@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" layoutY="79.0" prefHeight="68.0" prefWidth="190.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="76.0" layoutY="14.0" text="Salon 1" />
+            <Label layoutX="36.0" layoutY="34.0" text="Nombre de joueur : 3/4" />
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="154.0" prefHeight="68.0" prefWidth="190.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="36.0" layoutY="34.0" text="Nombre de joueur : 1/4" />
+            <Label layoutX="76.0" layoutY="14.0" text="Salon 2" />
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="229.0" prefHeight="68.0" prefWidth="190.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="36.0" layoutY="34.0" text="Nombre de joueur : 2/4" />
+            <Label layoutX="75.0" layoutY="6.0" text="Salon 3" />
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="304.0" prefHeight="68.0" prefWidth="190.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="36.0" layoutY="34.0" text="Nombre de joueur : 4/4" />
+            <Label layoutX="75.0" layoutY="6.0" text="Salon 4" />
+         </children>
+      </Pane>
+      <Label layoutX="216.0" layoutY="14.0" text="Salon de jeu">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="233.0" layoutY="79.0" prefHeight="293.0" prefWidth="352.0" style="-fx-background-color: white;">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <children>
+            <Label layoutX="147.0" layoutY="14.0" text="Salon 1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="10.0" layoutY="64.0" prefHeight="216.0" prefWidth="332.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="166.0" text="Joueur 1 : Corbac" />
+                  <Label prefHeight="17.0" prefWidth="166.0" text="Joueur 2 : LNALine" GridPane.rowIndex="1" />
+                  <Label prefHeight="17.0" prefWidth="166.0" text="Joueur 3 : Angorance" GridPane.rowIndex="2" />
+                  <Label prefHeight="17.0" prefWidth="166.0" text="Joueur 4 : -" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Join" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+               </children>
+            </GridPane>
+            <Label layoutX="266.0" layoutY="14.0" text="Mode : X">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button layoutX="523.0" layoutY="25.0" mnemonicParsing="false" text="ajouter" />
+   </children>
+</AnchorPane>

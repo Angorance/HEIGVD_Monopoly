@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="500.0" layoutX="50.0" layoutY="64.0">
+         <image>
+            <Image url="@../../../../../../../OneDrive/Bureau/monopoly-vierge.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="129.0" layoutY="144.0" prefHeight="340.0" prefWidth="338.0">
+         <children>
+            <Button layoutX="41.0" layoutY="297.0" mnemonicParsing="false" text="Acheter" />
+            <Label layoutX="134.0" layoutY="14.0" text="Carte X">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="58.0" text="Prix : 2000.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="78.0" text="Loyer 1 maison: 200.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="98.0" text="Loyer 2 maison: 200.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="118.0" text="Loyer 3 maison: 200.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="138.0" text="Loyer 4 maison: 200.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="160.0" text="Loyer hotel : 200.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="13.0" layoutY="180.0" text="Prix hypothèque : 400.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="127.0" layoutY="297.0" mnemonicParsing="false" text="Vendre" />
+            <Button layoutX="214.0" layoutY="297.0" mnemonicParsing="false" text="Hypothèque" />
+            <Label layoutX="181.0" layoutY="128.0" text="Prix maison : 100.-">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button layoutX="253.0" layoutY="564.0" mnemonicParsing="false" text="Lancer les dés" />
+      <Label layoutX="485.0" layoutY="152.0" text="Label" />
+   </children>
+</AnchorPane>
