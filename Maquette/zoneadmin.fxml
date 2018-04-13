@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="193.0" layoutY="14.0" text="Zone administrateur">
          <font>
@@ -21,7 +20,7 @@
       <Label layoutX="207.0" layoutY="134.0" text="min" />
       <TextField layoutX="346.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0" />
       <Label layoutX="319.0" layoutY="134.0" text="max" />
-      <Label layoutX="102.0" layoutY="168.0" text="Nombre de dés : " />
+      <Label layoutX="107.0" layoutY="168.0" text="Capital de base :" />
       <Label layoutX="205.0" layoutY="168.0" text="min" />
       <TextField layoutX="346.0" layoutY="164.0" prefHeight="25.0" prefWidth="72.0" />
       <Label layoutX="319.0" layoutY="168.0" text="max" />
