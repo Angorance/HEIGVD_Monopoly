@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="193.0" layoutY="14.0" text="Zone administrateur">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="67.0" layoutY="71.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Génération aléatoire" />
+      <CheckBox layoutX="38.0" layoutY="101.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Gestion du plateau de jeu" />
+      <Label layoutX="104.0" layoutY="134.0" text="Nombre de dés : " />
+      <Label layoutX="207.0" layoutY="134.0" text="min" />
+      <TextField layoutX="346.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0" />
+      <Label layoutX="319.0" layoutY="134.0" text="max" />
+      <Label layoutX="102.0" layoutY="168.0" text="Nombre de dés : " />
+      <Label layoutX="205.0" layoutY="168.0" text="min" />
+      <TextField layoutX="346.0" layoutY="164.0" prefHeight="25.0" prefWidth="72.0" />
+      <Label layoutX="319.0" layoutY="168.0" text="max" />
+      <TextField layoutX="235.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0" />
+      <TextField layoutX="235.0" layoutY="164.0" prefHeight="25.0" prefWidth="72.0" />
+      <Button layoutX="237.0" layoutY="236.0" mnemonicParsing="false" text="Valider les changements" />
+   </children>
+</AnchorPane>
