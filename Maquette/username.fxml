@@ -6,16 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField alignment="CENTER" layoutX="226.0" layoutY="218.0" promptText="username" />
-      <Label layoutX="274.0" layoutY="194.0" text="Username" />
+      <TextField alignment="CENTER" layoutX="226.0" layoutY="200.0" promptText="username" />
+      <Label layoutX="274.0" layoutY="176.0" text="Username" />
       <Label layoutX="180.0" layoutY="32.0" text="Monopoly">
          <font>
             <Font size="53.0" />
          </font>
       </Label>
-      <Button layoutX="278.0" layoutY="285.0" mnemonicParsing="false" text="Jouer" />
+      <Button layoutX="278.0" layoutY="308.0" mnemonicParsing="false" text="Jouer" />
+      <TextField alignment="CENTER" layoutX="226.0" layoutY="260.0" promptText="username" />
+      <Label layoutX="274.0" layoutY="236.0" text="Password" />
    </children>
 </AnchorPane>
