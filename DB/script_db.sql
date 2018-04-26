@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`score` (
     FOREIGN KEY (`player_id`)
     REFERENCES `cheseaux-poly`.`player` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON UPDATE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`card` (
     FOREIGN KEY (`action_id`)
     REFERENCES `cheseaux-poly`.`action` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON UPDATE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -74,4 +74,33 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`parameter` (
   `randomGameGeneration` TINYINT NOT NULL,
   `examSquares` INT NOT NULL,
   PRIMARY KEY (`id`)
+);
+
+-- -----------------------------------------------------
+-- Table `cheseaux-poly`.`price`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`price` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `rent` INT NOT NULL,
+  `priceHouse` INT NULL,
+  `priceHotel` INT NULL,
+  `hypothec` INT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- -----------------------------------------------------
+-- Table `cheseaux-poly`.`square`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `price_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_square_price1_idx` (`price_id` ASC),
+  CONSTRAINT `fk_square_price1`
+    FOREIGN KEY (`price_id`)
+    REFERENCES `cheseaux-poly`.`price` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
 );
