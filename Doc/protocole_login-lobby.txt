@@ -1,0 +1,12 @@
+Instructions du client : 
+LOGIN [username] [password_digest] ==> demande au serveur si une correspondance existe
+RGSTR [username] [password_digest] ==> demande au serveur s'il est possible de s'enregistrer avec ces identifiants
+JOIN [lobby_id] ==> tente de rejoindre un lobby s'il y a de la place
+NLOBBY ==> crée un lobby, cette commande est suivie des informations sur un salon de jeu (sérialisation)
+READY ==> se déclarer prêt
+
+Instructions du serveur : 
+OK ==> l'opération est possible, confirmation (réponse à LOGIN, RGSTR, JOIN)
+UNKNOWN ==> aucun username correspondant (réponse à LOGIN)
+DENIED ==> mdp ou username erroné (réponse à LOGIN)
+START ==> tous les joueurs sont prêts la partie commence
