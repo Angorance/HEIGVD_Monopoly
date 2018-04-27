@@ -23,10 +23,14 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`score` (
   `startDate` DATETIME NOT NULL,
   `startEnd` DATETIME NOT NULL,
   `abort` TINYINT NOT NULL,
+  `rank` INT NOT NULL,
   `moneyAtTheEnd` INT NOT NULL,
+  `moneyWin` INT NOT NULL,
+  `moneyLost` INT NOT NULL,
   `boughtHouses` INT NOT NULL,
   `examVisits` INT NOT NULL,
   `squaresMoved` INT NOT NULL,
+  `startWalker` INT NOT NULL,
   `player_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_score_player_idx` (`player_id` ASC),
@@ -72,7 +76,6 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`parameter` (
   `minMoneyAtTheStart` INT NOT NULL,
   `maxMoneyAtTheStart` INT NOT NULL,
   `randomGameGeneration` TINYINT NOT NULL,
-  `examSquares` INT NOT NULL,
   PRIMARY KEY (`id`)
 );
 
