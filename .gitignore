@@ -21,13 +21,18 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#IntellijIDEA
+# Intellij
 .idea/
 *.iml
+*.iws
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
+target/
 
 #Google Drive
 *.gdoc
 *.gsheet
-
-#Dani
-.DS_Store
