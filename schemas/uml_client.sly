@@ -63,11 +63,11 @@
     <entity entityType="CLASS" id="159" isAbstract="false" name="GameStats" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="moneyWin" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="moneyLost" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="housesBougth" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="housesBought" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="timesInJail" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="loss" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="win" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="startWalker" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="moneyAtEnd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="squaresMoved" type="int" visibility="PRIVATE"/>
     </entity>
     <entity entityType="CLASS" id="563" isAbstract="false" name="Protocoly" visibility="PUBLIC"/>
   </diagramElements>
