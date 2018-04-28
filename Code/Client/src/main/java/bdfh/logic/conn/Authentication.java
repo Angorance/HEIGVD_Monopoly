@@ -1,9 +1,9 @@
-package bdfh.protocol;
+package bdfh.logic.conn;
 
 /**
  * @version 1.0
  * @authors Daniel Gonzalez Lopez
  */
-public interface Protocoly {
-
+public class Authentication {
+	
 }
