@@ -5,8 +5,7 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * S'occupe de gérer la connection avec un client // TODO - IN ENGLISH BRYAN D:
- *
+ * Manage the connection with a client
  * @version 1.0
  * @authors Bryan Curchod
  */
@@ -17,6 +16,10 @@ public class ClientWorker implements Runnable {
 	Socket client;
 	ClientHandler handler;
 	
+	/**
+	 * Construct a client manager with a socket
+	 * @param client
+	 */
 	ClientWorker(Socket client) {
 		
 		try {
@@ -29,11 +32,29 @@ public class ClientWorker implements Runnable {
 		}
 	}
 	
+	/**
+	 * call the handler
+	 */
 	@Override
 	public void run() {
 		
 		try {
 			handler.handle(in, out);
+			disconnect();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * close the client connection
+	 */
+	private void disconnect() {
+		
+		try {
+			in.close();
+			out.close();
+			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
