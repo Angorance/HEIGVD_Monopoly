@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
-  <diagramElements name="Client">
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="Client">
     <dependency id="2037" label="use">
       <source>1</source>
       <target>3</target>
@@ -21,7 +21,10 @@
       <source>3</source>
       <target>563</target>
     </dependency>
-    <entity entityType="CLASS" id="2026" isAbstract="false" name="Server" visibility="PUBLIC"/>
+    <inheritance id="6753" innerClass="true">
+      <child>1</child>
+      <parent>6616</parent>
+    </inheritance>
     <association aggregation="NONE" direction="BIDIRECTIONAL" id="2008" name="">
       <role componentId="1" name="" visibility="PRIVATE">
         <multiplicity>
@@ -36,6 +39,7 @@
         </multiplicity>
       </role>
     </association>
+    <entity entityType="CLASS" id="2026" isAbstract="false" name="Server" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="3" isAbstract="false" name="Client" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="clientSocket" type="Socket" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="in" type="BufferedReader" visibility="PRIVATE"/>
@@ -46,14 +50,18 @@
       <method isAbstract="false" isStatic="false" name="login" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="2" isAbstract="false" name="Authentication" visibility="PUBLIC">
-      <method isAbstract="false" isStatic="false" name="register" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="login" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="confirmPassword" returnType="bool" view="DEFAULT" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="hashPassword" returnType="String" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="true" name="register" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="login" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="confirmPassword" returnType="bool" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="hashPassword" returnType="String" view="DEFAULT" visibility="PRIVATE"/>
     </entity>
     <entity entityType="CLASS" id="1" isAbstract="false" name="User" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="username" type="String" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="User" returnType="" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getUsername" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setUsername" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="username" type="String"/>
+      </method>
       <method isAbstract="false" isStatic="false" name="createLobby" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="joinLobby" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="ready" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -70,63 +78,78 @@
       <attribute const="false" defaultValue="" isStatic="false" name="squaresMoved" type="int" visibility="PRIVATE"/>
     </entity>
     <entity entityType="CLASS" id="563" isAbstract="false" name="Protocoly" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="6616" isAbstract="false" name="Instance" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="true" name="instance" type="User" visibility="PRIVATE"/>
+    </entity>
   </diagramElements>
-  <umlView grid="10" name="view no name">
+  <umlView grid="10" name="Main view" open="true">
     <relationView color="-12566464" relationId="2008">
       <line>
         <point>
-          <x>191</x>
-          <y>211</y>
+          <x>151</x>
+          <y>241</y>
         </point>
         <point>
-          <x>191</x>
+          <x>151</x>
           <y>291</y>
         </point>
       </line>
       <labelAssociation>
-        <x>195</x>
-        <y>255</y>
+        <x>155</x>
+        <y>270</y>
         <w>0</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
-        <x>195</x>
-        <y>215</y>
+        <x>155</x>
+        <y>245</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
-        <x>195</x>
+        <x>155</x>
         <y>268</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>177</x>
-        <y>215</y>
+        <x>137</x>
+        <y>245</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>177</x>
+        <x>137</x>
         <y>268</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
     </relationView>
+    <relationView color="-12566464" relationId="6753">
+      <line>
+        <point>
+          <x>321</x>
+          <y>221</y>
+        </point>
+        <point>
+          <x>371</x>
+          <y>221</y>
+        </point>
+      </line>
+    </relationView>
     <relationView color="-12566464" relationId="2031">
       <line>
         <point>
-          <x>731</x>
+          <x>801</x>
           <y>211</y>
         </point>
         <point>
-          <x>731</x>
+          <x>801</x>
           <y>341</y>
         </point>
       </line>
       <labelAssociation>
-        <x>735</x>
+        <x>805</x>
         <y>280</y>
         <w>22</w>
         <h>17</h>
@@ -135,16 +158,16 @@
     <relationView color="-12566464" relationId="2033">
       <line>
         <point>
-          <x>1221</x>
+          <x>1291</x>
           <y>361</y>
         </point>
         <point>
-          <x>811</x>
+          <x>881</x>
           <y>361</y>
         </point>
       </line>
       <labelAssociation>
-        <x>1020</x>
+        <x>1090</x>
         <y>365</y>
         <w>22</w>
         <h>17</h>
@@ -153,16 +176,16 @@
     <relationView color="-12566464" relationId="2035">
       <line>
         <point>
-          <x>271</x>
+          <x>321</x>
           <y>71</y>
         </point>
         <point>
-          <x>361</x>
+          <x>431</x>
           <y>71</y>
         </point>
       </line>
       <labelAssociation>
-        <x>320</x>
+        <x>363</x>
         <y>75</y>
         <w>22</w>
         <h>17</h>
@@ -171,16 +194,16 @@
     <relationView color="-12566464" relationId="2036">
       <line>
         <point>
-          <x>571</x>
+          <x>641</x>
           <y>71</y>
         </point>
         <point>
-          <x>661</x>
+          <x>731</x>
           <y>71</y>
         </point>
       </line>
       <labelAssociation>
-        <x>620</x>
+        <x>690</x>
         <y>75</y>
         <w>22</w>
         <h>17</h>
@@ -189,24 +212,32 @@
     <relationView color="-12566464" relationId="2037">
       <line>
         <point>
-          <x>271</x>
+          <x>321</x>
           <y>181</y>
         </point>
         <point>
-          <x>661</x>
+          <x>731</x>
           <y>181</y>
         </point>
       </line>
       <labelAssociation>
-        <x>470</x>
+        <x>530</x>
         <y>185</y>
         <w>22</w>
         <h>17</h>
       </labelAssociation>
     </relationView>
+    <componentView color="-2079" componentID="6616" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>370</x>
+        <y>190</y>
+        <w>150</w>
+        <h>70</h>
+      </geometry>
+    </componentView>
     <componentView color="-2079" componentID="563" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>660</x>
+        <x>730</x>
         <y>340</y>
         <w>150</w>
         <h>55</h>
@@ -214,23 +245,23 @@
     </componentView>
     <componentView color="-2079" componentID="159" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>120</x>
+        <x>80</x>
         <y>290</y>
-        <w>150</w>
+        <w>200</w>
         <h>160</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>120</x>
+        <x>80</x>
         <y>50</y>
-        <w>150</w>
-        <h>160</h>
+        <w>240</w>
+        <h>190</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="2" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>360</x>
+        <x>430</x>
         <y>50</y>
         <w>210</w>
         <h>115</h>
@@ -238,7 +269,7 @@
     </componentView>
     <componentView color="-2079" componentID="3" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>660</x>
+        <x>730</x>
         <y>50</y>
         <w>150</w>
         <h>160</h>
@@ -246,7 +277,7 @@
     </componentView>
     <componentView color="-2079" componentID="2026" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1220</x>
+        <x>1290</x>
         <y>340</y>
         <w>150</w>
         <h>55</h>
