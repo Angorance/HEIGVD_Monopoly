@@ -18,6 +18,7 @@ public class ClientHandler {
 	public void handle(InputStream in, OutputStream out) throws IOException {
 		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
+		DatabaseConnect database = DatabaseConnect.getInstance();
 		
 		// Dialog management
 		while(true){
@@ -36,7 +37,7 @@ public class ClientHandler {
 				case CMD_LOGIN : // USER LOGIN
 					param = line[0].split(" ");
 					// we try to log the user in
-					int result = DatabaseConnect.getInstance().playerExists(param[0], param[1]);
+					int result = database.getPlayerDB().playerExists(param[0], param[1]);
 					if(result == 0){
 						writer.write(ANS_UNKNOWN);
 					} else if(result == -1){
@@ -49,9 +50,9 @@ public class ClientHandler {
 					break;
 				case CMD_RGSTR : // USER REGISTER
 					param = line[0].split(" ");
-					if(DatabaseConnect.getInstance().createPlayer(param[0], param[1])){
+					if(database.getPlayerDB().createPlayer(param[0], param[1])){
 						// username free, we retrieve the user ID
-						clientID = DatabaseConnect.getInstance().playerExists(param[0], param[1]);
+						clientID = database.getPlayerDB().playerExists(param[0], param[1]);
 						writer.write(ANS_SUCCESS);
 					} else {
 						// username already taken
