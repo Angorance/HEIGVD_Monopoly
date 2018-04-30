@@ -1,6 +1,7 @@
 package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
+import bdfh.exceptions.CredentialsException;
 import bdfh.net.protocol.Protocoly;
 
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import static bdfh.net.protocol.Protocoly.*;
+
+// TODO - Maybe handle better the exceptions...
 
 /**
  * Client class.
@@ -43,6 +46,7 @@ public class Client {
 	 * Connect to the server and check if it is successful.
 	 *
 	 * @throws ConnectionException if the server sends a wrong answer.
+	 * @throws IOException
 	 */
 	public void connect() throws ConnectionException, IOException {
 		
@@ -63,6 +67,11 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Disconnect from the server and check if it is successful.
+	 *
+	 * @throws IOException
+	 */
 	public void disconnect() throws IOException {
 		
 		sendData(Protocoly.CMD_BYE);
@@ -74,7 +83,7 @@ public class Client {
 				// TODO - Disconnection failed - What to do?
 			}
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println("Client::disconnect: " + e);
 			throw e;
 		} finally {
 			
@@ -92,7 +101,19 @@ public class Client {
 		}
 	}
 	
-	public void register(String usr, String password) {
+	/**
+	 * Register a user given his credentials.
+	 * Fails if the username is not available.
+	 *
+	 * @param usr Username of the user.
+	 * @param password Password of the user.
+	 *
+	 * @return True if registration successful, false otherwise.
+	 */
+	public boolean register(String usr, String password)
+			throws CredentialsException, IOException {
+		
+		boolean success;
 		
 		sendData(CMD_RGSTR + " " + usr + " " + password);
 		
@@ -100,14 +121,37 @@ public class Client {
 			response = in.readLine();
 			
 			if (response.equals(ANS_SUCCESS)) {
-				// Registration done.
+				success = true;
+			} else if (response.equals(ANS_DENIED)) {
+				success = false;
+			} else {
+				throw new CredentialsException("Problem with Registration");
 			}
-		} catch (Exception e) {
-			System.out.println(e);
+		} catch (IOException e) {
+			System.out.println("Client::register: " + e);
+			throw e;
 		}
+		
+		return success;
 	}
 	
-	public void login(String usr, String password) {
+	/**
+	 * Log the user in given his credentials.
+	 * Fails if the username does not exist or if the credentials does not match.
+	 *
+	 * @param usr Username of the user.
+	 * @param password Password of the user.
+	 *
+	 * @return 1 if login successful, 0 if username unknown, -1 if password does
+	 * not match with username.
+	 *
+	 * @throws CredentialsException if the server sends wrong answer.
+	 * @throws IOException
+	 */
+	public int login(String usr, String password)
+			throws CredentialsException, IOException {
+		
+		int result;
 		
 		sendData(CMD_LOGIN + " " + usr + " " + password);
 		
@@ -115,13 +159,27 @@ public class Client {
 			response = in.readLine();
 			
 			if (response.equals(ANS_SUCCESS)) {
-				// Login success
+				result = 1;
+			} else if (response.equals(ANS_UKNW)) {
+				result = 0;
+			} else if (response.equals(ANS_DENIED)) {
+				result = -1;
+			} else {
+				throw new CredentialsException("Problem with Login");
 			}
-		} catch (Exception e) {
-			System.out.println(e);
+		} catch (IOException e) {
+			System.out.println("Client::login: " + e);
+			throw e;
 		}
+		
+		return result;
 	}
 	
+	/**
+	 * Send data (commands) to the server.
+	 *
+	 * @param data Data to send.
+	 */
 	private void sendData(String data) {
 		
 		// Print the data and flush the stream.
