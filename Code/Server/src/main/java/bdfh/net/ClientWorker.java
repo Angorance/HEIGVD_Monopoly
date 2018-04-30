@@ -5,17 +5,20 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * S'occupe de gérer la connection avec un client
+ * S'occupe de gérer la connection avec un client // TODO - IN ENGLISH BRYAN D:
+ *
  * @version 1.0
  * @authors Bryan Curchod
  */
 public class ClientWorker implements Runnable {
+	
 	InputStream in;
 	OutputStream out;
 	Socket client;
 	ClientHandler handler;
 	
-	ClientWorker(Socket client){
+	ClientWorker(Socket client) {
+		
 		try {
 			this.client = client;
 			in = client.getInputStream();
@@ -26,7 +29,8 @@ public class ClientWorker implements Runnable {
 		}
 	}
 	
-	@Override public void run() {
+	@Override
+	public void run() {
 		
 		try {
 			handler.handle(in, out);
