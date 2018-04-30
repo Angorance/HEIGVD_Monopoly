@@ -10,59 +10,71 @@ import javafx.fxml.FXML;
 import static bdfh.logic.conn.Authentication.*;
 
 public class Controller_connection {
-    @FXML private JFXTextField username;
-    @FXML private JFXPasswordField password;
-    @FXML private JFXPasswordField confirmPassword;
-    @FXML private JFXCheckBox enregistrementCheckBox;
-    @FXML private JFXButton login;
-    @FXML private JFXButton register;
+	
+	@FXML private JFXTextField username;
+	@FXML private JFXPasswordField password;
+	@FXML private JFXPasswordField confirmPassword;
+	@FXML private JFXCheckBox enregistrementCheckBox;
+	@FXML private JFXButton login;
+	@FXML private JFXButton register;
 	
 	/**
-	 * TODO
-	 * @param event TODO
+	 * Event check if checkBox is ticked
+	 *
+	 * @param event -
 	 */
 	@FXML void checkEnregistrement(ActionEvent event) {
-        if(enregistrementCheckBox.isSelected()){
-            confirmPassword.setVisible(true);
-            register.setVisible(true);
-            login.setVisible(false);
-        }else{
-            confirmPassword.setVisible(false);
-            login.setVisible(true);
-            register.setVisible(false);
-        }
-    }
+		
+		if (enregistrementCheckBox.isSelected()) {
+			confirmPassword.setVisible(true);
+			register.setVisible(true);
+			login.setVisible(false);
+		} else {
+			confirmPassword.setVisible(false);
+			login.setVisible(true);
+			register.setVisible(false);
+		}
+	}
 	
 	/**
-	 * TODO
-	 * @param event TODO
+	 * Event click on login button
+	 *
+	 * @param event -
 	 */
 	@FXML void loginButton(ActionEvent event) {
-	    String usernameText = username.getText();
-	    String passwordText = password.getText();
-    	int code = login(usernameText,passwordText);
-    	if(code == 0){
-		    username.setStyle("    -fx-text-box-border: red ;");;
-	    }else if(code == -1){
-		    password.setStyle("    -fx-text-box-border: red ;");;
-	    }
-    }
+		
+		String usernameText = username.getText();
+		String passwordText = password.getText();
+		int code = login(usernameText, passwordText);
+		if (code == 0) {
+			username.setStyle("    -fx-text-box-border: red ;");
+			;
+		} else if (code == -1) {
+			password.setStyle("    -fx-text-box-border: red ;");
+			;
+		}
+	}
 	
 	/**
-	 * TODO
+	 * Event click on register button
+	 *
 	 * @param event TODO
 	 */
 	@FXML void registerButton(ActionEvent event) {
-        String usernameText = username.getText();
-        String passwordText = password.getText();
-        String confPasswordText = confirmPassword.getText();
-        boolean check = true;
-        
-        if(checkPassword(passwordText,confPasswordText)){
-            if(!register(usernameText,passwordText)){
-                username.setStyle("    -fx-text-box-border: red ;");;
-            }
-        }
-    }
-
+		
+		String usernameText = username.getText();
+		String passwordText = password.getText();
+		String confPasswordText = confirmPassword.getText();
+		boolean check = true;
+		
+		/*Check if passwords are equal*/
+		if (checkPassword(passwordText, confPasswordText)) {
+			/*Check if username is not already used*/
+			if (!register(usernameText, passwordText)) {
+				username.setStyle("    -fx-text-box-border: red ;");
+				;
+			}
+		}
+	}
+	
 }
