@@ -61,7 +61,7 @@ public class DatabaseConnect {
 	 *
 	 * @return the connection created.
 	 */
-	private Connection connect() {
+	protected Connection connect() {
 		
 		if (connection == null) {
 			try {
@@ -80,7 +80,7 @@ public class DatabaseConnect {
 	/**
 	 * Disconnect the server from the database.
 	 */
-	private void disconnect() {
+	protected void disconnect() {
 		
 		if (connection != null) {
 			try {
@@ -94,185 +94,11 @@ public class DatabaseConnect {
 		}
 	}
 	
-	/**************************************************************************
-	 * Methods provided to the server about the player
-	 *************************************************************************/
-	
 	/**
-	 * Check if a username already exists.
-	 *
-	 * @param username  Username to check in the database.
-	 * @return  true (the username already exists), false (the username is available).
+	 * Get the Player DB object used to send queries about the player.
+	 * @return  the Player DB object
 	 */
-	private boolean usernameExists(String username) {
-		
-		String sql = "SELECT COUNT(id) FROM player WHERE username = '" + username + "';";
-		boolean usernameExists = false;
-		
-		try {
-			
-			// Execute and get the result of the query
-			Statement statement = connect().createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			
-			// Create the player
-			result.next();
-			usernameExists = result.getInt(1) == 0 ? false : true;
-			
-			// Close the connection
-			statement.close();
-			
-		} catch (SQLException e) {
-			System.out.print("The database can't check if the username " + username + " exists : ");
-			e.printStackTrace();
-			
-		} finally {
-			disconnect();
-		}
-		
-		return usernameExists;
+	public PlayerDB getPlayerDB(){
+		return PlayerDB.getInstance();
 	}
-	
-	/**
-	 * Create a player into the database.
-	 *
-	 * @param username  Username of the player.
-	 * @param password  Password of the player.
-	 *
-	 * @return  false [DENIED] (the username already exists), true [OK] (the username is created).
-	 */
-	public boolean createPlayer(String username, String password){
-		
-		String sql = "INSERT INTO player VALUES(NULL, ?, ?);";
-		boolean isCreated = false;
-		
-		try {
-			
-			if(usernameExists(username)){
-				
-				// The player already exists
-				isCreated = false;
-				
-			} else {
-			
-				// The player can be created
-				PreparedStatement statement = connect().prepareStatement(sql);
-				
-				// Execute the query
-				statement.setString(1, username);
-				statement.setString(2, password);
-				statement.execute();
-				
-				isCreated = true;
-				
-				// Close the connection
-				statement.close();
-			}
-			
-		} catch (SQLException e) {
-			System.out.print("The database can't create the player " + username + " : ");
-			e.printStackTrace();
-			
-		} finally {
-			disconnect();
-		}
-		
-		return isCreated;
-	}
-	
-	/**
-	 * Check if a player exists.
-	 *
-	 * @param username  Username to check in the database.
-	 * @param password  Password to check in the database.
-	 *
-	 * @return  -1 if the password is wrong [DENIED], 0 if the username is unknown [UNKNOWN], ID of the player if he is found [OK]
-	 */
-	public int playerExists(String username, String password){
-		
-		String sql = "SELECT COUNT(id), id FROM player WHERE username = '" + username + "' "
-					+ "AND password = '" + password + "';";
-		int ID = -2;
-		
-		try {
-			
-			// Execute and get the result of the query
-			Statement statement = connect().createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			
-			// Get the ID of the player
-			result.next();
-			
-			if(result.getInt(1) == 1){
-				
-				// The player exists in the database
-				ID = result.getInt("id");
-				
-			} else {
-				
-				if(usernameExists(username)){
-					
-					// The player set the wrong password
-					ID = -1;
-					
-				} else {
-				
-					// The player set an unknown username
-					ID = 0;
-				}
-			}
-			
-			// Close the connection
-			statement.close();
-			
-		} catch (SQLException e) {
-			System.out.print("The database can't check if the player " + username + " exists : ");
-			e.printStackTrace();
-			
-		} finally {
-			disconnect();
-		}
-		
-		return ID;
-	}
-	
-	/**
-	 * Get all informations of a player with his ID.
-	 *
-	 * @param id    ID of the player to retrieve.
-	 * @return      Player got.
-	 */
-	/*public Player selectPlayer(int id){
-		
-		String sql = "SELECT * FROM player WHERE id = " + id + ";";
-		Player player = null;
-		
-		try {
-			
-			// Execute and get the result of the query
-			Statement statement = connect().createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			
-			// Create the player
-			//while(result.next()){
-			result.next();
-			String username = result.getString("username");
-			String password = result.getString("password");
-			
-			player = new Player(id, username, password);
-			//}
-			
-			// Close the connection
-			statement.close();
-			
-		} catch (SQLException e) {
-			System.out.print("The database can't select the player with ID " + id + " : ");
-			e.printStackTrace();
-			
-		} finally {
-			disconnect();
-		}
-		
-		return player;
-	}*/
 }
