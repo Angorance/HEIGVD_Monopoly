@@ -28,7 +28,7 @@ public class ClientWorker implements Runnable {
 	 */
 	ClientWorker(Socket client) {
 		
-		LOG.log(Level.INFO, "Un client s'est connecté");
+		LOG.log(Level.INFO, "New client connected");
 		
 		try {
 			this.client = client;
