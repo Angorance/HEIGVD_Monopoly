@@ -15,9 +15,9 @@ import static bdfh.protocol.Protocoly.*;
  */
 public class ClientHandler {
 	
-	BufferedReader reader;
-	PrintWriter writer;
-	int clientID;
+	private BufferedReader reader;
+	private PrintWriter writer;
+	private int clientID;
 	
 	public void handle(InputStream in, OutputStream out) throws IOException {
 		
@@ -30,13 +30,21 @@ public class ClientHandler {
 		
 		// Dialog management
 		while (connected) {
+			
+			String line;
+			String cmd;
+			String[] param;
+			String[] args;
+			
 			// TODO - COMMENTS
-			String line = reader.readLine();
+			line = reader.readLine();
 			
-			int index = line.indexOf(" ");
+			args = line.split(" ");
 			
-			String cmd = line.substring(0, index);
-			String[] param = line.substring(index + 1).split(" ");
+			cmd = args[0];
+			
+			param = new String[args.length - 1];
+			System.arraycopy(args, 1, param, 0, param.length);
 			
 			// instruction processing
 			switch (cmd) {

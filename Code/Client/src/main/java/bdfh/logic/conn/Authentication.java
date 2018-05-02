@@ -55,15 +55,15 @@ public class Authentication {
 	 */
 	public static int login(String username, String password) {
 		
+		int code = -1;
+		
 		try {
-			int code = Client.getInstance().login(username, hashPassword(password));
+			code = Client.getInstance().login(username, hashPassword(password));
+			
 			//login successful
 			if (code == 1) {
 				//Set he username
 				User.getInstance().setUsername(username);
-				return code;
-			} else {
-				return code;
 			}
 		} catch (CredentialsException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class Authentication {
 			e.printStackTrace();
 		}
 		
-		return -1;
+		return code;
 	}
 	
 	/**

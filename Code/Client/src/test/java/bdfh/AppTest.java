@@ -1,8 +1,8 @@
 package bdfh;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.*;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit test for simple App.

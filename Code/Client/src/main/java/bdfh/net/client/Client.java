@@ -58,7 +58,7 @@ public class Client {
 			response = in.readLine();
 			
 			if (!response.equals(ANS_CONN)) {
-				throw new ConnectionException("A problem happened during connection");
+				throw new ConnectionException("A problem happened during Connection");
 			}
 			
 		} catch (IOException e) {
