@@ -1,7 +1,7 @@
 package bdfh.net;
 
 import java.io.*;
-import static bdfh.net.Protocoly.*;
+import static bdfh.protocol.Protocoly.*;
 
 /**
  * @version 1.0

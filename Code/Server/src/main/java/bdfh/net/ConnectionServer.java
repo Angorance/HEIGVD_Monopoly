@@ -1,5 +1,7 @@
 package bdfh.net;
 
+import bdfh.protocol.Protocoly;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
