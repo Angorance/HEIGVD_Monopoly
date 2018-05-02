@@ -34,7 +34,7 @@ public abstract class Protocoly {
 	
 	public static final String ANS_UKNW = "UKNW";
 	
-	public static final String ANS_DENIED = "DENIED";
+	public static final String ANS_DENIED = "FAIL";
 	
 	public static final String ANS_BYE = "SEEYA";
 	
