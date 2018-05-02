@@ -47,9 +47,9 @@ public class Controller_connection {
 		String passwordText = password.getText();
 		int code = login(usernameText, passwordText);
 		if (code == 0) {
-			username.setStyle("    -fx-text-box-border: red ;");
+			username.setStyle("-fx-text-inner-color: red;");
 		} else if (code == -1) {
-			password.setStyle("    -fx-text-box-border: red ;");
+			password.setStyle("-fx-text-inner-color: red;");
 		} else {
 			login.setStyle("-fx-background-color: blue");
 		}
@@ -71,7 +71,7 @@ public class Controller_connection {
 		if (checkPassword(passwordText, confPasswordText)) {
 			/*Check if username is not already used*/
 			if (!register(usernameText, passwordText)) {
-				username.setStyle("    -fx-text-box-border: red ;");
+				username.setStyle("-fx-text-inner-color: red;");
 			} else {
 				register.setStyle("-fx-background-color: blue");
 			}
