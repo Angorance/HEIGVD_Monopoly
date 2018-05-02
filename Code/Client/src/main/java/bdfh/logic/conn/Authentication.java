@@ -17,18 +17,22 @@ public class Authentication {
 	/**
 	 * TODO
 	 */
-	public Authentication(){}
+	public Authentication() {}
 	
 	/**
 	 * TODO
-	 * @param username TODO
-	 * @param password TODO
-	 * @return TODO
+	 *
+	 * @param username username of the new account
+	 * @param password password of the new account
+	 *
+	 * @return true if register successful and false if username is already used
 	 */
-	public static boolean register(String username, String password){
+	public static boolean register(String username, String password) {
 		
 		try {
-			if(Client.getInstance().register(username,hashPassword(password))){
+			/*register successful*/
+			if (Client.getInstance().register(username, hashPassword(password))) {
+				//Set the username
 				User.getInstance().setUsername(username);
 				return true;
 			}
@@ -41,19 +45,24 @@ public class Authentication {
 	}
 	
 	/**
-	 * TODO
-	 * @param username TODO
-	 * @param password TODO
-	 * @return TODO
+	 * Login
+	 *
+	 * @param username username to use for the login
+	 * @param password password to use for the login
+	 *
+	 * @return 1 if login successful, 0 if username unknown, -1 if password does
+	 * 		not match with username.
 	 */
-	public static int login(String username,String password){
+	public static int login(String username, String password) {
 		
 		try {
-			int code = Client.getInstance().login(username,hashPassword(password));
-			if(code == 1){
+			int code = Client.getInstance().login(username, hashPassword(password));
+			//login successful
+			if (code == 1) {
+				//Set he username
 				User.getInstance().setUsername(username);
 				return code;
-			}else{
+			} else {
 				return code;
 			}
 		} catch (CredentialsException e) {
@@ -66,24 +75,30 @@ public class Authentication {
 	}
 	
 	/**
-	 * TODO
-	 * @param pass1 TODO
-	 * @param pass2 TODO
+	 * check if passwords are equal
+	 *
+	 * @param pass1 password
+	 * @param pass2 confirm password
+	 *
 	 * @return
 	 */
-	public static boolean checkPassword(String pass1, String pass2){
-		if(pass1.isEmpty() || pass2.isEmpty()){
+	public static boolean checkPassword(String pass1, String pass2) {
+		
+		if (pass1.isEmpty() || pass2.isEmpty()) {
 			return false;
 		}
 		return pass1.equals(pass2);
 	}
 	
 	/**
-	 * TODO
-	 * @param passwordToHash TODO
-	 * @return TODO
+	 * Method to hash the password
+	 *
+	 * @param passwordToHash the password to hash
+	 *
+	 * @return hashed password in hex format
 	 */
-	private static String hashPassword(String passwordToHash){
+	private static String hashPassword(String passwordToHash) {
+		
 		String hash = null;
 		
 		/* Create MessageDigest instance for MD5*/
@@ -100,7 +115,7 @@ public class Authentication {
 			//This byte[] has bytes in decimal format
 			//Convert it to hexadecimal format
 			StringBuilder sb = new StringBuilder();
-			for(int i = 0; i < bytes.length; ++i){
+			for (int i = 0; i < bytes.length; ++i) {
 				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			

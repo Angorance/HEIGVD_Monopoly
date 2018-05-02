@@ -5,10 +5,11 @@ package bdfh.logic.usr;
  * @authors Daniel Gonzalez Lopez
  */
 public class User {
+	
 	private String username;
 	
 	private User() {}
-
+	
 	private static class Instance {
 		
 		static final User instance = new User();
@@ -16,6 +17,7 @@ public class User {
 	
 	/**
 	 * TODO
+	 *
 	 * @return TODO
 	 */
 	public static User getInstance() {
@@ -25,54 +27,58 @@ public class User {
 	
 	
 	/**
-	 * TODO
-	 * @return TODO
+	 * Get the username
+	 *
+	 * @return the username
 	 */
 	public String getUsername() {
+		
 		return username;
 	}
 	
 	/**
-	 * TODO
-	 * @param username TODO
+	 * Set the username
+	 *
+	 * @param username username to set
 	 */
 	public void setUsername(String username) {
+		
 		this.username = username;
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void createLobby(){
+	public void createLobby() {
 	
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void joinLobby(){
+	public void joinLobby() {
 	
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void rollDice(){
+	public void rollDice() {
 	
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void buy(){
+	public void buy() {
 	
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void sell(){
+	public void sell() {
 	
 	}
-
+	
 }
