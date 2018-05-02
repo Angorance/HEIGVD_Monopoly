@@ -3,19 +3,24 @@ package bdfh.net;
 import bdfh.database.DatabaseConnect;
 
 import java.io.*;
+
 import static bdfh.protocol.Protocoly.*;
 
 /**
  * Handle de dialog with a client
+ *
+ * @author Bryan Curchod
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
- * @authors Bryan Curchod
  */
 public class ClientHandler {
+	
 	BufferedReader reader;
 	PrintWriter writer;
 	int clientID;
 	
 	public void handle(InputStream in, OutputStream out) throws IOException {
+		
 		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		DatabaseConnect database = DatabaseConnect.getInstance();
@@ -24,55 +29,59 @@ public class ClientHandler {
 		sendData(ANS_CONN);
 		
 		// Dialog management
-		while(connected){
-			// divide the string in two parts : the command (in the 7 first char)
-			// and the eventual arguments
-			String[] line = reader.readLine().split(" ", 7);
+		while (connected) {
+			// TODO - COMMENTS
+			String line = reader.readLine();
 			
-			String cmd = line[0];
-			String[] param;
+			int index = line.indexOf(" ");
+			
+			String cmd = line.substring(0, index);
+			String[] param = line.substring(index + 1).split(" ");
 			
 			// instruction processing
-			switch(cmd){
-				case CMD_BYE :
+			switch (cmd) {
+				case CMD_BYE:
 					sendData(ANS_BYE);
 					connected = false;
 					break;
-				case CMD_LOGIN : // USER LOGIN
-					param = line[0].split(" ");
+				case CMD_LOGIN: // USER LOGIN
+					
 					// we try to log the user in
-					int result = database.getPlayerDB().playerExists(param[0], param[1]);
-					if(result == 0){
+					int result = database.getPlayerDB()
+							.playerExists(param[0], param[1]);
+					if (result == 0) {
 						sendData(ANS_UNKNOWN);
-					} else if(result == -1){
+					} else if (result == -1) {
 						sendData(ANS_FAIL);
 					} else {
 						sendData(ANS_SUCCESS);
 						clientID = result;
 					}
 					break;
-				case CMD_RGSTR : // USER REGISTER
-					param = line[0].split(" ");
-					if(database.getPlayerDB().createPlayer(param[0], param[1])){
+				case CMD_RGSTR: // USER REGISTER
+					
+					if (database.getPlayerDB()
+							.createPlayer(param[0], param[1])) {
 						// username free, we retrieve the user ID
-						clientID = database.getPlayerDB().playerExists(param[0], param[1]);
+						clientID = database.getPlayerDB()
+								.playerExists(param[0], param[1]);
 						sendData(ANS_SUCCESS);
 					} else {
 						// username already taken
 						sendData(ANS_FAIL);
 					}
 					break;
-				case CMD_SHOWLOBBY :
+				case CMD_SHOWLOBBY:
 					break;
 				case CMD_JOINLOBBY:
 					break;
 				case CMD_QUITLOBBY:
 					break;
-				case CMD_RDY :
+				case CMD_RDY:
 					break;
-				case CMD_NEWLOBBY :
+				case CMD_NEWLOBBY:
 					break;
-				default : // WTF ???
+				default: // WTF ???
 					sendData("U wot m8 ?");
 					break;
 			}
@@ -81,17 +90,19 @@ public class ClientHandler {
 		
 	}
 	
-	private void sendData(String cmd, String param){
+	private void sendData(String cmd, String param) {
+		
 		String toSend = cmd;
 		
-		if(param != ""){
+		if (param != "") {
 			toSend += " " + param;
 		}
 		writer.println(toSend);
 		writer.flush();
 	}
 	
-	private void sendData(String cmd){
+	private void sendData(String cmd) {
+		
 		sendData(cmd, "");
 	}
 	
