@@ -1,6 +1,5 @@
 package bdfh.net;
 
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -64,6 +63,9 @@ public class ClientWorker implements Runnable {
 			in.close();
 			out.close();
 			client.close();
+			
+			LOG.log(Level.INFO, "Client disconnected");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
