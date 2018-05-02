@@ -4,6 +4,7 @@ import bdfh.protocol.Protocoly;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * ConnectionServer class.
@@ -16,6 +17,8 @@ import java.net.Socket;
 public class ConnectionServer implements Runnable {
 	
 	ServerSocket srv;
+	
+	private final Logger LOG = Logger.getLogger("Server");
 	
 	private ConnectionServer() {
 		
