@@ -22,6 +22,7 @@ public class ClientWorker implements Runnable {
 	 */
 	ClientWorker(Socket client) {
 		
+		System.out.println("Un client s'est connecté");
 		try {
 			this.client = client;
 			in = client.getInputStream();

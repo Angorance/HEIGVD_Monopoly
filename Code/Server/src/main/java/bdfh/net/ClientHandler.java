@@ -20,6 +20,9 @@ public class ClientHandler {
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		DatabaseConnect database = DatabaseConnect.getInstance();
 		
+		writer.write(ANS_CONN);
+		writer.flush();
+		
 		// Dialog management
 		while(true){
 			// divide the string in two parts : the command (in the 7 first char)
