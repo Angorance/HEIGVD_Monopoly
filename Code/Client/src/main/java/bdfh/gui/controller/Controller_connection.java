@@ -4,12 +4,20 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.paint.Paint;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static bdfh.logic.conn.Authentication.*;
 
-public class Controller_connection {
+public class Controller_connection implements Initializable {
 	
 	@FXML private JFXTextField username;
 	@FXML private JFXPasswordField password;
@@ -78,4 +86,20 @@ public class Controller_connection {
 		}
 	}
 	
+	@Override public void initialize(URL location, ResourceBundle resources) {
+		
+		username.setOnMouseClicked(e -> {
+			username.setStyle("-fx-text-inner-color: black;");
+		});
+		
+		password.setOnMouseClicked(e -> {
+			password.setStyle("-fx-text-inner-color: black;");
+		});
+		
+		confirmPassword.setOnMouseClicked(e -> {
+			confirmPassword.setStyle("-fx-text-inner-color: black;");
+		});
+		
+		
+	}
 }
