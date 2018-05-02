@@ -19,12 +19,12 @@ public class ClientHandler {
 		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		DatabaseConnect database = DatabaseConnect.getInstance();
+		boolean connected = true;
 		
-		writer.write(ANS_CONN);
-		writer.flush();
+		sendData(ANS_CONN);
 		
 		// Dialog management
-		while(true){
+		while(connected){
 			// divide the string in two parts : the command (in the 7 first char)
 			// and the eventual arguments
 			String[] line = reader.readLine().split(" ", 7);
@@ -35,33 +35,32 @@ public class ClientHandler {
 			// instruction processing
 			switch(cmd){
 				case CMD_BYE :
-					writer.write(ANS_BYE);
+					sendData(ANS_BYE);
+					connected = false;
 					break;
 				case CMD_LOGIN : // USER LOGIN
 					param = line[0].split(" ");
 					// we try to log the user in
 					int result = database.getPlayerDB().playerExists(param[0], param[1]);
 					if(result == 0){
-						writer.write(ANS_UNKNOWN);
+						sendData(ANS_UNKNOWN);
 					} else if(result == -1){
-						writer.write(ANS_FAIL);
+						sendData(ANS_FAIL);
 					} else {
-						writer.write(ANS_SUCCESS);
+						sendData(ANS_SUCCESS);
 						clientID = result;
 					}
-					writer.flush();
 					break;
 				case CMD_RGSTR : // USER REGISTER
 					param = line[0].split(" ");
 					if(database.getPlayerDB().createPlayer(param[0], param[1])){
 						// username free, we retrieve the user ID
 						clientID = database.getPlayerDB().playerExists(param[0], param[1]);
-						writer.write(ANS_SUCCESS);
+						sendData(ANS_SUCCESS);
 					} else {
 						// username already taken
-						writer.write(ANS_FAIL);
+						sendData(ANS_FAIL);
 					}
-					writer.flush();
 					break;
 				case CMD_SHOWLOBBY :
 					break;
@@ -74,14 +73,26 @@ public class ClientHandler {
 				case CMD_NEWLOBBY :
 					break;
 				default : // WTF ???
-					writer.write("U wot m8 ?");
-					writer.flush();
+					sendData("U wot m8 ?");
 					break;
 			}
 			
-			
 		}
 		
+	}
+	
+	private void sendData(String cmd, String param){
+		String toSend = cmd;
+		
+		if(param != ""){
+			toSend += " " + param;
+		}
+		writer.println(toSend);
+		writer.flush();
+	}
+	
+	private void sendData(String cmd){
+		sendData(cmd, "");
 	}
 	
 }
