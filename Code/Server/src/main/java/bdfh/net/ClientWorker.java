@@ -3,32 +3,40 @@ package bdfh.net;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Manage the connection with a client
+ *
  * @version 1.0
  * @authors Bryan Curchod
  */
 public class ClientWorker implements Runnable {
 	
-	InputStream in;
-	OutputStream out;
-	Socket client;
-	ClientHandler handler;
+	private InputStream in;
+	private OutputStream out;
+	private Socket client;
+	private ClientHandler handler;
+	
+	private final static Logger LOG = Logger.getLogger("ClientWorker");
 	
 	/**
 	 * Construct a client manager with a socket
+	 *
 	 * @param client
 	 */
 	ClientWorker(Socket client) {
 		
-		System.out.println("Un client s'est connecté");
+		LOG.log(Level.INFO, "Un client s'est connecté");
+		
 		try {
 			this.client = client;
 			in = client.getInputStream();
 			out = client.getOutputStream();
 			handler = new ClientHandler();
 		} catch (IOException e) {
+			LOG.log(Level.SEVERE, "ClientWorker not created: " + e);
 			e.printStackTrace();
 		}
 	}
