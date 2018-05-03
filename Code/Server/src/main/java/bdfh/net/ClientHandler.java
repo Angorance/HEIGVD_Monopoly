@@ -3,6 +3,8 @@ package bdfh.net;
 import bdfh.database.DatabaseConnect;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static bdfh.protocol.Protocoly.*;
 
@@ -19,6 +21,14 @@ public class ClientHandler {
 	private PrintWriter writer;
 	private int clientID;
 	
+	private final static Logger LOG = Logger.getLogger("ClientHandler");
+	
+	/**
+	 * TODO
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	public void handle(InputStream in, OutputStream out) throws IOException {
 		
 		reader = new BufferedReader(new InputStreamReader(in));
@@ -46,12 +56,18 @@ public class ClientHandler {
 			param = new String[args.length - 1];
 			System.arraycopy(args, 1, param, 0, param.length);
 			
+			LOG.log(Level.INFO, "CMD RECEIVED: " + cmd);
+			
 			// instruction processing
 			switch (cmd) {
 				case CMD_BYE:
 					sendData(ANS_BYE);
 					connected = false;
+					
+					LOG.log(Level.INFO, "Closing connection...");
+					
 					break;
+					
 				case CMD_LOGIN: // USER LOGIN
 					
 					// we try to log the user in
@@ -59,13 +75,24 @@ public class ClientHandler {
 							.playerExists(param[0], param[1]);
 					if (result == 0) {
 						sendData(ANS_UNKNOWN);
+						
+						LOG.log(Level.INFO, "Username not found");
+						
 					} else if (result == -1) {
 						sendData(ANS_FAIL);
+						
+						LOG.log(Level.INFO, "Wrong credentials");
+						
 					} else {
 						sendData(ANS_SUCCESS);
 						clientID = result;
+						
+						LOG.log(Level.INFO, "User " + clientID + " connected");
+						
 					}
+					
 					break;
+					
 				case CMD_RGSTR: // USER REGISTER
 					
 					if (database.getPlayerDB()
@@ -73,24 +100,42 @@ public class ClientHandler {
 						// username free, we retrieve the user ID
 						clientID = database.getPlayerDB()
 								.playerExists(param[0], param[1]);
+						
 						sendData(ANS_SUCCESS);
+						
+						LOG.log(Level.INFO, "User created in database");
+						
 					} else {
 						// username already taken
 						sendData(ANS_FAIL);
+						
+						LOG.log(Level.INFO, "Registration failed: "
+								+ "Username already in database.");
+						
 					}
+					
 					break;
+					
 				case CMD_SHOWLOBBY:
 					break;
+					
 				case CMD_JOINLOBBY:
 					break;
+					
 				case CMD_QUITLOBBY:
 					break;
+					
 				case CMD_RDY:
 					break;
+					
 				case CMD_NEWLOBBY:
 					break;
+					
 				default: // WTF ???
 					sendData("U wot m8 ?");
+					
+					LOG.log(Level.SEVERE, "User CMD not found!");
+					
 					break;
 			}
 			
@@ -98,6 +143,11 @@ public class ClientHandler {
 		
 	}
 	
+	/**
+	 * TODO
+	 * @param cmd
+	 * @param param
+	 */
 	private void sendData(String cmd, String param) {
 		
 		String toSend = cmd;
@@ -105,10 +155,15 @@ public class ClientHandler {
 		if (param != "") {
 			toSend += " " + param;
 		}
+		
 		writer.println(toSend);
 		writer.flush();
 	}
 	
+	/**
+	 * TODO
+	 * @param cmd
+	 */
 	private void sendData(String cmd) {
 		
 		sendData(cmd, "");

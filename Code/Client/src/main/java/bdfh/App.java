@@ -6,8 +6,6 @@ import bdfh.net.client.Client;
 
 import java.io.IOException;
 
-import static javafx.application.Application.launch;
-
 /**
  * Hello world!
  *
