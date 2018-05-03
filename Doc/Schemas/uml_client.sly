@@ -67,6 +67,7 @@
       <method isAbstract="false" isStatic="false" name="ready" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="rollDice" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="buy" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="getInstance" returnType="User" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="159" isAbstract="false" name="GameStats" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="moneyWin" type="int" visibility="PRIVATE"/>
@@ -87,40 +88,40 @@
       <line>
         <point>
           <x>151</x>
-          <y>241</y>
+          <y>256</y>
         </point>
         <point>
           <x>151</x>
-          <y>291</y>
+          <y>311</y>
         </point>
       </line>
       <labelAssociation>
         <x>155</x>
-        <y>270</y>
+        <y>287</y>
         <w>0</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
         <x>155</x>
-        <y>245</y>
+        <y>260</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
         <x>155</x>
-        <y>268</y>
+        <y>288</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
         <x>137</x>
-        <y>245</y>
+        <y>260</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
         <x>137</x>
-        <y>268</y>
+        <y>288</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -158,7 +159,7 @@
     <relationView color="-12566464" relationId="2033">
       <line>
         <point>
-          <x>1291</x>
+          <x>971</x>
           <y>361</y>
         </point>
         <point>
@@ -167,7 +168,7 @@
         </point>
       </line>
       <labelAssociation>
-        <x>1090</x>
+        <x>930</x>
         <y>365</y>
         <w>22</w>
         <h>17</h>
@@ -246,7 +247,7 @@
     <componentView color="-2079" componentID="159" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>80</x>
-        <y>290</y>
+        <y>310</y>
         <w>200</w>
         <h>160</h>
       </geometry>
@@ -256,7 +257,7 @@
         <x>80</x>
         <y>50</y>
         <w>240</w>
-        <h>190</h>
+        <h>205</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="2" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -277,7 +278,7 @@
     </componentView>
     <componentView color="-2079" componentID="2026" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1290</x>
+        <x>970</x>
         <y>340</y>
         <w>150</w>
         <h>55</h>
