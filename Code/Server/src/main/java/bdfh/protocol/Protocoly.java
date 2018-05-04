@@ -6,7 +6,7 @@ package bdfh.protocol;
  * @author Bryan Curchod
  * @version 1.0
  */
-public class Protocoly {
+public abstract class Protocoly {
 	
 	public static final String SERVER = "localhost";
 	public static final int PORT = 4242;
@@ -25,7 +25,6 @@ public class Protocoly {
 	// réponse du serveur
 	public static final String ANS_CONN = "WLCM";
 	public static final String ANS_SUCCESS = "OK";
-	public static final String ANS_FAIL = "FAIL";
 	public static final String ANS_DENIED = "DENIED";
 	public static final String ANS_UNKNOWN = "UKNW";
 	public static final String ANS_BYE = "SEEYA";

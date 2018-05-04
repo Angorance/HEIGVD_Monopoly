@@ -87,6 +87,7 @@ public class Authentication {
 		if (pass1.isEmpty() || pass2.isEmpty()) {
 			return false;
 		}
+		
 		return pass1.equals(pass2);
 	}
 	

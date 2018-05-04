@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
 
 import java.net.URL;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 
 import static bdfh.logic.conn.Authentication.*;
 
-public class Controller_connection implements Initializable {
+public class Controller_connection {
 	
 	@FXML private JFXTextField username;
 	@FXML private JFXPasswordField password;
@@ -25,6 +26,7 @@ public class Controller_connection implements Initializable {
 	@FXML private JFXCheckBox enregistrementCheckBox;
 	@FXML private JFXButton login;
 	@FXML private JFXButton register;
+	@FXML private Label message;
 	
 	/**
 	 * Event check if checkBox is ticked
@@ -55,14 +57,16 @@ public class Controller_connection implements Initializable {
 		String passwordText = password.getText();
 		int code = login(usernameText, passwordText);
 		if (code == 0) {
-			username.setStyle("-fx-text-inner-color: red;");
+			setError("Username inconnue");
 		} else if (code == -1) {
-			password.setStyle("-fx-text-inner-color: red;");
-		} else {
-			login.setStyle("-fx-background-color: blue");
+			setError("Mot de passe incorrect");
 		}
 	}
 	
+	void setError(String errorMessage){
+		message.setText(errorMessage);
+		message.setStyle("-fx-text-fill: red;-fx-border-color: red;");
+	}
 	/**
 	 * Event click on register button
 	 *
@@ -79,30 +83,10 @@ public class Controller_connection implements Initializable {
 		if (checkPassword(passwordText, confPasswordText)) {
 			/*Check if username is not already used*/
 			if (!register(usernameText, passwordText)) {
-				username.setStyle("-fx-text-inner-color: red;");
-			} else {
-				register.setStyle("-fx-background-color: blue");
+				setError("Username déjà utilisé");
 			}
-		}else{
-			password.setStyle("-fx-text-inner-color: red;");
-			confirmPassword.setStyle("-fx-text-inner-color: red;");
+		} else {
+			setError("Les mots de passes ne correspondent pas");
 		}
-	}
-	
-	@Override public void initialize(URL location, ResourceBundle resources) {
-		
-		username.setOnMouseClicked(e -> {
-			username.setStyle("-fx-text-inner-color: black;");
-		});
-		
-		password.setOnMouseClicked(e -> {
-			password.setStyle("-fx-text-inner-color: black;");
-		});
-		
-		confirmPassword.setOnMouseClicked(e -> {
-			confirmPassword.setStyle("-fx-text-inner-color: black;");
-		});
-		
-		
 	}
 }
