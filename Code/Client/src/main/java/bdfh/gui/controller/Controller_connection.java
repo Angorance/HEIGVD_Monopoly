@@ -83,6 +83,9 @@ public class Controller_connection implements Initializable {
 			} else {
 				register.setStyle("-fx-background-color: blue");
 			}
+		}else{
+			password.setStyle("-fx-text-inner-color: red;");
+			confirmPassword.setStyle("-fx-text-inner-color: red;");
 		}
 	}
 	
