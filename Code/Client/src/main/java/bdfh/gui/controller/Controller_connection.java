@@ -84,9 +84,6 @@ public class Controller_connection {
 			/*Check if username is not already used*/
 			if (!register(usernameText, passwordText)) {
 				setError("Username déjà utilisé");
-			} else {
-				message.setText("Enregistrement réussi");
-				message.setStyle("-fx-text-fill: green;-fx-border-color: green;");
 			}
 		} else {
 			setError("Les mots de passes ne correspondent pas");
