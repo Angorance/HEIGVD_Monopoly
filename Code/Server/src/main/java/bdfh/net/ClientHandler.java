@@ -25,8 +25,10 @@ public class ClientHandler {
 	
 	/**
 	 * TODO
+	 *
 	 * @param in
 	 * @param out
+	 *
 	 * @throws IOException
 	 */
 	public void handle(InputStream in, OutputStream out) throws IOException {
@@ -67,7 +69,7 @@ public class ClientHandler {
 					LOG.log(Level.INFO, "Closing connection...");
 					
 					break;
-					
+				
 				case CMD_LOGIN: // USER LOGIN
 					
 					// we try to log the user in
@@ -79,7 +81,7 @@ public class ClientHandler {
 						LOG.log(Level.INFO, "Username not found");
 						
 					} else if (result == -1) {
-						sendData(ANS_FAIL);
+						sendData(ANS_DENIED);
 						
 						LOG.log(Level.INFO, "Wrong credentials");
 						
@@ -92,7 +94,7 @@ public class ClientHandler {
 					}
 					
 					break;
-					
+				
 				case CMD_RGSTR: // USER REGISTER
 					
 					if (database.getPlayerDB()
@@ -107,7 +109,7 @@ public class ClientHandler {
 						
 					} else {
 						// username already taken
-						sendData(ANS_FAIL);
+						sendData(ANS_DENIED);
 						
 						LOG.log(Level.INFO, "Registration failed: "
 								+ "Username already in database.");
@@ -115,22 +117,22 @@ public class ClientHandler {
 					}
 					
 					break;
-					
+				
 				case CMD_SHOWLOBBY:
 					break;
-					
+				
 				case CMD_JOINLOBBY:
 					break;
-					
+				
 				case CMD_QUITLOBBY:
 					break;
-					
+				
 				case CMD_RDY:
 					break;
-					
+				
 				case CMD_NEWLOBBY:
 					break;
-					
+				
 				default: // WTF ???
 					sendData("U wot m8 ?");
 					
@@ -145,6 +147,7 @@ public class ClientHandler {
 	
 	/**
 	 * TODO
+	 *
 	 * @param cmd
 	 * @param param
 	 */
@@ -162,6 +165,7 @@ public class ClientHandler {
 	
 	/**
 	 * TODO
+	 *
 	 * @param cmd
 	 */
 	private void sendData(String cmd) {
