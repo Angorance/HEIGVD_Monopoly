@@ -19,7 +19,7 @@ import static bdfh.net.protocol.Protocoly.*;
  * Implements the methods needed to communicate with the server.
  *
  * @version 1.0
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  */
 public class Client {
 	
