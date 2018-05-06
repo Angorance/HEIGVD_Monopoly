@@ -18,8 +18,8 @@ import static bdfh.net.protocol.Protocoly.*;
  * Client class.
  * Implements the methods needed to communicate with the server.
  *
- * @version 1.0
  * @author Daniel Gonzalez Lopez
+ * @version 1.0
  */
 public class Client {
 	
@@ -110,8 +110,7 @@ public class Client {
 	 *
 	 * @return True if registration successful, false otherwise.
 	 */
-	public boolean register(String usr, String password)
-			throws CredentialsException, IOException {
+	public boolean register(String usr, String password) throws CredentialsException, IOException {
 		
 		boolean success;
 		
@@ -143,13 +142,12 @@ public class Client {
 	 * @param password Password of the user.
 	 *
 	 * @return 1 if login successful, 0 if username unknown, -1 if password does
-	 * not match with username.
+	 * 		not match with username.
 	 *
 	 * @throws CredentialsException if the server sends wrong answer.
 	 * @throws IOException
 	 */
-	public int login(String usr, String password)
-			throws CredentialsException, IOException {
+	public int login(String usr, String password) throws CredentialsException, IOException {
 		
 		int result;
 		
