@@ -20,7 +20,8 @@ public class Parameter {
 	public boolean randomGeneration;                // True if random game generation allowed, false otherwise
 	
 	/**
-	 * Set the parameter of the game
+	 * Set the parameter of the game.
+	 *
 	 * @param nbrDice               Number of dice in the game
 	 * @param moneyAtTheStart       Money given at the start
 	 */
@@ -29,7 +30,8 @@ public class Parameter {
 	}
 	
 	/**
-	 * Set the parameter of the game
+	 * Set the parameter of the game.
+	 *
 	 * @param nbrDice               Number of dice in the game
 	 * @param moneyAtTheStart       Money given at the start
 	 * @param randomGeneration      True if random game generation allowed, false otherwise
@@ -41,7 +43,8 @@ public class Parameter {
 	}
 	
 	/**
-	 * Set the limits of parameters for all game created
+	 * Set the limits of parameters for all game created.
+	 *
 	 * @param minDice                   Minimum number of dice allowed
 	 * @param maxDice                   Maximum number of dice allowed
 	 * @param minMoney                  Minimum money allowed at the start per player
@@ -49,8 +52,6 @@ public class Parameter {
 	 * @param randomGameGeneration      True if randomGameGeneration allowed, false otherwise
 	 */
 	public static void updateLimits(int minDice, int maxDice, int minMoney, int maxMoney, boolean randomGameGeneration){
-		
-		// TODO - call this method at the connection of the server and each time a player want to create a game
 		Parameter.minDice = minDice;
 		Parameter.maxDice = maxDice;
 		Parameter.minMoneyAtTheStart = minMoney;

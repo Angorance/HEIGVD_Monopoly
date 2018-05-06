@@ -101,4 +101,12 @@ public class DatabaseConnect {
 	public PlayerDB getPlayerDB(){
 		return PlayerDB.getInstance();
 	}
+	
+	/**
+	 * Get the Parameter DB object used to send queries about the parameters.
+	 * @return  the Parameter DB object
+	 */
+	public ParameterDB getParameterDB(){
+		return ParameterDB.getInstance();
+	}
 }
