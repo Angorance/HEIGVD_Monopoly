@@ -95,6 +95,9 @@ public class Controller_connection {
 		}
 	}
 	
+	/**
+	 *
+	 */
 	private void loadFrame(){
 		((Stage)username.getScene().getWindow()).close();
 		new Lobby();
