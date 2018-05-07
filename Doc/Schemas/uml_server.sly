@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
   <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="Server">
+    <dependency id="36702" label="use">
+      <source>36505</source>
+      <target>3618</target>
+    </dependency>
+    <entity entityType="CLASS" id="36505" isAbstract="false" name="ParameterDB" visibility="PUBLIC">
+      <method isAbstract="false" isStatic="true" name="getInstance" returnType="ParameterDB" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="updateLimits" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setLimits" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="minDice" type="int"/>
+        <variable const="false" name="maxDice" type="int"/>
+        <variable const="false" name="minMoney" type="int"/>
+        <variable const="false" name="maxMoney" type="int"/>
+        <variable const="false" name="randomGameGeneration" type="boolean"/>
+      </method>
+    </entity>
     <dependency id="36420" label="use">
       <source>36156</source>
       <target>3618</target>
@@ -57,7 +72,7 @@
         </multiplicity>
       </role>
     </association>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="5175" name="">
+    <association aggregation="NONE" direction="SECOND_TO_FIRST" id="5175" name="">
       <role componentId="4407" name="" visibility="PRIVATE">
         <multiplicity>
           <min>1</min>
@@ -114,7 +129,6 @@
       </role>
     </association>
     <entity entityType="CLASS" id="36156" isAbstract="false" name="PlayerDB" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="db" type="DatabaseConnect" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="true" name="getInstance" returnType="PlayerDB" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="usernameExists" returnType="boolean" view="DEFAULT" visibility="PRIVATE">
         <variable const="false" name="username" type="String"/>
@@ -130,8 +144,13 @@
     </entity>
     <entity entityType="CLASS" id="3760" isAbstract="false" name="Game" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="gameBoard" type="Board" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="players" type="ArrayList" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="joinGame" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="player" type="ClientHandler"/>
+      </method>
       <method isAbstract="false" isStatic="false" name="startGame" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="quitGame" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="player" type="ClientHandler"/>
+      </method>
     </entity>
     <entity entityType="CLASS" id="3655" isAbstract="false" name="Authentication" visibility="PUBLIC">
       <method isAbstract="false" isStatic="false" name="checkUsername" returnType="bool" view="DEFAULT" visibility="PUBLIC"/>
@@ -189,9 +208,10 @@
       </method>
     </entity>
     <entity entityType="CLASS" id="4291" isAbstract="false" name="Lobby" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="games" type="ArrayList" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="createGame" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="joinGame" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="createGame" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="creator" type="ClientHandler"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="getGames" returnType="ArrayList&lt;Game&gt;" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="4407" isAbstract="false" name="GameHandler" visibility="PUBLIC">
       <method isAbstract="false" isStatic="false" name="handle" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -234,8 +254,8 @@
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>721</x>
-        <y>583</y>
+        <x>718</x>
+        <y>587</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -286,7 +306,7 @@
       <line>
         <point>
           <x>811</x>
-          <y>531</y>
+          <y>516</y>
         </point>
         <point>
           <x>811</x>
@@ -295,13 +315,13 @@
       </line>
       <labelAssociation>
         <x>815</x>
-        <y>565</y>
+        <y>557</y>
         <w>0</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
         <x>815</x>
-        <y>535</y>
+        <y>520</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
@@ -313,7 +333,7 @@
       </roleAssociation>
       <multipliciteAssociation>
         <x>792</x>
-        <y>535</y>
+        <y>520</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -355,13 +375,13 @@
       </roleAssociation>
       <multipliciteAssociation>
         <x>515</x>
-        <y>611</y>
+        <y>618</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
         <x>725</x>
-        <y>612</y>
+        <y>618</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -580,6 +600,24 @@
         <h>17</h>
       </labelAssociation>
     </relationView>
+    <relationView color="-12566464" relationId="36702">
+      <line>
+        <point>
+          <x>961</x>
+          <y>211</y>
+        </point>
+        <point>
+          <x>851</x>
+          <y>211</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>898</x>
+        <y>215</y>
+        <w>22</w>
+        <h>17</h>
+      </labelAssociation>
+    </relationView>
     <componentView color="-2079" componentID="4407" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>360</x>
@@ -592,8 +630,8 @@
       <geometry>
         <x>740</x>
         <y>430</y>
-        <w>150</w>
-        <h>100</h>
+        <w>260</w>
+        <h>85</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="3566" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -656,8 +694,8 @@
       <geometry>
         <x>740</x>
         <y>590</y>
-        <w>150</w>
-        <h>100</h>
+        <w>240</w>
+        <h>115</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="36156" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -665,24 +703,32 @@
         <x>960</x>
         <y>50</y>
         <w>370</w>
-        <h>130</h>
+        <h>115</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="36505" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>960</x>
+        <y>180</y>
+        <w>630</w>
+        <h>100</h>
       </geometry>
     </componentView>
     <note color="-2079" content="Singleton">
       <noteGeometry>
-        <x>864</x>
-        <y>175</y>
+        <x>534</x>
+        <y>185</y>
         <w>80</w>
         <h>30</h>
       </noteGeometry>
       <noteLine color="-12566464" relationId="3618">
         <point>
-          <x>865</x>
-          <y>181</y>
+          <x>615</x>
+          <y>191</y>
         </point>
         <point>
-          <x>851</x>
-          <y>181</y>
+          <x>631</x>
+          <y>191</y>
         </point>
       </noteLine>
     </note>
@@ -706,18 +752,18 @@
     </note>
     <note color="-2079" content="Singleton">
       <noteGeometry>
-        <x>914</x>
+        <x>1024</x>
         <y>435</y>
         <w>80</w>
         <h>30</h>
       </noteGeometry>
       <noteLine color="-12566464" relationId="4291">
         <point>
-          <x>915</x>
+          <x>1025</x>
           <y>441</y>
         </point>
         <point>
-          <x>891</x>
+          <x>1001</x>
           <y>441</y>
         </point>
       </noteLine>
@@ -737,6 +783,24 @@
         <point>
           <x>1331</x>
           <y>81</y>
+        </point>
+      </noteLine>
+    </note>
+    <note color="-2079" content="Singleton">
+      <noteGeometry>
+        <x>1620</x>
+        <y>230</y>
+        <w>80</w>
+        <h>30</h>
+      </noteGeometry>
+      <noteLine color="-12566464" relationId="36505">
+        <point>
+          <x>1621</x>
+          <y>231</y>
+        </point>
+        <point>
+          <x>1591</x>
+          <y>231</y>
         </point>
       </noteLine>
     </note>

@@ -18,20 +18,20 @@ public class Lobby {
 		Stage primaryStage = new Stage();
 		try {
 			root = FXMLLoader.load(getClass().getResource("/view/lobby.fxml"));
+			primaryStage.setTitle("Cheseaux-Poly");
+			primaryStage.setScene(new Scene(root, 650, 400));
+			primaryStage.setOnCloseRequest(event -> {
+				try {
+					Client.getInstance().disconnect();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				exit(0);
+			});
+			primaryStage.setResizable(false);
+			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		primaryStage.setTitle("Cheseaux-Poly");
-		primaryStage.setScene(new Scene(root, 650, 400));
-		primaryStage.setOnCloseRequest(event -> {
-			try {
-				Client.getInstance().disconnect();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			exit(0);
-		});
-		primaryStage.setResizable(false);
-		primaryStage.show();
 	}
 }
