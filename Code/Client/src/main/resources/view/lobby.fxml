@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_lobby">
    <children>
-      <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" layoutX="21.0" layoutY="40.0" prefHeight="350.0" prefWidth="105.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="40.0" prefHeight="350.0" prefWidth="105.0" style="-fx-background-color: gainsboro;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
          <content>
-            <VBox fx:id="sp" prefHeight="323.0" prefWidth="101.0" />
+            <VBox fx:id="playRoom" prefHeight="323.0" prefWidth="101.0" spacing="5.0" style="-fx-background-color: gainsboro;" />
          </content>
       </ScrollPane>
       <AnchorPane layoutX="142.0" layoutY="25.0" prefHeight="350.0" prefWidth="416.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
@@ -27,17 +27,17 @@
          <children>
             <HBox layoutY="256.0" prefHeight="55.0" prefWidth="425.0" spacing="50.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <JFXButton alignment="CENTER" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Rejoindre">
+                  <JFXButton fx:id="join_button" alignment="CENTER" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Rejoindre">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Quitter">
+                  <JFXButton fx:id="quit_button" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Quitter">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Prêt">
+                  <JFXButton fx:id="ready_button" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="99.0" style="-fx-background-color: gainsboro;" text="Prêt">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -82,16 +82,16 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefWidth="170.0" text="Nom joueur 1" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="Nom joueur 2" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" prefWidth="170.0" text="Nom joueur 3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label alignment="CENTER" prefWidth="170.0" text="Nom joueur 4" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2">
+                  <Label fx:id="name_player1" alignment="CENTER" prefWidth="170.0" text="Nom joueur 1" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                  <Label fx:id="name_player2" alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="Nom joueur 2" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label fx:id="name_player3" alignment="CENTER" prefWidth="170.0" text="Nom joueur 3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label fx:id="name_player4" alignment="CENTER" prefWidth="170.0" text="Nom joueur 4" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Label fx:id="ready_player1" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="ready_player2" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
@@ -110,6 +110,7 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <JFXButton layoutX="520.0" layoutY="361.0" style="-fx-background-color: gainsboro;" text="Ajouter" />
+      <JFXButton fx:id="add_button" layoutX="520.0" layoutY="361.0" style="-fx-background-color: gainsboro;" text="Ajouter" />
+      <AnchorPane fx:id="paneform" mouseTransparent="true" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
