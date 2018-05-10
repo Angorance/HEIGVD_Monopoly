@@ -1,4 +1,4 @@
-package bdfh.data;
+package bdfh.serializable;
 
 /**
  * Class used to create parameters linked to one game.

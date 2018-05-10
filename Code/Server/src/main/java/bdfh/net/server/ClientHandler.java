@@ -1,9 +1,12 @@
 package bdfh.net.server;
 
+import bdfh.data.Lobbies;
 import bdfh.database.DatabaseConnect;
 import bdfh.net.Handler;
 import bdfh.serializable.BoundParameters;
 import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.Parameter;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -134,6 +137,10 @@ public class ClientHandler implements Handler {
 					break;
 				
 				case CMD_NEWLOBBY:
+					
+					createLobby(param[0]);
+					LOG.log(Level.INFO, "Lobby created.");
+					
 					break;
 				
 				default: // WTF ???
@@ -172,5 +179,22 @@ public class ClientHandler implements Handler {
 	private void sendData(String cmd) {
 		
 		sendData(cmd, "");
+	}
+	
+	private void createLobby(String param) {
+		
+		try {
+			
+			Parameter p = GsonSerializer.getInstance().fromJson(param, Parameter.class);
+			
+			Lobbies.getInstance().createLobby(this, p);
+			
+			sendData(ANS_SUCCESS);
+		} catch (JsonSyntaxException e) {
+			
+			sendData(ANS_DENIED);
+			
+			LOG.log(Level.SEVERE, "Problem with Json syntax.");
+		}
 	}
 }
