@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * ConnectionServer class.
+ * ClientServer class.
  * Implements methods to wait for client connections and create workers to
  * handle
  * them.
@@ -18,13 +18,13 @@ import java.util.logging.Logger;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class ConnectionServer implements Runnable {
+public class ClientServer implements Runnable {
 	
 	ServerSocket srv;
 	
 	private final static Logger LOG = Logger.getLogger("Server");
 	
-	private ConnectionServer() {
+	private ClientServer() {
 		
 		try {
 			srv = new ServerSocket(Protocoly.CPORT);
@@ -43,10 +43,10 @@ public class ConnectionServer implements Runnable {
 	
 	private static class Instance {
 		
-		static final ConnectionServer instance = new ConnectionServer();
+		static final ClientServer instance = new ClientServer();
 	}
 	
-	public static ConnectionServer getInstance() {
+	public static ClientServer getInstance() {
 		
 		return Instance.instance;
 	}

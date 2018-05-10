@@ -67,7 +67,7 @@ public class Worker implements Runnable {
 			out.close();
 			client.close();
 			
-			LOG.log(Level.INFO, "Client disconnected\n"
+			LOG.log(Level.INFO, "Client disconnected\n\t"
 					+ Thread.currentThread().getName() + " stopped.");
 			
 		} catch (IOException e) {

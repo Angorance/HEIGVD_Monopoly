@@ -70,7 +70,7 @@ public class ClientHandler implements Handler {
 			param = new String[args.length - 1];
 			System.arraycopy(args, 1, param, 0, param.length);
 			
-			LOG.log(Level.INFO, "CMD RECEIVED: " + line);
+			LOG.log(Level.INFO, "CMD RECEIVED BY PLAYER" + clientID + ": " + line);
 			
 			// instruction processing
 			switch (cmd) {
@@ -132,7 +132,7 @@ public class ClientHandler implements Handler {
 				
 				case CMD_JOINLOBBY:
 					
-					
+					joinLobby(param[0]);
 					break;
 				
 				case CMD_QUITLOBBY:
@@ -141,6 +141,8 @@ public class ClientHandler implements Handler {
 					break;
 				
 				case CMD_RDY:
+					
+					setReady();
 					break;
 				
 				case CMD_NEWLOBBY:
@@ -200,7 +202,7 @@ public class ClientHandler implements Handler {
 			
 			lobby = Lobbies.getInstance().createLobby(this, p);
 			
-			LOG.log(Level.INFO, "Lobby created.");
+			LOG.log(Level.INFO, "Lobby " + lobby.getID() + " created.");
 			
 			sendData(ANS_SUCCESS);
 		} catch (JsonSyntaxException e) {
@@ -214,13 +216,55 @@ public class ClientHandler implements Handler {
 	private void quitLobby() {
 		
 		if (lobby != null) {
+			int lobbyLeft = lobby.getID();
+			
 			lobby.quitLobby(this);
 			lobby = null;
 			
-			LOG.log(Level.INFO, "Lobby left.");
+			LOG.log(Level.INFO, "Player " + clientID + " left lobby" + lobbyLeft);
+			
+			sendData(ANS_SUCCESS);
 		} else {
 			
-			LOG.log(Level.INFO, "Not in a lobby...");
+			sendData(ANS_DENIED);
+			
+			LOG.log(Level.SEVERE, "Not in a lobby...");
 		}
+	}
+	
+	private void joinLobby(String lobbyID) {
+		
+		lobby = Lobbies.getInstance()
+				.joinLobby(this, Integer.parseInt(lobbyID));
+		
+		if (lobby != null) {
+			
+			LOG.log(Level.INFO,
+					"Player " + clientID + " joined lobby " + lobby.getID());
+			
+			sendData(ANS_SUCCESS);
+		} else {
+			
+			LOG.log(Level.SEVERE, "Impossible to join lobby.");
+			
+			sendData(ANS_DENIED);
+		}
+	}
+	
+	private void setReady() {
+		
+		if (lobby != null) {
+			lobby.setReady(this);
+			
+			LOG.log(Level.INFO, "Player " + clientID + " is ready!");
+			
+			sendData(ANS_SUCCESS);
+		} else {
+			
+			LOG.log(Level.SEVERE, "Not in a lobby...");
+			
+			sendData(ANS_DENIED);
+		}
+		
 	}
 }

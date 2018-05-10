@@ -58,13 +58,17 @@ public class Lobbies /*extends Observable*/ {
 		return lobby;
 	}
 	
-	public void joinLobby(ClientHandler player, int lobbyID) {
+	public Lobby joinLobby(ClientHandler player, int lobbyID) {
 		
 		for (Lobby lo : getLobbies()) {
-			if (lo.getID() == lobbyID) {
+			if (lo.getID() == lobbyID && !lo.isFull()) {
 				lo.joinLobby(player);
+				
+				return lo;
 			}
 		}
+		
+		return null;
 	}
 	
 	/**

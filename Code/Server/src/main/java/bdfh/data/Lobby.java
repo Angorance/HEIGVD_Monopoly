@@ -20,7 +20,8 @@ public class Lobby implements Runnable {
 	
 	//private Board gameBoard;  TODO - uncomment when Board is implemented
 	private Parameter param;
-	private ArrayList<ClientHandler> players = new ArrayList<>();
+	private ArrayList<ClientHandler> players = new ArrayList<>(4);
+	private ArrayList<Boolean> areReady = new ArrayList(4);
 	
 	boolean isRunning = false;
 	
@@ -39,6 +40,7 @@ public class Lobby implements Runnable {
 	public synchronized void joinLobby(ClientHandler player) {
 		
 		players.add(player);
+		areReady.add(false);
 	}
 	
 	/**
@@ -55,10 +57,35 @@ public class Lobby implements Runnable {
 	 */
 	public synchronized void quitLobby(ClientHandler player) {
 		
+		if (!areReady.isEmpty() && areReady.get(players.indexOf(player)) != null) {
+			areReady.remove(players.indexOf(player));
+		}
+		
 		players.remove(player);
 		
 		if (players.isEmpty()) {
 			Lobbies.getInstance().removeLobby(this);
+		}
+	}
+	
+	public synchronized void setReady(ClientHandler player) {
+		
+		areReady.set(players.indexOf(player), true);
+		
+		if (players.size() > 1) {
+			
+			boolean allR = true;
+			
+			for (ClientHandler cl : players) {
+				if (areReady.get(players.indexOf(cl)) != true) {
+					allR = false;
+					break;
+				}
+			}
+			
+			if (allR) {
+				System.out.println("ALL READY");
+			}
 		}
 	}
 	
@@ -80,6 +107,16 @@ public class Lobby implements Runnable {
 	public int getID() {
 		
 		return ID;
+	}
+	
+	public synchronized ArrayList<ClientHandler> getPlayers() {
+		
+		return players;
+	}
+	
+	public boolean isFull() {
+		
+		return (getPlayers().size() == 4);
 	}
 	
 	/**

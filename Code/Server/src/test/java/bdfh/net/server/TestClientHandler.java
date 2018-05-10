@@ -2,8 +2,6 @@ package bdfh.net.server;
 
 
 import bdfh.protocol.Protocoly;
-import bdfh.serializable.BoundParameters;
-import bdfh.serializable.GsonSerializer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +18,7 @@ public class TestClientHandler {
 	
 	@BeforeAll
 	public static void startingTests() {
-		Thread t = new Thread(ConnectionServer.getInstance());
+		Thread t = new Thread(ClientServer.getInstance());
 		t.start();
 	}
 	
