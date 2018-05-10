@@ -4,6 +4,7 @@ import bdfh.database.DatabaseConnect;
 import bdfh.database.ParameterDB;
 import bdfh.database.PlayerDB;
 import bdfh.protocol.Protocoly;
+import bdfh.serializable.GsonSerializer;
 
 import java.net.ServerSocket;
 import java.net.Socket;
