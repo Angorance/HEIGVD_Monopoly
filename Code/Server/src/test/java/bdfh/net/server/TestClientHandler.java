@@ -35,7 +35,7 @@ public class TestClientHandler {
 			
 			String response = in.readLine();
 			
-			String expected = Protocoly.ANS_CONN + " " + "{\"minDice\":1,\"maxDice\":2,\"minMoneyAtTheStart\":1000,\"maxMoneyAtTheStart\":4000,\"randomGameGeneration\":false}";
+			String expected = Protocoly.ANS_CONN + " " + "{\"minDice\":2,\"maxDice\":4,\"minMoneyAtTheStart\":1000,\"maxMoneyAtTheStart\":4000,\"randomGameGeneration\":false}";
 			
 			assertEquals(expected, response);
 			

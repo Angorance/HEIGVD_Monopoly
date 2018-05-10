@@ -2,7 +2,9 @@ package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
 import bdfh.exceptions.CredentialsException;
+import bdfh.logic.usr.User;
 import bdfh.net.protocol.Protocoly;
+import bdfh.serializable.BoundParameters;
 import bdfh.serializable.GsonSerializer;
 
 import java.io.BufferedReader;
@@ -52,16 +54,18 @@ public class Client {
 	public void connect() throws ConnectionException, IOException {
 		
 		try {
-			clientSocket = new Socket(Protocoly.SERVER, Protocoly.PORT);
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			clientSocket = new Socket(Protocoly.SERVER, Protocoly.CPORT);
+			in = new BufferedReader(
+					new InputStreamReader(clientSocket.getInputStream()));
 			out = new PrintWriter(clientSocket.getOutputStream());
 			
 			response = in.readLine();
 			
 			// TODO - Recover bound parameters.
 			
-			if (!handleConnectionAnswer(response);) {
-				throw new ConnectionException("A problem happened during Connection");
+			if (!handleConnectionAnswer(response)){
+				throw new ConnectionException(
+						"A problem happened during Connection");
 			}
 			
 		} catch (IOException e) {
@@ -113,7 +117,8 @@ public class Client {
 	 *
 	 * @return True if registration successful, false otherwise.
 	 */
-	public boolean register(String usr, String password) throws CredentialsException, IOException {
+	public boolean register(String usr, String password)
+			throws CredentialsException, IOException {
 		
 		boolean success;
 		
@@ -139,7 +144,8 @@ public class Client {
 	
 	/**
 	 * Log the user in given his credentials.
-	 * Fails if the username does not exist or if the credentials does not match.
+	 * Fails if the username does not exist or if the credentials does not
+	 * match.
 	 *
 	 * @param usr Username of the user.
 	 * @param password Password of the user.
@@ -150,7 +156,8 @@ public class Client {
 	 * @throws CredentialsException if the server sends wrong answer.
 	 * @throws IOException
 	 */
-	public int login(String usr, String password) throws CredentialsException, IOException {
+	public int login(String usr, String password)
+			throws CredentialsException, IOException {
 		
 		int result;
 		
@@ -196,8 +203,9 @@ public class Client {
 			return false;
 		}
 		
-		GsonSerializer
+		User.setBounds(GsonSerializer.getInstance()
+				.fromJson(splitted[1], BoundParameters.class));
 		
-		return false;
+		return true;
 	}
 }
