@@ -1,6 +1,6 @@
 package bdfh.database;
 
-import bdfh.data.Parameter;
+import bdfh.serializable.BoundParameters;
 
 import java.sql.*;
 
@@ -39,7 +39,7 @@ public class ParameterDB {
 	 * Update the limits of the game.
 	 */
 	public void updateLimits() {
-		// TODO - call this method at the connection of the server and each time the administrator update the limits
+		// TODO - call this method each time the administrator update the limits
 		
 		String sql = "SELECT * FROM parameter WHERE id = 1;";
 		
@@ -59,7 +59,7 @@ public class ParameterDB {
 			boolean randomGameGeneration = result.getInt("randomGameGeneration") == 0 ? false : true;
 			
 			// Update the limits of the game
-			Parameter.updateLimits(minDice, maxDice, minMoney, maxMoney, randomGameGeneration);
+			BoundParameters.getInstance().updateLimits(minDice, maxDice, minMoney, maxMoney, randomGameGeneration);
 			
 			// Close the db
 			statement.close();
