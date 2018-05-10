@@ -19,7 +19,7 @@ public class Lobby {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/view/lobbylist.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
-			primaryStage.setScene(new Scene(root, 650, 400));
+			primaryStage.setScene(new Scene(root, 800, 600));
 			primaryStage.setOnCloseRequest(event -> {
 				try {
 					Client.getInstance().disconnect();

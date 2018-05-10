@@ -18,7 +18,7 @@ public class Connection extends Application {
 		
 		Parent root = FXMLLoader.load(getClass().getResource("/view/loginRegister.fxml"));
 		primaryStage.setTitle("Cheseaux-Poly");
-		primaryStage.setScene(new Scene(root, 650, 400));
+		primaryStage.setScene(new Scene(root, 600, 400));
 		primaryStage.setOnCloseRequest(event -> {
 			try {
 				Client.getInstance().disconnect();
