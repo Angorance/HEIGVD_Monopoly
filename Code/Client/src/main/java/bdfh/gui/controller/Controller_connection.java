@@ -1,5 +1,6 @@
 package bdfh.gui.controller;
 
+import bdfh.gui.model.Lobby;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -61,6 +63,7 @@ public class Controller_connection {
 		} else if (code == -1) {
 			setError("Mot de passe incorrect");
 		}
+		loadFrame();
 	}
 	
 	void setError(String errorMessage){
@@ -84,9 +87,20 @@ public class Controller_connection {
 			/*Check if username is not already used*/
 			if (!register(usernameText, passwordText)) {
 				setError("Username déjà utilisé");
+			}else{
+				loadFrame();
 			}
 		} else {
 			setError("Les mots de passes ne correspondent pas");
 		}
+	}
+	
+	/**
+	 *
+	 */
+	private void loadFrame(){
+		((Stage)username.getScene().getWindow()).close();
+		new Lobby();
+	
 	}
 }

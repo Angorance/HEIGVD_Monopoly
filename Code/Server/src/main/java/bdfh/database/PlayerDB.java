@@ -50,7 +50,7 @@ public class PlayerDB {
 			Statement statement = db.connect().createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
-			// Create the player
+			// Check if the player exists
 			result.next();
 			usernameExists = result.getInt(1) == 0 ? false : true;
 			
