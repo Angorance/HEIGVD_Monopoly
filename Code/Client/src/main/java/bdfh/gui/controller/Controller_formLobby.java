@@ -47,6 +47,33 @@ public class Controller_formLobby implements Initializable {
 		
 	}
 	
+	boolean checkValidation(){
+		boolean check = true;
+		String name = nameLobby.getText();
+		String money =moneyStart.getText();
+		
+		if(name.isEmpty()){
+			nameLobby.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		if(money.isEmpty() || !isNumber(money)){
+			moneyStart.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		return check;
+	}
+	
+	private boolean isNumber(String str){
+		try {
+			Integer.parseInt(str);
+			return true;
+		}catch (Exception e){
+			return false;
+		}
+	}
+	
 	/**
 	 * Return to the list of lobby page
 	 */
@@ -65,6 +92,7 @@ public class Controller_formLobby implements Initializable {
 			items.add(i);
 		}
 		numberDice.setItems(items);
+		numberDice.getSelectionModel().selectFirst();
 	}
 	
 	

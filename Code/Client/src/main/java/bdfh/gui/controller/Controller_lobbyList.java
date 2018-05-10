@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class Controller_lobbyList implements Initializable {
 	
-	@FXML private VBox playRoom;
+	@FXML private VBox lobby;
 	@FXML private Label name_player1;
 	@FXML private Label name_player2;
 	@FXML private Label name_player3;
@@ -67,7 +67,7 @@ public class Controller_lobbyList implements Initializable {
 	
 	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
 		Controller_formLobby cba = new Controller_formLobby(this);
@@ -105,9 +105,12 @@ public class Controller_lobbyList implements Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		for (int i = 0; i < 10; ++i) {
-			playRoom.getChildren().add(new LobbyDisplayer());
-		}
+		/*for (int i = 0; i < 10; ++i) {
+			lobby.getChildren().add(new LobbyDisplayer());
+		}*/
+		
+		paneform.setVisible(false);
+		paneform.setMouseTransparent(true);
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
 			
