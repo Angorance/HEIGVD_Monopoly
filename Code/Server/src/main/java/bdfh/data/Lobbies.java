@@ -17,6 +17,11 @@ public class Lobbies /*extends Observable*/ {
 	
 	private Lobbies() {}
 	
+	public void removeLobby(Lobby lobby) {
+		
+		lobbies.remove(lobby);
+	}
+	
 	/**
 	 * Internal static class used to create one and only one instance of
 	 * Lobbies to guarantee it follows the singleton model.
@@ -39,7 +44,7 @@ public class Lobbies /*extends Observable*/ {
 	/**
 	 * Add a new game to the list of lobbies.
 	 */
-	public void createLobby(ClientHandler creator, Parameter param) {
+	public Lobby createLobby(ClientHandler creator, Parameter param) {
 		
 		// Create the lobby
 		Lobby lobby = new Lobby(param);
@@ -49,6 +54,17 @@ public class Lobbies /*extends Observable*/ {
 		
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
+		
+		return lobby;
+	}
+	
+	public void joinLobby(ClientHandler player, int lobbyID) {
+		
+		for (Lobby lo : getLobbies()) {
+			if (lo.getID() == lobbyID) {
+				lo.joinLobby(player);
+			}
+		}
 	}
 	
 	/**
@@ -56,7 +72,7 @@ public class Lobbies /*extends Observable*/ {
 	 *
 	 * @return  lobbies created in the lobby
 	 */
-	public ArrayList<Lobby> getLobbies() {
+	public synchronized ArrayList<Lobby> getLobbies() {
 		return lobbies;
 	}
 }

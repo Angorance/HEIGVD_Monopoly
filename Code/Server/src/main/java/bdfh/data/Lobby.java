@@ -9,25 +9,35 @@ import java.util.ArrayList;
  * Class used to simulate a game with players.
  *
  * @author Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class Lobby implements Runnable {
+	
+	public static int nbLobbies = 0;
+	
+	private int ID;
 	
 	//private Board gameBoard;  TODO - uncomment when Board is implemented
 	private Parameter param;
 	private ArrayList<ClientHandler> players = new ArrayList<>();
 	
+	boolean isRunning = false;
+	
 	
 	public Lobby(Parameter param) {
+		
 		this.param = param;
+		setID();
 	}
 	
 	/**
 	 * Add a player to the game.
 	 *
-	 * @param player    Player who wants to join the game.
+	 * @param player Player who wants to join the game.
 	 */
-	public void joinLobby(ClientHandler player) {
+	public synchronized void joinLobby(ClientHandler player) {
+		
 		players.add(player);
 	}
 	
@@ -41,10 +51,35 @@ public class Lobby implements Runnable {
 	/**
 	 * Remove a player from the game.
 	 *
-	 * @param player    Player who wants to quit the game.
+	 * @param player Player who wants to quit the game.
 	 */
-	public void quitLobby(ClientHandler player) {
+	public synchronized void quitLobby(ClientHandler player) {
+		
 		players.remove(player);
+		
+		if (players.isEmpty()) {
+			Lobbies.getInstance().removeLobby(this);
+		}
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @return
+	 */
+	public boolean isRunning() {
+		
+		return isRunning;
+	}
+	
+	public synchronized void setID() {
+		
+		ID = nbLobbies++;
+	}
+	
+	public int getID() {
+		
+		return ID;
 	}
 	
 	/**

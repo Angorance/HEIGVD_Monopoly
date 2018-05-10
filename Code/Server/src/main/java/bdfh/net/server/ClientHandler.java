@@ -1,6 +1,7 @@
 package bdfh.net.server;
 
 import bdfh.data.Lobbies;
+import bdfh.data.Lobby;
 import bdfh.database.DatabaseConnect;
 import bdfh.net.Handler;
 import bdfh.serializable.BoundParameters;
@@ -26,6 +27,8 @@ public class ClientHandler implements Handler {
 	private BufferedReader reader;
 	private PrintWriter writer;
 	private int clientID;
+	
+	Lobby lobby;
 	
 	private final static Logger LOG = Logger.getLogger("ClientHandler");
 	
@@ -67,7 +70,7 @@ public class ClientHandler implements Handler {
 			param = new String[args.length - 1];
 			System.arraycopy(args, 1, param, 0, param.length);
 			
-			LOG.log(Level.INFO, "CMD RECEIVED: " + cmd);
+			LOG.log(Level.INFO, "CMD RECEIVED: " + line);
 			
 			// instruction processing
 			switch (cmd) {
@@ -128,9 +131,13 @@ public class ClientHandler implements Handler {
 					break;
 				
 				case CMD_JOINLOBBY:
+					
+					
 					break;
 				
 				case CMD_QUITLOBBY:
+					
+					quitLobby();
 					break;
 				
 				case CMD_RDY:
@@ -139,8 +146,6 @@ public class ClientHandler implements Handler {
 				case CMD_NEWLOBBY:
 					
 					createLobby(param[0]);
-					LOG.log(Level.INFO, "Lobby created.");
-					
 					break;
 				
 				default: // WTF ???
@@ -181,13 +186,21 @@ public class ClientHandler implements Handler {
 		sendData(cmd, "");
 	}
 	
+	/**
+	 * TODO
+	 *
+	 * @param param
+	 */
 	private void createLobby(String param) {
 		
 		try {
 			
-			Parameter p = GsonSerializer.getInstance().fromJson(param, Parameter.class);
+			Parameter p = GsonSerializer.getInstance()
+					.fromJson(param, Parameter.class);
 			
-			Lobbies.getInstance().createLobby(this, p);
+			lobby = Lobbies.getInstance().createLobby(this, p);
+			
+			LOG.log(Level.INFO, "Lobby created.");
 			
 			sendData(ANS_SUCCESS);
 		} catch (JsonSyntaxException e) {
@@ -195,6 +208,19 @@ public class ClientHandler implements Handler {
 			sendData(ANS_DENIED);
 			
 			LOG.log(Level.SEVERE, "Problem with Json syntax.");
+		}
+	}
+	
+	private void quitLobby() {
+		
+		if (lobby != null) {
+			lobby.quitLobby(this);
+			lobby = null;
+			
+			LOG.log(Level.INFO, "Lobby left.");
+		} else {
+			
+			LOG.log(Level.INFO, "Not in a lobby...");
 		}
 	}
 }
