@@ -99,15 +99,13 @@ public class Controller_lobbyList implements Initializable {
 		
 		if (result != null) {
 			//TODO création du lobbyDisplayer avec l'objet result
+			lobby.getChildren().add(new LobbyDisplayer());
+			
 		}
 	}
 	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
-		
-		/*for (int i = 0; i < 10; ++i) {
-			lobby.getChildren().add(new LobbyDisplayer());
-		}*/
 		
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);

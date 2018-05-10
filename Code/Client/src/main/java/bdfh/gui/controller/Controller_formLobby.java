@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -37,13 +38,15 @@ public class Controller_formLobby implements Initializable {
 	 * Create the lobby
 	 */
 	private void formValidation(){
-		String name = nameLobby.getText();
-		int nbrDice = numberDice.getValue();
-		int money = Integer.parseInt(moneyStart.getText());
-		boolean random = randomCheck.isSelected();
-		
-		//TODO création du lobby
-		cl.createItem(null/*TODO mettre l'objet lobby ici*/);
+		if(checkValidation()) {
+			String name = nameLobby.getText();
+			int nbrDice = numberDice.getValue();
+			int money = Integer.parseInt(moneyStart.getText());
+			boolean random = randomCheck.isSelected();
+			
+			//TODO création du lobby
+			cl.createItem(5/*TODO mettre l'objet lobby ici*/);
+		}
 		
 	}
 	
@@ -113,6 +116,21 @@ public class Controller_formLobby implements Initializable {
 			}
 		});
 		
+		nameLobby.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				nameLobby.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
+		
+		moneyStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				moneyStart.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
 	}
 	
 
