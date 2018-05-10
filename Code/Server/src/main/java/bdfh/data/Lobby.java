@@ -2,60 +2,41 @@ package bdfh.data;
 
 import bdfh.net.server.ClientHandler;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
- * Class used to store all games created.
+ * Class used to simulate a game with players.
  *
  * @author Héléna Line Reymond
  * @version 1.0
  */
 public class Lobby {
 	
-	private ArrayList<Game> games = new ArrayList();
-	
-	private Lobby() {}
-	
-	/**
-	 * Internal static class used to create one and only one instance of
-	 * Lobby to guarantee it follows the singleton model.
-	 */
-	private static class Instance {
-		
-		static final Lobby instance = new Lobby();
-	}
+	//private Board gameBoard;  TODO - uncomment when Board is implemented
+	private ArrayList<ClientHandler> players = new ArrayList<>();
 	
 	/**
-	 * Get the only instance of Lobby.
+	 * Add a player to the game.
 	 *
-	 * @return the instance of Lobby.
+	 * @param player    Player who wants to join the game.
 	 */
-	public static Lobby getInstance() {
-		
-		return Instance.instance;
+	public void joinLobby(ClientHandler player) {
+		players.add(player);
 	}
 	
 	/**
-	 * Add a new game to the list of games.
+	 * Start the game when all players are ready.
 	 */
-	public void createGame(ClientHandler creator){
-		
-		// Create the game
-		Game game = new Game();
-		
-		// Add the game to the list
-		games.add(game);
-		
-		// Let the creator join the game created
-		game.joinGame(creator);
+	public void startLobby() {
+		//TODO - implement when sprint 3 is started
 	}
 	
 	/**
-	 * Retrieve all games created in the lobby.
+	 * Remove a player from the game.
 	 *
-	 * @return  games created in the lobby
+	 * @param player    Player who wants to quit the game.
 	 */
-	public ArrayList<Game> getGames() {
-		return games;
+	public void quitLobby(ClientHandler player) {
+		players.remove(player);
 	}
 }

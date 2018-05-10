@@ -16,8 +16,8 @@ public abstract class Protocoly {
 	public static final String CMD_LOGIN = "LOGIN";
 	public static final String CMD_JOIN = "JOIN";
 	public static final String CMD_RDY = "READY";
-	public static final String CMD_NEWGAME = "NGAME";
-	public static final String CMD_QUITGAME = "QGAME";
+	public static final String CMD_NEWLOBBY = "NLOBBY";
+	public static final String CMD_QUITLOBBY = "QLOBBY";
 	public static final String CMD_BYE = "BYE";
 	
 	
