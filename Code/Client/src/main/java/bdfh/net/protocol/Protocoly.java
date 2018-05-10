@@ -14,7 +14,6 @@ public abstract class Protocoly {
 	
 	public static final String CMD_RGSTR = "RGSTR";
 	public static final String CMD_LOGIN = "LOGIN";
-	//public static final String CMD_SHOWLOBBY = "SLOBBY";
 	public static final String CMD_JOIN = "JOIN";
 	public static final String CMD_RDY = "READY";
 	public static final String CMD_NEWGAME = "NGAME";

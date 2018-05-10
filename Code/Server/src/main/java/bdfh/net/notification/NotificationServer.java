@@ -1,40 +1,29 @@
-package bdfh.net;
+package bdfh.net.notification;
 
-import bdfh.database.DatabaseConnect;
-import bdfh.database.ParameterDB;
+import bdfh.net.Worker;
 import bdfh.protocol.Protocoly;
-import bdfh.serializable.GsonSerializer;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
- * ConnectionServer class.
- * Implements methods to wait for client connections and create workers to
- * handle
- * them.
- *
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class ConnectionServer implements Runnable {
+public class NotificationServer implements Runnable {
 	
 	ServerSocket srv;
 	
-	private final static Logger LOG = Logger.getLogger("Server");
+	private final static Logger LOG = Logger.getLogger("NotificationServer");
 	
-	private ConnectionServer() {
+	private NotificationServer() {
 		
 		try {
-			srv = new ServerSocket(Protocoly.PORT);
+			srv = new ServerSocket(Protocoly.NPORT);
 			LOG.log(Level.INFO,
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
-							+ "\nPort::" + Protocoly.PORT);
-			
-			// Update the limits of the game
-			ParameterDB.getInstance().updateLimits();
+							+ "\nPort::" + Protocoly.NPORT);
 			
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Exception creating server socket: " + e);
@@ -44,10 +33,10 @@ public class ConnectionServer implements Runnable {
 	
 	private static class Instance {
 		
-		static final ConnectionServer instance = new ConnectionServer();
+		static final NotificationServer instance = new NotificationServer();
 	}
 	
-	public static ConnectionServer getInstance() {
+	public static NotificationServer getInstance() {
 		
 		return Instance.instance;
 	}
@@ -67,7 +56,7 @@ public class ConnectionServer implements Runnable {
 				
 				Socket newClient = srv.accept();
 				
-				ClientWorker cw = new ClientWorker(newClient);
+				Worker cw = new Worker(newClient, new NotificationHandler());
 				
 				Thread worker = new Thread(cw);
 				worker.start();

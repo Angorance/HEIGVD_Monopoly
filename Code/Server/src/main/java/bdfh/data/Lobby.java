@@ -1,6 +1,6 @@
 package bdfh.data;
 
-import bdfh.net.ClientHandler;
+import bdfh.net.server.ClientHandler;
 
 import java.util.*;
 

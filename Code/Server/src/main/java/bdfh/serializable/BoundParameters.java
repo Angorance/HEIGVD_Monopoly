@@ -1,6 +1,8 @@
 package bdfh.serializable;
 
 /**
+ * TODO
+ *
  * @author Daniel Gonzalez Lopez
  * @author Héléna Line Reymond
  * @version 1.0

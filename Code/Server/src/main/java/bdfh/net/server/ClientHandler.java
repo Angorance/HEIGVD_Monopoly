@@ -1,6 +1,9 @@
-package bdfh.net;
+package bdfh.net.server;
 
 import bdfh.database.DatabaseConnect;
+import bdfh.net.Handler;
+import bdfh.serializable.BoundParameters;
+import bdfh.serializable.GsonSerializer;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -15,7 +18,7 @@ import static bdfh.protocol.Protocoly.*;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class ClientHandler {
+public class ClientHandler implements Handler {
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -26,8 +29,8 @@ public class ClientHandler {
 	/**
 	 * TODO
 	 *
-	 * @param in
-	 * @param out
+	 * @param in Input stream to receive commands.
+	 * @param out Output stream to send commands / info.
 	 *
 	 * @throws IOException
 	 */
@@ -38,7 +41,10 @@ public class ClientHandler {
 		DatabaseConnect database = DatabaseConnect.getInstance();
 		boolean connected = true;
 		
-		sendData(ANS_CONN);
+		String bounds = GsonSerializer.getInstance()
+				.toJson(BoundParameters.getInstance());
+		
+		sendData(ANS_CONN, bounds);
 		
 		// Dialog management
 		while (connected) {
@@ -118,9 +124,6 @@ public class ClientHandler {
 					
 					break;
 				
-				case CMD_SHOWLOBBY:
-					break;
-				
 				case CMD_JOINLOBBY:
 					break;
 				
@@ -164,13 +167,12 @@ public class ClientHandler {
 	}
 	
 	/**
-	 * TODO
+	 * Send data (commands / info) through the output stream.
 	 *
-	 * @param cmd
+	 * @param cmd Data to send (either a command or info).
 	 */
 	private void sendData(String cmd) {
 		
 		sendData(cmd, "");
 	}
-	
 }

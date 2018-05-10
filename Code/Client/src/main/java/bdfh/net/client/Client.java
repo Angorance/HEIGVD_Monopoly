@@ -3,6 +3,7 @@ package bdfh.net.client;
 import bdfh.exceptions.ConnectionException;
 import bdfh.exceptions.CredentialsException;
 import bdfh.net.protocol.Protocoly;
+import bdfh.serializable.GsonSerializer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,7 +58,9 @@ public class Client {
 			
 			response = in.readLine();
 			
-			if (!response.equals(ANS_CONN)) {
+			// TODO - Recover bound parameters.
+			
+			if (!handleConnectionAnswer(response);) {
 				throw new ConnectionException("A problem happened during Connection");
 			}
 			
@@ -183,5 +186,18 @@ public class Client {
 		// Print the data and flush the stream.
 		out.println(data);
 		out.flush();
+	}
+	
+	private boolean handleConnectionAnswer(String response) {
+		
+		String[] splitted = response.split(" ", 2);
+		
+		if (!splitted[0].equals(ANS_CONN)) {
+			return false;
+		}
+		
+		GsonSerializer
+		
+		return false;
 	}
 }
