@@ -1,8 +1,9 @@
 package bdfh.data;
 
 import bdfh.net.server.ClientHandler;
+import bdfh.serializable.Parameter;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Class used to store all lobbies created.
@@ -10,7 +11,7 @@ import java.util.*;
  * @author Héléna Line Reymond
  * @version 1.0
  */
-public class Lobbies {
+public class Lobbies /*extends Observable*/ {
 	
 	private ArrayList<Lobby> lobbies = new ArrayList();
 	
@@ -38,10 +39,10 @@ public class Lobbies {
 	/**
 	 * Add a new game to the list of lobbies.
 	 */
-	public void createLobby(ClientHandler creator){
+	public void createLobby(ClientHandler creator, Parameter param) {
 		
 		// Create the lobby
-		Lobby lobby = new Lobby();
+		Lobby lobby = new Lobby(param);
 		
 		// Add the lobby to the list
 		lobbies.add(lobby);
