@@ -98,7 +98,10 @@ public class User {
 	 */
 	public boolean quitLobby() {
 		
-		return Client.getInstance().quitLobby();
+		boolean result = Client.getInstance().quitLobby();
+		isReady = !result;
+		
+		return result;
 	}
 	
 	/**
