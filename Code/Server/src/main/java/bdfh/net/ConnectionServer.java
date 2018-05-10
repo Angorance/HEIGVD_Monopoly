@@ -1,5 +1,7 @@
 package bdfh.net;
 
+import bdfh.database.DatabaseConnect;
+import bdfh.database.ParameterDB;
 import bdfh.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 
@@ -30,6 +32,9 @@ public class ConnectionServer implements Runnable {
 			LOG.log(Level.INFO,
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
 							+ "\nPort::" + Protocoly.PORT);
+			
+			// Update the limits of the game
+			ParameterDB.getInstance().updateLimits();
 			
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Exception creating server socket: " + e);
