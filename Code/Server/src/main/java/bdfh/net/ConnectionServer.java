@@ -1,6 +1,7 @@
 package bdfh.net;
 
 import bdfh.protocol.Protocoly;
+import bdfh.serializable.GsonSerializer;
 
 import java.net.ServerSocket;
 import java.net.Socket;
