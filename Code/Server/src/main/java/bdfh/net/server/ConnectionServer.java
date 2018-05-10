@@ -1,6 +1,6 @@
 package bdfh.net.server;
 
-import bdfh.database.ParameterDB;
+import bdfh.database.DatabaseConnect;
 import bdfh.net.Worker;
 import bdfh.protocol.Protocoly;
 
@@ -71,10 +71,12 @@ public class ConnectionServer implements Runnable {
 				Thread worker = new Thread(cw);
 				worker.start();
 				
-				LOG.log(Level.INFO, "Client accepted. Worker created and started");
+				LOG.log(Level.INFO,
+						"Client accepted. Worker created and started");
 				
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "Exception accepting client connection: " + e);
+				LOG.log(Level.SEVERE,
+						"Exception accepting client connection: " + e);
 				e.printStackTrace();
 			}
 		}

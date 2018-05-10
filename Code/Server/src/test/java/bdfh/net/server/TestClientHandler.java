@@ -35,11 +35,9 @@ public class TestClientHandler {
 			
 			String response = in.readLine();
 			
-			String expected = Protocoly.ANS_CONN + " " + GsonSerializer.getInstance().toJson(BoundParameters.getInstance());
+			String expected = Protocoly.ANS_CONN + " " + "{\"minDice\":1,\"maxDice\":2,\"minMoneyAtTheStart\":1000,\"maxMoneyAtTheStart\":4000,\"randomGameGeneration\":false}";
 			
-			System.out.println(response);
 			assertEquals(expected, response);
-			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
