@@ -39,7 +39,7 @@ public class ParameterDB {
 	 * Update the limits of the game.
 	 */
 	public void updateLimits() {
-		// TODO - call this method at the connection of the server and each time a player want to create a game
+		// TODO - call this method at the connection of the server and each time the administrator update the limits
 		
 		String sql = "SELECT * FROM parameter WHERE id = 1;";
 		
