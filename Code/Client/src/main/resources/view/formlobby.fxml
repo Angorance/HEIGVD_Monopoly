@@ -37,7 +37,7 @@
                               <Label text="Type" GridPane.rowIndex="1" />
                               <Label prefHeight="17.0" prefWidth="155.0" text="nom de la banque" GridPane.rowIndex="2" />
                               <Label text="Montant" GridPane.rowIndex="3" />
-                              <JFXTextField fx:id="nameAccount" promptText="nom du compte" GridPane.columnIndex="1" />
+                              <JFXTextField fx:id="nameAccount" promptText="nom du salon" GridPane.columnIndex="1" />
                               <JFXTextField fx:id="nameBankAccount" promptText="nom de la banque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <JFXTextField fx:id="amount" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <JFXComboBox fx:id="typeAccount" prefHeight="25.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_lobby implements Initializable {
+public class Controller_lobbyList implements Initializable {
 	
 	@FXML private VBox playRoom;
 	@FXML private Label name_player1;
@@ -66,12 +65,12 @@ public class Controller_lobby implements Initializable {
 		
 	}
 	
-	private void createPlayRoom() {
+	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formPlayRoom.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formPlayRoom cba = new Controller_formPlayRoom(this);
+		Controller_formLobby cba = new Controller_formLobby(this);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -96,7 +95,7 @@ public class Controller_lobby implements Initializable {
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				createPlayRoom();
+				createLobby();
 			}
 		});
 		
