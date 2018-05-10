@@ -113,4 +113,4 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
 -- -----------------------------------------------------
 INSERT INTO `cheseaux-poly`.`parameter`
 (`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `randomGameGeneration`)
-VALUES (1, 1, 2, 1000, 4000, false);
+VALUES (1, 2, 4, 1000, 4000, false);

@@ -2,6 +2,7 @@ package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
 import bdfh.exceptions.CredentialsException;
+import bdfh.logic.usr.Parameter;
 import bdfh.logic.usr.User;
 import bdfh.net.protocol.Protocoly;
 import bdfh.serializable.BoundParameters;
@@ -60,8 +61,6 @@ public class Client {
 			out = new PrintWriter(clientSocket.getOutputStream());
 			
 			response = in.readLine();
-			
-			// TODO - Recover bound parameters.
 			
 			if (!handleConnectionAnswer(response)){
 				throw new ConnectionException(
@@ -207,5 +206,39 @@ public class Client {
 				.fromJson(splitted[1], BoundParameters.class));
 		
 		return true;
+	}
+	
+	/**
+	 * Create a new lobby on the game server.
+	 *
+	 * @param parameters    Parameters used in the new lobby.
+	 *
+	 * @return  true if the lobby is created, false otherwise.
+	 *
+	 * @throws IOException
+	 */
+	public boolean createLobby(Parameter parameters) {
+		
+		boolean result = false;
+		
+		// Send the new lobby to the server with its parameters
+		String jsonParam = GsonSerializer.getInstance().toJson(parameters);
+		sendData(CMD_NEWLOBBY + " " + jsonParam);
+		
+		try {
+			response = in.readLine();
+			
+			if (response.equals(ANS_SUCCESS)) {
+				result = true;
+			} else if (response.equals(ANS_DENIED)) {
+				result = false;
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Client::createLobby: " + e);
+			result = false;
+		}
+		
+		return result;
 	}
 }
