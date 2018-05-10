@@ -1,12 +1,18 @@
 package bdfh.logic.usr;
 
+import bdfh.serializable.BoundParameters;
+
 /**
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
- * @authors Daniel Gonzalez Lopez
  */
 public class User {
 	
+	
+	private static BoundParameters bounds;
+	
 	private String username;
+	
 	
 	private User() {}
 	
@@ -81,4 +87,13 @@ public class User {
 	
 	}
 	
+	public static void setBounds(BoundParameters bounds) {
+		
+		User.bounds = bounds;
+	}
+	
+	public static BoundParameters getBounds() {
+		
+		return bounds;
+	}
 }

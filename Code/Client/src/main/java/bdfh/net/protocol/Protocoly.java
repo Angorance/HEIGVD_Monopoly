@@ -6,10 +6,10 @@ package bdfh.net.protocol;
  */
 public abstract class Protocoly {
 
-	public static final String SERVER = "10.192.92.152";
+	public static final String SERVER = "localhost";
 	
-	public static final int PORT = 4242;
-	public static final int NPORT = 666;
+	public static final int CPORT = 4242;
+	public static final int NPORT = 9071;
 	
 	
 	public static final String CMD_RGSTR = "RGSTR";

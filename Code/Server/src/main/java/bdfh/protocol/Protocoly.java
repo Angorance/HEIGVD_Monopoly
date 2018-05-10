@@ -10,7 +10,7 @@ public abstract class Protocoly {
 	
 	public static final String SERVER = "localhost";
 	public static final int CPORT = 4242;
-	public static final int NPORT = 666;
+	public static final int NPORT = 9071;
 	
 	
 	// commandes utilisée par le client

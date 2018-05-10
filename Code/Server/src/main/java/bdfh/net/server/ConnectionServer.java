@@ -58,6 +58,8 @@ public class ConnectionServer implements Runnable {
 	@Override
 	public void run() {
 		
+		int threadID = 0;
+		
 		while (true) {
 			
 			try {
@@ -68,11 +70,11 @@ public class ConnectionServer implements Runnable {
 				
 				Worker cw = new Worker(newClient, new ClientHandler());
 				
-				Thread worker = new Thread(cw);
+				Thread worker = new Thread(cw, "ClientThread" + threadID++);
 				worker.start();
 				
 				LOG.log(Level.INFO,
-						"Client accepted. Worker created and started");
+						"Client accepted. " + worker.getName() + " created and started");
 				
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE,

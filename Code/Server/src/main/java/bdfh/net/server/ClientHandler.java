@@ -143,9 +143,7 @@ public class ClientHandler implements Handler {
 					
 					break;
 			}
-			
 		}
-		
 	}
 	
 	/**
