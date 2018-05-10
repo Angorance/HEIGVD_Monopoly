@@ -36,8 +36,8 @@ public class Controller_lobbyList implements Initializable {
 	class LobbyDisplayer extends GridPane {
 		
 		private final static int MAX_PLAYER = 4;
-		private final static int HEIGHT = 100;
-		private final static int WIDTH = 50;
+		private final static int HEIGHT = 40;
+		private final static int WIDTH = 40;
 		private Label name;
 		private Label nbPlayer;
 		
@@ -52,7 +52,7 @@ public class Controller_lobbyList implements Initializable {
 			
 			this.setPrefSize(WIDTH, HEIGHT);
 			
-			this.setStyle("-fx-background-color: white");
+			this.setStyle("-fx-background-color:  gainsboro");
 			
 			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				
