@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,39 +17,39 @@
    <children>
       <VBox alignment="CENTER" layoutX="110.0" layoutY="1.0" prefHeight="565.0" prefWidth="607.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="215.0" prefWidth="607.0" style="-fx-background-color: white;" styleClass="anchor-pane" stylesheets="@../css/general.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <AnchorPane prefHeight="215.0" prefWidth="607.0" style="-fx-background-color: white;" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <HBox alignment="CENTER" layoutX="154.0" layoutY="25.0" prefHeight="165.0" prefWidth="351.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="153.0">
                      <children>
-                        <GridPane prefHeight="138.0" prefWidth="300.0" HBox.hgrow="NEVER">
+                        <GridPane prefHeight="165.0" prefWidth="374.0" HBox.hgrow="NEVER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="179.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="121.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label prefHeight="17.0" prefWidth="150.0" text="Nom" />
-                              <Label text="Type" GridPane.rowIndex="1" />
-                              <Label prefHeight="17.0" prefWidth="155.0" text="nom de la banque" GridPane.rowIndex="2" />
-                              <Label text="Montant" GridPane.rowIndex="3" />
-                              <JFXTextField fx:id="nameAccount" promptText="nom du salon" GridPane.columnIndex="1" />
-                              <JFXTextField fx:id="nameBankAccount" promptText="nom de la banque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <JFXTextField fx:id="amount" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <JFXComboBox fx:id="typeAccount" prefHeight="25.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Compte par défaut" GridPane.rowIndex="4" />
-                              <JFXCheckBox fx:id="defaultAccount" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label prefHeight="17.0" prefWidth="150.0" text="Nom :" />
+                              <Label text="Nombre de dé :" GridPane.rowIndex="1" />
+                              <Label prefHeight="17.0" prefWidth="155.0" text="Monnaie de départ :" GridPane.rowIndex="2" />
+                              <Label fx:id="random_label" text="Génération aléatoire du plateau" GridPane.rowIndex="3" />
+                              <JFXTextField fx:id="nameLobby" promptText="nom du salon" GridPane.columnIndex="1" />
+                              <JFXTextField fx:id="moneyStart" promptText="nom de la banque" text="20000" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXComboBox fx:id="numberDice" prefHeight="25.0" prefWidth="44.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <JFXCheckBox fx:id="randomCheck" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </GridPane>
                      </children>
                   </HBox>
-                  <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="return" stylesheets="@../css/general.css" text="retour" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0" />
-                  <JFXButton fx:id="accepteButton" layoutX="428.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="accept" stylesheets="@../css/general.css" text="Accepter" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
+                  <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="return" text="retour" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0" />
+                  <JFXButton fx:id="accepteButton" layoutX="428.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="accept" text="Accepter" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
                </children>
             </AnchorPane>
          </children>

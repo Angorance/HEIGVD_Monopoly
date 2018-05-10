@@ -33,7 +33,7 @@ public class Controller_lobbyList implements Initializable {
 	@FXML private JFXButton quit_button;
 	@FXML private JFXButton ready_button;
 	
-	class PlayRoomDisplayer extends GridPane {
+	class LobbyDisplayer extends GridPane {
 		
 		private final static int MAX_PLAYER = 4;
 		private final static int HEIGHT = 100;
@@ -41,7 +41,7 @@ public class Controller_lobbyList implements Initializable {
 		private Label name;
 		private Label nbPlayer;
 		
-		public PlayRoomDisplayer() {
+		public LobbyDisplayer() {
 			
 			int nbPlayers = 0;
 			name = new Label("Mon salon");
@@ -83,18 +83,36 @@ public class Controller_lobbyList implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+		
 	}
+	
+	private void unloadForm() {
+		
+		paneform.getChildren().clear();
+		paneform.setVisible(false);
+		paneform.setMouseTransparent(true);
+	}
+	
+	public void createItem(Object result) {
+		
+		unloadForm();
+		
+		if (result != null) {
+			//TODO création du lobbyDisplayer avec l'objet result
+		}
+	}
+	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		for (int i = 0; i < 10; ++i) {
-			playRoom.getChildren().add(new PlayRoomDisplayer());
+			playRoom.getChildren().add(new LobbyDisplayer());
 		}
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				createLobby();
 			}
 		});
