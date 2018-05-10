@@ -30,7 +30,7 @@ public class ParameterDB {
 	 *
 	 * @return the instance of ParameterDB.
 	 */
-	public static ParameterDB getInstance() {
+	protected static ParameterDB getInstance() {
 		
 		return Instance.instance;
 	}

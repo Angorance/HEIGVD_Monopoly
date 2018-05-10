@@ -2,6 +2,7 @@ package bdfh.net;
 
 import bdfh.database.DatabaseConnect;
 import bdfh.database.ParameterDB;
+import bdfh.database.PlayerDB;
 import bdfh.protocol.Protocoly;
 
 import java.net.ServerSocket;
@@ -33,7 +34,7 @@ public class ConnectionServer implements Runnable {
 							+ "\nPort::" + Protocoly.PORT);
 			
 			// Update the limits of the game
-			ParameterDB.getInstance().updateLimits();
+			DatabaseConnect.getInstance().getParameterDB().updateLimits();
 			
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Exception creating server socket: " + e);
