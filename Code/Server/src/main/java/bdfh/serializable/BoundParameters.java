@@ -1,7 +1,7 @@
 package bdfh.serializable;
 
 /**
- * TODO
+ * Class used to update the limits of the game.
  *
  * @author Daniel Gonzalez Lopez
  * @author Héléna Line Reymond
@@ -18,16 +18,24 @@ public class BoundParameters {
 	
 	private BoundParameters() {}
 	
+	/**
+	 * Internal static class used to create one and only one instance of
+	 * BoundParameters to guarantee it follows the singleton model.
+	 */
 	private static class Instance {
 		
 		static final BoundParameters instance = new BoundParameters();
 	}
 	
+	/**
+	 * Get the only instance of BoundParameters.
+	 *
+	 * @return the instance of BoundParameters.
+	 */
 	public static BoundParameters getInstance() {
 		
 		return Instance.instance;
 	}
-	
 	
 	public int getMinDice() {
 		
@@ -76,6 +84,23 @@ public class BoundParameters {
 	
 	public void setRandomGameGeneration(boolean randomGameGeneration) {
 		
+		this.randomGameGeneration = randomGameGeneration;
+	}
+	
+	/**
+	 * Set the limits of parameters for all game created.
+	 *
+	 * @param minDice                   Minimum number of dice allowed
+	 * @param maxDice                   Maximum number of dice allowed
+	 * @param minMoney                  Minimum money allowed at the start per player
+	 * @param maxMoney                  Maximum money allowed at the start per player
+	 * @param randomGameGeneration      True if randomGameGeneration allowed, false otherwise
+	 */
+	public void updateLimits(int minDice, int maxDice, int minMoney, int maxMoney, boolean randomGameGeneration) {
+		this.minDice = minDice;
+		this.maxDice = maxDice;
+		this.minMoneyAtTheStart = minMoney;
+		this.maxMoneyAtTheStart = maxMoney;
 		this.randomGameGeneration = randomGameGeneration;
 	}
 }

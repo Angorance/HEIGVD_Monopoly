@@ -33,7 +33,7 @@ public class ConnectionServer implements Runnable {
 							+ "\nPort::" + Protocoly.CPORT);
 			
 			// Update the limits of the game
-			ParameterDB.getInstance().updateLimits();
+			DatabaseConnect.getInstance().getParameterDB().updateLimits();
 			
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Exception creating server socket: " + e);

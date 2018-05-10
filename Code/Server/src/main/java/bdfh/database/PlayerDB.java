@@ -28,7 +28,7 @@ public class PlayerDB {
 	 *
 	 * @return the instance of PlayerDB.
 	 */
-	public static PlayerDB getInstance() {
+	protected static PlayerDB getInstance() {
 		
 		return Instance.instance;
 	}
