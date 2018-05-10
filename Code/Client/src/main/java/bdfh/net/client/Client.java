@@ -241,6 +241,65 @@ public class Client {
 	}
 	
 	/**
+	 * Join a lobby on the game server.
+	 *
+	 * @param lobbyID   ID of the lobby to join.
+	 *
+	 * @return true if the lobby is joined, false otherwise.
+	 */
+	public boolean joinLobby(int lobbyID) {
+		
+		boolean result = false;
+		
+		sendData(CMD_JOIN + " " + lobbyID);
+		
+		try {
+			response = in.readLine();
+			
+			if (response.equals(ANS_SUCCESS)) {
+				result = true;
+			} else if (response.equals(ANS_DENIED)) {
+				result = false;
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Client::joinLobby: " + e);
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * The player notifies the game server that he's ready.
+	 *
+	 * @return  true if the lobby is left, false otherwise.
+	 */
+	public boolean setReady() {
+		
+		boolean result = false;
+		
+		// Send the command to the server
+		sendData(CMD_RDY);
+		
+		try {
+			response = in.readLine();
+			
+			if (response.equals(ANS_SUCCESS)) {
+				result = true;
+			} else if (response.equals(ANS_DENIED)) {
+				result = false;
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Client::setReady: " + e);
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * Quit the current lobby on the game server.
 	 *
 	 * @return  true if the lobby is left, false otherwise.

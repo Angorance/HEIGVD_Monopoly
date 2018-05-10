@@ -13,6 +13,7 @@ public class User {
 	private static BoundParameters bounds;
 	
 	private String username;
+	private boolean isReady;
 	
 	
 	private User() {}
@@ -69,10 +70,25 @@ public class User {
 	}
 	
 	/**
-	 * TODO
+	 * Join a lobby.
+	 *
+	 * @param lobbyID   ID of the lobby to join.
+	 *
+	 * @return true if the lobby is joined, false otherwise.
 	 */
-	public void joinLobby() {
+	public boolean joinLobby(int lobbyID) {
+		
+		return Client.getInstance().joinLobby(lobbyID);
+	}
 	
+	/**
+	 * The player is ready to play.
+	 *
+	 * @return  true if the player is ready, false otherwise.
+	 */
+	public boolean setReady() {
+		
+		return isReady = Client.getInstance().setReady();
 	}
 	
 	/**
