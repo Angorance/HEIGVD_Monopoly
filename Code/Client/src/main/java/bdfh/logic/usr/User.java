@@ -1,5 +1,6 @@
 package bdfh.logic.usr;
 
+import bdfh.net.client.Client;
 import bdfh.serializable.BoundParameters;
 
 /**
@@ -53,10 +54,18 @@ public class User {
 	}
 	
 	/**
-	 * TODO
+	 * Create a lobby with special parameters.
+	 *
+	 * @param nbrDice           Number of dice in the game.
+	 * @param money             Money given at the start of the game.
+	 * @param randomGeneration  Random game generation.
+	 *
+	 * @return  true if the lobby is created, false otherwise.
 	 */
-	public void createLobby() {
-	
+	public boolean createLobby(int nbrDice, int money, boolean randomGeneration) {
+		
+		// Create the lobby on the server
+		return Client.getInstance().createLobby(new Parameter(nbrDice, money, randomGeneration));
 	}
 	
 	/**
