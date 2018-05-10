@@ -214,8 +214,6 @@ public class Client {
 	 * @param parameters    Parameters used in the new lobby.
 	 *
 	 * @return  true if the lobby is created, false otherwise.
-	 *
-	 * @throws IOException
 	 */
 	public boolean createLobby(Parameter parameters) {
 		
@@ -236,6 +234,35 @@ public class Client {
 			
 		} catch (IOException e) {
 			System.out.println("Client::createLobby: " + e);
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Quit the current lobby on the game server.
+	 *
+	 * @return  true if the lobby is left, false otherwise.
+	 */
+	public boolean quitLobby() {
+		
+		boolean result = false;
+		
+		// Send the command to the server
+		sendData(CMD_QUITLOBBY);
+		
+		try {
+			response = in.readLine();
+			
+			if (response.equals(ANS_SUCCESS)) {
+				result = true;
+			} else if (response.equals(ANS_DENIED)) {
+				result = false;
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Client::quitLobby: " + e);
 			result = false;
 		}
 		

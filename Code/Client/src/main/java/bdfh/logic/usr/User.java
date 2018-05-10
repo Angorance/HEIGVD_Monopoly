@@ -76,6 +76,16 @@ public class User {
 	}
 	
 	/**
+	 * Leave the current lobby.
+	 *
+	 * @return  true if the lobby is left, false otherwise.
+	 */
+	public boolean quitLobby() {
+		
+		return Client.getInstance().quitLobby();
+	}
+	
+	/**
 	 * TODO
 	 */
 	public void rollDice() {
