@@ -4,6 +4,7 @@ import bdfh.data.Lobbies;
 import bdfh.data.Lobby;
 import bdfh.net.Handler;
 import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.LightLobby;
 import com.google.gson.JsonArray;
 
 import java.io.*;
@@ -38,13 +39,13 @@ public class NotificationHandler implements Handler{
 		boolean connected = true;
 
 		Lobbies.getInstance().addSubscriber(this);
-		//sendData(); TODO
+		sendLobbyList();
 		
 		// Dialog management
 		while (connected) {
 			// TODO ???
 		}
-		
+
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class NotificationHandler implements Handler{
 	private void sendLobbyList() {
 		JsonArray lobbyList = new JsonArray();
 		Lobbies.getInstance().getLobbies().forEach((key, lobby) -> {
-			lobbyList.add(GsonSerializer.getInstance().toJson(lobby));
+			lobbyList.add(GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		});
 
 		sendData(NOT_LIST + " " +lobbyList.getAsString());
