@@ -24,13 +24,13 @@ import java.util.ResourceBundle;
 public class Controller_formLobby implements Initializable {
 	
 	@FXML private AnchorPane paneFond;
-	@FXML private Label random_label;
 	@FXML private JFXTextField nameLobby;
 	@FXML private JFXTextField moneyStart;
 	@FXML private JFXComboBox<Integer> numberDice;
 	@FXML private JFXCheckBox randomCheck;
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
+	@FXML private Label random_label;
 	
 	private Controller_lobbyList cl;
 	
@@ -45,12 +45,11 @@ public class Controller_formLobby implements Initializable {
 	private void formValidation() {
 		
 		if (checkValidation()) {
-			String name = nameLobby.getText();
 			int nbrDice = numberDice.getValue();
 			int money = Integer.parseInt(moneyStart.getText());
 			boolean random = randomCheck.isSelected();
 			
-			Player.getInstance().createLobby(nbrDice,money,random);
+			Player.getInstance().createLobby(nbrDice, money, random);
 			cl.createItem();
 		}
 		
@@ -90,6 +89,7 @@ public class Controller_formLobby implements Initializable {
 	 * Return to the list of lobby page
 	 */
 	private void formReturn() {
+		
 		cl.returnForm();
 	}
 	
@@ -114,6 +114,12 @@ public class Controller_formLobby implements Initializable {
 		
 		generateItemComboBox();
 		
+		BoundParameters b = Player.getBounds();
+		
+		if (!b.isRandomGameGeneration()) {
+			random_label.setVisible(false);
+			randomCheck.setVisible(false);
+		}
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
