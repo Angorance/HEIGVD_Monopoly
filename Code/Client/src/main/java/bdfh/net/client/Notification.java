@@ -1,17 +1,12 @@
 package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
-import bdfh.logic.usr.Lobbies;
-import bdfh.logic.usr.Lobby;
+import bdfh.logic.usr.*;
 import bdfh.net.protocol.Protocoly;
 import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
-
-import static bdfh.net.protocol.Protocoly.ANS_CONN;
-import static bdfh.net.protocol.Protocoly.NOT_DELETE;
-import static bdfh.net.protocol.Protocoly.NOT_UPDATE;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -54,7 +49,7 @@ public class Notification extends Thread {
 			
 			line = in.readLine();
 			
-			if (!line.equals(ANS_CONN)) {
+			if (!line.equals(Protocoly.ANS_CONN)) {
 				throw new ConnectionException(
 						"A problem happened during Connection to Notification");
 			}
@@ -96,11 +91,11 @@ public class Notification extends Thread {
 				int idUpdated = 0;
 				
 				switch (command[0]) {
-					case NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
+					case Protocoly.NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
 						idUpdated = Integer.parseInt(command[1]);
 						lobbies.removeLobby(idUpdated);
 						break;
-					case NOT_UPDATE : // a lobby has been updated
+					case Protocoly.NOT_UPDATE : // a lobby has been updated
 						Lobby l = new Gson().fromJson(command[1],Lobby.class);
 						lobbies.updateLobby(l);
 						idUpdated = l.getID();
