@@ -107,3 +107,10 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
     ON DELETE NO ACTION
     ON UPDATE CASCADE
 );
+
+-- -----------------------------------------------------
+-- Set the limits of the game
+-- -----------------------------------------------------
+INSERT INTO `cheseaux-poly`.`parameter`
+(`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `randomGameGeneration`)
+VALUES (1, 2, 4, 1000, 4000, false);

@@ -9,13 +9,13 @@ package bdfh.protocol;
 public abstract class Protocoly {
 	
 	public static final String SERVER = "localhost";
-	public static final int PORT = 4242;
+	public static final int CPORT = 4242;
+	public static final int NPORT = 9071;
 	
 	
 	// commandes utilisée par le client
 	public static final String CMD_RGSTR = "RGSTR";
 	public static final String CMD_LOGIN = "LOGIN";
-	public static final String CMD_SHOWLOBBY = "SLOBBY";
 	public static final String CMD_JOINLOBBY = "JOIN";
 	public static final String CMD_RDY = "READY";
 	public static final String CMD_NEWLOBBY = "NLOBBY";

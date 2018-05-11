@@ -1,61 +1,142 @@
 package bdfh.data;
 
-import bdfh.net.ClientHandler;
+import bdfh.net.server.ClientHandler;
+import bdfh.serializable.Parameter;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
- * Class used to store all games created.
+ * Class used to simulate a game with players.
  *
  * @author Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class Lobby {
+public class Lobby implements Runnable {
+
+	public static int nbLobbies = 0;
+
+	private int ID;
+	public static final int MAX_PLAYER = 4;
 	
-	private ArrayList<Game> games = new ArrayList();
+	//private Board gameBoard;  TODO - uncomment when Board is implemented
+	private Parameter param;
+	private ArrayList<ClientHandler> players = new ArrayList<>(MAX_PLAYER);
+	private ArrayList<Boolean> areReady = new ArrayList(MAX_PLAYER);
 	
-	private Lobby() {}
+	boolean isRunning = false;
 	
-	/**
-	 * Internal static class used to create one and only one instance of
-	 * Lobby to guarantee it follows the singleton model.
-	 */
-	private static class Instance {
+	
+	public Lobby(Parameter param) {
 		
-		static final Lobby instance = new Lobby();
+		this.param = param;
+		setID();
 	}
 	
 	/**
-	 * Get the only instance of Lobby.
+	 * Add a player to the game.
 	 *
-	 * @return the instance of Lobby.
+	 * @param player Player who wants to join the game.
 	 */
-	public static Lobby getInstance() {
+	public synchronized void joinLobby(ClientHandler player) {
 		
-		return Instance.instance;
+		players.add(player);
+		areReady.add(false);
 	}
 	
 	/**
-	 * Add a new game to the list of games.
+	 * Start the game when all players are ready.
 	 */
-	public void createGame(ClientHandler creator){
-		
-		// Create the game
-		Game game = new Game();
-		
-		// Add the game to the list
-		games.add(game);
-		
-		// Let the creator join the game created
-		game.joinGame(creator);
+	public void startLobby() {
+		//TODO - implement when sprint 3 is started
 	}
 	
 	/**
-	 * Retrieve all games created in the lobby.
+	 * Remove a player from the game.
 	 *
-	 * @return  games created in the lobby
+	 * @param player Player who wants to quit the game.
 	 */
-	public ArrayList<Game> getGames() {
-		return games;
+	public synchronized void quitLobby(ClientHandler player) {
+		
+		if (!areReady.isEmpty() && areReady.get(players.indexOf(player)) != null) {
+			areReady.remove(players.indexOf(player));
+		}
+		
+		players.remove(player);
+		
+		if (players.isEmpty()) {
+			Lobbies.getInstance().removeLobby(this);
+		}
+	}
+	
+	public synchronized void setReady(ClientHandler player) {
+		
+		areReady.set(players.indexOf(player), true);
+		
+		if (players.size() > 1) {
+			
+			boolean allR = true;
+			
+			for (ClientHandler cl : players) {
+				if (areReady.get(players.indexOf(cl)) != true) {
+					allR = false;
+					break;
+				}
+			}
+			
+			if (allR) {
+				System.out.println("ALL READY");
+			}
+		}
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @return
+	 */
+	public boolean isRunning() {
+		
+		return isRunning;
+	}
+	
+	public synchronized void setID() {
+		
+		ID = nbLobbies++;
+	}
+	
+	public int getID() {
+		
+		return ID;
+	}
+	
+	public synchronized ArrayList<ClientHandler> getPlayers() {
+		
+		return players;
+	}
+
+	public ArrayList<Boolean> getAreReady() {
+		return areReady;
+	}
+
+	public boolean isFull() {
+		
+		return (getPlayers().size() == 4);
+	}
+	
+	/**
+	 * When an object implementing interface <code>Runnable</code> is used
+	 * to create a thread, starting the thread causes the object's
+	 * <code>run</code> method to be called in that separately executing
+	 * thread.
+	 * <p>
+	 * The general contract of the method <code>run</code> is that it may
+	 * take any action whatsoever.
+	 *
+	 * @see Thread#run()
+	 */
+	@Override
+	public void run() {
+	
 	}
 }

@@ -1,5 +1,7 @@
 package bdfh.net.client;
 
+import bdfh.logic.usr.Player;
+import bdfh.serializable.BoundParameters;
 import org.junit.jupiter.api.*;
 
 import java.util.Random;
@@ -91,5 +93,19 @@ public class ClientTest {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	@Test
+	public void shouldDeserializeBoundParametersCorrectly() {
+		
+		BoundParameters bp = Player.getBounds();
+		
+		assertEquals(2, bp.minDice);
+		assertEquals(4, bp.maxDice);
+		
+		assertEquals(1000, bp.minMoneyAtTheStart);
+		assertEquals(4000, bp.maxMoneyAtTheStart);
+		
+		assertFalse(bp.randomGameGeneration);
 	}
 }

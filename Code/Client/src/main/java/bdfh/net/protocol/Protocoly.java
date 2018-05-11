@@ -1,19 +1,19 @@
 package bdfh.net.protocol;
 
 /**
- * @version 1.0
  * @author Daniel Gonzalez Lopez
+ * @version 1.0
  */
 public abstract class Protocoly {
 
-	public static final String SERVER = "10.192.92.152";
+	public static final String SERVER = "localhost";
 	
-	public static final int PORT = 4242;
+	public static final int CPORT = 4242;
+	public static final int NPORT = 9071;
 	
 	
 	public static final String CMD_RGSTR = "RGSTR";
 	public static final String CMD_LOGIN = "LOGIN";
-	public static final String CMD_SHOWLOBBY = "SLOBBY";
 	public static final String CMD_JOIN = "JOIN";
 	public static final String CMD_RDY = "READY";
 	public static final String CMD_NEWLOBBY = "NLOBBY";

@@ -36,4 +36,7 @@ target/
 #Google Drive
 *.gdoc
 *.gsheet
+"Doc/RapportsPDF/Icon\r"
 Icon?
+
+Doc/RapportsPDF/Icon

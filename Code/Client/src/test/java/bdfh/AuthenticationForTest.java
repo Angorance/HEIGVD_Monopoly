@@ -1,8 +1,6 @@
-package bdfh.logic.conn;
+package bdfh;
 
-import bdfh.exceptions.CredentialsException;
 import bdfh.logic.usr.Player;
-import bdfh.net.client.Client;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -12,36 +10,15 @@ import java.security.NoSuchAlgorithmException;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class Authentication {
+public class AuthenticationForTest {
+	
+	ClientForTest cl;
 	
 	/**
 	 * TODO
 	 */
-	public Authentication() {}
-	
-	/**
-	 * TODO
-	 *
-	 * @param username username of the new account
-	 * @param password password of the new account
-	 *
-	 * @return true if register successful and false if username is already used
-	 */
-	public static boolean register(String username, String password) {
-		
-		try {
-			/*register successful*/
-			if (Client.getInstance().register(username, hashPassword(password))) {
-				//Set the username
-				Player.getInstance().setUsername(username);
-				return true;
-			}
-		} catch (CredentialsException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public AuthenticationForTest(ClientForTest c) {
+		cl = c;
 	}
 	
 	/**
@@ -53,42 +30,23 @@ public class Authentication {
 	 * @return 1 if login successful, 0 if username unknown, -1 if password does
 	 * 		not match with username.
 	 */
-	public static int login(String username, String password) {
+	public int login(String username, String password) {
 		
 		int code = -1;
 		
 		try {
-			code = Client.getInstance().login(username, hashPassword(password));
+			code = cl.login(username, hashPassword(password));
 			
 			//login successful
 			if (code == 1) {
 				//Set he username
 				Player.getInstance().setUsername(username);
 			}
-		} catch (CredentialsException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return code;
-	}
-	
-	/**
-	 * check if passwords are equal
-	 *
-	 * @param pass1 password
-	 * @param pass2 confirm password
-	 *
-	 * @return
-	 */
-	public static boolean checkPassword(String pass1, String pass2) {
-		
-		if (pass1.isEmpty() || pass2.isEmpty()) {
-			return false;
-		}
-		
-		return pass1.equals(pass2);
 	}
 	
 	/**
@@ -117,7 +75,8 @@ public class Authentication {
 			//Convert it to hexadecimal format
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < bytes.length; ++i) {
-				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+						.substring(1));
 			}
 			
 			//Get complete hashed password in hex format
@@ -129,3 +88,4 @@ public class Authentication {
 		return hash;
 	}
 }
+

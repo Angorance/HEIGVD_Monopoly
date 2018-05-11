@@ -1,22 +1,14 @@
 package bdfh.gui.controller;
 
-import bdfh.gui.model.Lobby;
+import bdfh.gui.model.frameLobby;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import static bdfh.logic.conn.Authentication.*;
 
@@ -100,7 +92,7 @@ public class Controller_connection {
 	 */
 	private void loadFrame(){
 		((Stage)username.getScene().getWindow()).close();
-		new Lobby();
+		new frameLobby();
 	
 	}
 }

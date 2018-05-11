@@ -10,9 +10,9 @@ import java.io.IOException;
 
 import static java.lang.System.exit;
 
-public class Lobby {
+public class frameLobby {
 	
-	public Lobby() {
+	public frameLobby() {
 		
 		Parent root = null;
 		Stage primaryStage = new Stage();

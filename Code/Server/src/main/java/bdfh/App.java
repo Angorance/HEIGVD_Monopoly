@@ -1,6 +1,7 @@
 package bdfh;
 
-import bdfh.net.ConnectionServer;
+import bdfh.net.notification.NotificationServer;
+import bdfh.net.server.ClientServer;
 
 /**
  * Hello world!
@@ -9,8 +10,10 @@ public class App {
 	
 	public static void main(String[] args) {
 		
-		Thread main = new Thread(ConnectionServer.getInstance());
-		main.start();
+		Thread main = new Thread(ClientServer.getInstance());
+		Thread notification = new Thread(NotificationServer.getInstance());
 		
+		main.start();
+		notification.start();
 	}
 }
