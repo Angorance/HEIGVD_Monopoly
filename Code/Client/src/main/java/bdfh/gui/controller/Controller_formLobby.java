@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 public class Controller_formLobby implements Initializable {
 	
 	@FXML private AnchorPane paneFond;
-	@FXML private JFXTextField nameLobby;
 	@FXML private JFXTextField moneyStart;
 	@FXML private JFXComboBox<Integer> numberDice;
 	@FXML private JFXCheckBox randomCheck;
@@ -58,13 +57,7 @@ public class Controller_formLobby implements Initializable {
 	boolean checkValidation() {
 		
 		boolean check = true;
-		String name = nameLobby.getText();
 		String money = moneyStart.getText();
-		
-		if (name.isEmpty()) {
-			nameLobby.setStyle("-jfx-unfocus-color: red;");
-			check = false;
-		}
 		
 		if (money.isEmpty() || !isNumber(money) || Integer.parseInt(money) < Player.getBounds().getMinMoneyAtTheStart()
 				|| Integer.parseInt(money) > Player.getBounds().getMaxMoneyAtTheStart()) {
@@ -133,14 +126,6 @@ public class Controller_formLobby implements Initializable {
 			@Override public void handle(ActionEvent event) {
 				
 				formReturn();
-			}
-		});
-		
-		nameLobby.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			
-			@Override public void handle(MouseEvent event) {
-				
-				nameLobby.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
 			}
 		});
 		
