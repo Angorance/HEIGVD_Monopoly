@@ -112,7 +112,7 @@ public class Controller_formLobby implements Initializable {
 		label_moneyStart
 				.setText("Monnaie de départ (" + b.getMinMoneyAtTheStart() + " à " + b.getMaxMoneyAtTheStart() + ") :");
 		
-		moneyStart.setText(String.valueOf((int)(b.getMaxMoneyAtTheStart()/b.getMinMoneyAtTheStart())));
+		moneyStart.setPromptText("De " + b.getMinMoneyAtTheStart() + " à " + b.getMaxMoneyAtTheStart());
 		if (!b.isRandomGameGeneration()) {
 			random_label.setVisible(false);
 			randomCheck.setVisible(false);
