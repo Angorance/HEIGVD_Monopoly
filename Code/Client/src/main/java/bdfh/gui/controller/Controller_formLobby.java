@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 public class Controller_formLobby implements Initializable {
 	
 	@FXML private AnchorPane paneFond;
-	@FXML private JFXTextField nameLobby;
 	@FXML private JFXTextField moneyStart;
 	@FXML private JFXComboBox<Integer> numberDice;
 	@FXML private JFXCheckBox randomCheck;
