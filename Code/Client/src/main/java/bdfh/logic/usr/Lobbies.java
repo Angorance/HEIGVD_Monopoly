@@ -21,10 +21,11 @@ public class Lobbies {
     }
 
     /**
-     * initilize the lobby list from a JSON string
-     * @param JSListLobby JSON string representing a list of lobby
+     * Initialize the lobby list from a JSON string.
+     *
+     * @param JSListLobby JSON string representing a list of lobby.
      */
-    public void setLobbies(String JSListLobby){
+    public void setLobbies(String JSListLobby) {
         Lobby[] list = new Gson().fromJson(JSListLobby, Lobby[].class);
 
         for(Lobby l : list){
@@ -33,20 +34,36 @@ public class Lobbies {
     }
 
     private Lobbies() {}
-
+    
     /**
-     * update a lobby if exists, add it to the lost otherwise
+     * Get a particular lobby of the list.
+     *
+     * @param ID    ID of the lobby wanted.
+     *
+     * @return  the lobby wanted.
+     */
+    public Lobby getLobby(int ID) {
+        
+        return lobbies.get(ID);
+    }
+    
+    /**
+     * Update a lobby if exists, add it to the lost otherwise
+     *
      * @param l updated/new lobby
      */
-    public void updateLobby(Lobby l){
+    public void updateLobby(Lobby l) {
+        
         lobbies.put(l.getID(), l);
     }
 
     /**
-     * remove a lobby from the hasmap
-      * @param ID lobby's ID to remove
+     * Remove a lobby from the hashmap
+     *
+     * @param ID lobby's ID to remove
      */
-    public void removeLobby(int ID){
+    public void removeLobby(int ID) {
+        
         lobbies.remove(ID);
     }
 }
