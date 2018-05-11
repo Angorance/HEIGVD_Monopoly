@@ -1,8 +1,6 @@
 package bdfh;
 
-import bdfh.exceptions.CredentialsException;
-import bdfh.logic.usr.User;
-import bdfh.net.client.Client;
+import bdfh.logic.usr.Player;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -42,7 +40,7 @@ public class AuthenticationForTest {
 			//login successful
 			if (code == 1) {
 				//Set he username
-				User.getInstance().setUsername(username);
+				Player.getInstance().setUsername(username);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

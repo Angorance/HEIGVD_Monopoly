@@ -3,7 +3,7 @@ package bdfh.net.client;
 import bdfh.exceptions.ConnectionException;
 import bdfh.exceptions.CredentialsException;
 import bdfh.logic.usr.Parameter;
-import bdfh.logic.usr.User;
+import bdfh.logic.usr.Player;
 import bdfh.net.protocol.Protocoly;
 import bdfh.serializable.BoundParameters;
 import bdfh.serializable.GsonSerializer;
@@ -202,7 +202,7 @@ public class Client {
 			return false;
 		}
 		
-		User.setBounds(GsonSerializer.getInstance()
+		Player.setBounds(GsonSerializer.getInstance()
 				.fromJson(splitted[1], BoundParameters.class));
 		
 		return true;

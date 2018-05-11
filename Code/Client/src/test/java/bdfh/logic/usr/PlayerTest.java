@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class UserTest {
+public class PlayerTest {
 	
 	@BeforeAll
 	public static void startingTests() {
@@ -49,7 +49,7 @@ public class UserTest {
 		
 		Authentication.login("JUnit", "tests");
 		
-		assertTrue(User.getInstance().createLobby(2, 2000, false));
+		assertTrue(Player.getInstance().createLobby(2, 2000, false));
 		
 	}
 	
@@ -58,17 +58,17 @@ public class UserTest {
 		
 		Authentication.login("JUnit", "tests");
 		
-		assertTrue(User.getInstance().createLobby(2, 2000, false));
-		assertTrue(User.getInstance().setReady());
-		assertTrue(User.getInstance().quitLobby());
+		assertTrue(Player.getInstance().createLobby(2, 2000, false));
+		assertTrue(Player.getInstance().setReady());
+		assertTrue(Player.getInstance().quitLobby());
 	}
 	
 	@Test
 	public void shouldJoinReadyQuitExistingLobby() {
 		
 		Authentication.login("JUnit", "tests");
-		assertTrue(User.getInstance().createLobby(2, 2000, false));
-		User.getInstance().setReady();
+		assertTrue(Player.getInstance().createLobby(2, 2000, false));
+		Player.getInstance().setReady();
 		
 		ClientForTest c1 = null;
 		ClientForTest c2 = null;
@@ -123,8 +123,8 @@ public class UserTest {
 	public void shouldNotJoinFullLobby() {
 		
 		Authentication.login("JUnit", "tests");
-		assertTrue(User.getInstance().createLobby(2, 2000, false));
-		User.getInstance().setReady();
+		assertTrue(Player.getInstance().createLobby(2, 2000, false));
+		Player.getInstance().setReady();
 		
 		ClientForTest c1 = null;
 		ClientForTest c2 = null;

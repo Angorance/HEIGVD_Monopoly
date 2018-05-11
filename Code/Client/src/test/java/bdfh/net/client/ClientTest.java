@@ -1,11 +1,9 @@
 package bdfh.net.client;
 
-import bdfh.exceptions.ConnectionException;
-import bdfh.logic.usr.User;
+import bdfh.logic.usr.Player;
 import bdfh.serializable.BoundParameters;
 import org.junit.jupiter.api.*;
 
-import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,7 +98,7 @@ public class ClientTest {
 	@Test
 	public void shouldDeserializeBoundParametersCorrectly() {
 		
-		BoundParameters bp = User.getBounds();
+		BoundParameters bp = Player.getBounds();
 		
 		assertEquals(2, bp.minDice);
 		assertEquals(4, bp.maxDice);

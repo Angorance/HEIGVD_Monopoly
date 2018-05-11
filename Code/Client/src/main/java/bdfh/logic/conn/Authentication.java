@@ -1,7 +1,7 @@
 package bdfh.logic.conn;
 
 import bdfh.exceptions.CredentialsException;
-import bdfh.logic.usr.User;
+import bdfh.logic.usr.Player;
 import bdfh.net.client.Client;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class Authentication {
 			/*register successful*/
 			if (Client.getInstance().register(username, hashPassword(password))) {
 				//Set the username
-				User.getInstance().setUsername(username);
+				Player.getInstance().setUsername(username);
 				return true;
 			}
 		} catch (CredentialsException e) {
@@ -63,7 +63,7 @@ public class Authentication {
 			//login successful
 			if (code == 1) {
 				//Set he username
-				User.getInstance().setUsername(username);
+				Player.getInstance().setUsername(username);
 			}
 		} catch (CredentialsException e) {
 			e.printStackTrace();

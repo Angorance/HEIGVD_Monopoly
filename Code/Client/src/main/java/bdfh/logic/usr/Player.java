@@ -7,7 +7,7 @@ import bdfh.serializable.BoundParameters;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class User {
+public class Player {
 	
 	
 	private static BoundParameters bounds;
@@ -16,11 +16,11 @@ public class User {
 	private boolean isReady;
 	
 	
-	private User() {}
+	private Player() {}
 	
 	private static class Instance {
 		
-		static final User instance = new User();
+		static final Player instance = new Player();
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class User {
 	 *
 	 * @return TODO
 	 */
-	public static User getInstance() {
+	public static Player getInstance() {
 		
 		return Instance.instance;
 	}
@@ -127,7 +127,7 @@ public class User {
 	
 	public static void setBounds(BoundParameters bounds) {
 		
-		User.bounds = bounds;
+		Player.bounds = bounds;
 	}
 	
 	public static BoundParameters getBounds() {
