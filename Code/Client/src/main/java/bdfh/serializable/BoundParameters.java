@@ -9,12 +9,11 @@ package bdfh.serializable;
  */
 public class BoundParameters {
 	
-	public int minDice;                      // Minimum number of dice allowed
-	public int maxDice;                      // Maximum number of dice allowed
-	public int minMoneyAtTheStart;           // Minimum money allowed at the start per player
-	public int maxMoneyAtTheStart;           // Maximum money allowed at the start per player
-	public boolean randomGameGeneration;     // True if random game generation allowed, false otherwise
-	
+	private int minDice;                      // Minimum number of dice allowed
+	private int maxDice;                      // Maximum number of dice allowed
+	private int minMoneyAtTheStart;           // Minimum money allowed at the start per player
+	private int maxMoneyAtTheStart;           // Maximum money allowed at the start per player
+	private boolean randomGameGeneration;     // True if random game generation allowed, false otherwise
 	
 	public BoundParameters() {}
 	
