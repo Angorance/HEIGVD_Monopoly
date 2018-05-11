@@ -1,8 +1,12 @@
 package bdfh.net.notification;
 
+import bdfh.data.Lobbies;
+import bdfh.data.Lobby;
 import bdfh.net.Handler;
 
 import java.io.*;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Logger;
 
 import static bdfh.protocol.Protocoly.CMD_NEWLOBBY;
@@ -11,7 +15,7 @@ import static bdfh.protocol.Protocoly.CMD_NEWLOBBY;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class NotificationHandler implements Handler {
+public class NotificationHandler implements Handler{
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -31,12 +35,13 @@ public class NotificationHandler implements Handler {
 		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		boolean connected = true;
-		
+
+		Lobbies.getInstance().addSubscriber(this);
 		//sendData(); TODO
 		
 		// Dialog management
 		while (connected) {
-			// TODO
+			// TODO ???
 		}
 		
 	}
@@ -64,8 +69,9 @@ public class NotificationHandler implements Handler {
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */
-	private void sendData(String cmd) {
+	public void sendData(String cmd) {
 		
 		sendData(cmd, "");
 	}
+
 }

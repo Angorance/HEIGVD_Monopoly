@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Lobby implements Runnable {
-	
+
 	public static int nbLobbies = 0;
-	
+
 	private int ID;
 	
 	//private Board gameBoard;  TODO - uncomment when Board is implemented

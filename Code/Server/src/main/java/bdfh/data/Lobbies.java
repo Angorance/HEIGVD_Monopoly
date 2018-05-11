@@ -1,9 +1,14 @@
 package bdfh.data;
 
+import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
+import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.Parameter;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * Class used to store all lobbies created.
@@ -11,17 +16,30 @@ import java.util.ArrayList;
  * @author Héléna Line Reymond
  * @version 1.0
  */
-public class Lobbies /*extends Observable*/ {
+	public class Lobbies {
 	
-	private ArrayList<Lobby> lobbies = new ArrayList();
+	private HashMap<Integer, Lobby> lobbies = new HashMap<>();
+	private LinkedList<NotificationHandler> subList = new LinkedList<>();
 	
 	private Lobbies() {}
 	
 	public void removeLobby(Lobby lobby) {
-		
-		lobbies.remove(lobby);
+		lobbies.remove(lobby.getID());
+		notifySubs("DELETED " + lobby.getID());
 	}
-	
+
+	private void notifySubs(String s) {
+		for(NotificationHandler n : subList){
+			n.sendData(s);
+		}
+	}
+
+	public void addSubscriber(NotificationHandler notificationHandler) {
+		if(!subList.contains(notificationHandler)){
+			subList.add(notificationHandler);
+		}
+	}
+
 	/**
 	 * Internal static class used to create one and only one instance of
 	 * Lobbies to guarantee it follows the singleton model.
@@ -50,25 +68,29 @@ public class Lobbies /*extends Observable*/ {
 		Lobby lobby = new Lobby(param);
 		
 		// Add the lobby to the list
-		lobbies.add(lobby);
+		lobbies.put(lobby.getID(), lobby);
 		
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
+
+		notifySubs("ADDED" + GsonSerializer.getInstance().toJson(lobby));
 		
 		return lobby;
 	}
-	
-	public Lobby joinLobby(ClientHandler player, int lobbyID) {
-		
-		for (Lobby lo : getLobbies()) {
-			if (lo.getID() == lobbyID && !lo.isFull()) {
-				lo.joinLobby(player);
-				
-				return lo;
-			}
+
+	/**
+	 * Add a player to a lobby
+	 * @param player payer that wants to join a lobby
+	 * @param lobbyID lobby requested to join
+	 * @return
+	 */
+	public synchronized Lobby joinLobby(ClientHandler player, int lobbyID) {
+		Lobby l = lobbies.get(lobbyID);
+		if(l != null && !l.isFull()) {
+			l.joinLobby(player);
+			notifySubs("UPDATED " + GsonSerializer.getInstance().toJson(l));
 		}
-		
-		return null;
+		return l;
 	}
 	
 	/**
@@ -76,7 +98,7 @@ public class Lobbies /*extends Observable*/ {
 	 *
 	 * @return  lobbies created in the lobby
 	 */
-	public synchronized ArrayList<Lobby> getLobbies() {
+	public synchronized HashMap<Integer, Lobby> getLobbies() {
 		return lobbies;
 	}
 }
