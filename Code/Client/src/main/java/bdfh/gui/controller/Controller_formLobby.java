@@ -3,6 +3,7 @@ package bdfh.gui.controller;
 import bdfh.logic.usr.Lobby;
 import bdfh.logic.usr.Parameter;
 import bdfh.logic.usr.Player;
+import bdfh.serializable.BoundParameters;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
@@ -49,7 +50,6 @@ public class Controller_formLobby implements Initializable {
 			int money = Integer.parseInt(moneyStart.getText());
 			boolean random = randomCheck.isSelected();
 			
-			//TODO création du lobby
 			Player.getInstance().createLobby(nbrDice,money,random);
 			cl.createItem();
 		}
@@ -67,8 +67,8 @@ public class Controller_formLobby implements Initializable {
 			check = false;
 		}
 		
-		if (money.isEmpty() || !isNumber(money) || Integer.parseInt(money) < Parameter.minMoneyAtTheStart
-				|| Integer.parseInt(money) > Parameter.maxMoneyAtTheStart) {
+		if (money.isEmpty() || !isNumber(money) || Integer.parseInt(money) < Player.getBounds().getMinMoneyAtTheStart()
+				|| Integer.parseInt(money) > Player.getBounds().getMaxMoneyAtTheStart()) {
 			moneyStart.setStyle("-jfx-unfocus-color: red;");
 			check = false;
 		}
@@ -99,8 +99,9 @@ public class Controller_formLobby implements Initializable {
 	private void generateItemComboBox() {
 		
 		ObservableList<Integer> items = FXCollections.observableArrayList();
-		int min = Parameter.minDice;
-		int max = Parameter.maxDice;
+		BoundParameters b = Player.getBounds();
+		int min = b.getMinDice();
+		int max = b.maxDice;
 		for (int i = min; i <= max; ++i) {
 			items.add(i);
 		}
