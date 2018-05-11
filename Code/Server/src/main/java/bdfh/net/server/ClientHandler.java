@@ -106,8 +106,6 @@ public class ClientHandler implements Handler {
 						clientUsername = param[0];
 						
 						LOG.log(Level.INFO, "User " + clientID + " connected");
-
-						sendLobbyList();
 					}
 
 					
@@ -125,8 +123,6 @@ public class ClientHandler implements Handler {
 						sendData(ANS_SUCCESS);
 						
 						LOG.log(Level.INFO, "User created in database");
-
-						sendLobbyList();
 						
 					} else {
 						// username already taken
@@ -167,15 +163,6 @@ public class ClientHandler implements Handler {
 					break;
 			}
 		}
-	}
-
-	private void sendLobbyList() {
-		JsonArray lobbyList = new JsonArray();
-		Lobbies.getInstance().getLobbies().forEach((key, lobby) -> {
-			lobbyList.add(GsonSerializer.getInstance().toJson(lobby));
-		});
-
-		sendData(lobbyList.getAsString());
 	}
 
 	/**

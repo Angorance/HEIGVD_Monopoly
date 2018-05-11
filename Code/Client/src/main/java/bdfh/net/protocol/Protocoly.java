@@ -27,6 +27,7 @@ public abstract class Protocoly {
 	public static final String ANS_DENIED = "DENIED";
 	public static final String ANS_BYE = "SEEYA";
 	
-	public static final String NOT_DELETE = "DELETED";
+	public static final String NOT_LIST = "LIST";
 	public static final String NOT_UPDATE = "UPDATED";
+	public static final String NOT_DELETE = "DELETED";
 }

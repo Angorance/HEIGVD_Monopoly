@@ -2,6 +2,7 @@ package bdfh.data;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
+import static bdfh.protocol.Protocoly.*;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.LightLobby;
 import bdfh.serializable.Parameter;
@@ -72,7 +73,7 @@ import java.util.LinkedList;
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 
-		notifySubs("UPDATED" + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
+		notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		
 		return lobby;
 	}
@@ -87,7 +88,7 @@ import java.util.LinkedList;
 		Lobby l = lobbies.get(lobbyID);
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs("UPDATED " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
+			notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
 		}
 		return l;
 	}

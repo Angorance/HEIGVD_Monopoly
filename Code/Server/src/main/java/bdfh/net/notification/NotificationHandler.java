@@ -3,13 +3,15 @@ package bdfh.net.notification;
 import bdfh.data.Lobbies;
 import bdfh.data.Lobby;
 import bdfh.net.Handler;
+import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.LightLobby;
+import com.google.gson.JsonArray;
 
 import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
-
-import static bdfh.protocol.Protocoly.CMD_NEWLOBBY;
+import static bdfh.protocol.Protocoly.*;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -37,13 +39,25 @@ public class NotificationHandler implements Handler{
 		boolean connected = true;
 
 		Lobbies.getInstance().addSubscriber(this);
-		//sendData(); TODO
+		sendLobbyList();
 		
 		// Dialog management
 		while (connected) {
 			// TODO ???
 		}
-		
+
+	}
+
+	/**
+	 * Send the whole list
+	 */
+	private void sendLobbyList() {
+		JsonArray lobbyList = new JsonArray();
+		Lobbies.getInstance().getLobbies().forEach((key, lobby) -> {
+			lobbyList.add(GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
+		});
+
+		sendData(NOT_LIST + " " +lobbyList.getAsString());
 	}
 	
 	/**

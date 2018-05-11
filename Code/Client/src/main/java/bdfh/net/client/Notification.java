@@ -91,14 +91,17 @@ public class Notification extends Thread {
 				int idUpdated = 0;
 				
 				switch (command[0]) {
-					case Protocoly.NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
-						idUpdated = Integer.parseInt(command[1]);
-						lobbies.removeLobby(idUpdated);
+					case Protocoly.NOT_LIST : // lobbies have been sent
+						//TODO - implement when sprint 3 is started
 						break;
 					case Protocoly.NOT_UPDATE : // a lobby has been updated
 						Lobby l = new Gson().fromJson(command[1],Lobby.class);
 						lobbies.updateLobby(l);
 						idUpdated = l.getID();
+						break;
+					case Protocoly.NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
+						idUpdated = Integer.parseInt(command[1]);
+						lobbies.removeLobby(idUpdated);
 						break;
 				}
 
