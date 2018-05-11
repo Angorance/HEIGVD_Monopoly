@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="paneFond" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="89.0" prefHeight="565.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="88.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="215.0" prefWidth="655.0" style="-fx-background-color: white;" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER" layoutX="100.0" layoutY="25.0" prefHeight="165.0" prefWidth="451.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="99.0">
+                     <children>
+                        <GridPane prefHeight="165.0" prefWidth="465.0" HBox.hgrow="NEVER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="218.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="128.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="150.0" text="Nom :" />
+                              <Label text="Nombre de dé :" GridPane.rowIndex="1" />
+                              <Label prefHeight="17.0" prefWidth="155.0" text="Monnaie de départ :" GridPane.rowIndex="2" />
+                              <Label fx:id="random_label" text="Génération aléatoire du plateau :" GridPane.rowIndex="3" />
+                              <JFXTextField fx:id="nameLobby" promptText="nom du salon" GridPane.columnIndex="1" />
+                              <JFXTextField fx:id="moneyStart" promptText="nom de la banque" text="20000" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXComboBox fx:id="numberDice" prefHeight="25.0" prefWidth="44.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <JFXCheckBox fx:id="randomCheck" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </GridPane>
+                     </children>
+                  </HBox>
+                  <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="return" text="retour" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0" />
+                  <JFXButton fx:id="accepteButton" layoutX="428.0" layoutY="88.0" style="-fx-background-color: #DCDCDC;" styleClass="accept" text="Accepter" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

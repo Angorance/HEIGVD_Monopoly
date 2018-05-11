@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,9 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_lobby implements Initializable {
+public class Controller_lobbyList implements Initializable {
 	
-	@FXML private VBox playRoom;
+	@FXML private VBox lobby;
 	@FXML private Label name_player1;
 	@FXML private Label name_player2;
 	@FXML private Label name_player3;
@@ -34,15 +33,15 @@ public class Controller_lobby implements Initializable {
 	@FXML private JFXButton quit_button;
 	@FXML private JFXButton ready_button;
 	
-	class PlayRoomDisplayer extends GridPane {
+	class LobbyDisplayer extends GridPane {
 		
 		private final static int MAX_PLAYER = 4;
-		private final static int HEIGHT = 100;
-		private final static int WIDTH = 50;
+		private final static int HEIGHT = 40;
+		private final static int WIDTH = 40;
 		private Label name;
 		private Label nbPlayer;
 		
-		public PlayRoomDisplayer() {
+		public LobbyDisplayer() {
 			
 			int nbPlayers = 0;
 			name = new Label("Mon salon");
@@ -53,7 +52,7 @@ public class Controller_lobby implements Initializable {
 			
 			this.setPrefSize(WIDTH, HEIGHT);
 			
-			this.setStyle("-fx-background-color: white");
+			this.setStyle("-fx-background-color:  gainsboro");
 			
 			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				
@@ -66,12 +65,12 @@ public class Controller_lobby implements Initializable {
 		
 	}
 	
-	private void createPlayRoom() {
+	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formPlayRoom.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formPlayRoom cba = new Controller_formPlayRoom(this);
+		Controller_formLobby cba = new Controller_formLobby(this);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -84,19 +83,38 @@ public class Controller_lobby implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+		
 	}
+	
+	private void unloadForm() {
+		
+		paneform.getChildren().clear();
+		paneform.setVisible(false);
+		paneform.setMouseTransparent(true);
+	}
+	
+	public void createItem(Object result) {
+		
+		unloadForm();
+		
+		if (result != null) {
+			//TODO création du lobbyDisplayer avec l'objet result
+			lobby.getChildren().add(new LobbyDisplayer());
+			
+		}
+	}
+	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		for (int i = 0; i < 10; ++i) {
-			playRoom.getChildren().add(new PlayRoomDisplayer());
-		}
+		paneform.setVisible(false);
+		paneform.setMouseTransparent(true);
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				createPlayRoom();
+				
+				createLobby();
 			}
 		});
 		
