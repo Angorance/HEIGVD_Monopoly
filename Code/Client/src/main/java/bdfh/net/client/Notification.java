@@ -10,6 +10,8 @@ import java.io.*;
 import java.net.Socket;
 
 import static bdfh.net.protocol.Protocoly.ANS_CONN;
+import static bdfh.net.protocol.Protocoly.NOT_DELETE;
+import static bdfh.net.protocol.Protocoly.NOT_UPDATE;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -92,12 +94,13 @@ public class Notification extends Thread {
 
 				String[] command = line.split(" ",1);
 				int idUpdated = 0;
-				switch (command[0]){
-					case "DELETED" : // a lobby has been deleted (game launched, nobody in lobby)
+				
+				switch (command[0]) {
+					case NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
 						idUpdated = Integer.parseInt(command[1]);
 						lobbies.removeLobby(idUpdated);
 						break;
-					case "UPDATE" : // a lobby has been updated
+					case NOT_UPDATE : // a lobby has been updated
 						Lobby l = new Gson().fromJson(command[1],Lobby.class);
 						lobbies.updateLobby(l);
 						idUpdated = l.getID();
