@@ -101,7 +101,7 @@ public class Controller_formLobby implements Initializable {
 		ObservableList<Integer> items = FXCollections.observableArrayList();
 		BoundParameters b = Player.getBounds();
 		int min = b.getMinDice();
-		int max = b.maxDice;
+		int max = b.getMaxDice();
 		for (int i = min; i <= max; ++i) {
 			items.add(i);
 		}
