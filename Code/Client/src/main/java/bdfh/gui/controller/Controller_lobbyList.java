@@ -1,5 +1,7 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Lobbies;
+import bdfh.logic.usr.Lobby;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller_lobbyList implements Initializable {
@@ -33,6 +36,8 @@ public class Controller_lobbyList implements Initializable {
 	@FXML private JFXButton quit_button;
 	@FXML private JFXButton ready_button;
 	
+	private HashMap<Integer, LobbyDisplayer> displayerList;
+	
 	class LobbyDisplayer extends GridPane {
 		
 		private final static int MAX_PLAYER = 4;
@@ -41,8 +46,10 @@ public class Controller_lobbyList implements Initializable {
 		private Label name;
 		private Label nbPlayer;
 		
-		public LobbyDisplayer() {
-			
+		Lobby lobby;
+		
+		public LobbyDisplayer(Lobby lobby) {
+			this.lobby = lobby;
 			int nbPlayers = 0;
 			name = new Label("Mon salon");
 			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
@@ -97,6 +104,9 @@ public class Controller_lobbyList implements Initializable {
 		returnForm();
 		
 		//TODO création du lobbyDisplayer
+		/*LobbyDisplayer ld = new LobbyDisplayer(l);
+		lobby.getChildren().add(ld);
+		displayerList.put(lobby.getID(),ld);*/
 		
 	}
 	
@@ -109,6 +119,16 @@ public class Controller_lobbyList implements Initializable {
 		
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
+		
+		displayerList = new HashMap<>();
+		
+		/*for(Lobby lobby : tableau de lobby){
+			LobbyDisplayer ld = new LobbyDisplayer(lobby);
+			lobby.getChildren().add(ld);
+			displayerList.put(lobby.getID(),ld);
+		}*/
+		
+		
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
 			
