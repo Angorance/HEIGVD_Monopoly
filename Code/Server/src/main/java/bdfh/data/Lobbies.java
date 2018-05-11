@@ -3,13 +3,11 @@ package bdfh.data;
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
 import bdfh.serializable.GsonSerializer;
-import bdfh.serializable.JSONLobby;
+import bdfh.serializable.LightLobby;
 import bdfh.serializable.Parameter;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
 
 /**
  * Class used to store all lobbies created.
@@ -74,7 +72,7 @@ import java.util.Observable;
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 
-		notifySubs("UPDATED" + GsonSerializer.getInstance().toJson(new JSONLobby(lobby)));
+		notifySubs("UPDATED" + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		
 		return lobby;
 	}
@@ -89,7 +87,7 @@ import java.util.Observable;
 		Lobby l = lobbies.get(lobbyID);
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs("UPDATED " + GsonSerializer.getInstance().toJson(new JSONLobby(l)));
+			notifySubs("UPDATED " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
 		}
 		return l;
 	}
