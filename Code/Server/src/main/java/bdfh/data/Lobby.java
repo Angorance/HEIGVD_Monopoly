@@ -17,11 +17,12 @@ public class Lobby implements Runnable {
 	public static int nbLobbies = 0;
 
 	private int ID;
+	public static final int MAX_PLAYER = 4;
 	
 	//private Board gameBoard;  TODO - uncomment when Board is implemented
 	private Parameter param;
-	private ArrayList<ClientHandler> players = new ArrayList<>(4);
-	private ArrayList<Boolean> areReady = new ArrayList(4);
+	private ArrayList<ClientHandler> players = new ArrayList<>(MAX_PLAYER);
+	private ArrayList<Boolean> areReady = new ArrayList(MAX_PLAYER);
 	
 	boolean isRunning = false;
 	
@@ -113,7 +114,11 @@ public class Lobby implements Runnable {
 		
 		return players;
 	}
-	
+
+	public ArrayList<Boolean> getAreReady() {
+		return areReady;
+	}
+
 	public boolean isFull() {
 		
 		return (getPlayers().size() == 4);

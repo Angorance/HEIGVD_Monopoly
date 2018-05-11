@@ -7,9 +7,11 @@ import bdfh.net.Handler;
 import bdfh.serializable.BoundParameters;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.Parameter;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,13 +29,14 @@ public class ClientHandler implements Handler {
 	private BufferedReader reader;
 	private PrintWriter writer;
 	private int clientID;
+	private String clientUsername;
 	
 	Lobby lobby;
 	
 	private final static Logger LOG = Logger.getLogger("ClientHandler");
 	
 	/**
-	 * TODO
+	 * handle de discussion with a client
 	 *
 	 * @param in Input stream to receive commands.
 	 * @param out Output stream to send commands / info.
@@ -100,10 +103,13 @@ public class ClientHandler implements Handler {
 					} else {
 						sendData(ANS_SUCCESS);
 						clientID = result;
+						clientUsername = param[0];
 						
 						LOG.log(Level.INFO, "User " + clientID + " connected");
-						
+
+						sendLobbyList();
 					}
+
 					
 					break;
 				
@@ -114,10 +120,13 @@ public class ClientHandler implements Handler {
 						// username free, we retrieve the user ID
 						clientID = database.getPlayerDB()
 								.playerExists(param[0], param[1]);
+						clientUsername = param[0];
 						
 						sendData(ANS_SUCCESS);
 						
 						LOG.log(Level.INFO, "User created in database");
+
+						sendLobbyList();
 						
 					} else {
 						// username already taken
@@ -159,7 +168,16 @@ public class ClientHandler implements Handler {
 			}
 		}
 	}
-	
+
+	private void sendLobbyList() {
+		JsonArray lobbyList = new JsonArray();
+		Lobbies.getInstance().getLobbies().forEach((key, lobby) -> {
+			lobbyList.add(GsonSerializer.getInstance().toJson(lobby));
+		});
+
+		sendData(lobbyList.getAsString());
+	}
+
 	/**
 	 * TODO
 	 *
@@ -266,5 +284,9 @@ public class ClientHandler implements Handler {
 			sendData(ANS_DENIED);
 		}
 		
+	}
+
+	public String getClientUsername() {
+		return clientUsername;
 	}
 }

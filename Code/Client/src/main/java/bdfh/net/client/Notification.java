@@ -1,7 +1,10 @@
 package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
+import bdfh.logic.usr.Lobbies;
+import bdfh.logic.usr.Lobby;
 import bdfh.net.protocol.Protocoly;
+import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
@@ -10,14 +13,16 @@ import static bdfh.net.protocol.Protocoly.ANS_CONN;
 
 /**
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @author Bryan Curchod
+ * @version 1.1
  */
 public class Notification extends Thread {
 	
 	private Socket notifSocket = null;
 	private BufferedReader in = null;
 	
-	private String update;
+	private String line;
+	private Lobbies lobbies = Lobbies.getInstance();
 	
 	
 	private Notification() {}
@@ -45,9 +50,9 @@ public class Notification extends Thread {
 			in = new BufferedReader(
 					new InputStreamReader(notifSocket.getInputStream()));
 			
-			update = in.readLine();
+			line = in.readLine();
 			
-			if (!update.equals(ANS_CONN)) {
+			if (!line.equals(ANS_CONN)) {
 				throw new ConnectionException(
 						"A problem happened during Connection to Notification");
 			}
@@ -83,9 +88,26 @@ public class Notification extends Thread {
 			connect();
 			
 			while (true) {
-				update = in.readLine();
-				
-				// TODO - créer classe lobby pour désérialisation
+				line = in.readLine();
+
+				String[] command = line.split(" ",1);
+				int idUpdated = 0;
+				switch (command[0]){
+					case "DELETED" : // a lobby has been deleted (game launched, nobody in lobby)
+						idUpdated = Integer.parseInt(command[1]);
+						lobbies.removeLobby(idUpdated);
+						break;
+					case "UPDATE" : // a lobby has been updated
+						Lobby l = new Gson().fromJson(command[1],Lobby.class);
+						lobbies.updateLobby(l);
+						idUpdated = l.getID();
+						break;
+				}
+
+				// signal the update with the ID
+				// TODO signal an observer/the GUI
+
+
 			}
 		} catch (ConnectionException e) {
 			e.printStackTrace();
@@ -93,7 +115,7 @@ public class Notification extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void pause() {
 		getInstance().interrupt();
 	}
