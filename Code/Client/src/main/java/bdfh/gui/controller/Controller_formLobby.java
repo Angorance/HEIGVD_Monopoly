@@ -1,5 +1,8 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Lobby;
+import bdfh.logic.usr.Parameter;
+import bdfh.logic.usr.Player;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
@@ -31,36 +34,41 @@ public class Controller_formLobby implements Initializable {
 	private Controller_lobbyList cl;
 	
 	public Controller_formLobby(Controller_lobbyList cl) {
+		
 		this.cl = cl;
 	}
 	
 	/**
 	 * Create the lobby
 	 */
-	private void formValidation(){
-		if(checkValidation()) {
+	private void formValidation() {
+		
+		if (checkValidation()) {
 			String name = nameLobby.getText();
 			int nbrDice = numberDice.getValue();
 			int money = Integer.parseInt(moneyStart.getText());
 			boolean random = randomCheck.isSelected();
 			
 			//TODO création du lobby
-			cl.createItem(5/*TODO mettre l'objet lobby ici*/);
+			Player.getInstance().createLobby(nbrDice,money,random);
+			cl.createItem();
 		}
 		
 	}
 	
-	boolean checkValidation(){
+	boolean checkValidation() {
+		
 		boolean check = true;
 		String name = nameLobby.getText();
-		String money =moneyStart.getText();
+		String money = moneyStart.getText();
 		
-		if(name.isEmpty()){
+		if (name.isEmpty()) {
 			nameLobby.setStyle("-jfx-unfocus-color: red;");
 			check = false;
 		}
 		
-		if(money.isEmpty() || !isNumber(money)){
+		if (money.isEmpty() || !isNumber(money) || Integer.parseInt(money) < Parameter.minMoneyAtTheStart
+				|| Integer.parseInt(money) > Parameter.maxMoneyAtTheStart) {
 			moneyStart.setStyle("-jfx-unfocus-color: red;");
 			check = false;
 		}
@@ -68,11 +76,12 @@ public class Controller_formLobby implements Initializable {
 		return check;
 	}
 	
-	private boolean isNumber(String str){
+	private boolean isNumber(String str) {
+		
 		try {
 			Integer.parseInt(str);
 			return true;
-		}catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -81,17 +90,18 @@ public class Controller_formLobby implements Initializable {
 	 * Return to the list of lobby page
 	 */
 	private void formReturn() {
-		cl.createItem(null);
+		cl.returnForm();
 	}
 	
 	/**
 	 * Generate de item in comboBox
 	 */
-	private void generateItemComboBox(){
-		ObservableList<Integer> items = FXCollections.observableArrayList();
+	private void generateItemComboBox() {
 		
-		/*TODO retrieve of the limit of the number of dice */
-		for(int i = 2; i <= 4; ++i){
+		ObservableList<Integer> items = FXCollections.observableArrayList();
+		int min = Parameter.minDice;
+		int max = Parameter.maxDice;
+		for (int i = min; i <= max; ++i) {
 			items.add(i);
 		}
 		numberDice.setItems(items);
@@ -100,11 +110,13 @@ public class Controller_formLobby implements Initializable {
 	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
 		generateItemComboBox();
 		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				formValidation();
 			}
 		});
@@ -112,6 +124,7 @@ public class Controller_formLobby implements Initializable {
 		returnButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				formReturn();
 			}
 		});
@@ -133,5 +146,4 @@ public class Controller_formLobby implements Initializable {
 		});
 	}
 	
-
 }

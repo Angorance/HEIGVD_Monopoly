@@ -93,15 +93,15 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
-	public void createItem(Object result) {
+	public void createItem() {
+		returnForm();
 		
+		//TODO création du lobbyDisplayer
+		
+	}
+	
+	public void returnForm() {
 		unloadForm();
-		
-		if (result != null) {
-			//TODO création du lobbyDisplayer avec l'objet result
-			lobby.getChildren().add(new LobbyDisplayer());
-			
-		}
 	}
 	
 	
