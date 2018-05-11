@@ -73,7 +73,7 @@ import java.util.LinkedList;
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 
-		notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
+		//notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		
 		return lobby;
 	}

@@ -62,7 +62,7 @@ public class Client {
 			}
 			
 			// Connect to the notification channel
-			Notification.getInstance().connect();
+			//Notification.getInstance().connect();
 			
 		} catch (IOException e) {
 			System.out.println("Client::connect: " + e);

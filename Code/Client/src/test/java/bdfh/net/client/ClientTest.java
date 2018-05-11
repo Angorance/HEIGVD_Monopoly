@@ -100,12 +100,12 @@ public class ClientTest {
 		
 		BoundParameters bp = Player.getBounds();
 		
-		assertEquals(2, bp.minDice);
-		assertEquals(4, bp.maxDice);
+		assertEquals(2, bp.getMinDice());
+		assertEquals(4, bp.getMaxDice());
 		
-		assertEquals(1000, bp.minMoneyAtTheStart);
-		assertEquals(4000, bp.maxMoneyAtTheStart);
+		assertEquals(1000, bp.getMinMoneyAtTheStart());
+		assertEquals(4000, bp.getMaxMoneyAtTheStart());
 		
-		assertFalse(bp.randomGameGeneration);
+		assertFalse(bp.isRandomGameGeneration());
 	}
 }

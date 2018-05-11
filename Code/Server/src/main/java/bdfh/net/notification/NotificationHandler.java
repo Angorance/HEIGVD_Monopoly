@@ -57,7 +57,7 @@ public class NotificationHandler implements Handler{
 			lobbyList.add(GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		});
 
-		sendData(NOT_LIST + " " +lobbyList.getAsString());
+		sendData(NOT_LIST + " " + lobbyList.getAsString());
 	}
 	
 	/**
