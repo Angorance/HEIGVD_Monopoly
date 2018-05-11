@@ -1,17 +1,11 @@
 package bdfh.net.client;
 
-import bdfh.exceptions.ConnectionException;
-import bdfh.exceptions.CredentialsException;
-import bdfh.logic.usr.Parameter;
-import bdfh.logic.usr.Player;
+import bdfh.exceptions.*;
+import bdfh.logic.usr.*;
 import bdfh.net.protocol.Protocoly;
-import bdfh.serializable.BoundParameters;
-import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import static bdfh.net.protocol.Protocoly.*;
@@ -67,10 +61,15 @@ public class Client {
 						"A problem happened during Connection");
 			}
 			
+			// Connect to the notification channel
+			Notification.getInstance().connect();
+			
 		} catch (IOException e) {
 			System.out.println("Client::connect: " + e);
 			throw e;
 		}
+		
+		
 	}
 	
 	/**

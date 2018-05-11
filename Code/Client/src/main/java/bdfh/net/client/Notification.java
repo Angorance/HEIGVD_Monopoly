@@ -3,10 +3,7 @@ package bdfh.net.client;
 import bdfh.exceptions.ConnectionException;
 import bdfh.net.protocol.Protocoly;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import static bdfh.net.protocol.Protocoly.ANS_CONN;
@@ -41,7 +38,7 @@ public class Notification extends Thread {
 	 * @throws ConnectionException if the server sends a wrong answer.
 	 * @throws IOException
 	 */
-	private void connect() throws ConnectionException, IOException {
+	public void connect() throws ConnectionException, IOException {
 		
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
@@ -58,6 +55,24 @@ public class Notification extends Thread {
 		} catch (IOException e) {
 			System.out.println("Notification::connect: " + e);
 			throw e;
+		}
+	}
+	
+	/**
+	 * Disconnect from the server and check if it is successful.
+	 *
+	 * @throws IOException
+	 */
+	public void disconnect() throws IOException {
+		
+		pause();
+		
+		if (in != null) {
+			in.close();
+		}
+		
+		if (notifSocket != null) {
+			notifSocket.close();
 		}
 	}
 	
@@ -79,11 +94,11 @@ public class Notification extends Thread {
 		}
 	}
 	
-	public static void pause() {
+	public void pause() {
 		getInstance().interrupt();
 	}
 	
-	public static void unpause() {
+	public void unpause() {
 		getInstance().start();
 	}
 }
