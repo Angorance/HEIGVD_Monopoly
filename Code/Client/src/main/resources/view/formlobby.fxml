@@ -33,7 +33,7 @@
                           </rowConstraints>
                            <children>
                               <Label text="Nombre de dé :" />
-                              <Label fx:id="label_moneyStart" prefHeight="17.0" prefWidth="155.0" text="Monnaie de départ :" GridPane.rowIndex="1" />
+                              <Label prefHeight="17.0" prefWidth="374.0" text="Monnaie de départ :" GridPane.rowIndex="1" />
                               <Label fx:id="random_label" text="Génération aléatoire du plateau :" GridPane.rowIndex="2" />
                               <JFXTextField fx:id="moneyStart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <JFXComboBox fx:id="numberDice" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="1" />
