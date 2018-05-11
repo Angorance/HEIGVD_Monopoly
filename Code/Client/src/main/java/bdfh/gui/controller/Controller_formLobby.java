@@ -30,6 +30,7 @@ public class Controller_formLobby implements Initializable {
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
 	@FXML private Label random_label;
+	@FXML private Label label_moneyStart;
 	
 	private Controller_lobbyList cl;
 	
@@ -108,7 +109,10 @@ public class Controller_formLobby implements Initializable {
 		generateItemComboBox();
 		
 		BoundParameters b = Player.getBounds();
+		label_moneyStart
+				.setText("Monnaie de départ (" + b.getMinMoneyAtTheStart() + " à " + b.getMaxMoneyAtTheStart() + ") :");
 		
+		moneyStart.setText(String.valueOf((int)(b.getMaxMoneyAtTheStart()/b.getMinMoneyAtTheStart())));
 		if (!b.isRandomGameGeneration()) {
 			random_label.setVisible(false);
 			randomCheck.setVisible(false);
