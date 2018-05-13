@@ -8,8 +8,6 @@ import bdfh.serializable.*;
 import java.io.*;
 import java.net.Socket;
 
-import static bdfh.net.protocol.Protocoly.*;
-
 // TODO - Maybe handle better the exceptions...
 
 /**
@@ -68,8 +66,6 @@ public class Client {
 			System.out.println("Client::connect: " + e);
 			throw e;
 		}
-		
-		
 	}
 	
 	/**
@@ -90,6 +86,7 @@ public class Client {
 		} catch (IOException e) {
 			System.out.println("Client::disconnect: " + e);
 			throw e;
+			
 		} finally {
 			
 			if (in != null) {
@@ -120,14 +117,14 @@ public class Client {
 		
 		boolean success;
 		
-		sendData(CMD_RGSTR + " " + usr + " " + password);
+		sendData(Protocoly.CMD_RGSTR + " " + usr + " " + password);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				success = true;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				success = false;
 			} else {
 				throw new CredentialsException("Problem with Registration");
@@ -159,16 +156,16 @@ public class Client {
 		
 		int result;
 		
-		sendData(CMD_LOGIN + " " + usr + " " + password);
+		sendData(Protocoly.CMD_LOGIN + " " + usr + " " + password);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = 1;
-			} else if (response.equals(ANS_UKNW)) {
+			} else if (response.equals(Protocoly.ANS_UKNW)) {
 				result = 0;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = -1;
 			} else {
 				throw new CredentialsException("Problem with Login");
@@ -197,7 +194,7 @@ public class Client {
 		
 		String[] splitted = response.split(" ", 2);
 		
-		if (!splitted[0].equals(ANS_CONN)) {
+		if (!splitted[0].equals(Protocoly.ANS_CONN)) {
 			return false;
 		}
 		
@@ -220,14 +217,14 @@ public class Client {
 		
 		// Send the new lobby to the server with its parameters
 		String jsonParam = GsonSerializer.getInstance().toJson(parameters);
-		sendData(CMD_NEWLOBBY + " " + jsonParam);
+		sendData(Protocoly.CMD_NEWLOBBY + " " + jsonParam);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
 			
@@ -250,14 +247,14 @@ public class Client {
 		
 		boolean result = false;
 		
-		sendData(CMD_JOIN + " " + lobbyID);
+		sendData(Protocoly.CMD_JOIN + " " + lobbyID);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
 			
@@ -279,14 +276,14 @@ public class Client {
 		boolean result = false;
 		
 		// Send the command to the server
-		sendData(CMD_RDY);
+		sendData(Protocoly.CMD_RDY);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
 			
@@ -308,14 +305,14 @@ public class Client {
 		boolean result = false;
 		
 		// Send the command to the server
-		sendData(CMD_QUITLOBBY);
+		sendData(Protocoly.CMD_QUITLOBBY);
 		
 		try {
 			response = in.readLine();
 			
-			if (response.equals(ANS_SUCCESS)) {
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
-			} else if (response.equals(ANS_DENIED)) {
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
 			
