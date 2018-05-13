@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
-  <diagramElements name="Client">
-    <dependency id="2037" label="use">
-      <source>1</source>
-      <target>3</target>
-    </dependency>
-    <dependency id="2036" label="use">
-      <source>2</source>
-      <target>3</target>
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="Client">
+    <dependency id="2031" label="use">
+      <source>3</source>
+      <target>563</target>
     </dependency>
     <dependency id="2035" label="use">
       <source>1</source>
       <target>2</target>
     </dependency>
-    <dependency id="2031" label="use">
-      <source>3</source>
-      <target>563</target>
+    <dependency id="2036" label="use">
+      <source>2</source>
+      <target>3</target>
+    </dependency>
+    <dependency id="2037" label="use">
+      <source>1</source>
+      <target>3</target>
     </dependency>
     <association aggregation="NONE" direction="BIDIRECTIONAL" id="2008" name="">
       <role componentId="1" name="" visibility="PRIVATE">
@@ -31,25 +31,8 @@
         </multiplicity>
       </role>
     </association>
-    <entity entityType="CLASS" id="3" isAbstract="false" name="Client" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="clientSocket" type="Socket" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="in" type="BufferedReader" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="out" type="BufferedOutput" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="response" type="String" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="Client" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="getInstance" returnType="Client" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="connect" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="disconnect" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="register" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="login" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="sendData" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
-    </entity>
-    <entity entityType="CLASS" id="2" isAbstract="false" name="Authentication" visibility="PUBLIC">
-      <method isAbstract="false" isStatic="true" name="register" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="login" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="confirmPassword" returnType="bool" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="hashPassword" returnType="String" view="DEFAULT" visibility="PRIVATE"/>
-    </entity>
+    <entity entityType="CLASS" id="563" isAbstract="false" name="Protocoly" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="159" isAbstract="false" name="GameStats" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="1" isAbstract="false" name="User" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="username" type="String" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="User" returnType="" view="DEFAULT" visibility="PRIVATE"/>
@@ -64,10 +47,27 @@
       <method isAbstract="false" isStatic="false" name="buy" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="true" name="getInstance" returnType="User" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="CLASS" id="159" isAbstract="false" name="GameStats" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="563" isAbstract="false" name="Protocoly" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="2" isAbstract="false" name="Authentication" visibility="PUBLIC">
+      <method isAbstract="false" isStatic="true" name="register" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="login" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="confirmPassword" returnType="bool" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="hashPassword" returnType="String" view="DEFAULT" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="3" isAbstract="false" name="Client" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="clientSocket" type="Socket" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="in" type="BufferedReader" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="out" type="BufferedOutput" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="response" type="String" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="Client" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getInstance" returnType="Client" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="connect" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="disconnect" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="register" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="login" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="sendData" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
+    </entity>
   </diagramElements>
-  <umlView grid="10" name="view no name">
+  <umlView grid="10" name="Main view" open="true">
     <relationView color="-12566464" relationId="2008">
       <line>
         <point>
@@ -110,38 +110,20 @@
         <h>17</h>
       </multipliciteAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="2031">
-      <line>
-        <point>
-          <x>801</x>
-          <y>271</y>
-        </point>
-        <point>
-          <x>801</x>
-          <y>341</y>
-        </point>
-      </line>
-      <labelAssociation>
-        <x>805</x>
-        <y>310</y>
-        <w>22</w>
-        <h>17</h>
-      </labelAssociation>
-    </relationView>
-    <relationView color="-12566464" relationId="2035">
+    <relationView color="-12566464" relationId="2037">
       <line>
         <point>
           <x>321</x>
-          <y>71</y>
+          <y>181</y>
         </point>
         <point>
-          <x>431</x>
-          <y>71</y>
+          <x>731</x>
+          <y>181</y>
         </point>
       </line>
       <labelAssociation>
-        <x>363</x>
-        <y>75</y>
+        <x>530</x>
+        <y>185</y>
         <w>22</w>
         <h>17</h>
       </labelAssociation>
@@ -164,46 +146,48 @@
         <h>17</h>
       </labelAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="2037">
+    <relationView color="-12566464" relationId="2035">
       <line>
         <point>
           <x>321</x>
-          <y>181</y>
+          <y>71</y>
         </point>
         <point>
-          <x>731</x>
-          <y>181</y>
+          <x>431</x>
+          <y>71</y>
         </point>
       </line>
       <labelAssociation>
-        <x>530</x>
-        <y>185</y>
+        <x>363</x>
+        <y>75</y>
         <w>22</w>
         <h>17</h>
       </labelAssociation>
     </relationView>
-    <componentView color="-2079" componentID="563" displayAttributes="true" displayDefault="true" displayMethods="true">
+    <relationView color="-12566464" relationId="2031">
+      <line>
+        <point>
+          <x>801</x>
+          <y>271</y>
+        </point>
+        <point>
+          <x>801</x>
+          <y>341</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>807</x>
+        <y>295</y>
+        <w>22</w>
+        <h>17</h>
+      </labelAssociation>
+    </relationView>
+    <componentView color="-2079" componentID="3" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>730</x>
-        <y>340</y>
-        <w>150</w>
-        <h>55</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="159" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>80</x>
-        <y>310</y>
-        <w>200</w>
-        <h>55</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>80</x>
         <y>50</y>
-        <w>240</w>
-        <h>205</h>
+        <w>150</w>
+        <h>220</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="2" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -214,12 +198,28 @@
         <h>115</h>
       </geometry>
     </componentView>
-    <componentView color="-2079" componentID="3" displayAttributes="true" displayDefault="true" displayMethods="true">
+    <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>80</x>
+        <y>50</y>
+        <w>240</w>
+        <h>205</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="159" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>80</x>
+        <y>310</y>
+        <w>200</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="563" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>730</x>
-        <y>50</y>
+        <y>340</y>
         <w>150</w>
-        <h>220</h>
+        <h>55</h>
       </geometry>
     </componentView>
     <note color="-2079" content="Singleton">
