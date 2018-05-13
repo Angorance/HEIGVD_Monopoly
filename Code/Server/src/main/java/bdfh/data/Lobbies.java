@@ -2,13 +2,10 @@ package bdfh.data;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
-import static bdfh.protocol.Protocoly.*;
-import bdfh.serializable.GsonSerializer;
-import bdfh.serializable.LightLobby;
-import bdfh.serializable.Parameter;
+import bdfh.protocol.Protocoly;
+import bdfh.serializable.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Class used to store all lobbies created.
@@ -23,23 +20,6 @@ import java.util.LinkedList;
 	
 	private Lobbies() {}
 	
-	public void removeLobby(Lobby lobby) {
-		lobbies.remove(lobby.getID());
-		notifySubs("DELETED " + lobby.getID());
-	}
-
-	private void notifySubs(String s) {
-		for(NotificationHandler n : subList){
-			n.sendData(s);
-		}
-	}
-
-	public void addSubscriber(NotificationHandler notificationHandler) {
-		if(!subList.contains(notificationHandler)){
-			subList.add(notificationHandler);
-		}
-	}
-
 	/**
 	 * Internal static class used to create one and only one instance of
 	 * Lobbies to guarantee it follows the singleton model.
@@ -72,12 +52,12 @@ import java.util.LinkedList;
 		
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
-
+		
 		//notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		
 		return lobby;
 	}
-
+	
 	/**
 	 * Add a player to a lobby
 	 * @param player payer that wants to join a lobby
@@ -86,11 +66,30 @@ import java.util.LinkedList;
 	 */
 	public synchronized Lobby joinLobby(ClientHandler player, int lobbyID) {
 		Lobby l = lobbies.get(lobbyID);
+		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
+			notifySubs(Protocoly.NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
 		}
+		
 		return l;
+	}
+	
+	public void addSubscriber(NotificationHandler notificationHandler) {
+		if(!subList.contains(notificationHandler)){
+			subList.add(notificationHandler);
+		}
+	}
+	
+	private void notifySubs(String s) {
+		for(NotificationHandler n : subList){
+			n.sendData(s);
+		}
+	}
+	
+	public void removeLobby(Lobby lobby) {
+		lobbies.remove(lobby.getID());
+		notifySubs("DELETED " + lobby.getID());
 	}
 	
 	/**

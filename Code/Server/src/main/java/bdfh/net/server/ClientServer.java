@@ -4,10 +4,8 @@ import bdfh.database.DatabaseConnect;
 import bdfh.net.Worker;
 import bdfh.protocol.Protocoly;
 
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.*;
+import java.util.logging.*;
 
 /**
  * ClientServer class.
@@ -20,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ClientServer implements Runnable {
 	
-	ServerSocket srv;
+	private ServerSocket srv;
 	
 	private final static Logger LOG = Logger.getLogger("Server");
 	

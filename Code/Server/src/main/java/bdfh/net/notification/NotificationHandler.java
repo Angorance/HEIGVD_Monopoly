@@ -1,23 +1,19 @@
 package bdfh.net.notification;
 
-import bdfh.data.Lobbies;
-import bdfh.data.Lobby;
+import bdfh.data.*;
 import bdfh.net.Handler;
-import bdfh.serializable.GsonSerializer;
-import bdfh.serializable.LightLobby;
+import bdfh.serializable.*;
 import com.google.gson.JsonArray;
 
 import java.io.*;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Logger;
-import static bdfh.protocol.Protocoly.*;
+import java.util.logging.*;
+import  bdfh.protocol.Protocoly;
 
 /**
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class NotificationHandler implements Handler{
+public class NotificationHandler implements Handler {
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -57,7 +53,7 @@ public class NotificationHandler implements Handler{
 			lobbyList.add(GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
 		});
 
-		sendData(NOT_LIST + " " + lobbyList.getAsString());
+		sendData(Protocoly.NOT_LIST + " " + lobbyList.getAsString());
 	}
 	
 	/**
@@ -87,5 +83,4 @@ public class NotificationHandler implements Handler{
 		
 		sendData(cmd, "");
 	}
-
 }

@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
   <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="Client">
-    <entity entityType="ENUM" id="42041" name="Enum"/>
-    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="42007" name="">
-      <role componentId="41282" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>1</min>
-          <max>1</max>
-        </multiplicity>
-      </role>
-      <role componentId="41330" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>0</min>
-          <max>2147483647</max>
-        </multiplicity>
-      </role>
-    </association>
-    <entity entityType="ENUM" id="41877" name="Enum"/>
+    <dependency id="56181" label="use">
+      <source>40546</source>
+      <target>41282</target>
+    </dependency>
     <dependency id="41777" label="use">
       <source>1</source>
       <target>40592</target>
@@ -29,57 +17,14 @@
       <source>40997</source>
       <target>41330</target>
     </dependency>
-    <entity entityType="CLASS" id="41330" isAbstract="false" name="Lobby" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="ID" type="void" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="players" type="String[]" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="areReady" type="boolean[]" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="getID" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getPlayers" returnType="String[]" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getAreReady" returnType="boolean[]" view="DEFAULT" visibility="PUBLIC"/>
-    </entity>
     <dependency id="41329" label="use">
       <source>40997</source>
       <target>563</target>
     </dependency>
-    <entity entityType="ENUM" id="41307" name="Enum"/>
-    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="41283" name="">
-      <role componentId="40997" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>0</min>
-          <max>1</max>
-        </multiplicity>
-      </role>
-      <role componentId="41282" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>1</min>
-          <max>1</max>
-        </multiplicity>
-      </role>
-    </association>
-    <entity entityType="CLASS" id="41282" isAbstract="false" name="Lobbies" visibility="PUBLIC">
-      <method isAbstract="false" isStatic="true" name="getInstance" returnType="Lobbies" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setLobbies" returnType="void" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="JSListLobby" type="String"/>
-      </method>
-      <method isAbstract="false" isStatic="false" name="getLobby" returnType="Lobby" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="id" type="int"/>
-      </method>
-      <method isAbstract="false" isStatic="false" name="updateLobby" returnType="void" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="l" type="Lobby"/>
-      </method>
-      <method isAbstract="false" isStatic="false" name="removeLobby" returnType="void" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="id" type="int"/>
-      </method>
-    </entity>
     <dependency id="41134" label="use">
       <source>3</source>
       <target>41133</target>
     </dependency>
-    <entity entityType="CLASS" id="41133" isAbstract="false" name="Parameter" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="nbrDice" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="moneyAtTheStart" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="randomGeneration" type="boolean" visibility="PRIVATE"/>
-    </entity>
     <dependency id="41103" label="use">
       <source>3</source>
       <target>1</target>
@@ -96,6 +41,78 @@
       <source>3</source>
       <target>40997</target>
     </dependency>
+    <dependency id="2037" label="use">
+      <source>1</source>
+      <target>3</target>
+    </dependency>
+    <dependency id="2036" label="use">
+      <source>2</source>
+      <target>3</target>
+    </dependency>
+    <dependency id="2035" label="use">
+      <source>1</source>
+      <target>2</target>
+    </dependency>
+    <dependency id="2031" label="use">
+      <source>3</source>
+      <target>563</target>
+    </dependency>
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="42007" name="">
+      <role componentId="41282" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="41330" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+    </association>
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="41283" name="">
+      <role componentId="40997" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="41282" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="41330" isAbstract="false" name="Lobby" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="ID" type="void" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="players" type="String[]" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="areReady" type="boolean[]" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getID" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getPlayers" returnType="String[]" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getAreReady" returnType="boolean[]" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="41282" isAbstract="false" name="Lobbies" visibility="PUBLIC">
+      <method isAbstract="false" isStatic="true" name="getInstance" returnType="Lobbies" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setLobbies" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="JSListLobby" type="String"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="getLobby" returnType="Lobby" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="id" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="updateLobby" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="l" type="Lobby"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="removeLobby" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="id" type="int"/>
+      </method>
+    </entity>
+    <entity entityType="CLASS" id="41133" isAbstract="false" name="Parameter" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="nbrDice" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="moneyAtTheStart" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="randomGeneration" type="boolean" visibility="PRIVATE"/>
+    </entity>
     <entity entityType="CLASS" id="40997" isAbstract="false" name="Notification" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="notifSocket" type="Socket" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="in" type="BufferedReader" visibility="PRIVATE"/>
@@ -107,7 +124,6 @@
       <method isAbstract="false" isStatic="false" name="pause" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="unpause" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="ENUM" id="40808" name="Enum"/>
     <entity entityType="CLASS" id="40592" isAbstract="false" name="BoundParameters" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="minDice" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="maxDice" type="int" visibility="PRIVATE"/>
@@ -139,36 +155,6 @@
       <attribute const="false" defaultValue="" isStatic="false" name="gson" type="Gson" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="true" name="getInstance" returnType="Gson" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <dependency id="2037" label="use">
-      <source>1</source>
-      <target>3</target>
-    </dependency>
-    <dependency id="2036" label="use">
-      <source>2</source>
-      <target>3</target>
-    </dependency>
-    <dependency id="2035" label="use">
-      <source>1</source>
-      <target>2</target>
-    </dependency>
-    <dependency id="2031" label="use">
-      <source>3</source>
-      <target>563</target>
-    </dependency>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="2008" name="">
-      <role componentId="1" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>1</min>
-          <max>1</max>
-        </multiplicity>
-      </role>
-      <role componentId="159" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>1</min>
-          <max>1</max>
-        </multiplicity>
-      </role>
-    </association>
     <entity entityType="CLASS" id="3" isAbstract="false" name="Client" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="clientSocket" type="Socket" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="in" type="BufferedReader" visibility="PRIVATE"/>
@@ -244,10 +230,93 @@
       </method>
       <method isAbstract="false" isStatic="true" name="getBounds" returnType="BoundParameters" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="CLASS" id="159" isAbstract="false" name="LobbyStats" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="563" isAbstract="false" name="Protocoly" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="563" isAbstract="true" name="Protocoly" visibility="PUBLIC"/>
   </diagramElements>
   <umlView grid="10" name="Main view" open="true">
+    <relationView color="-12566464" relationId="41283">
+      <line>
+        <point>
+          <x>1001</x>
+          <y>371</y>
+        </point>
+        <point>
+          <x>1081</x>
+          <y>371</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>1045</x>
+        <y>375</y>
+        <w>0</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>1005</x>
+        <y>375</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>1075</x>
+        <y>375</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>1005</x>
+        <y>348</y>
+        <w>23</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>1060</x>
+        <y>346</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="42007">
+      <line>
+        <point>
+          <x>1181</x>
+          <y>441</y>
+        </point>
+        <point>
+          <x>1181</x>
+          <y>481</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>1185</x>
+        <y>465</y>
+        <w>0</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>1185</x>
+        <y>445</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>1185</x>
+        <y>458</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>1154</x>
+        <y>442</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>1148</x>
+        <y>461</y>
+        <w>21</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
     <relationView color="-12566464" relationId="2031">
       <line>
         <point>
@@ -418,48 +487,6 @@
         <h>17</h>
       </labelAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="41283">
-      <line>
-        <point>
-          <x>1001</x>
-          <y>371</y>
-        </point>
-        <point>
-          <x>1081</x>
-          <y>371</y>
-        </point>
-      </line>
-      <labelAssociation>
-        <x>1045</x>
-        <y>375</y>
-        <w>0</w>
-        <h>17</h>
-      </labelAssociation>
-      <roleAssociation>
-        <x>1005</x>
-        <y>375</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <roleAssociation>
-        <x>1075</x>
-        <y>375</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <multipliciteAssociation>
-        <x>1005</x>
-        <y>348</y>
-        <w>23</w>
-        <h>17</h>
-      </multipliciteAssociation>
-      <multipliciteAssociation>
-        <x>1060</x>
-        <y>346</y>
-        <w>8</w>
-        <h>17</h>
-      </multipliciteAssociation>
-    </relationView>
     <relationView color="-12566464" relationId="41329">
       <line>
         <point>
@@ -532,47 +559,31 @@
         <h>17</h>
       </labelAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="42007">
+    <relationView color="-12566464" relationId="56181">
       <line>
         <point>
-          <x>1181</x>
-          <y>441</y>
+          <x>731</x>
+          <y>676</y>
         </point>
         <point>
-          <x>1181</x>
-          <y>481</y>
+          <x>731</x>
+          <y>691</y>
+        </point>
+        <point>
+          <x>1281</x>
+          <y>691</y>
+        </point>
+        <point>
+          <x>1281</x>
+          <y>441</y>
         </point>
       </line>
       <labelAssociation>
-        <x>1185</x>
-        <y>465</y>
-        <w>0</w>
+        <x>1284</x>
+        <y>556</y>
+        <w>22</w>
         <h>17</h>
       </labelAssociation>
-      <roleAssociation>
-        <x>1185</x>
-        <y>445</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <roleAssociation>
-        <x>1185</x>
-        <y>458</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <multipliciteAssociation>
-        <x>1154</x>
-        <y>442</y>
-        <w>8</w>
-        <h>17</h>
-      </multipliciteAssociation>
-      <multipliciteAssociation>
-        <x>1148</x>
-        <y>461</y>
-        <w>21</w>
-        <h>17</h>
-      </multipliciteAssociation>
     </relationView>
     <componentView color="-2079" componentID="563" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
@@ -674,18 +685,18 @@
     </note>
     <note color="-2079" content="Singleton">
       <noteGeometry>
-        <x>680</x>
+        <x>570</x>
         <y>690</y>
         <w>80</w>
         <h>30</h>
       </noteGeometry>
       <noteLine color="-12566464" relationId="40546">
         <point>
-          <x>701</x>
+          <x>591</x>
           <y>691</y>
         </point>
         <point>
-          <x>701</x>
+          <x>591</x>
           <y>676</y>
         </point>
       </noteLine>

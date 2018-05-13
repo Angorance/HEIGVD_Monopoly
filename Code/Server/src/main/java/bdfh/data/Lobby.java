@@ -44,6 +44,27 @@ public class Lobby implements Runnable {
 		areReady.add(false);
 	}
 	
+	public synchronized void setReady(ClientHandler player) {
+		
+		areReady.set(players.indexOf(player), true);
+		
+		if (players.size() > 1) {
+			
+			boolean allR = true;
+			
+			for (ClientHandler cl : players) {
+				if (areReady.get(players.indexOf(cl)) != true) {
+					allR = false;
+					break;
+				}
+			}
+			
+			if (allR) {
+				System.out.println("ALL READY");
+			}
+		}
+	}
+	
 	/**
 	 * Start the game when all players are ready.
 	 */
@@ -66,27 +87,6 @@ public class Lobby implements Runnable {
 		
 		if (players.isEmpty()) {
 			Lobbies.getInstance().removeLobby(this);
-		}
-	}
-	
-	public synchronized void setReady(ClientHandler player) {
-		
-		areReady.set(players.indexOf(player), true);
-		
-		if (players.size() > 1) {
-			
-			boolean allR = true;
-			
-			for (ClientHandler cl : players) {
-				if (areReady.get(players.indexOf(cl)) != true) {
-					allR = false;
-					break;
-				}
-			}
-			
-			if (allR) {
-				System.out.println("ALL READY");
-			}
 		}
 	}
 	

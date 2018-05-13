@@ -1,10 +1,9 @@
 package bdfh.net.notification;
 
 import bdfh.net.Worker;
-import static bdfh.protocol.Protocoly.*;
+import bdfh.protocol.Protocoly;
 
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.logging.*;
 
 
@@ -21,10 +20,10 @@ public class NotificationServer implements Runnable {
 	private NotificationServer() {
 		
 		try {
-			srv = new ServerSocket(NPORT);
+			srv = new ServerSocket(Protocoly.NPORT);
 			LOG.log(Level.INFO,
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
-							+ "\nPort::" + NPORT);
+							+ "\nPort::" + Protocoly.NPORT);
 			
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Exception creating server socket: " + e);

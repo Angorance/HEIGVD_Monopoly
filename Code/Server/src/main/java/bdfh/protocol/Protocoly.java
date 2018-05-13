@@ -12,7 +12,6 @@ public abstract class Protocoly {
 	public static final int CPORT = 4242;
 	public static final int NPORT = 9071;
 	
-	
 	// commandes utilisée par le client
 	public static final String CMD_RGSTR = "RGSTR";
 	public static final String CMD_LOGIN = "LOGIN";
@@ -32,5 +31,4 @@ public abstract class Protocoly {
 	public static final String NOT_DELETE = "DELETED";
 	public static final String NOT_UPDATE = "UPDATED";
 	public static final String NOT_LIST = "LIST";
-	
 }
