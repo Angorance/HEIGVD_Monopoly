@@ -49,9 +49,15 @@ public class Controller_lobbyList implements Initializable {
 		Lobby lobby;
 		
 		public LobbyDisplayer(Lobby lobby) {
+			
 			this.lobby = lobby;
 			int nbPlayers = 0;
-			name = new Label("Mon salon");
+			for (String str : lobby.getPlayers()) {
+				if (!str.isEmpty()) {
+					nbPlayers++;
+				}
+			}
+			name = new Label("Mon salon" + lobby.getID());
 			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
 			
 			this.add(name, 0, 0);
@@ -65,11 +71,39 @@ public class Controller_lobbyList implements Initializable {
 				
 				@Override public void handle(MouseEvent event) {
 					
-					System.out.println(name.getText());
+					detailLobby(lobby);
 				}
 			});
 		}
 		
+		public void redraw() {
+			
+			int nbPlayers = 0;
+			for (String str : lobby.getPlayers()) {
+				if (!str.isEmpty()) {
+					nbPlayers++;
+				}
+			}
+			nbPlayer.setText(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
+		}
+		
+	}
+	
+	private void detailLobby(Lobby lobby) {
+		
+		String[] players = lobby.getPlayers();
+		boolean[] readys = lobby.getAreReady();
+		Label[] labelsPlayers = { name_player1, name_player2, name_player3, name_player4 };
+		Label[] labelsReadys = { ready_player1, ready_player2, ready_player3, ready_player4 };
+		
+		for (int i = 0; i < players.length; ++i) {
+			labelsPlayers[i].setText(players[i]);
+			labelsReadys[i].setText(readys[i] ? "Prêt" : "-");
+		}
+	}
+	
+	private void refresh(){
+	
 	}
 	
 	private void createLobby() {
@@ -101,6 +135,7 @@ public class Controller_lobbyList implements Initializable {
 	}
 	
 	public void createItem() {
+		
 		returnForm();
 		
 		//TODO création du lobbyDisplayer
@@ -111,6 +146,7 @@ public class Controller_lobbyList implements Initializable {
 	}
 	
 	public void returnForm() {
+		
 		unloadForm();
 	}
 	
@@ -127,7 +163,6 @@ public class Controller_lobbyList implements Initializable {
 			lobby.getChildren().add(ld);
 			displayerList.put(lobby.getID(),ld);
 		}*/
-		
 		
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
