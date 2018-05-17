@@ -1,5 +1,7 @@
 package bdfh.game;
 
+import java.util.Random;
+
 /**
  * @author Bryan Curchod
  * @version 1.0
@@ -24,7 +26,21 @@ public class Card {
 	 * @return the value associated to the card.
 	 */
 	private int generateValue() {
-		return 0;
+		
+		Random random = new Random();
+		int value = 0;
+		
+		if(effect == EFFECTS.MOVE) {
+			value = random.nextInt(6) + 1;
+		
+		} else if (effect == EFFECTS.WIN || effect == EFFECTS.LOSE) {
+			value = (random.nextInt(10) + 1) * 100;
+		
+		} else if (effect == EFFECTS.GOTO) {
+			value = random.nextInt(40);
+		}
+		
+		return value;
 	}
 	
 }
