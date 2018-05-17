@@ -1,19 +1,51 @@
 package bdfh.serializable;
 
-import bdfh.data.Lobby;
+import bdfh.game.Lobby;
+
+import java.util.ArrayList;
 
 public class LightLobby {
 	
 	private int ID;
-	private String[] players = new String[Lobby.MAX_PLAYER];
-	private boolean[] readys = new boolean[Lobby.MAX_PLAYER];
+	private ArrayList<String> usernames = new ArrayList<>(Lobby.MAX_PLAYER);
+	private ArrayList<Boolean> areReady = new ArrayList<>(Lobby.MAX_PLAYER);
 	
-	public LightLobby(Lobby l) {
+	
+	public LightLobby() {}
+	
+	public int getID() {
 		
-		ID = l.getID();
-		for (int i = 0; i < Lobby.MAX_PLAYER; ++i) {
-			players[i] = l.getPlayers().get(i).getClientUsername();
-			readys[i] = l.getAreReady().get(i);
-		}
+		return ID;
+	}
+	
+	public ArrayList<String> getUsernames() {
+		
+		return usernames;
+	}
+	
+	public ArrayList<Boolean> getAreReady() {
+		
+		return areReady;
+	}
+	
+	public void setID(int ID) {
+		
+		this.ID = ID;
+	}
+	
+	public void addPlayer(String username/*, int index*/) {
+	
+		usernames.add(/*index, */username);
+	}
+	
+	public void addReady(boolean ready, int index) {
+		
+		areReady.add(index, ready);
+	}
+	
+	public void removePlayer(int index) {
+		
+		usernames.remove(index);
+		areReady.remove(index);
 	}
 }

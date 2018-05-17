@@ -21,6 +21,8 @@ public class Notification extends Thread {
 	private String line;
 	private Lobbies lobbies = Lobbies.getInstance();
 	
+	boolean isNotified = true;
+	
 	
 	private Notification() {}
 	
@@ -84,7 +86,7 @@ public class Notification extends Thread {
 		try {
 			connect();
 			
-			while (true) {
+			while (isNotified) {
 				line = in.readLine();
 
 				String[] command = line.split(" ",1);

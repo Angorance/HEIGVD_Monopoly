@@ -31,7 +31,9 @@ public class PlayerTest {
 			e.printStackTrace();
 		}
 		
-		Authentication.register("JUnit4", "tests");
+		for (int i = 0; i < 100; ++i) {
+			Authentication.register("JUnit" + i, "tests");
+		}
 	}
 	
 	@AfterAll

@@ -1,7 +1,8 @@
-package bdfh.data;
+package bdfh.game;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
+import bdfh.protocol.ObsProtocol;
 import bdfh.protocol.Protocoly;
 import bdfh.serializable.*;
 
@@ -13,9 +14,8 @@ import java.util.*;
  * @author Héléna Line Reymond
  * @version 1.0
  */
-	public class Lobbies {
+public class Lobbies extends LightLobbies {
 	
-	private HashMap<Integer, Lobby> lobbies = new HashMap<>();
 	private LinkedList<NotificationHandler> subList = new LinkedList<>();
 	
 	private Lobbies() {}
@@ -48,12 +48,12 @@ import java.util.*;
 		Lobby lobby = new Lobby(param);
 		
 		// Add the lobby to the list
-		lobbies.put(lobby.getID(), lobby);
+		addLobby(lobby);
 		
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 		
-		//notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
+		notifySubs(ObsProtocol.NEW, lobby);
 		
 		return lobby;
 	}
@@ -65,15 +65,22 @@ import java.util.*;
 	 * @return
 	 */
 	public synchronized Lobby joinLobby(ClientHandler player, int lobbyID) {
-		Lobby l = lobbies.get(lobbyID);
+		Lobby l = (Lobby) getLobbies().get(lobbyID);
 		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs(Protocoly.NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
+			notifySubs(ObsProtocol.UPDATE, l);
 		}
 		
 		return l;
 	}
+	
+	public void removeLobby(Lobby lobby) {
+		removeLobby(lobby);
+		
+		notifySubs(ObsProtocol.DELETE, lobby);
+	}
+	
 	
 	public void addSubscriber(NotificationHandler notificationHandler) {
 		if(!subList.contains(notificationHandler)){
@@ -81,23 +88,14 @@ import java.util.*;
 		}
 	}
 	
-	private void notifySubs(String s) {
+	private void notifySubs(int cmd, LightLobby l) {
 		for(NotificationHandler n : subList){
-			n.sendData(s);
+			n.update(cmd, l);
 		}
 	}
 	
-	public void removeLobby(Lobby lobby) {
-		lobbies.remove(lobby.getID());
-		notifySubs("DELETED " + lobby.getID());
-	}
-	
-	/**
-	 * Retrieve all lobbies created in the lobby.
-	 *
-	 * @return  lobbies created in the lobby
-	 */
-	public synchronized HashMap<Integer, Lobby> getLobbies() {
-		return lobbies;
+	public String jsonify() {
+		
+		return GsonSerializer.getInstance().toJson(getLobbies());
 	}
 }

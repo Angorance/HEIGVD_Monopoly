@@ -3,6 +3,7 @@ package bdfh.logic.conn;
 import bdfh.exceptions.CredentialsException;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.Client;
+import bdfh.net.client.Notification;
 
 import java.io.IOException;
 import java.security.*;
@@ -68,6 +69,11 @@ public class Authentication {
 				
 				//Set he username
 				Player.getInstance().setUsername(username);
+				
+				// Connect to the notification channel
+				Thread notif = new Thread(Notification.getInstance());
+				
+				notif.start();
 			}
 		} catch (CredentialsException e) {
 			e.printStackTrace();

@@ -21,6 +21,7 @@ public class NotificationServer implements Runnable {
 		
 		try {
 			srv = new ServerSocket(Protocoly.NPORT);
+			
 			LOG.log(Level.INFO,
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
 							+ "\nPort::" + Protocoly.NPORT);
@@ -52,7 +53,7 @@ public class NotificationServer implements Runnable {
 			
 			try {
 				
-				LOG.log(Level.INFO, "Waiting for new client to connect");
+				LOG.log(Level.INFO, "Notif: Waiting for new client to connect");
 				
 				Socket newClient = srv.accept();
 				
@@ -61,10 +62,10 @@ public class NotificationServer implements Runnable {
 				Thread worker = new Thread(cw);
 				worker.start();
 				
-				LOG.log(Level.INFO, "Client accepted. Worker created and started");
+				LOG.log(Level.INFO, "Notif: Client accepted. Worker created and started");
 				
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "Exception accepting client connection: " + e);
+				LOG.log(Level.SEVERE, "Notif: Exception accepting client connection: " + e);
 				e.printStackTrace();
 			}
 		}

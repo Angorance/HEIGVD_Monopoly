@@ -1,6 +1,6 @@
 package bdfh.net.server;
 
-import bdfh.data.*;
+import bdfh.game.*;
 import bdfh.protocol.Protocoly;
 import bdfh.database.DatabaseConnect;
 import bdfh.net.Handler;
@@ -84,6 +84,7 @@ public class ClientHandler implements Handler {
 					// we try to log the user in
 					int result = database.getPlayerDB()
 							.playerExists(param[0], param[1]);
+					
 					if (result == 0) {
 						sendData(Protocoly.ANS_UNKNOWN);
 						
@@ -178,7 +179,7 @@ public class ClientHandler implements Handler {
 	}
 	
 	/**
-	 * Send data (commands / info) through the output stream.
+	 * Send game (commands / info) through the output stream.
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */
@@ -214,7 +215,6 @@ public class ClientHandler implements Handler {
 	
 	private void joinLobby(String lobbyID) {
 		
-		//TODO - POURQUOI LE LOBBYID C EST UN STRING????????
 		lobby = Lobbies.getInstance()
 				.joinLobby(this, Integer.parseInt(lobbyID));
 		

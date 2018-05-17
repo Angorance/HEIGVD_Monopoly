@@ -7,6 +7,8 @@ import bdfh.serializable.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // TODO - Maybe handle better the exceptions...
 
@@ -24,6 +26,8 @@ public class Client {
 	private PrintWriter out = null;
 	
 	private String response;
+	
+	private static Logger LOG = Logger.getLogger("Client");
 	
 	
 	private Client() {}
@@ -54,16 +58,15 @@ public class Client {
 			
 			response = in.readLine();
 			
+			LOG.log(Level.INFO, "RECEIVED: " + response);
+			
 			if (!handleConnectionAnswer(response)){
 				throw new ConnectionException(
 						"A problem happened during Connection");
 			}
 			
-			// Connect to the notification channel
-			//Notification.getInstance().connect();
-			
 		} catch (IOException e) {
-			System.out.println("Client::connect: " + e);
+			LOG.log(Level.SEVERE, "Client::connect: " + e);
 			throw e;
 		}
 	}
@@ -80,11 +83,13 @@ public class Client {
 		try {
 			response = in.readLine();
 			
+			LOG.log(Level.INFO, "RECEIVED: " + response);
+			
 			if (!response.equals(Protocoly.ANS_BYE)) {
-				// TODO - Disconnection failed - What to do?
+				LOG.log(Level.SEVERE, "Disconnection failed from server.");
 			}
 		} catch (IOException e) {
-			System.out.println("Client::disconnect: " + e);
+			LOG.log(Level.SEVERE, "Client::disconnect: " + e);
 			throw e;
 			
 		} finally {
@@ -121,6 +126,8 @@ public class Client {
 		
 		try {
 			response = in.readLine();
+			
+			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				success = true;
@@ -161,6 +168,8 @@ public class Client {
 		try {
 			response = in.readLine();
 			
+			LOG.log(Level.INFO, "RECEIVED: " + response);
+			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = 1;
 			} else if (response.equals(Protocoly.ANS_UKNW)) {
@@ -171,7 +180,7 @@ public class Client {
 				throw new CredentialsException("Problem with Login");
 			}
 		} catch (IOException e) {
-			System.out.println("Client::login: " + e);
+			LOG.log(Level.SEVERE, "Client::login: " + e);
 			throw e;
 		}
 		
@@ -184,6 +193,8 @@ public class Client {
 	 * @param data Data to send.
 	 */
 	private void sendData(String data) {
+		
+		LOG.log(Level.INFO, "Sending: " + data);
 		
 		// Print the data and flush the stream.
 		out.println(data);
