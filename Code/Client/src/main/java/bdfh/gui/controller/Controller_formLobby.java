@@ -30,6 +30,8 @@ public class Controller_formLobby implements Initializable {
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
 	@FXML private Label random_label;
+	@FXML private JFXComboBox<String> mode;
+	@FXML private JFXTextField time;
 	
 	private Controller_lobbyList cl;
 	
@@ -65,7 +67,17 @@ public class Controller_formLobby implements Initializable {
 			check = false;
 		}
 		
-		return check;
+		if (mode.getSelectionModel().getSelectedItem().equals("Limite de temps")){
+			String timeInt = time.getText();
+			if(timeInt.isEmpty() || isNumber(timeInt) || Integer.parseInt(timeInt) < 45 || Integer.parseInt(timeInt) > 90){
+				check = false;
+				time.setStyle("-jfx-unfocus-color: red;");
+			}
+		}
+		
+		{
+			return check;
+		}
 	}
 	
 	private boolean isNumber(String str) {
@@ -100,6 +112,18 @@ public class Controller_formLobby implements Initializable {
 		}
 		numberDice.setItems(items);
 		numberDice.getSelectionModel().selectFirst();
+		
+		ObservableList<String> items2 = FXCollections.observableArrayList();
+		items2.addAll("Banqueroute", "Limite de temps");
+		mode.setItems(items2);
+		mode.getSelectionModel().selectFirst();
+		
+	}
+	
+	private void checkMode() {
+		
+		boolean check = mode.getSelectionModel().getSelectedItem().equals("Limite de temps");
+		time.setVisible(check);
 	}
 	
 	
@@ -135,6 +159,21 @@ public class Controller_formLobby implements Initializable {
 			@Override public void handle(MouseEvent event) {
 				
 				moneyStart.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
+		
+		mode.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				checkMode();
+				time.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		time.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				time.setStyle("-jfx-unfocus-color: black;");
 			}
 		});
 	}
