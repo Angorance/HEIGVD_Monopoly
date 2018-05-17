@@ -8,9 +8,9 @@ package bdfh.serializable;
  */
 public class Parameter {
 	
-	public int nbrDice;                             // Number of dice in the game
-	public int moneyAtTheStart;                     // Money given at the start
-	public boolean randomGeneration;                // True if random game generation allowed, false otherwise
+	private int nbrDice;                             // Number of dice in the game
+	private int moneyAtTheStart;                     // Money given at the start
+	private boolean randomGeneration;                // True if random game generation allowed, false otherwise
 	
 	/**
 	 * Set the parameter of the game.
@@ -33,5 +33,15 @@ public class Parameter {
 		this.nbrDice = nbrDice;
 		this.moneyAtTheStart = moneyAtTheStart;
 		this.randomGeneration = randomGeneration;
+	}
+	
+	public int getMoneyAtTheStart() {
+		
+		return moneyAtTheStart;
+	}
+	
+	public int getNbrDice() {
+		
+		return nbrDice;
 	}
 }
