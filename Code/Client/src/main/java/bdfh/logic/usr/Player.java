@@ -23,11 +23,6 @@ public class Player {
 		static final Player instance = new Player();
 	}
 	
-	/**
-	 * TODO
-	 *
-	 * @return TODO
-	 */
 	public static Player getInstance() {
 		
 		return Instance.instance;

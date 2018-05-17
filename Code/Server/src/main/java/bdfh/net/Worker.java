@@ -1,11 +1,8 @@
 package bdfh.net;
 
-import bdfh.net.server.ClientHandler;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * Manage the connection with a client

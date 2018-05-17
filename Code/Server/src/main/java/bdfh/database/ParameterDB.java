@@ -1,6 +1,6 @@
 package bdfh.database;
 
-import bdfh.serializable.BoundParameters;
+import bdfh.serializable.*;
 
 import java.sql.*;
 

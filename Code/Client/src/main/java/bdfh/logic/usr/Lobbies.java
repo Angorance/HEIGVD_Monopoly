@@ -11,7 +11,9 @@ import java.util.HashMap;
 public class Lobbies {
 
     private HashMap<Integer, Lobby> lobbies = new HashMap<>();
-
+    
+    private Lobbies() {}
+    
     private static class Instance {
         static final Lobbies instance = new Lobbies();
     }
@@ -26,14 +28,13 @@ public class Lobbies {
      * @param JSListLobby JSON string representing a list of lobby.
      */
     public void setLobbies(String JSListLobby) {
+        //TODO - NE PAS UTILISER GSON ICI, IL FAUT RAJOUTER UNE METHODE SETLOBBIES DANS NOTIFICATION
         Lobby[] list = new Gson().fromJson(JSListLobby, Lobby[].class);
 
         for(Lobby l : list){
            lobbies.put(l.getID(), l);
         }
     }
-
-    private Lobbies() {}
     
     /**
      * Get a particular lobby of the list.

@@ -1,14 +1,12 @@
-package bdfh.data;
+package bdfh.game;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
-import static bdfh.protocol.Protocoly.*;
-import bdfh.serializable.GsonSerializer;
-import bdfh.serializable.LightLobby;
-import bdfh.serializable.Parameter;
+import bdfh.protocol.ObsProtocol;
+import bdfh.protocol.Protocoly;
+import bdfh.serializable.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Class used to store all lobbies created.
@@ -16,30 +14,12 @@ import java.util.LinkedList;
  * @author Héléna Line Reymond
  * @version 1.0
  */
-	public class Lobbies {
+public class Lobbies extends LightLobbies {
 	
-	private HashMap<Integer, Lobby> lobbies = new HashMap<>();
 	private LinkedList<NotificationHandler> subList = new LinkedList<>();
 	
 	private Lobbies() {}
 	
-	public void removeLobby(Lobby lobby) {
-		lobbies.remove(lobby.getID());
-		notifySubs("DELETED " + lobby.getID());
-	}
-
-	private void notifySubs(String s) {
-		for(NotificationHandler n : subList){
-			n.sendData(s);
-		}
-	}
-
-	public void addSubscriber(NotificationHandler notificationHandler) {
-		if(!subList.contains(notificationHandler)){
-			subList.add(notificationHandler);
-		}
-	}
-
 	/**
 	 * Internal static class used to create one and only one instance of
 	 * Lobbies to guarantee it follows the singleton model.
@@ -68,16 +48,16 @@ import java.util.LinkedList;
 		Lobby lobby = new Lobby(param);
 		
 		// Add the lobby to the list
-		lobbies.put(lobby.getID(), lobby);
+		addLobby(lobby);
 		
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
-
-		//notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
+		
+		notifySubs(ObsProtocol.NEW, lobby);
 		
 		return lobby;
 	}
-
+	
 	/**
 	 * Add a player to a lobby
 	 * @param player payer that wants to join a lobby
@@ -85,20 +65,37 @@ import java.util.LinkedList;
 	 * @return
 	 */
 	public synchronized Lobby joinLobby(ClientHandler player, int lobbyID) {
-		Lobby l = lobbies.get(lobbyID);
+		Lobby l = (Lobby) getLobbies().get(lobbyID);
+		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs(NOT_UPDATE + " " + GsonSerializer.getInstance().toJson(new LightLobby(l)));
+			notifySubs(ObsProtocol.UPDATE, l);
 		}
+		
 		return l;
 	}
 	
-	/**
-	 * Retrieve all lobbies created in the lobby.
-	 *
-	 * @return  lobbies created in the lobby
-	 */
-	public synchronized HashMap<Integer, Lobby> getLobbies() {
-		return lobbies;
+	public void removeLobby(Lobby lobby) {
+		removeLobby(lobby);
+		
+		notifySubs(ObsProtocol.DELETE, lobby);
+	}
+	
+	
+	public void addSubscriber(NotificationHandler notificationHandler) {
+		if(!subList.contains(notificationHandler)){
+			subList.add(notificationHandler);
+		}
+	}
+	
+	private void notifySubs(int cmd, LightLobby l) {
+		for(NotificationHandler n : subList){
+			n.update(cmd, l);
+		}
+	}
+	
+	public String jsonify() {
+		
+		return GsonSerializer.getInstance().toJson(getLobbies());
 	}
 }

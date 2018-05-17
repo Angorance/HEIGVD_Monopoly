@@ -114,3 +114,29 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
 INSERT INTO `cheseaux-poly`.`parameter`
 (`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `randomGameGeneration`)
 VALUES (1, 2, 4, 1000, 4000, false);
+
+-- -----------------------------------------------------
+-- Set the actions of the cards
+-- -----------------------------------------------------
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (1, "MOVE");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (2, "EXAM");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (3, "WIN");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (4, "LOSE");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (5, "GOTO");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `text`) VALUES (6, "CARD");
+
+-- -----------------------------------------------------
+-- Create the cards
+-- -----------------------------------------------------
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (1, "Félicitation, vous avez réussi tous les challenges de RES.", 1);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (2, "Fantastique, vous avez obtenu plus que 5 au dernier labo de POO.", 1);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (3, "Vous n'avez pas rendu à temps votre dernier labo de PCO.", 2);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (4, "Vous avez oublié d'acheter votre billet de parking.", 2);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (5, "Merci d'avoir rempli toutes les évaluations d'enseignants.", 3);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (6, "Vous avez été élu membre du CoRe.", 3);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (7, "Il se trouve que vous vous êtes planté dans la partie assembleur de votre test de SLO.", 4);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (8, "En rendant votre rapport de PRO, vous vous êtes trompé de casier.", 4);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (9, "Aller, qu'est-ce que tu attends ? C'est l'heure d'aller manger !", 5);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (10, "Fin des cours, tu mérites ta pause.", 5);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (11, "Vous avez été injustement pénalisé à votre dernier examen. Le professeur s'en excuse.", 6);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `action_id`) VALUES (12, "Grâce au coup de pouce d'un enseignant, vous passez finalement votre branche.", 6);

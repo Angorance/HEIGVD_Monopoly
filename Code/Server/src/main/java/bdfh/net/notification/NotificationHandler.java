@@ -1,23 +1,18 @@
 package bdfh.net.notification;
 
-import bdfh.data.Lobbies;
-import bdfh.data.Lobby;
+import bdfh.game.*;
 import bdfh.net.Handler;
-import bdfh.serializable.GsonSerializer;
-import bdfh.serializable.LightLobby;
-import com.google.gson.JsonArray;
+import bdfh.protocol.ObsProtocol;
+import bdfh.serializable.*;
 
 import java.io.*;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Logger;
-import static bdfh.protocol.Protocoly.*;
+import java.util.logging.*;
 
 /**
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class NotificationHandler implements Handler{
+public class NotificationHandler implements Handler {
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -52,12 +47,12 @@ public class NotificationHandler implements Handler{
 	 * Send the whole list
 	 */
 	private void sendLobbyList() {
-		JsonArray lobbyList = new JsonArray();
-		Lobbies.getInstance().getLobbies().forEach((key, lobby) -> {
-			lobbyList.add(GsonSerializer.getInstance().toJson(new LightLobby(lobby)));
-		});
-
-		sendData(NOT_LIST + " " + lobbyList.getAsString());
+		
+		String json = Lobbies.getInstance().jsonify();
+		
+		LOG.log(Level.INFO, "Lobbies: " + json);
+		
+		sendData(json);
 	}
 	
 	/**
@@ -79,7 +74,7 @@ public class NotificationHandler implements Handler{
 	}
 	
 	/**
-	 * Send data (commands / info) through the output stream.
+	 * Send game (commands / info) through the output stream.
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */
@@ -87,5 +82,12 @@ public class NotificationHandler implements Handler{
 		
 		sendData(cmd, "");
 	}
-
+	
+	public void update(int cmd, LightLobby l) {
+	
+		switch (cmd) {
+			case ObsProtocol.NEW:
+			
+		}
+	}
 }
