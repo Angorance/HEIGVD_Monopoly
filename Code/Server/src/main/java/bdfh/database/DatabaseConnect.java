@@ -109,4 +109,12 @@ public class DatabaseConnect {
 	public ParameterDB getParameterDB(){
 		return ParameterDB.getInstance();
 	}
+	
+	/**
+	 * Get the Card DB object used to send queries about the cards.
+	 * @return  the Card DB object
+	 */
+	public CardDB getCardDB(){
+		return CardDB.getInstance();
+	}
 }

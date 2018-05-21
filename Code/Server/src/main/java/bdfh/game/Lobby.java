@@ -118,4 +118,9 @@ public class Lobby extends LightLobby {
 		
 		return (getPlayers().size() == 4);
 	}
+	
+	public Parameter getParam() {
+		
+		return param;
+	}
 }

@@ -30,14 +30,19 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Nombre de dé :" />
                               <Label prefHeight="17.0" prefWidth="374.0" text="Monnaie de départ :" GridPane.rowIndex="1" />
-                              <Label fx:id="random_label" text="Génération aléatoire du plateau :" GridPane.rowIndex="2" />
+                              <Label fx:id="random_label" text="Génération aléatoire du plateau :" GridPane.rowIndex="4" />
                               <JFXTextField fx:id="moneyStart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <JFXComboBox fx:id="numberDice" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="1" />
-                              <JFXCheckBox fx:id="randomCheck" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXCheckBox fx:id="randomCheck" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Mode :" GridPane.rowIndex="2" />
+                              <JFXComboBox fx:id="mode" prefHeight="25.0" prefWidth="174.0" promptText="Limite de temps" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXTextField fx:id="time" promptText="Temps entre X et X" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                            <opaqueInsets>
                               <Insets />
