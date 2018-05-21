@@ -5,14 +5,21 @@ import bdfh.ClientForTest;
 import bdfh.exceptions.ConnectionException;
 import bdfh.logic.conn.Authentication;
 import bdfh.net.client.Client;
+import bdfh.net.client.Notification;
+import bdfh.net.protocol.NotifProtocol;
+import bdfh.net.protocol.Protocoly;
+import bdfh.serializable.LightLobbies;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -31,9 +38,9 @@ public class PlayerTest {
 			e.printStackTrace();
 		}
 		
-		for (int i = 0; i < 100; ++i) {
+		/*for (int i = 0; i < 100; ++i) {
 			Authentication.register("JUnit" + i, "tests");
-		}
+		}*/
 	}
 	
 	@AfterAll
@@ -56,7 +63,7 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void shouldCreateReadyQuitLoby() {
+	public void shouldCreateReadyQuitLobby() {
 		
 		Authentication.login("JUnit", "tests");
 		
@@ -172,6 +179,89 @@ public class PlayerTest {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	@Test
+	public void shouldReceiveGoodFirstNotificationWhenStartingNotificationClient() {
+		
+		ArrayList<ClientForTest> clients = new ArrayList<>();
+		
+		for (int i = 0; i < 8; ++i) {
+			ClientForTest c = new ClientForTest();
+			
+			try {
+				c.connect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			clients.add(c);
+			new AuthenticationForTest(c).login("JUnit" + i, "tests");
+		}
+		
+		for (int i = 0; i < 8; ++i) {
+			
+			clients.get(i).createLobby(new Parameter(2, 2000, false));
+		}
+		
+		try {
+			Socket tmp = new Socket(Protocoly.SERVER, Protocoly.NPORT);
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(tmp.getInputStream()));
+			
+			assertEquals(NotifProtocol.NOTIF_LIST + " "
+							+ "[{\"key\":0,\"value\":\"{\\\"ID\\\":0,\\\"Users\\\":[\\\"JUnit0\\\"],\\\"Ready\\\":[false]}\"},{\"key\":1,\"value\":\"{\\\"ID\\\":1,\\\"Users\\\":[\\\"JUnit1\\\"],\\\"Ready\\\":[false]}\"},{\"key\":2,\"value\":\"{\\\"ID\\\":2,\\\"Users\\\":[\\\"JUnit2\\\"],\\\"Ready\\\":[false]}\"},{\"key\":3,\"value\":\"{\\\"ID\\\":3,\\\"Users\\\":[\\\"JUnit3\\\"],\\\"Ready\\\":[false]}\"},{\"key\":4,\"value\":\"{\\\"ID\\\":4,\\\"Users\\\":[\\\"JUnit4\\\"],\\\"Ready\\\":[false]}\"},{\"key\":5,\"value\":\"{\\\"ID\\\":5,\\\"Users\\\":[\\\"JUnit5\\\"],\\\"Ready\\\":[false]}\"},{\"key\":6,\"value\":\"{\\\"ID\\\":6,\\\"Users\\\":[\\\"JUnit6\\\"],\\\"Ready\\\":[false]}\"},{\"key\":7,\"value\":\"{\\\"ID\\\":7,\\\"Users\\\":[\\\"JUnit7\\\"],\\\"Ready\\\":[false]}\"}]",
+					in.readLine());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			for (int i = 0; i < 8; ++i) {
+				
+				try {
+					clients.get(i).disconnect();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void shouldCreateLobbyInstances() {
+		
+		ArrayList<ClientForTest> clients = new ArrayList<>();
+		
+		for (int i = 0; i < 3; ++i) {
+			ClientForTest c = new ClientForTest();
+			
+			try {
+				c.connect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			clients.add(c);
+			new AuthenticationForTest(c).login("JUnit" + i, "tests");
+		}
+		
+		for (int i = 0; i < 3; ++i) {
+			
+			clients.get(i).createLobby(new Parameter(2, 2000, false));
+		}
+		
+		try {
+			Notification.getInstance().run();
+			
+			LightLobbies ls = Notification.getInstance().getLobbies();
+			
+			assertEquals(0, ls.getLobbies().get(0).getID());
+			assertEquals(1, ls.getLobbies().get(1).getID());
+			assertEquals(2, ls.getLobbies().get(2).getID());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

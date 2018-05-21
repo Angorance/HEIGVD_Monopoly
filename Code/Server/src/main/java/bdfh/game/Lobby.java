@@ -81,6 +81,8 @@ public class Lobby extends LightLobby {
 	 */
 	public synchronized void quitLobby(ClientHandler player) {
 		
+		// TODO - Do it from the Lobbies to be able to notify the Notification observer !!!
+		
 		if (!getAreReady().isEmpty() && getAreReady().get(players.indexOf(player)) != null) {
 			removePlayer(players.indexOf(player));
 		}

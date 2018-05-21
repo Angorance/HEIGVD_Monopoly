@@ -1,14 +1,18 @@
 package bdfh.net.server;
 
-import bdfh.game.*;
-import bdfh.protocol.Protocoly;
 import bdfh.database.DatabaseConnect;
+import bdfh.game.Lobbies;
+import bdfh.game.Lobby;
 import bdfh.net.Handler;
-import bdfh.serializable.*;
+import bdfh.protocol.Protocoly;
+import bdfh.serializable.BoundParameters;
+import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.Parameter;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Handle de dialog with a client
@@ -23,6 +27,7 @@ public class ClientHandler implements Handler {
 	private PrintWriter writer;
 	private int clientID;
 	private String clientUsername;
+	private boolean connected = true;
 	
 	private Lobby lobby;
 	
@@ -42,7 +47,6 @@ public class ClientHandler implements Handler {
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		
 		DatabaseConnect database = DatabaseConnect.getInstance();
-		boolean connected = true;
 		
 		String bounds = GsonSerializer.getInstance()
 				.toJson(BoundParameters.getInstance());
@@ -57,109 +61,131 @@ public class ClientHandler implements Handler {
 			String[] param;
 			String[] args;
 			
-			// TODO - COMMENTS
 			line = reader.readLine();
 			
-			args = line.split(" ");
-			
-			cmd = args[0];
-			
-			param = new String[args.length - 1];
-			System.arraycopy(args, 1, param, 0, param.length);
-			
-			LOG.log(Level.INFO, "CMD RECEIVED BY PLAYER" + clientID + ": " + line);
-			
-			// instruction processing
-			switch (cmd) {
-				case Protocoly.CMD_BYE:
-					sendData(Protocoly.ANS_BYE);
-					connected = false;
-					
-					LOG.log(Level.INFO, "Closing connection...");
-					
-					break;
+			try {
+				args = line.split(" ");
 				
-				case Protocoly.CMD_LOGIN: // USER LOGIN
-					
-					// we try to log the user in
-					int result = database.getPlayerDB()
-							.playerExists(param[0], param[1]);
-					
-					if (result == 0) {
-						sendData(Protocoly.ANS_UNKNOWN);
-						
-						LOG.log(Level.INFO, "Username not found");
-						
-					} else if (result == -1) {
-						sendData(Protocoly.ANS_DENIED);
-						
-						LOG.log(Level.INFO, "Wrong credentials");
-						
-					} else {
-						sendData(Protocoly.ANS_SUCCESS);
-						clientID = result;
-						clientUsername = param[0];
-						
-						LOG.log(Level.INFO, "User " + clientID + " connected");
-					}
-
-					
-					break;
+				cmd = args[0];
 				
-				case Protocoly.CMD_RGSTR: // USER REGISTER
+				
+				param = new String[args.length - 1];
+				System.arraycopy(args, 1, param, 0, param.length);
+				
+				LOG.log(Level.INFO,
+						"CMD RECEIVED BY PLAYER" + clientID + ": " + line);
+				
+				// instruction processing
+				switch (cmd) {
+					case Protocoly.CMD_BYE:
+						sendData(Protocoly.ANS_BYE);
+						
+						byebye();
+						
+						LOG.log(Level.INFO, "Closing connection...");
+						
+						break;
 					
-					if (database.getPlayerDB()
-							.createPlayer(param[0], param[1])) {
-						// username free, we retrieve the user ID
-						clientID = database.getPlayerDB()
+					case Protocoly.CMD_LOGIN: // USER LOGIN
+						
+						// we try to log the user in
+						int result = database.getPlayerDB()
 								.playerExists(param[0], param[1]);
-						clientUsername = param[0];
 						
-						sendData(Protocoly.ANS_SUCCESS);
+						if (result == 0) {
+							sendData(Protocoly.ANS_UNKNOWN);
+							
+							LOG.log(Level.INFO, "Username not found");
+							
+						} else if (result == -1) {
+							sendData(Protocoly.ANS_DENIED);
+							
+							LOG.log(Level.INFO, "Wrong credentials");
+							
+						} else {
+							sendData(Protocoly.ANS_SUCCESS);
+							clientID = result;
+							clientUsername = param[0];
+							
+							LOG.log(Level.INFO,
+									"User " + clientID + " connected");
+						}
 						
-						LOG.log(Level.INFO, "User created in database");
 						
-					} else {
-						// username already taken
-						sendData(Protocoly.ANS_DENIED);
+						break;
+					
+					case Protocoly.CMD_RGSTR: // USER REGISTER
 						
-						LOG.log(Level.INFO, "Registration failed: "
-								+ "Username already in database.");
+						if (database.getPlayerDB()
+								.createPlayer(param[0], param[1])) {
+							// username free, we retrieve the user ID
+							clientID = database.getPlayerDB()
+									.playerExists(param[0], param[1]);
+							clientUsername = param[0];
+							
+							sendData(Protocoly.ANS_SUCCESS);
+							
+							LOG.log(Level.INFO, "User created in database");
+							
+						} else {
+							// username already taken
+							sendData(Protocoly.ANS_DENIED);
+							
+							LOG.log(Level.INFO, "Registration failed: "
+									+ "Username already in database.");
+							
+						}
 						
-					}
+						break;
 					
-					break;
+					case Protocoly.CMD_JOINLOBBY:
+						
+						joinLobby(param[0]);
+						break;
+					
+					case Protocoly.CMD_QUITLOBBY:
+						
+						quitLobby();
+						break;
+					
+					case Protocoly.CMD_RDY:
+						
+						setReady();
+						break;
+					
+					case Protocoly.CMD_NEWLOBBY:
+						
+						createLobby(param[0]);
+						break;
+					
+					default: // WTF ???
+						sendData("U wot m8 ?");
+						
+						LOG.log(Level.SEVERE, "User CMD not found!");
+						
+						break;
+				}
 				
-				case Protocoly.CMD_JOINLOBBY:
-					
-					joinLobby(param[0]);
-					break;
+			} catch (NullPointerException e) {
 				
-				case Protocoly.CMD_QUITLOBBY:
-					
-					quitLobby();
-					break;
+				byebye();
 				
-				case Protocoly.CMD_RDY:
-					
-					setReady();
-					break;
-				
-				case Protocoly.CMD_NEWLOBBY:
-					
-					createLobby(param[0]);
-					break;
-				
-				default: // WTF ???
-					sendData("U wot m8 ?");
-					
-					LOG.log(Level.SEVERE, "User CMD not found!");
-					
-					break;
+				LOG.log(Level.SEVERE,
+						"Client " + clientID + " disconnected suddenly.");
 			}
 		}
 	}
-
+	
+	private void byebye() {
+		
+		connected = false;
+		
+		if (lobby != null) {
+			lobby.quitLobby(this);
+		}
+		
+	}
+	
 	/**
 	 * TODO
 	 *
@@ -257,7 +283,8 @@ public class ClientHandler implements Handler {
 			lobby.quitLobby(this);
 			lobby = null;
 			
-			LOG.log(Level.INFO, "Player " + clientID + " left lobby" + lobbyLeft);
+			LOG.log(Level.INFO,
+					"Player " + clientID + " left lobby" + lobbyLeft);
 			
 			sendData(Protocoly.ANS_SUCCESS);
 		} else {
@@ -269,6 +296,7 @@ public class ClientHandler implements Handler {
 	}
 	
 	public String getClientUsername() {
+		
 		return clientUsername;
 	}
 }

@@ -1,7 +1,7 @@
 package bdfh.serializable;
 
-import bdfh.game.Lobby;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class LightLobby {
 	
 	private int ID;
-	private ArrayList<String> usernames = new ArrayList<>(Lobby.MAX_PLAYER);
-	private ArrayList<Boolean> areReady = new ArrayList<>(Lobby.MAX_PLAYER);
+	private ArrayList<String> usernames = new ArrayList<>(4);
+	private ArrayList<Boolean> areReady = new ArrayList<>(4);
 	
 	
 	public LightLobby() {}
@@ -39,12 +39,16 @@ public class LightLobby {
 	public void addPlayer(String username/*, int index*/) {
 	
 		usernames.add(/*index, */username);
-		areReady.add(false);
 	}
 	
 	public void addReady(boolean ready, int index) {
 		
-		areReady.set(index, ready);
+		areReady.add(index, ready);
+	}
+	
+	private void addR(boolean ready) {
+		
+		areReady.add(ready);
 	}
 	
 	public void removePlayer(int index) {
@@ -53,28 +57,22 @@ public class LightLobby {
 		areReady.remove(index);
 	}
 	
-	public String jsonify() {
+	public static LightLobby instancify(JsonObject json) {
 		
-		JsonObject jsonLobby = new JsonObject();
+		LightLobby tmp = new LightLobby();
 		
-		JsonArray jsonUsers = new JsonArray();
+		tmp.setID(json.get("ID").getAsInt());
 		
-		for (String s : usernames) {
+		for (JsonElement je : json.get("Users").getAsJsonArray()) {
 			
-			jsonUsers.add(s);
+			tmp.addPlayer(je.getAsString());
 		}
 		
-		JsonArray jsonReady = new JsonArray();
-		
-		for (boolean b : areReady) {
+		for (JsonElement je : json.get("Ready").getAsJsonArray()) {
 			
-			jsonReady.add(b);
+			tmp.addR(je.getAsBoolean());
 		}
 		
-		jsonLobby.add("ID", new JsonPrimitive(ID));
-		jsonLobby.add("Users", jsonUsers);
-		jsonLobby.add("Ready", jsonReady);
-		
-		return GsonSerializer.getInstance().toJson(jsonLobby);
+		return tmp;
 	}
 }

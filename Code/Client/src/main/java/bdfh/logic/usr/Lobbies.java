@@ -14,6 +14,11 @@ public class Lobbies {
     
     private Lobbies() {}
     
+    public HashMap<Integer, Lobby> getLobbies() {
+        
+        return lobbies;
+    }
+    
     private static class Instance {
         static final Lobbies instance = new Lobbies();
     }

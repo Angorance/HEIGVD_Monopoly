@@ -1,6 +1,8 @@
 package bdfh;
 
+import bdfh.logic.usr.Parameter;
 import bdfh.net.protocol.Protocoly;
+import bdfh.serializable.GsonSerializer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -130,6 +132,38 @@ public class ClientForTest {
 		// Print the data and flush the stream.
 		out.println(data);
 		out.flush();
+	}
+	
+	/**
+	 * Create a new lobby on the game server.
+	 *
+	 * @param parameters    Parameters used in the new lobby.
+	 *
+	 * @return  true if the lobby is created, false otherwise.
+	 */
+	public boolean createLobby(Parameter parameters) {
+		
+		boolean result = false;
+		
+		// Send the new lobby to the server with its parameters
+		String jsonParam = GsonSerializer.getInstance().toJson(parameters);
+		sendData(Protocoly.CMD_NEWLOBBY + " " + jsonParam);
+		
+		try {
+			response = in.readLine();
+			
+			if (response.equals(Protocoly.ANS_SUCCESS)) {
+				result = true;
+			} else if (response.equals(Protocoly.ANS_DENIED)) {
+				result = false;
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Client::createLobby: " + e);
+			result = false;
+		}
+		
+		return result;
 	}
 	
 	/**

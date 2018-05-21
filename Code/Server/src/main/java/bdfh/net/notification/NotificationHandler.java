@@ -1,12 +1,13 @@
 package bdfh.net.notification;
 
-import bdfh.game.*;
+import bdfh.game.Lobbies;
 import bdfh.net.Handler;
-import bdfh.protocol.ObsProtocol;
-import bdfh.serializable.*;
+import bdfh.protocol.NotifProtocol;
+import bdfh.serializable.LightLobby;
 
 import java.io.*;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -32,7 +33,7 @@ public class NotificationHandler implements Handler {
 		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		boolean connected = true;
-
+		
 		Lobbies.getInstance().addSubscriber(this);
 		sendLobbyList();
 		
@@ -40,9 +41,9 @@ public class NotificationHandler implements Handler {
 		while (connected) {
 			// TODO ???
 		}
-
+		
 	}
-
+	
 	/**
 	 * Send the whole list
 	 */
@@ -52,7 +53,7 @@ public class NotificationHandler implements Handler {
 		
 		LOG.log(Level.INFO, "Lobbies: " + json);
 		
-		sendData(json);
+		sendData(NotifProtocol.NOTIF_LIST + " " + json);
 	}
 	
 	/**
@@ -84,10 +85,24 @@ public class NotificationHandler implements Handler {
 	}
 	
 	public void update(int cmd, LightLobby l) {
-	
+		
+		String json = l.jsonify();
+		
 		switch (cmd) {
-			case ObsProtocol.NEW:
-			
+			case NotifProtocol.NEW:
+				
+				sendData(NotifProtocol.NOTIF_NEW + " " + json);
+				break;
+				
+			case NotifProtocol.UPDATE:
+				
+				sendData(NotifProtocol.NOTIF_UPDATE + " " + json);
+				break;
+				
+			case NotifProtocol.DELETE:
+				
+				sendData(NotifProtocol.NOTIF_DELETE + " " + json);
+				break;
 		}
 	}
 }

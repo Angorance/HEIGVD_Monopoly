@@ -2,8 +2,7 @@ package bdfh.game;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
-import bdfh.protocol.ObsProtocol;
-import bdfh.protocol.Protocoly;
+import bdfh.protocol.NotifProtocol;
 import bdfh.serializable.*;
 
 import java.util.*;
@@ -19,6 +18,11 @@ public class Lobbies extends LightLobbies {
 	private LinkedList<NotificationHandler> subList = new LinkedList<>();
 	
 	private Lobbies() {}
+	
+	public Lobby getLobby(Integer lobbyID) {
+		
+		return (Lobby) getLobbies().get(lobbyID);
+	}
 	
 	/**
 	 * Internal static class used to create one and only one instance of
@@ -53,7 +57,7 @@ public class Lobbies extends LightLobbies {
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 		
-		notifySubs(ObsProtocol.NEW, lobby);
+		notifySubs(NotifProtocol.NEW, lobby);
 		
 		return lobby;
 	}
@@ -69,16 +73,18 @@ public class Lobbies extends LightLobbies {
 		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs(ObsProtocol.UPDATE, l);
+			notifySubs(NotifProtocol.UPDATE, l);
+		} else {
+			l = null;
 		}
 		
 		return l;
 	}
 	
 	public void removeLobby(Lobby lobby) {
-		removeLobby(lobby);
+		super.removeLobby(lobby);
 		
-		notifySubs(ObsProtocol.DELETE, lobby);
+		notifySubs(NotifProtocol.DELETE, lobby);
 	}
 	
 	
@@ -89,13 +95,8 @@ public class Lobbies extends LightLobbies {
 	}
 	
 	private void notifySubs(int cmd, LightLobby l) {
-		for(NotificationHandler n : subList){
+		for (NotificationHandler n : subList){
 			n.update(cmd, l);
 		}
-	}
-	
-	public String jsonify() {
-		
-		return GsonSerializer.getInstance().toJson(getLobbies());
 	}
 }

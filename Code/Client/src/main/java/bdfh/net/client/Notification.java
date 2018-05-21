@@ -3,10 +3,16 @@ package bdfh.net.client;
 import bdfh.exceptions.ConnectionException;
 import bdfh.logic.usr.*;
 import bdfh.net.protocol.Protocoly;
+import bdfh.net.protocol.NotifProtocol;
+import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.LightLobbies;
+import bdfh.serializable.LightLobby;
 import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -19,10 +25,18 @@ public class Notification extends Thread {
 	private BufferedReader in = null;
 	
 	private String line;
-	private Lobbies lobbies = Lobbies.getInstance();
+	private LightLobbies lobbies;
+	
+	public LightLobbies getLobbies() {
+		
+		return lobbies;
+	}
 	
 	boolean isNotified = true;
 	
+	Logger LOG = Logger.getLogger("Notification");
+	
+	// TODO - Gérer list observer
 	
 	private Notification() {}
 	
@@ -51,14 +65,40 @@ public class Notification extends Thread {
 			
 			line = in.readLine();
 			
-			if (!line.equals(Protocoly.ANS_CONN)) {
-				throw new ConnectionException(
-						"A problem happened during Connection to Notification");
-			}
+			LOG.log(Level.INFO, line);
+			
+			handleNotification(line);
 			
 		} catch (IOException e) {
 			System.out.println("Notification::connect: " + e);
 			throw e;
+		}
+	}
+	
+	private void handleNotification(String line) {
+		
+		String[] s = line.split(" ");
+		
+		String json = s[1];
+		
+		// TODO - Notify observer
+		
+		switch (s[0]) {
+			case NotifProtocol.NOTIF_LIST:
+				
+				LightLobbies.getInstance().instancify(json);
+				break;
+				
+			case NotifProtocol.NOTIF_NEW:
+			case NotifProtocol.NOTIF_UPDATE:
+				
+				LightLobbies.getInstance().addLobby(json);
+				break;
+				
+			case NotifProtocol.NOTIF_DELETE:
+				
+				LightLobbies.getInstance().removeLobby(json);
+				break;
 		}
 	}
 	
@@ -89,28 +129,8 @@ public class Notification extends Thread {
 			while (isNotified) {
 				line = in.readLine();
 
-				String[] command = line.split(" ",1);
-				int idUpdated = 0;
+				handleNotification(line);
 				
-				switch (command[0]) {
-					case Protocoly.NOT_LIST : // lobbies have been sent
-						//TODO - implement when sprint 3 is started
-						break;
-					case Protocoly.NOT_UPDATE : // a lobby has been updated
-						Lobby l = new Gson().fromJson(command[1],Lobby.class);
-						lobbies.updateLobby(l);
-						idUpdated = l.getID();
-						break;
-					case Protocoly.NOT_DELETE : // a lobby has been deleted (game launched, nobody in lobby)
-						idUpdated = Integer.parseInt(command[1]);
-						lobbies.removeLobby(idUpdated);
-						break;
-				}
-
-				// signal the update with the ID
-				// TODO signal an observer/the GUI
-
-
 			}
 		} catch (ConnectionException e) {
 			e.printStackTrace();
@@ -120,6 +140,13 @@ public class Notification extends Thread {
 	}
 
 	public void pause() {
+		
+		try {
+			disconnect();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		getInstance().interrupt();
 	}
 	
