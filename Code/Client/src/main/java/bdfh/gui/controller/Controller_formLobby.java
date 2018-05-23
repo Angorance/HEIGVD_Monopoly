@@ -134,6 +134,8 @@ public class Controller_formLobby implements Initializable {
 		BoundParameters b = Player.getBounds();
 		
 		moneyStart.setPromptText("De " + b.getMinMoneyAtTheStart() + " à " + b.getMaxMoneyAtTheStart());
+		time.setPromptText("De " + b.getMinTime() + " à " + b.getMaxTime() + " min");
+		
 		if (!b.isRandomGameGeneration()) {
 			random_label.setVisible(false);
 			randomCheck.setVisible(false);
