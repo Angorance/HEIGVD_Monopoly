@@ -1,6 +1,5 @@
 package bdfh.gui.controller;
 
-import bdfh.logic.usr.Lobby;
 import bdfh.logic.usr.Parameter;
 import bdfh.logic.usr.Player;
 import bdfh.serializable.BoundParameters;
@@ -48,9 +47,10 @@ public class Controller_formLobby implements Initializable {
 		if (checkValidation()) {
 			int nbrDice = numberDice.getValue();
 			int money = Integer.parseInt(moneyStart.getText());
+			int m = Parameter.getModesValues().get(mode.getValue());
 			boolean random = randomCheck.isSelected();
 			
-			Player.getInstance().createLobby(nbrDice, money, random);
+			Player.getInstance().createLobby(nbrDice, money, m, random);
 			cl.createItem();
 		}
 		

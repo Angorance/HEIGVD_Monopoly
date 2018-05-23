@@ -18,7 +18,6 @@ public class GameLogic extends Thread {
 	private ArrayDeque<Player> joueurs;
 	private ArrayDeque<Card> Deck;
 	private Square[] board = new Square[NB_SQUARE];
-	CircularA
 	private int nbDice;
 	
 	/**
@@ -47,7 +46,7 @@ public class GameLogic extends Thread {
 		//TODO get card list, generate list of card
 		
 		for(int i = 0; i < NB_DECKCARD; ++i){
-			Deck.addFirst(new Card());
+			//Deck.addFirst(new Card());
 		}
 	}
 	

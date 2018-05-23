@@ -1,9 +1,9 @@
 package bdfh.net.notification;
 
 import bdfh.game.Lobbies;
+import bdfh.game.Lobby;
 import bdfh.net.Handler;
 import bdfh.protocol.NotifProtocol;
-import bdfh.serializable.LightLobby;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -84,7 +84,7 @@ public class NotificationHandler implements Handler {
 		sendData(cmd, "");
 	}
 	
-	public void update(int cmd, LightLobby l) {
+	public void update(int cmd, Lobby l) {
 		
 		String json = l.jsonify();
 		

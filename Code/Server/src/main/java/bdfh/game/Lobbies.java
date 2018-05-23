@@ -4,25 +4,31 @@ import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
 import bdfh.protocol.NotifProtocol;
 import bdfh.serializable.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import java.util.*;
 
 /**
- * Class used to store all lobbies created.
+ * Class Lobbies.
+ * Used to create, store and remove Lobby instances.
+ * Used to add, remove or set ready players on those Lobby instances.
+ * Has a method to serialise itself.
  *
  * @author Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class Lobbies extends LightLobbies {
+public class Lobbies {
 	
+	private HashMap<Integer, Lobby> lobbies = new HashMap<>();
 	private LinkedList<NotificationHandler> subList = new LinkedList<>();
 	
-	private Lobbies() {}
 	
-	public Lobby getLobby(Integer lobbyID) {
-		
-		return (Lobby) getLobbies().get(lobbyID);
-	}
+	// SINGLETON ---------------------------------------------------------------
+	private Lobbies() {}
 	
 	/**
 	 * Internal static class used to create one and only one instance of
@@ -42,6 +48,33 @@ public class Lobbies extends LightLobbies {
 		
 		return Instance.instance;
 	}
+	
+	// -------------------------------------------------------------------------
+	// HASHMAP -----------------------------------------------------------------
+	
+	public HashMap<Integer, Lobby> getLobbies() {
+		
+		return lobbies;
+	}
+	
+	public void addLobby(Lobby lobby) {
+		
+		lobbies.put(lobby.getID(), lobby);
+	}
+	
+	public void removeLobby(Lobby lobby) {
+		
+		lobbies.remove(lobby.getID(), lobby);
+		
+		notifySubs(NotifProtocol.DELETE, lobby);
+	}
+	
+	public Lobby getLobby(Integer lobbyID) {
+		
+		return (Lobby) getLobbies().get(lobbyID);
+	}
+	
+	// -------------------------------------------------------------------------
 	
 	/**
 	 * Add a new game to the list of lobbies.
@@ -69,7 +102,8 @@ public class Lobbies extends LightLobbies {
 	 * @return
 	 */
 	public synchronized Lobby joinLobby(ClientHandler player, int lobbyID) {
-		Lobby l = (Lobby) getLobbies().get(lobbyID);
+		
+		Lobby l = getLobby(lobbyID);
 		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
@@ -81,12 +115,8 @@ public class Lobbies extends LightLobbies {
 		return l;
 	}
 	
-	public void removeLobby(Lobby lobby) {
-		super.removeLobby(lobby);
-		
-		notifySubs(NotifProtocol.DELETE, lobby);
-	}
 	
+	// OBSERVABLE --------------------------------------------------------------
 	
 	public void addSubscriber(NotificationHandler notificationHandler) {
 		if(!subList.contains(notificationHandler)){
@@ -94,9 +124,32 @@ public class Lobbies extends LightLobbies {
 		}
 	}
 	
-	private void notifySubs(int cmd, LightLobby l) {
+	private void notifySubs(int cmd, Lobby l) {
 		for (NotificationHandler n : subList){
 			n.update(cmd, l);
 		}
+	}
+	
+	// -------------------------------------------------------------------------
+	// SERIALISATION -----------------------------------------------------------
+	
+	public String jsonify() {
+		
+		JsonArray jsonMap = new JsonArray();
+		
+		for (Integer id : lobbies.keySet()) {
+			
+			JsonObject jsonKV = new JsonObject();
+			
+			JsonElement jsonId = new JsonPrimitive(id);
+			JsonElement jsonLobby = new JsonPrimitive(lobbies.get(id).jsonify());
+			
+			jsonKV.add("key", jsonId);
+			jsonKV.add("value", jsonLobby);
+			
+			jsonMap.add(jsonKV);
+		}
+		
+		return GsonSerializer.getInstance().toJson(jsonMap);
 	}
 }

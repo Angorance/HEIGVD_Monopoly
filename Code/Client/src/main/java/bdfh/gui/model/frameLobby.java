@@ -17,7 +17,8 @@ public class frameLobby {
 		Parent root = null;
 		Stage primaryStage = new Stage();
 		try {
-			root = FXMLLoader.load(getClass().getResource("/view/lobbylist.fxml"));
+			root = FXMLLoader.load(getClass().getResource(
+					"/gui/view/lobbylist.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
 			primaryStage.setScene(new Scene(root, 800, 600));
 			primaryStage.setOnCloseRequest(event -> {

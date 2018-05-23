@@ -58,10 +58,10 @@ public class Player {
 	 *
 	 * @return  true if the lobby is created, false otherwise.
 	 */
-	public boolean createLobby(int nbrDice, int money, boolean randomGeneration) {
+	public boolean createLobby(int nbrDice, int money, int mode, boolean randomGeneration) {
 		
 		// Create the lobby on the server
-		return Client.getInstance().createLobby(new Parameter(nbrDice, money, randomGeneration));
+		return Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, randomGeneration));
 	}
 	
 	/**

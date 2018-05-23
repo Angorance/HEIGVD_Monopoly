@@ -34,9 +34,7 @@ public class LightLobbies {
 	
 	public void addLobby(String json) {
 		
-		JsonObject jo = new JsonObject();
-		
-		jo = jo.getAsJsonObject(json);
+		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
 		LightLobby lobby = LightLobby.instancify(jo);
 		

@@ -1,6 +1,5 @@
 package bdfh.gui.controller;
 
-import bdfh.logic.usr.Lobbies;
 import bdfh.logic.usr.Lobby;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -108,7 +107,8 @@ public class Controller_lobbyList implements Initializable {
 	
 	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/formlobby.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"/gui/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
 		Controller_formLobby cba = new Controller_formLobby(this);
