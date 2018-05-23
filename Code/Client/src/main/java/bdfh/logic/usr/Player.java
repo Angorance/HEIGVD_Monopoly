@@ -54,14 +54,16 @@ public class Player {
 	 *
 	 * @param nbrDice           Number of dice in the game.
 	 * @param money             Money given at the start of the game.
+	 * @param mode
+	 * @param time
 	 * @param randomGeneration  Random game generation.
 	 *
 	 * @return  true if the lobby is created, false otherwise.
 	 */
-	public boolean createLobby(int nbrDice, int money, int mode, boolean randomGeneration) {
+	public boolean createLobby(int nbrDice, int money, int mode, int time, boolean randomGeneration) {
 		
 		// Create the lobby on the server
-		return Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, randomGeneration));
+		return Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, time, randomGeneration));
 	}
 	
 	/**

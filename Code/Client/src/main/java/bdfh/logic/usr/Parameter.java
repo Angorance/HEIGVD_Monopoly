@@ -7,6 +7,7 @@ import java.util.Map;
  * store the limits of the game fixed by the administrator.
  *
  * @author Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class Parameter {
@@ -25,6 +26,7 @@ public class Parameter {
 	private int moneyAtTheStart;                     // Money given at the start
 	private boolean randomGeneration;                // True if random game generation allowed, false otherwise
 	private int mode;
+	private int time;
 	
 	/**
 	 * Set the parameter of the game.
@@ -32,8 +34,8 @@ public class Parameter {
 	 * @param nbrDice               Number of dice in the game
 	 * @param moneyAtTheStart       Money given at the start
 	 */
-	Parameter(int nbrDice, int moneyAtTheStart, int mode) {
-		this(nbrDice, moneyAtTheStart, mode, false);
+	Parameter(int nbrDice, int moneyAtTheStart, int mode, int time) {
+		this(nbrDice, moneyAtTheStart, mode, time, false);
 	}
 	
 	/**
@@ -42,13 +44,15 @@ public class Parameter {
 	 * @param nbrDice               Number of dice in the game
 	 * @param moneyAtTheStart       Money given at the start
 	 * @param mode                  Game mode identifier
+	 * @param time
 	 * @param randomGeneration      True if random game generation allowed, false otherwise
 	 */
-	Parameter(int nbrDice, int moneyAtTheStart, int mode, boolean randomGeneration) {
+	Parameter(int nbrDice, int moneyAtTheStart, int mode, int time, boolean randomGeneration) {
 		this.nbrDice = nbrDice;
 		this.moneyAtTheStart = moneyAtTheStart;
-		this.mode = mode;
 		this.randomGeneration = randomGeneration;
+		this.mode = mode;
+		this.time = time;
 	}
 	
 	public static Map<Integer, String> getModes() {

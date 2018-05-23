@@ -147,6 +147,7 @@ public class Lobby {
 		
 		jsonLobby.add("ID", new JsonPrimitive(ID));
 		jsonLobby.add("Mode", new JsonPrimitive(param.getMode()));
+		jsonLobby.add("Time", new JsonPrimitive(param.getTime()));
 		jsonLobby.add("Users", jsonUsers);
 		jsonLobby.add("Ready", jsonReady);
 		

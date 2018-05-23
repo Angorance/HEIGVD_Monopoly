@@ -58,7 +58,7 @@ public class PlayerTest {
 		
 		Authentication.login("JUnit", "tests");
 		
-		assertTrue(Player.getInstance().createLobby(2, 2000, 1, false));
+		assertTrue(Player.getInstance().createLobby(2, 2000, 1, 60, false));
 		
 	}
 	
@@ -67,7 +67,7 @@ public class PlayerTest {
 		
 		Authentication.login("JUnit", "tests");
 		
-		assertTrue(Player.getInstance().createLobby(2, 2000, 1, false));
+		assertTrue(Player.getInstance().createLobby(2, 2000, 1, 60, false));
 		assertTrue(Player.getInstance().setReady());
 		assertTrue(Player.getInstance().quitLobby());
 	}
@@ -76,7 +76,7 @@ public class PlayerTest {
 	public void shouldJoinReadyQuitExistingLobby() {
 		
 		Authentication.login("JUnit", "tests");
-		assertTrue(Player.getInstance().createLobby(2, 2000, 1, false));
+		assertTrue(Player.getInstance().createLobby(2, 2000, 1, 60, false));
 		Player.getInstance().setReady();
 		
 		ClientForTest c1 = null;
@@ -132,7 +132,7 @@ public class PlayerTest {
 	public void shouldNotJoinFullLobby() {
 		
 		Authentication.login("JUnit", "tests");
-		assertTrue(Player.getInstance().createLobby(2, 2000, 1, false));
+		assertTrue(Player.getInstance().createLobby(2, 2000, 1, 60, false));
 		Player.getInstance().setReady();
 		
 		ClientForTest c1 = null;
@@ -202,7 +202,7 @@ public class PlayerTest {
 		
 		for (int i = 0; i < 8; ++i) {
 			
-			clients.get(i).createLobby(new Parameter(2, 2000, 1, false));
+			clients.get(i).createLobby(new Parameter(2, 2000, 1, 60, false));
 		}
 		
 		try {
@@ -248,7 +248,7 @@ public class PlayerTest {
 		
 		for (int i = 0; i < 3; ++i) {
 			
-			clients.get(i).createLobby(new Parameter(2, 2000, 1, false));
+			clients.get(i).createLobby(new Parameter(2, 2000, 1, 60, false));
 		}
 		
 		try {
