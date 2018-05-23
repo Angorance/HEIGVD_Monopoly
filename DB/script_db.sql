@@ -75,6 +75,8 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`parameter` (
   `maxDice` INT NOT NULL,
   `minMoneyAtTheStart` INT NOT NULL,
   `maxMoneyAtTheStart` INT NOT NULL,
+  `minTime` INT NOT NULL,
+  `maxTime` INT NOT NULL,
   `randomGameGeneration` TINYINT NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -112,8 +114,8 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
 -- Set the limits of the game
 -- -----------------------------------------------------
 INSERT INTO `cheseaux-poly`.`parameter`
-(`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `randomGameGeneration`)
-VALUES (1, 2, 4, 1000, 4000, false);
+(`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `minTime`, `maxTime`, `randomGameGeneration`)
+VALUES (1, 2, 4, 1000, 4000, 30, 120, false);
 
 -- -----------------------------------------------------
 -- Set the actions of the cards
