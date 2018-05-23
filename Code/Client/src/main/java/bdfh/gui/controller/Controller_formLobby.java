@@ -114,7 +114,7 @@ public class Controller_formLobby implements Initializable {
 		numberDice.getSelectionModel().selectFirst();
 		
 		ObservableList<String> items2 = FXCollections.observableArrayList();
-		items2.addAll("Banqueroute", "Limite de temps");
+		items2.addAll(Parameter.getModes().values());
 		mode.setItems(items2);
 		mode.getSelectionModel().selectFirst();
 		
