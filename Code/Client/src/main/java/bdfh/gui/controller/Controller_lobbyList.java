@@ -1,7 +1,6 @@
 package bdfh.gui.controller;
 
-import bdfh.logic.usr.Lobbies;
-import bdfh.logic.usr.Lobby;
+import bdfh.serializable.LightLobby;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +16,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller_lobbyList implements Initializable {
@@ -46,13 +46,13 @@ public class Controller_lobbyList implements Initializable {
 		private Label name;
 		private Label nbPlayer;
 		
-		Lobby lobby;
+		LightLobby lobby;
 		
-		public LobbyDisplayer(Lobby lobby) {
+		public LobbyDisplayer(LightLobby lobby) {
 			
 			this.lobby = lobby;
 			int nbPlayers = 0;
-			for (String str : lobby.getPlayers()) {
+			for (String str : lobby.getUsernames()) {
 				if (!str.isEmpty()) {
 					nbPlayers++;
 				}
@@ -79,7 +79,7 @@ public class Controller_lobbyList implements Initializable {
 		public void redraw() {
 			
 			int nbPlayers = 0;
-			for (String str : lobby.getPlayers()) {
+			for (String str : lobby.getUsernames()) {
 				if (!str.isEmpty()) {
 					nbPlayers++;
 				}
@@ -89,16 +89,16 @@ public class Controller_lobbyList implements Initializable {
 		
 	}
 	
-	private void detailLobby(Lobby lobby) {
+	private void detailLobby(LightLobby lobby) {
 		
-		String[] players = lobby.getPlayers();
-		boolean[] readys = lobby.getAreReady();
+		List<String> players = lobby.getUsernames();
+		List<Boolean> readys = lobby.getAreReady();
 		Label[] labelsPlayers = { name_player1, name_player2, name_player3, name_player4 };
 		Label[] labelsReadys = { ready_player1, ready_player2, ready_player3, ready_player4 };
 		
-		for (int i = 0; i < players.length; ++i) {
-			labelsPlayers[i].setText(players[i]);
-			labelsReadys[i].setText(readys[i] ? "Prêt" : "-");
+		for (int i = 0; i < players.size(); ++i) {
+			labelsPlayers[i].setText(players.get(i));
+			labelsReadys[i].setText(readys.get(i) ? "Prêt" : "-");
 		}
 	}
 	
@@ -108,7 +108,8 @@ public class Controller_lobbyList implements Initializable {
 	
 	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/formlobby.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"/gui/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
 		Controller_formLobby cba = new Controller_formLobby(this);

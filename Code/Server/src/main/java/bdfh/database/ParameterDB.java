@@ -1,8 +1,11 @@
 package bdfh.database;
 
-import bdfh.serializable.*;
+import bdfh.serializable.BoundParameters;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Class used to execute queries on the parameter table.
@@ -14,7 +17,7 @@ public class ParameterDB {
 	
 	private static final DatabaseConnect db = DatabaseConnect.getInstance();
 	
-	private ParameterDB(){}
+	private ParameterDB() {}
 	
 	/**
 	 * Internal static class used to create one and only one instance of
@@ -56,16 +59,22 @@ public class ParameterDB {
 			int maxDice = result.getInt("maxDice");
 			int minMoney = result.getInt("minMoneyAtTheStart");
 			int maxMoney = result.getInt("maxMoneyAtTheStart");
-			boolean randomGameGeneration = result.getInt("randomGameGeneration") == 0 ? false : true;
+			int minTime = result.getInt("minTime");
+			int maxTime = result.getInt("maxTime");
+			boolean randomGameGeneration =
+					result.getInt("randomGameGeneration") == 0 ? false : true;
 			
 			// Update the limits of the game
-			BoundParameters.getInstance().updateLimits(minDice, maxDice, minMoney, maxMoney, randomGameGeneration);
+			BoundParameters.getInstance()
+					.updateLimits(minDice, maxDice, minMoney, maxMoney, minTime,
+							maxTime, randomGameGeneration);
 			
 			// Close the db
 			statement.close();
 			
 		} catch (SQLException e) {
-			System.out.print("The database can't get the limits of the game : ");
+			System.out
+					.print("The database can't get the limits of the game : ");
 			e.printStackTrace();
 			
 		} finally {
@@ -76,21 +85,23 @@ public class ParameterDB {
 	/**
 	 * Set the limits of the game in the database.
 	 *
-	 * @param minDice                   Minimum number of dice allowed
-	 * @param maxDice                   Maximum number of dice allowed
-	 * @param minMoney                  Minimum money allowed at the start per player
-	 * @param maxMoney                  Maximum money allowed at the start per player
-	 * @param randomGameGeneration      True if randomGameGeneration allowed, false otherwise
+	 * @param minDice Minimum number of dice allowed
+	 * @param maxDice Maximum number of dice allowed
+	 * @param minMoney Minimum money allowed at the start per player
+	 * @param maxMoney Maximum money allowed at the start per player
+	 * @param minTime
+	 * @param maxTime
+	 * @param randomGameGeneration True if randomGameGeneration allowed, false
+	 * 		otherwise
 	 */
-	public void setLimits(int minDice, int maxDice, int minMoney, int maxMoney, boolean randomGameGeneration) {
+	public void setLimits(int minDice, int maxDice, int minMoney, int maxMoney,
+			int minTime, int maxTime, boolean randomGameGeneration) {
 		
-		String sql = "UPDATE parameter "
-				+ "SET minDice = ?, "
-				+ "SET maxDice = ?, "
-				+ "SET minMoneyAtTheStart = ?, "
+		String sql = "UPDATE parameter " + "SET minDice = ?, "
+				+ "SET maxDice = ?, " + "SET minMoneyAtTheStart = ?, "
 				+ "SET maxMoneyAtTheStart = ?, "
-				+ "SET randomGameGeneration = ? "
-				+ "WHERE id = 1;";
+				+ "SET minTime = ?, " + "SET maxTime = ?, "
+				+ "SET randomGameGeneration = ? " + "WHERE id = 1;";
 		
 		try {
 			PreparedStatement statement = db.connect().prepareStatement(sql);
@@ -100,14 +111,17 @@ public class ParameterDB {
 			statement.setInt(2, maxDice);
 			statement.setInt(3, minMoney);
 			statement.setInt(4, maxMoney);
-			statement.setBoolean(5, randomGameGeneration);
+			statement.setInt(5, minTime);
+			statement.setInt(6, maxTime);
+			statement.setBoolean(7, randomGameGeneration);
 			statement.execute();
 			
 			// Close the db
 			statement.close();
 			
 		} catch (SQLException e) {
-			System.out.print("The database can't set the limits of the game : ");
+			System.out
+					.print("The database can't set the limits of the game : ");
 			e.printStackTrace();
 			
 		} finally {

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LightLobby {
 	
@@ -26,7 +27,7 @@ public class LightLobby {
 		return usernames;
 	}
 	
-	public ArrayList<Boolean> getAreReady() {
+	public List<Boolean> getAreReady() {
 		
 		return areReady;
 	}

@@ -16,7 +16,8 @@ public class Connection extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/view/loginRegister.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(
+				"/gui/view/loginRegister.fxml"));
 		primaryStage.setTitle("Cheseaux-Poly");
 		primaryStage.setScene(new Scene(root, 600, 400));
 		primaryStage.setOnCloseRequest(event -> {
