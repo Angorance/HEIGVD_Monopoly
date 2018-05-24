@@ -11,6 +11,7 @@ public class Card {
 	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD}
 	
 	private String text;
+	private int qte;
 	private EFFECTS effect;
 	private int value;
 	private int id;
