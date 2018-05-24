@@ -1,11 +1,7 @@
 package bdfh.database;
 
 import bdfh.serializable.BoundParameters;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Class used to execute queries on the parameter table.
@@ -74,7 +70,7 @@ public class ParameterDB {
 			
 		} catch (SQLException e) {
 			System.out
-					.print("The database can't get the limits of the logic : ");
+					.print("The database can't get the limits : ");
 			e.printStackTrace();
 			
 		} finally {
@@ -121,7 +117,7 @@ public class ParameterDB {
 			
 		} catch (SQLException e) {
 			System.out
-					.print("The database can't set the limits of the logic : ");
+					.print("The database can't set the limits : ");
 			e.printStackTrace();
 			
 		} finally {

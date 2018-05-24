@@ -117,4 +117,12 @@ public class DatabaseConnect {
 	public CardDB getCardDB(){
 		return CardDB.getInstance();
 	}
+	
+	/**
+	 * Get the Square DB object used to send queries about the cards.
+	 * @return  the Square DB object
+	 */
+	public SquareDB getSquareDB(){
+		return SquareDB.getInstance();
+	}
 }
