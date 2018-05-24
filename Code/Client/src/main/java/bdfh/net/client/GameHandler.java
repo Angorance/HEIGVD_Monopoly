@@ -70,4 +70,9 @@ public class GameHandler extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	public void initialise(BufferedReader in, PrintWriter out) {
+		this.in = in;
+		this.out = out;
+	}
 }

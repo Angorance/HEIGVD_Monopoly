@@ -78,7 +78,7 @@ public class Notification extends Thread {
 			case NotifProtocol.NOTIF_NEW:
 				
 				sub.newLobby(LightLobby.instancify(json));
-				LightLobbies.getInstance().addLobby(json);
+				LightLobbies.getInstance().createLobby(json);
 				break;
 				
 			case NotifProtocol.NOTIF_UPDATE:

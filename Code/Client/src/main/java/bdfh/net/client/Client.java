@@ -24,6 +24,7 @@ public class Client {
 	private Socket clientSocket = null;
 	private BufferedReader in = null;
 	private PrintWriter out = null;
+	private Thread gamehandler = new Thread(GameHandler.getInstance());
 	
 	private String response;
 	
@@ -55,6 +56,8 @@ public class Client {
 			in = new BufferedReader(
 					new InputStreamReader(clientSocket.getInputStream()));
 			out = new PrintWriter(clientSocket.getOutputStream());
+			
+			GameHandler.getInstance().initialise(in, out);
 			
 			response = in.readLine();
 			
@@ -293,8 +296,10 @@ public class Client {
 			response = in.readLine();
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
-				GameHandler.getInstance().start();
+				
 				result = true;
+				
+				gamehandler.start();
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -318,7 +323,7 @@ public class Client {
 		boolean result = false;
 		
 		// Stop the game
-		GameHandler.getInstance().interrupt();
+		gamehandler.interrupt();
 		
 		// Send the command to the server
 		sendData(Protocoly.CMD_QUITLOBBY);

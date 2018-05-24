@@ -261,7 +261,7 @@ public class ClientHandler implements Handler {
 	private void setReady() {
 		
 		if (lobby != null) {
-			lobby.setReady(this);
+			Lobbies.getInstance().setReady(lobby, this);
 			
 			LOG.log(Level.INFO, "Player " + clientID + " is ready!");
 			

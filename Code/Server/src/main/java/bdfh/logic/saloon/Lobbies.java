@@ -66,7 +66,7 @@ public class Lobbies {
 		
 		lobbies.remove(lobby.getID(), lobby);
 		
-		notifySubs(NotifProtocol.DELETE, lobby);
+		notifySubs(NotifProtocol.NOTIF_DELETE, lobby);
 	}
 	
 	public Lobby getLobby(Integer lobbyID) {
@@ -90,7 +90,7 @@ public class Lobbies {
 		// Let the creator join the lobby created
 		lobby.joinLobby(creator);
 		
-		notifySubs(NotifProtocol.NEW, lobby);
+		notifySubs(NotifProtocol.NOTIF_NEW, lobby);
 		
 		return lobby;
 	}
@@ -107,12 +107,18 @@ public class Lobbies {
 		
 		if(l != null && !l.isFull()) {
 			l.joinLobby(player);
-			notifySubs(NotifProtocol.UPDATE, l);
+			notifySubs(NotifProtocol.NOTIF_UPDATE, l);
 		} else {
 			l = null;
 		}
 		
 		return l;
+	}
+	
+	public synchronized void setReady(Lobby lobby, ClientHandler player) {
+		if (lobby.setReady(player)) {
+			notifySubs(NotifProtocol.NOTIF_UPDATE, lobby);
+		}
 	}
 	
 	
@@ -124,7 +130,7 @@ public class Lobbies {
 		}
 	}
 	
-	private void notifySubs(int cmd, Lobby l) {
+	private void notifySubs(String cmd, Lobby l) {
 		for (NotificationHandler n : subList){
 			n.update(cmd, l);
 		}

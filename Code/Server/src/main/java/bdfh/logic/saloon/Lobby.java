@@ -57,32 +57,43 @@ public class Lobby {
 		areReady.add(false);
 	}
 	
-	public synchronized void setReady(ClientHandler player) {
+	public synchronized boolean setReady(ClientHandler player) {
 		
-		areReady.set(players.indexOf(player), true);
-		++numOfReady;
+		int playerIndex = players.indexOf(player);
 		
-		// TODO - Start logic (GameLogic)
-		if (players.size() > 1 && numOfReady == players.size()) {
-			LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
+		if (areReady.get(playerIndex) != true) {
 			
-			// send the START signal to every player in the room
-			for(ClientHandler p : players){
-				p.sendData(Protocoly.CMD_START);
-				startGame();
+			areReady.set(playerIndex, true);
+			++numOfReady;
+			
+			// TODO - Start logic (GameLogic)
+			if (players.size() > 1 && numOfReady == players.size()) {
+				LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
+				
+				// send the START signal to every player in the room
+				for (ClientHandler p : players) {
+					p.sendData(Protocoly.CMD_START);
+					startGame();
+				}
+				
+				// start the game session
+				
+			} else if (players.size() > 1 && numOfReady > 1) {
+				LOG.log(Level.INFO,
+						"Lobby" + ID + ": AT LEAST 2 PLAYERS READY");
 			}
 			
-			// start the game session
-			
-		} else if (players.size() > 1 && numOfReady > 1) {
-			LOG.log(Level.INFO, "Lobby" + ID + ": AT LEAST 2 PLAYERS READY");
+			return true;
 		}
+		
+		return false;
 	}
 	
 	/**
 	 * Start the game with this lobby
 	 */
 	private void startGame() {
+		
 		Lobbies.getInstance().removeLobby(this);
 		new GameLogic(this);
 	}

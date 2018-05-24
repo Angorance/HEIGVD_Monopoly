@@ -29,20 +29,32 @@ public class LightLobbies {
 		return lobbies;
 	}
 	
+	public void createLobby(String json) {
+		
+		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
+		
+		LightLobby tmp = LightLobby.instancify(jo);
+		
+		lobbies.put(tmp.getID(), tmp);
+	}
+	
 	public void addLobby(String json) {
 		
 		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
-		LightLobby lobby = LightLobby.instancify(jo);
+		LightLobby tmp = LightLobby.instancify(jo);
+		LightLobby toUpdate = lobbies.get(tmp.getID());
 		
-		lobbies.put(lobby.getID(), lobby);
+		toUpdate.updateAll(tmp.getUsernames(), tmp.getAreReady());
+		
+		lobbies.put(tmp.getID(), toUpdate);
 	}
 	
 	public void removeLobby(String json) {
 		
 		LightLobby lobby = LightLobby.instancify(json);
 		
-		lobbies.remove(lobby.getID(), lobby);
+		lobbies.remove(lobby.getID());
 	}
 	
 	/**

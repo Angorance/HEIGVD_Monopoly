@@ -1,9 +1,7 @@
 package bdfh.serializable;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +54,14 @@ public class LightLobby {
 		
 		usernames.remove(index);
 		areReady.remove(index);
+	}
+	
+	public void updateAll(List<String> users, List<Boolean> readys) {
+		usernames.clear();
+		readys.clear();
+		
+		usernames.addAll(users);
+		areReady.addAll(readys);
 	}
 	
 	public static LightLobby instancify(String json) {

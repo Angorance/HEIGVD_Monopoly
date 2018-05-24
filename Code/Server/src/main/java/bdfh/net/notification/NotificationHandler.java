@@ -84,22 +84,24 @@ public class NotificationHandler implements Handler {
 		sendData(cmd, "");
 	}
 	
-	public void update(int cmd, Lobby l) {
+	public void update(String cmd, Lobby l) {
 		
 		String json = l.jsonify();
 		
+		LOG.log(Level.INFO, cmd + " Lobby: " + json);
+		
 		switch (cmd) {
-			case NotifProtocol.NEW:
+			case NotifProtocol.NOTIF_NEW:
 				
 				sendData(NotifProtocol.NOTIF_NEW + " " + json);
 				break;
 				
-			case NotifProtocol.UPDATE:
+			case NotifProtocol.NOTIF_UPDATE:
 				
 				sendData(NotifProtocol.NOTIF_UPDATE + " " + json);
 				break;
 				
-			case NotifProtocol.DELETE:
+			case NotifProtocol.NOTIF_DELETE:
 				
 				sendData(NotifProtocol.NOTIF_DELETE + " " + json);
 				break;
