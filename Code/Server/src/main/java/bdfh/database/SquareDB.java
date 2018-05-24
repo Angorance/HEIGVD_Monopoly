@@ -1,52 +1,51 @@
 package bdfh.database;
 
-import bdfh.logic.game.Card;
+import bdfh.logic.game.Square;
 import java.sql.*;
-import java.util.*;
 
 /**
- * Class used to execute queries on the card table.
+ * Class used to execute queries on the square table.
  *
  * @author Héléna Line Reymond
  * @version 1.0
  */
-public class CardDB {
+public class SquareDB {
 	
 	private static final DatabaseConnect db = DatabaseConnect.getInstance();
 	
-	private CardDB(){}
+	private SquareDB() {}
 	
 	/**
 	 * Internal static class used to create one and only one instance of
-	 * CardDB to guarantee it follows the singleton model.
+	 * SquareDB to guarantee it follows the singleton model.
 	 */
 	private static class Instance {
 		
-		static final CardDB instance = new CardDB();
+		static final SquareDB instance = new SquareDB();
 	}
 	
 	/**
-	 * Get the only instance of CardDB.
+	 * Get the only instance of SquareDB.
 	 *
-	 * @return the instance of CardDB.
+	 * @return the instance of SquareDB.
 	 */
-	protected static CardDB getInstance() {
+	public static SquareDB getInstance() {
 		
 		return Instance.instance;
 	}
 	
 	/**
-	 * Get all cards stored in database.
+	 * Get all squares stored in database.
 	 *
-	 * @return array of all cards.
+	 * @return array of all squares.
 	 */
-	public ArrayList<Card> getCards() {
+	public Square[] getSquares() {
 		
-		ArrayList<Card> cards = null;
+		Square[] squares = null;
 		
-		String sql = "SELECT C.text, A.text "
-					+ "FROM card C "
-					+ "INNER JOIN action A ON C.action_id = A.id;";
+		String sql = "SELECT S.type, S.name, S.price_id, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
+				+ "FROM square S "
+				+ "INNER JOIN price P ON S.price_id = P.id;";
 		
 		try {
 			
@@ -54,11 +53,13 @@ public class CardDB {
 			Statement statement = db.connect().createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
-			// Get the cards of the logic
+			// Get the squares
+			int s = 0;
+			
 			while(result.next()) {
 				
-				String cardText = result.getString(0);
-				String actionText = result.getString(1);
+				/*String type = result.getString(0);
+				String name = result.getString(1);
 				
 				// Get the effect of the card
 				Card.EFFECTS effect = null;
@@ -85,21 +86,22 @@ public class CardDB {
 				}
 				
 				// Create one card of the logic
-				Card card = new Card(cardText, effect);
-				cards.add(card);
+				Square square = new Square(cardText, effect);
+				squares[c] = square;
+				++c;*/
 			}
 			
 			// Close the db
 			statement.close();
 			
 		} catch (SQLException e) {
-			System.out.print("The database can't get the cards : ");
+			System.out.print("The database can't get the squares : ");
 			e.printStackTrace();
 			
 		} finally {
 			db.disconnect();
 		}
 		
-		return cards;
+		return squares;
 	}
 }

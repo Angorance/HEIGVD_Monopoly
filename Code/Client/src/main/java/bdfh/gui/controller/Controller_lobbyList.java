@@ -1,6 +1,7 @@
 package bdfh.gui.controller;
 
 import bdfh.logic.usr.Player;
+import bdfh.net.client.Notification;
 import bdfh.serializable.LightLobbies;
 import bdfh.serializable.LightLobby;
 import com.jfoenix.controls.JFXButton;
@@ -266,5 +267,7 @@ public class Controller_lobbyList implements Initializable {
 				ready();
 			}
 		});
+		
+		Notification.getInstance().addSubscriber(this);
 	}
 }
