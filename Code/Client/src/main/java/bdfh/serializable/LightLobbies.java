@@ -31,7 +31,7 @@ public class LightLobbies {
 	}
 	
 	public void createLobby(Controller_lobbyList sub, String json) {
-		
+		// TODO - AU PROPRE
 		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
 		LightLobby tmp = LightLobby.instancify(jo);
@@ -41,6 +41,7 @@ public class LightLobbies {
 	}
 	
 	public void addLobby(Controller_lobbyList sub, String json) {
+		// TODO - AU PROPRE
 		
 		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
@@ -54,6 +55,7 @@ public class LightLobbies {
 	}
 	
 	public void removeLobby(Controller_lobbyList sub, String json) {
+		// TODO - AU PROPRE
 		
 		LightLobby lobby = LightLobby.instancify(json);
 		

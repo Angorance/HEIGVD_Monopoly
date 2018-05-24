@@ -69,6 +69,7 @@ public class Notification extends Thread {
 		
 		String json = s[1];
 		
+		// TODO - faire propre
 		switch (s[0]) {
 			case NotifProtocol.NOTIF_LIST:
 				
