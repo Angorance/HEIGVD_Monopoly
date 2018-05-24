@@ -48,9 +48,10 @@ public class Worker implements Runnable {
 		
 		try {
 			handler.handle(in, out);
-			disconnect();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			disconnect();
 		}
 	}
 	
