@@ -200,7 +200,9 @@ public class Controller_lobbyList implements Initializable {
 	private void join() {
 		
 		if (lightLobby != null) {
-			Player.getInstance().joinLobby(lightLobby.getID());
+			if(!Player.getInstance().isInLobby()) {
+				Player.getInstance().joinLobby(lightLobby.getID());
+			}
 		}
 	}
 	
@@ -209,7 +211,9 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void ready() {
 		
-		Player.getInstance().setReady();
+		if(!Player.getInstance().isReady()){
+			Player.getInstance().setReady();
+		}
 	}
 	
 	/**
@@ -217,7 +221,9 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void quit() {
 		
-		Player.getInstance().quitLobby();
+		if(Player.getInstance().isInLobby()) {
+			Player.getInstance().quitLobby();
+		}
 	}
 	
 	public void returnForm() {
