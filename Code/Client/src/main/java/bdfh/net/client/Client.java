@@ -293,7 +293,9 @@ public class Client {
 			response = in.readLine();
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
+				GameHandler.getInstance().start();
 				result = true;
+				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
@@ -314,6 +316,9 @@ public class Client {
 	public boolean quitLobby() {
 		
 		boolean result = false;
+		
+		// Stop the game
+		GameHandler.getInstance().interrupt();
 		
 		// Send the command to the server
 		sendData(Protocoly.CMD_QUITLOBBY);

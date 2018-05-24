@@ -1,9 +1,6 @@
 package bdfh.serializable;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 import java.util.HashMap;
 
@@ -43,13 +40,16 @@ public class LightLobbies {
 	
 	public void removeLobby(String json) {
 		
-		JsonObject jo = new JsonObject();
-		
-		jo = jo.getAsJsonObject(json);
-		
-		LightLobby lobby = LightLobby.instancify(jo);
+		LightLobby lobby = LightLobby.instancify(json);
 		
 		lobbies.remove(lobby.getID(), lobby);
+	}
+	
+	/**
+	 * Remove all the lobbies.
+	 */
+	public void clearLobbies() {
+		lobbies.clear();
 	}
 	
 	public void instancify(String s) {

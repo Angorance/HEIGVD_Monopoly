@@ -58,18 +58,26 @@ public class LightLobby {
 		areReady.remove(index);
 	}
 	
-	public static LightLobby instancify(JsonObject json) {
+	public static LightLobby instancify(String json) {
+		
+		JsonObject jo = new JsonObject();
+		jo = jo.getAsJsonObject(json);
+		
+		return instancify(jo);
+	}
+	
+	public static LightLobby instancify(JsonObject jo) {
 		
 		LightLobby tmp = new LightLobby();
 		
-		tmp.setID(json.get("ID").getAsInt());
+		tmp.setID(jo.get("ID").getAsInt());
 		
-		for (JsonElement je : json.get("Users").getAsJsonArray()) {
+		for (JsonElement je : jo.get("Users").getAsJsonArray()) {
 			
 			tmp.addPlayer(je.getAsString());
 		}
 		
-		for (JsonElement je : json.get("Ready").getAsJsonArray()) {
+		for (JsonElement je : jo.get("Ready").getAsJsonArray()) {
 			
 			tmp.addR(je.getAsBoolean());
 		}
