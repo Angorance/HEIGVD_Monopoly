@@ -1,6 +1,10 @@
-package bdfh.game;
+package bdfh.logic.game;
 
+import bdfh.logic.Player;
+import bdfh.logic.game.Card;
+import bdfh.logic.game.Square;
 import bdfh.net.server.ClientHandler;
+import bdfh.logic.saloon.Lobby;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,8 +25,8 @@ public class GameLogic extends Thread {
 	private int nbDice;
 	
 	/**
-	 * constructor of a game session. Define the turns, generate the board, and apply the parameters
-	 * @param lobby lobby that launched a game
+	 * constructor of a logic session. Define the turns, generate the board, and apply the parameters
+	 * @param lobby lobby that launched a logic
 	 */
 	GameLogic(Lobby lobby){
 		preparePlayers(lobby);
@@ -32,7 +36,7 @@ public class GameLogic extends Thread {
 	}
 	
 	/**
-	 * Generate the game board
+	 * Generate the logic board
 	 */
 	private void prepareBoard() {
 	

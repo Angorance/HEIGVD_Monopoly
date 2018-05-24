@@ -1,4 +1,4 @@
-package bdfh.game;
+package bdfh.logic.saloon;
 
 import bdfh.net.server.ClientHandler;
 import bdfh.serializable.GsonSerializer;
@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class used to simulate a game with players.
+ * Class used to simulate a logic with players.
  *
  * @author Héléna Line Reymond
  * @author Daniel Gonzalez Lopez
@@ -45,9 +45,9 @@ public class Lobby {
 	// LOBBY METHODS -----------------------------------------------------------
 	
 	/**
-	 * Add a player to the game.
+	 * Add a player to the logic.
 	 *
-	 * @param player Player who wants to join the game.
+	 * @param player Player who wants to join the logic.
 	 */
 	public synchronized void joinLobby(ClientHandler player) {
 		
@@ -60,7 +60,7 @@ public class Lobby {
 		areReady.set(players.indexOf(player), true);
 		++numOfReady;
 		
-		// TODO - Start game (GameLogic)
+		// TODO - Start logic (GameLogic)
 		if (players.size() > 1 && numOfReady == players.size()) {
 			LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
 		} else if (players.size() > 1 && numOfReady > 1) {
@@ -69,9 +69,9 @@ public class Lobby {
 	}
 	
 	/**
-	 * Remove a player from the game.
+	 * Remove a player from the logic.
 	 *
-	 * @param player Player who wants to quit the game.
+	 * @param player Player who wants to quit the logic.
 	 */
 	public synchronized void quitLobby(ClientHandler player) {
 		

@@ -30,7 +30,7 @@ public class ClientServer implements Runnable {
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
 							+ "\nPort::" + Protocoly.CPORT);
 			
-			// Update the limits of the game
+			// Update the limits of the logic
 			DatabaseConnect.getInstance().getParameterDB().updateLimits();
 			
 		} catch (Exception e) {

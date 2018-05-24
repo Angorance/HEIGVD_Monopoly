@@ -1,7 +1,7 @@
 package bdfh.serializable;
 
 /**
- * Class used to update the limits of the game.
+ * Class used to update the limits of the logic.
  *
  * @author Daniel Gonzalez Lopez
  * @author Héléna Line Reymond
@@ -21,7 +21,7 @@ public class BoundParameters {
 	private int minTime;
 	private int maxTime;
 	
-	// True if random game generation allowed, false otherwise
+	// True if random logic generation allowed, false otherwise
 	private boolean randomGameGeneration;
 	
 	private BoundParameters() {}
@@ -116,7 +116,7 @@ public class BoundParameters {
 	}
 	
 	/**
-	 * Set the limits of parameters for all game created.
+	 * Set the limits of parameters for all logic created.
 	 *
 	 * @param minDice Minimum number of dice allowed
 	 * @param maxDice Maximum number of dice allowed
