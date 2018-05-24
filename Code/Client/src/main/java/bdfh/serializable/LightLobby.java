@@ -60,8 +60,7 @@ public class LightLobby {
 	
 	public static LightLobby instancify(String json) {
 		
-		JsonObject jo = new JsonObject();
-		jo = jo.getAsJsonObject(json);
+		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
 		return instancify(jo);
 	}
