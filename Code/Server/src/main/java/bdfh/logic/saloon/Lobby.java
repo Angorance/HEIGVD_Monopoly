@@ -70,10 +70,10 @@ public class Lobby {
 			if (players.size() > 1 && numOfReady == players.size()) {
 				LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
 				
-				// send the START signal to every player in the room
-				for (ClientHandler p : players) {
-					p.sendData(Protocoly.CMD_START);
-					startGame();
+			// send the START signal to every player in the room
+			for(ClientHandler p : players){
+				p.sendData(Protocoly.GAM_START);
+				startGame();
 				}
 				
 				// start the game session

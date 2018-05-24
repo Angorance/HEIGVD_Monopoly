@@ -1,5 +1,6 @@
 package bdfh.database;
 
+import bdfh.logic.game.Price;
 import bdfh.logic.game.Square;
 import java.sql.*;
 import java.util.*;
@@ -30,7 +31,7 @@ public class SquareDB {
 	 *
 	 * @return the instance of SquareDB.
 	 */
-	public static SquareDB getInstance() {
+	protected static SquareDB getInstance() {
 		
 		return Instance.instance;
 	}
@@ -44,7 +45,7 @@ public class SquareDB {
 		
 		ArrayList<Square> squares = null;
 		
-		String sql = "SELECT S.type, S.name, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
+		String sql = "SELECT S.position, S.family, S.name, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
 				+ "FROM square S "
 				+ "LEFT JOIN price P ON S.price_id = P.id;";
 		
@@ -57,12 +58,27 @@ public class SquareDB {
 			// Get the squares
 			while(result.next()) {
 				
-				/*String type = result.getString(0);
-				String name = result.getString(1);
+				int position = result.getInt(0);
+				String type = result.getString(1);
+				String name = result.getString(2);
+				int rent = result.getInt(3);
+				int priceHouse = result.getInt(4);
+				int priceHotel = result.getInt(5);
+				int hypothec = result.getInt(6);
+				
+				// Get the family of the card
+				Square.FAMILY family = Square.FAMILY.valueOf(type);
+
+				// Create the price if needed
+				Price prices = null;
+				
+				if(priceHouse != 0 && priceHotel != 0 && hypothec != 0) {
+					prices = new Price(rent, priceHouse, priceHotel, hypothec);
+				}
 				
 				// Create one card
-				Square square = new Square(cardText, effect);
-				squares.add(square);*/
+				Square square = new Square(position, family, name, prices);
+				squares.add(square);
 			}
 			
 			// Close the db

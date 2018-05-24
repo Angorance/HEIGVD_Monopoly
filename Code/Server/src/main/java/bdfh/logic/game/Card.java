@@ -3,18 +3,27 @@ package bdfh.logic.game;
 import java.util.Random;
 
 /**
- * @author Bryan Curchod
- * @version 1.0
+ * @authors Bryan Curchod, Héléna Line Reymond
+ * @version 1.1
  */
 public class Card {
 	
+	
+	
 	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD, FREE}
 	
-	private String text;
-	private int quantity;
-	private EFFECTS effect;
-	private int value;
+	private String text;        // Text of the card
+	private int quantity;       // Quantity of the card
+	private EFFECTS effect;     // Effect linked to the card
+	private int value;          // Value of the effect
 	
+	/**
+	 * Constructor.
+	 *
+	 * @param text      Text of the card.
+	 * @param quantity  Quantity of the card.
+	 * @param effect    Effect linked to the card.
+	 */
 	public Card(String text, int quantity, EFFECTS effect){
 		this.text = text;
 		this.quantity = quantity;
@@ -43,5 +52,20 @@ public class Card {
 		}
 		
 		return value;
+	}
+	
+	public void setQuantity(int quantity) {
+		
+		this.quantity = quantity;
+	}
+	
+	public int getQuantity() {
+		
+		return quantity;
+	}
+	
+	public EFFECTS getEffect() {
+		
+		return effect;
 	}
 }

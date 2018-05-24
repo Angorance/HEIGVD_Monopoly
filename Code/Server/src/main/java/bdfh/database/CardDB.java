@@ -30,7 +30,7 @@ public class CardDB {
 	 *
 	 * @return the instance of CardDB.
 	 */
-	protected static CardDB getInstance() {
+	public static CardDB getInstance() {
 		
 		return Instance.instance;
 	}
@@ -62,31 +62,7 @@ public class CardDB {
 				String action = result.getString(2);
 				
 				// Get the effect of the card
-				Card.EFFECTS effect = null;
-				
-				switch(action) {
-					case "MOVE":
-						effect = Card.EFFECTS.MOVE;
-						break;
-					case "EXAM":
-						effect = Card.EFFECTS.EXAM;
-						break;
-					case "WIN":
-						effect = Card.EFFECTS.WIN;
-						break;
-					case "LOSE":
-						effect = Card.EFFECTS.LOSE;
-						break;
-					case "GOTO":
-						effect = Card.EFFECTS.GOTO;
-						break;
-					case "CARD":
-						effect = Card.EFFECTS.CARD;
-						break;
-					case "FREE":
-						effect = Card.EFFECTS.FREE;
-						break;
-				}
+				Card.EFFECTS effect = Card.EFFECTS.valueOf(action);
 				
 				// Create one card
 				Card card = new Card(cardText, quantity, effect);
