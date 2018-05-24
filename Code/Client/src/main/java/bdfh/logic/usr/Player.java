@@ -64,7 +64,8 @@ public class Player {
 	public boolean createLobby(int nbrDice, int money, int mode, int time, boolean randomGeneration) {
 		
 		// Create the lobby on the server
-		return Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, time, randomGeneration));
+		inLobby = Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, time, randomGeneration));
+		return inLobby;
 	}
 	
 	/**
