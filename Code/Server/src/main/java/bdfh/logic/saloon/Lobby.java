@@ -1,6 +1,8 @@
 package bdfh.logic.saloon;
 
+import bdfh.logic.game.GameLogic;
 import bdfh.net.server.ClientHandler;
+import bdfh.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.Parameter;
 import com.google.gson.JsonArray;
@@ -63,9 +65,26 @@ public class Lobby {
 		// TODO - Start logic (GameLogic)
 		if (players.size() > 1 && numOfReady == players.size()) {
 			LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
+			
+			// send the START signal to every player in the room
+			for(ClientHandler p : players){
+				p.sendData(Protocoly.CMD_START);
+				startGame();
+			}
+			
+			// start the game session
+			
 		} else if (players.size() > 1 && numOfReady > 1) {
 			LOG.log(Level.INFO, "Lobby" + ID + ": AT LEAST 2 PLAYERS READY");
 		}
+	}
+	
+	/**
+	 * Start the game with this lobby
+	 */
+	private void startGame() {
+		Lobbies.getInstance().removeLobby(this);
+		new GameLogic(this);
 	}
 	
 	/**

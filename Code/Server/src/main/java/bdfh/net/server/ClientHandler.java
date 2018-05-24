@@ -209,7 +209,7 @@ public class ClientHandler implements Handler {
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */
-	private void sendData(String cmd) {
+	public void sendData(String cmd) {
 		
 		sendData(cmd, "");
 	}
