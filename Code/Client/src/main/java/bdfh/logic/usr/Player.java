@@ -14,6 +14,7 @@ public class Player {
 	
 	private String username;
 	private boolean isReady;
+	private boolean inLobby;
 	
 	
 	private Player() {}
@@ -75,7 +76,14 @@ public class Player {
 	 */
 	public boolean joinLobby(int lobbyID) {
 		
-		return Client.getInstance().joinLobby(lobbyID);
+		inLobby = Client.getInstance().joinLobby(lobbyID);
+		
+		return inLobby;
+	}
+	
+	public boolean isInLobby() {
+		
+		return inLobby;
 	}
 	
 	/**
@@ -85,7 +93,14 @@ public class Player {
 	 */
 	public boolean setReady() {
 		
-		return isReady = Client.getInstance().setReady();
+		isReady = Client.getInstance().setReady();
+		
+		return isReady;
+	}
+	
+	public boolean isReady() {
+		
+		return isReady;
 	}
 	
 	/**
