@@ -8,16 +8,16 @@ import java.util.Random;
  */
 public class Card {
 	
-	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD}
+	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD, FREE}
 	
 	private String text;
-	private int qte;
+	private int quantity;
 	private EFFECTS effect;
 	private int value;
-	private int id;
 	
-	public Card(String text, EFFECTS effect){
+	public Card(String text, int quantity, EFFECTS effect){
 		this.text = text;
+		this.quantity = quantity;
 		this.effect = effect;
 		this.value = generateValue();
 	}
@@ -44,5 +44,4 @@ public class Card {
 		
 		return value;
 	}
-	
 }

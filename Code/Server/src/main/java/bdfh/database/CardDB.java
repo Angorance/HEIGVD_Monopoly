@@ -44,7 +44,7 @@ public class CardDB {
 		
 		ArrayList<Card> cards = null;
 		
-		String sql = "SELECT C.text, A.text "
+		String sql = "SELECT C.text, C.quantity, A.type "
 					+ "FROM card C "
 					+ "INNER JOIN action A ON C.action_id = A.id;";
 		
@@ -54,16 +54,17 @@ public class CardDB {
 			Statement statement = db.connect().createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
-			// Get the cards of the logic
+			// Get the cards
 			while(result.next()) {
 				
 				String cardText = result.getString(0);
-				String actionText = result.getString(1);
+				int quantity = result.getInt(1);
+				String action = result.getString(2);
 				
 				// Get the effect of the card
 				Card.EFFECTS effect = null;
 				
-				switch(actionText) {
+				switch(action) {
 					case "MOVE":
 						effect = Card.EFFECTS.MOVE;
 						break;
@@ -82,10 +83,13 @@ public class CardDB {
 					case "CARD":
 						effect = Card.EFFECTS.CARD;
 						break;
+					case "FREE":
+						effect = Card.EFFECTS.FREE;
+						break;
 				}
 				
-				// Create one card of the logic
-				Card card = new Card(cardText, effect);
+				// Create one card
+				Card card = new Card(cardText, quantity, effect);
 				cards.add(card);
 			}
 			
