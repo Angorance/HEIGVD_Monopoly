@@ -52,18 +52,18 @@ public class Controller_lobbyList implements Initializable {
 		private Label name;
 		private Label nbPlayer;
 		
-		LightLobby lobby;
+		private LightLobby lLobby;
 		
 		public LobbyDisplayer(LightLobby lobby) {
 			
-			this.lobby = lobby;
+			this.lLobby = lobby;
 			int nbPlayers = 0;
 			for (String str : lobby.getUsernames()) {
 				if (!str.isEmpty()) {
 					nbPlayers++;
 				}
 			}
-			name = new Label("Mon salon" + lobby.getID());
+			name = new Label("Mon salon" + lLobby.getID());
 			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
 			
 			this.add(name, 0, 0);
@@ -77,7 +77,7 @@ public class Controller_lobbyList implements Initializable {
 				
 				@Override public void handle(MouseEvent event) {
 					
-					detailLobby(lobby);
+					detailLobby(lLobby);
 				}
 			});
 		}
@@ -85,7 +85,7 @@ public class Controller_lobbyList implements Initializable {
 		public void redraw() {
 			
 			int nbPlayers = 0;
-			for (String str : lobby.getUsernames()) {
+			for (String str : lLobby.getUsernames()) {
 				if (!str.isEmpty()) {
 					nbPlayers++;
 				}
@@ -133,7 +133,7 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void removeLobby(LightLobby l) {
 		
-		Platform.runLater(()-> {
+		Platform.runLater(() -> {
 			lobby.getChildren().removeAll(displayerList.get(l.getID()));
 			displayerList.remove(l.getID());
 		});
@@ -146,9 +146,7 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void detailLobby(LightLobby lobby) {
 		
-		if (lightLobby.getID() != lobby.getID()) {
-			lightLobby = lobby;
-		}
+		lightLobby = lobby;
 		
 		List<String> players = lobby.getUsernames();
 		List<Boolean> readys = lobby.getAreReady();

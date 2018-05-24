@@ -85,16 +85,16 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="name_player1" alignment="CENTER" prefWidth="170.0" text="Nom joueur 1" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label fx:id="name_player2" alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="Nom joueur 2" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label fx:id="name_player3" alignment="CENTER" prefWidth="170.0" text="Nom joueur 3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label fx:id="name_player4" alignment="CENTER" prefWidth="170.0" text="Nom joueur 4" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <Label fx:id="ready_player1" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2">
+                  <Label fx:id="name_player1" alignment="CENTER" prefWidth="170.0" text="-" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                  <Label fx:id="name_player2" alignment="CENTER" prefHeight="17.0" prefWidth="170.0" text="-" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label fx:id="name_player3" alignment="CENTER" prefWidth="170.0" text="-" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label fx:id="name_player4" alignment="CENTER" prefWidth="170.0" text="-" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Label fx:id="ready_player1" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="-" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="ready_player2" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="Prêt" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="ready_player2" alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="-" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
