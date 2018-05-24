@@ -5,6 +5,7 @@ import bdfh.net.client.Notification;
 import bdfh.serializable.LightLobbies;
 import bdfh.serializable.LightLobby;
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -102,11 +103,13 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void updateLobby(LightLobby l) {
 		
-		displayerList.get(l.getID()).redraw();
-		
-		if (l.getID() == lightLobby.getID()) {
-			detailLobby(l);
-		}
+		Platform.runLater(() -> {
+			displayerList.get(l.getID()).redraw();
+			
+			if (l.getID() == lightLobby.getID()) {
+				detailLobby(l);
+			}
+		});
 	}
 	
 	/**
@@ -116,10 +119,11 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void newLobby(LightLobby l) {
 		
-		LobbyDisplayer ld = new LobbyDisplayer(l);
-		lobby.getChildren().add(ld);
-		displayerList.put(l.getID(), ld);
-		
+		Platform.runLater(() -> {
+			LobbyDisplayer ld = new LobbyDisplayer(l);
+			lobby.getChildren().add(ld);
+			displayerList.put(l.getID(), ld);
+		});
 	}
 	
 	/**
@@ -129,9 +133,10 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void removeLobby(LightLobby l) {
 		
-		lobby.getChildren().removeAll(displayerList.get(l.getID()));
-		displayerList.remove(l.getID());
-		;
+		Platform.runLater(()-> {
+			lobby.getChildren().removeAll(displayerList.get(l.getID()));
+			displayerList.remove(l.getID());
+		});
 	}
 	
 	/**
