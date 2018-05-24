@@ -2,7 +2,7 @@ package bdfh.net.protocol;
 
 /**
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Protocoly {
 
@@ -23,5 +23,6 @@ public abstract class Protocoly {
 	public static final String ANS_SUCCESS = "OK";
 	public static final String ANS_UKNW = "UKNW";
 	public static final String ANS_DENIED = "DENIED";
+	public static final String ANS_START = "START";
 	public static final String ANS_BYE = "SEEYA";
 }
