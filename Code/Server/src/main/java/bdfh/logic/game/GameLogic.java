@@ -21,14 +21,14 @@ public class GameLogic extends Thread {
 	private static final int NB_SQUARE = 40;
 	private ArrayDeque<Player> joueurs;
 	private ArrayDeque<Card> Deck;
-	private Square[] board = new Square[NB_SQUARE];
+	private Square[] board; // = new Square[NB_SQUARE];
 	private int nbDice;
 	
 	/**
 	 * constructor of a logic session. Define the turns, generate the board, and apply the parameters
 	 * @param lobby lobby that launched a logic
 	 */
-	GameLogic(Lobby lobby){
+	public GameLogic(Lobby lobby){
 		preparePlayers(lobby);
 		prepareDeck();
 		prepareBoard();
@@ -39,7 +39,11 @@ public class GameLogic extends Thread {
 	 * Generate the logic board
 	 */
 	private void prepareBoard() {
-	
+		// TODO SPRINT 4 récupérer la liste des case et les placer dans l'ordre
+		
+		/*for(Square s : dbSqaures){
+		
+		}*/
 	}
 	
 	/**
@@ -47,7 +51,7 @@ public class GameLogic extends Thread {
 	 */
 	private void prepareDeck() {
 		Deck = new ArrayDeque<>(NB_DECKCARD);
-		//TODO get card list, generate list of card
+		//TODO SPRINT 4 récupérer la liste de carte de la DB, idéalement une correspondance entre la carte et la quantité accepté
 		
 		for(int i = 0; i < NB_DECKCARD; ++i){
 			//Deck.addFirst(new Card());

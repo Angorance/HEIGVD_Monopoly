@@ -72,13 +72,14 @@ public class Notification extends Thread {
 				break;
 				
 			case NotifProtocol.NOTIF_NEW:
+				/*newLobby(LightLobby)*/
 			case NotifProtocol.NOTIF_UPDATE:
-				
+				/*updateLobby(LightLobby)*/
 				LightLobbies.getInstance().addLobby(json);
 				break;
 				
 			case NotifProtocol.NOTIF_DELETE:
-				
+				/*deleteLobby(LightLobby)*/
 				LightLobbies.getInstance().removeLobby(json);
 				break;
 		}

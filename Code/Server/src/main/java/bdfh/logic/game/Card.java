@@ -13,6 +13,7 @@ public class Card {
 	private String text;
 	private EFFECTS effect;
 	private int value;
+	private int id;
 	
 	public Card(String text, EFFECTS effect){
 		this.text = text;

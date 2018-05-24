@@ -1,5 +1,7 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Player;
+import bdfh.serializable.LightLobbies;
 import bdfh.serializable.LightLobby;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -37,6 +39,8 @@ public class Controller_lobbyList implements Initializable {
 	@FXML private JFXButton ready_button;
 	
 	private HashMap<Integer, LobbyDisplayer> displayerList;
+	
+	private LightLobby lightLobby;
 	
 	class LobbyDisplayer extends GridPane {
 		
@@ -89,7 +93,56 @@ public class Controller_lobbyList implements Initializable {
 		
 	}
 	
+	/**
+	 * Mise à jour du lobby. Si le joueur à cliquer dans un lobby
+	 * il met a jour aussi les information de se lobby
+	 *
+	 * @param l lobby à mettre à jour
+	 */
+	public void updateLobby(LightLobby l) {
+		
+		displayerList.get(l.getID()).redraw();
+		
+		if (l.getID() == lightLobby.getID()) {
+			detailLobby(l);
+		}
+	}
+	
+	/**
+	 * Ajout du lobby dans la liste des lobby
+	 *
+	 * @param l lobby à ajouter
+	 */
+	public void newLobby(LightLobby l) {
+		
+		LobbyDisplayer ld = new LobbyDisplayer(l);
+		lobby.getChildren().add(ld);
+		displayerList.put(l.getID(), ld);
+		
+	}
+	
+	/**
+	 * Suppression d'un lobby de la liste
+	 *
+	 * @param l lobby à supprimer
+	 */
+	public void removeLobby(LightLobby l) {
+		
+		lobby.getChildren().removeAll(displayerList.get(l.getID()));
+		displayerList.remove(l.getID());
+		;
+	}
+	
+	/**
+	 * Affichage du detail d'un lobby
+	 *
+	 * @param lobby lobby que l'on veut afficher les détails
+	 */
 	private void detailLobby(LightLobby lobby) {
+		
+		if (lightLobby.getID() != lobby.getID()) {
+			lightLobby = lobby;
+		}
 		
 		List<String> players = lobby.getUsernames();
 		List<Boolean> readys = lobby.getAreReady();
@@ -102,14 +155,13 @@ public class Controller_lobbyList implements Initializable {
 		}
 	}
 	
-	private void refresh(){
-	
-	}
-	
+	/**
+	 * Methode qui "crée" un lobby. Ca appelle le formulaire de création
+	 * d'un lobby
+	 */
 	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(
-				"/gui/view/formlobby.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
 		Controller_formLobby cba = new Controller_formLobby(this);
@@ -128,6 +180,9 @@ public class Controller_lobbyList implements Initializable {
 		
 	}
 	
+	/**
+	 * ferme de formulaire
+	 */
 	private void unloadForm() {
 		
 		paneform.getChildren().clear();
@@ -135,22 +190,36 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
-	public void createItem() {
+	/**
+	 * Methode qui permet de joindre un lobby
+	 */
+	private void join() {
 		
-		returnForm();
+		if (lightLobby != null) {
+			Player.getInstance().joinLobby(lightLobby.getID());
+		}
+	}
+	
+	/**
+	 * Methode qui permet de se mettre prêt lorsque l'on a rejoint un lobby
+	 */
+	private void ready() {
 		
-		//TODO création du lobbyDisplayer
-		/*LobbyDisplayer ld = new LobbyDisplayer(l);
-		lobby.getChildren().add(ld);
-		displayerList.put(lobby.getID(),ld);*/
+		Player.getInstance().setReady();
+	}
+	
+	/**
+	 * Methode qui permet de quitter un lobby lorsque l'on est a l'intérieur
+	 */
+	private void quit() {
 		
+		Player.getInstance().quitLobby();
 	}
 	
 	public void returnForm() {
 		
 		unloadForm();
 	}
-	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
@@ -159,11 +228,11 @@ public class Controller_lobbyList implements Initializable {
 		
 		displayerList = new HashMap<>();
 		
-		/*for(Lobby lobby : tableau de lobby){
-			LobbyDisplayer ld = new LobbyDisplayer(lobby);
+		for (LightLobby l : LightLobbies.getInstance().getLobbies().values()) {
+			LobbyDisplayer ld = new LobbyDisplayer(l);
 			lobby.getChildren().add(ld);
-			displayerList.put(lobby.getID(),ld);
-		}*/
+			displayerList.put(l.getID(), ld);
+		}
 		
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -177,23 +246,27 @@ public class Controller_lobbyList implements Initializable {
 		join_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				join();
 			}
 		});
 		
 		quit_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				quit();
 			}
 		});
 		
 		ready_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				ready();
 			}
 		});
 		
 	}
+	
 }
