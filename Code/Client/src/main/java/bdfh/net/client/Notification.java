@@ -1,9 +1,11 @@
 package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
+import bdfh.gui.controller.Controller_lobbyList;
 import bdfh.net.protocol.Protocoly;
 import bdfh.net.protocol.NotifProtocol;
 import bdfh.serializable.LightLobbies;
+import bdfh.serializable.LightLobby;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,6 +23,8 @@ public class Notification extends Thread {
 	private Socket notifSocket = null;
 	private BufferedReader in = null;
 	private String line;
+	
+	private Controller_lobbyList sub;
 	
 	private Notification() {}
 	
@@ -72,14 +76,20 @@ public class Notification extends Thread {
 				break;
 				
 			case NotifProtocol.NOTIF_NEW:
-				/*newLobby(LightLobby)*/
+				
+				sub.newLobby(LightLobby.instancify(json));
+				LightLobbies.getInstance().addLobby(json);
+				break;
+				
 			case NotifProtocol.NOTIF_UPDATE:
-				/*updateLobby(LightLobby)*/
+				
+				sub.updateLobby(LightLobby.instancify(json));
 				LightLobbies.getInstance().addLobby(json);
 				break;
 				
 			case NotifProtocol.NOTIF_DELETE:
-				/*deleteLobby(LightLobby)*/
+				
+				sub.removeLobby(LightLobby.instancify(json));
 				LightLobbies.getInstance().removeLobby(json);
 				break;
 		}
@@ -133,5 +143,9 @@ public class Notification extends Thread {
 	
 	public void unpause() {
 		getInstance().start();
+	}
+	
+	public void addSubscriber(Controller_lobbyList sub) {
+		this.sub = sub;
 	}
 }
