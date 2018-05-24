@@ -1,5 +1,7 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Player;
+import bdfh.serializable.LightLobbies;
 import bdfh.serializable.LightLobby;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -37,6 +39,8 @@ public class Controller_lobbyList implements Initializable {
 	@FXML private JFXButton ready_button;
 	
 	private HashMap<Integer, LobbyDisplayer> displayerList;
+	
+	private LightLobby lightLobby;
 	
 	class LobbyDisplayer extends GridPane {
 		
@@ -90,6 +94,9 @@ public class Controller_lobbyList implements Initializable {
 	}
 	
 	private void detailLobby(LightLobby lobby) {
+		if(lightLobby.getID() != lobby.getID()){
+			lightLobby = lobby;
+		}
 		
 		List<String> players = lobby.getUsernames();
 		List<Boolean> readys = lobby.getAreReady();
@@ -102,14 +109,17 @@ public class Controller_lobbyList implements Initializable {
 		}
 	}
 	
-	private void refresh(){
-	
+	public void updateLobby(LightLobby l){
+		displayerList.get(l.getID()).redraw();
+		
+		if(l.getID() == lightLobby.getID()){
+			detailLobby(l);
+		}
 	}
 	
 	private void createLobby() {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(
-				"/gui/view/formlobby.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
 		Controller_formLobby cba = new Controller_formLobby(this);
@@ -135,14 +145,11 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
-	public void createItem() {
+	public void createItem(LightLobby l) {
 		
-		returnForm();
-		
-		//TODO création du lobbyDisplayer
-		/*LobbyDisplayer ld = new LobbyDisplayer(l);
+		LobbyDisplayer ld = new LobbyDisplayer(l);
 		lobby.getChildren().add(ld);
-		displayerList.put(lobby.getID(),ld);*/
+		displayerList.put(l.getID(), ld);
 		
 	}
 	
@@ -151,6 +158,20 @@ public class Controller_lobbyList implements Initializable {
 		unloadForm();
 	}
 	
+	private void join() {
+		if(lightLobby != null) {
+			Player.getInstance().joinLobby(lightLobby.getID());
+		}
+	}
+	
+	
+	private void ready() {
+		Player.getInstance().setReady();
+	}
+	
+	private void quit() {
+		Player.getInstance().quitLobby();
+	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
@@ -159,11 +180,11 @@ public class Controller_lobbyList implements Initializable {
 		
 		displayerList = new HashMap<>();
 		
-		/*for(Lobby lobby : tableau de lobby){
-			LobbyDisplayer ld = new LobbyDisplayer(lobby);
+		for (LightLobby l : LightLobbies.getInstance().getLobbies().values()) {
+			LobbyDisplayer ld = new LobbyDisplayer(l);
 			lobby.getChildren().add(ld);
-			displayerList.put(lobby.getID(),ld);
-		}*/
+			displayerList.put(l.getID(), ld);
+		}
 		
 		
 		add_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -177,23 +198,27 @@ public class Controller_lobbyList implements Initializable {
 		join_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				join();
 			}
 		});
 		
 		quit_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				quit();
 			}
 		});
 		
 		ready_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				//TODO
+				
+				ready();
 			}
 		});
 		
 	}
+	
 }

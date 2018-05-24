@@ -61,15 +61,13 @@ public class Controller_formLobby implements Initializable {
 			int gameTime;
 			
 			if (gameMode == 1) {
-				
 				gameTime = Integer.parseInt(time.getText());
 			} else {
 				gameTime = 0;
 			}
 			
-			Player.getInstance()
-					.createLobby(nbrDice, money, gameMode, gameTime, random);
-			cl.createItem();
+			Player.getInstance().createLobby(nbrDice, money, gameMode, gameTime, random);
+			cl.returnForm();
 		}
 		
 	}
