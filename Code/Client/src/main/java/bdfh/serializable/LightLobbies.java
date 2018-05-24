@@ -43,11 +43,7 @@ public class LightLobbies {
 	
 	public void removeLobby(String json) {
 		
-		JsonObject jo = new JsonObject();
-		
-		jo = jo.getAsJsonObject(json);
-		
-		LightLobby lobby = LightLobby.instancify(jo);
+		LightLobby lobby = LightLobby.instancify(json);
 		
 		lobbies.remove(lobby.getID(), lobby);
 	}

@@ -266,7 +266,5 @@ public class Controller_lobbyList implements Initializable {
 				ready();
 			}
 		});
-		
 	}
-	
 }
