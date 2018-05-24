@@ -85,6 +85,8 @@ public class Controller_lobbyList implements Initializable {
 		public void redraw() {
 			
 			int nbPlayers = 0;
+			System.out.println(lLobby.getUsernames());
+			
 			for (String str : lLobby.getUsernames()) {
 				if (!str.isEmpty()) {
 					nbPlayers++;
@@ -103,6 +105,7 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void updateLobby(LightLobby l) {
 		
+		System.out.println(l.getUsernames());
 		Platform.runLater(() -> {
 			displayerList.get(l.getID()).redraw();
 			
@@ -152,6 +155,11 @@ public class Controller_lobbyList implements Initializable {
 		List<Boolean> readys = lobby.getAreReady();
 		Label[] labelsPlayers = { name_player1, name_player2, name_player3, name_player4 };
 		Label[] labelsReadys = { ready_player1, ready_player2, ready_player3, ready_player4 };
+		
+		for(int i = 0; i < players.size(); ++i){
+			labelsPlayers[i].setText("-");
+			labelsReadys[i].setText("-");
+		}
 		
 		for (int i = 0; i < players.size(); ++i) {
 			labelsPlayers[i].setText(players.get(i));
