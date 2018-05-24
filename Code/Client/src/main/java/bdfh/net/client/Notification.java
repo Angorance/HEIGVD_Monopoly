@@ -1,18 +1,13 @@
 package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
-import bdfh.logic.usr.*;
 import bdfh.net.protocol.Protocoly;
 import bdfh.net.protocol.NotifProtocol;
-import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.LightLobbies;
-import bdfh.serializable.LightLobby;
-import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -21,22 +16,11 @@ import java.util.logging.Logger;
  */
 public class Notification extends Thread {
 	
+	private static Logger LOG = Logger.getLogger("Notification");
+	
 	private Socket notifSocket = null;
 	private BufferedReader in = null;
-	
 	private String line;
-	private LightLobbies lobbies;
-	
-	public LightLobbies getLobbies() {
-		
-		return lobbies;
-	}
-	
-	boolean isNotified = true;
-	
-	Logger LOG = Logger.getLogger("Notification");
-	
-	// TODO - Gérer list observer
 	
 	private Notification() {}
 	
@@ -56,7 +40,7 @@ public class Notification extends Thread {
 	 * @throws ConnectionException if the server sends a wrong answer.
 	 * @throws IOException
 	 */
-	public void connect() throws ConnectionException, IOException {
+	public void connect() throws IOException {
 		
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
@@ -80,8 +64,6 @@ public class Notification extends Thread {
 		String[] s = line.split(" ");
 		
 		String json = s[1];
-		
-		// TODO - Notify observer
 		
 		switch (s[0]) {
 			case NotifProtocol.NOTIF_LIST:
@@ -126,14 +108,12 @@ public class Notification extends Thread {
 		try {
 			connect();
 			
-			while (isNotified) {
+			while (true) {
 				line = in.readLine();
 
 				handleNotification(line);
 				
 			}
-		} catch (ConnectionException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
