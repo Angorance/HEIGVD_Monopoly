@@ -1,5 +1,6 @@
 package bdfh.serializable;
 
+import bdfh.gui.controller.Controller_lobbyList;
 import com.google.gson.*;
 
 import java.util.HashMap;
@@ -29,16 +30,18 @@ public class LightLobbies {
 		return lobbies;
 	}
 	
-	public void createLobby(String json) {
-		
+	public void createLobby(Controller_lobbyList sub, String json) {
+		// TODO - AU PROPRE
 		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
 		LightLobby tmp = LightLobby.instancify(jo);
 		
 		lobbies.put(tmp.getID(), tmp);
+		sub.newLobby(tmp);
 	}
 	
-	public void addLobby(String json) {
+	public void addLobby(Controller_lobbyList sub, String json) {
+		// TODO - AU PROPRE
 		
 		JsonObject jo = GsonSerializer.getInstance().fromJson(json, JsonObject.class);
 		
@@ -48,13 +51,16 @@ public class LightLobbies {
 		toUpdate.updateAll(tmp.getUsernames(), tmp.getAreReady());
 		
 		lobbies.put(tmp.getID(), toUpdate);
+		sub.updateLobby(toUpdate);
 	}
 	
-	public void removeLobby(String json) {
+	public void removeLobby(Controller_lobbyList sub, String json) {
+		// TODO - AU PROPRE
 		
 		LightLobby lobby = LightLobby.instancify(json);
 		
 		lobbies.remove(lobby.getID());
+		sub.removeLobby(LightLobby.instancify(json));
 	}
 	
 	/**

@@ -69,6 +69,7 @@ public class Notification extends Thread {
 		
 		String json = s[1];
 		
+		// TODO - faire propre
 		switch (s[0]) {
 			case NotifProtocol.NOTIF_LIST:
 				
@@ -77,20 +78,17 @@ public class Notification extends Thread {
 				
 			case NotifProtocol.NOTIF_NEW:
 				
-				sub.newLobby(LightLobby.instancify(json));
-				LightLobbies.getInstance().createLobby(json);
+				LightLobbies.getInstance().createLobby(sub, json);
 				break;
 				
 			case NotifProtocol.NOTIF_UPDATE:
 				
-				sub.updateLobby(LightLobby.instancify(json));
-				LightLobbies.getInstance().addLobby(json);
+				LightLobbies.getInstance().addLobby(sub, json);
 				break;
 				
 			case NotifProtocol.NOTIF_DELETE:
 				
-				sub.removeLobby(LightLobby.instancify(json));
-				LightLobbies.getInstance().removeLobby(json);
+				LightLobbies.getInstance().removeLobby(sub, json);
 				break;
 		}
 	}
