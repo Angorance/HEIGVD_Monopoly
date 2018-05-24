@@ -4,7 +4,7 @@ package bdfh.net.protocol;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class NotifProtocol {
+public abstract class NotifProtocol {
 	
 	public static final String NOTIF_DELETE = "DELETED";
 	public static final String NOTIF_UPDATE = "UPDATED";
