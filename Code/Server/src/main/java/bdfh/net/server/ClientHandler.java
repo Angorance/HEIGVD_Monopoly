@@ -192,7 +192,7 @@ public class ClientHandler implements Handler {
 	 * @param cmd
 	 * @param param
 	 */
-	private void sendData(String cmd, String param) {
+	public void sendData(String cmd, String param) {
 		
 		String toSend = cmd;
 		
@@ -298,5 +298,10 @@ public class ClientHandler implements Handler {
 	public String getClientUsername() {
 		
 		return clientUsername;
+	}
+	
+	public int getClientID() {
+		
+		return clientID;
 	}
 }

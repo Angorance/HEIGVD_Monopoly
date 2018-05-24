@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public class Card {
 	
+	
+	
 	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD, FREE}
 	
 	private String text;        // Text of the card
@@ -50,5 +52,20 @@ public class Card {
 		}
 		
 		return value;
+	}
+	
+	public void setQuantity(int quantity) {
+		
+		this.quantity = quantity;
+	}
+	
+	public int getQuantity() {
+		
+		return quantity;
+	}
+	
+	public EFFECTS getEffect() {
+		
+		return effect;
 	}
 }

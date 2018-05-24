@@ -10,8 +10,7 @@ import java.util.logging.*;
 /**
  * ClientServer class.
  * Implements methods to wait for client connections and create workers to
- * handle
- * them.
+ * handle them.
  *
  * @author Daniel Gonzalez Lopez
  * @version 1.0

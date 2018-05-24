@@ -68,7 +68,7 @@ public class Lobby {
 			
 			// send the START signal to every player in the room
 			for(ClientHandler p : players){
-				p.sendData(Protocoly.CMD_START);
+				p.sendData(Protocoly.GAM_START);
 				startGame();
 			}
 			
