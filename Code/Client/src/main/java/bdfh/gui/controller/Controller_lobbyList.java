@@ -117,6 +117,20 @@ public class Controller_lobbyList implements Initializable {
 		}
 	}
 	
+	public void newLobby(LightLobby l) {
+		
+		LobbyDisplayer ld = new LobbyDisplayer(l);
+		lobby.getChildren().add(ld);
+		displayerList.put(l.getID(), ld);
+		
+	}
+	
+	public void removeLobby(LightLobby l){
+		lobby.getChildren()
+				.removeAll(displayerList.get(l.getID()));
+		displayerList.remove(l.getID());
+;	}
+	
 	private void createLobby() {
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
@@ -145,32 +159,26 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
-	public void addLobby(LightLobby l) {
-		
-		LobbyDisplayer ld = new LobbyDisplayer(l);
-		lobby.getChildren().add(ld);
-		displayerList.put(l.getID(), ld);
-		
-	}
-	
-	public void returnForm() {
-		
-		unloadForm();
-	}
-	
 	private void join() {
+		
 		if(lightLobby != null) {
 			Player.getInstance().joinLobby(lightLobby.getID());
 		}
 	}
 	
-	
 	private void ready() {
+		
 		Player.getInstance().setReady();
 	}
 	
 	private void quit() {
+		
 		Player.getInstance().quitLobby();
+	}
+	
+	public void returnForm() {
+		
+		unloadForm();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
