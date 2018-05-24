@@ -93,8 +93,54 @@ public class Controller_lobbyList implements Initializable {
 		
 	}
 	
+	/**
+	 * Mise à jour du lobby. Si le joueur à cliquer dans un lobby
+	 * il met a jour aussi les information de se lobby
+	 *
+	 * @param l lobby à mettre à jour
+	 */
+	public void updateLobby(LightLobby l) {
+		
+		displayerList.get(l.getID()).redraw();
+		
+		if (l.getID() == lightLobby.getID()) {
+			detailLobby(l);
+		}
+	}
+	
+	/**
+	 * Ajout du lobby dans la liste des lobby
+	 *
+	 * @param l lobby à ajouter
+	 */
+	public void newLobby(LightLobby l) {
+		
+		LobbyDisplayer ld = new LobbyDisplayer(l);
+		lobby.getChildren().add(ld);
+		displayerList.put(l.getID(), ld);
+		
+	}
+	
+	/**
+	 * Suppression d'un lobby de la liste
+	 *
+	 * @param l lobby à supprimer
+	 */
+	public void removeLobby(LightLobby l) {
+		
+		lobby.getChildren().removeAll(displayerList.get(l.getID()));
+		displayerList.remove(l.getID());
+		;
+	}
+	
+	/**
+	 * Affichage du detail d'un lobby
+	 *
+	 * @param lobby lobby que l'on veut afficher les détails
+	 */
 	private void detailLobby(LightLobby lobby) {
-		if(lightLobby.getID() != lobby.getID()){
+		
+		if (lightLobby.getID() != lobby.getID()) {
 			lightLobby = lobby;
 		}
 		
@@ -109,28 +155,10 @@ public class Controller_lobbyList implements Initializable {
 		}
 	}
 	
-	public void updateLobby(LightLobby l){
-		displayerList.get(l.getID()).redraw();
-		
-		if(l.getID() == lightLobby.getID()){
-			detailLobby(l);
-		}
-	}
-	
-	public void newLobby(LightLobby l) {
-		
-		LobbyDisplayer ld = new LobbyDisplayer(l);
-		lobby.getChildren().add(ld);
-		displayerList.put(l.getID(), ld);
-		
-	}
-	
-	public void removeLobby(LightLobby l){
-		lobby.getChildren()
-				.removeAll(displayerList.get(l.getID()));
-		displayerList.remove(l.getID());
-;	}
-	
+	/**
+	 * Methode qui "crée" un lobby. Ca appelle le formulaire de création
+	 * d'un lobby
+	 */
 	private void createLobby() {
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formlobby.fxml"));
@@ -152,6 +180,9 @@ public class Controller_lobbyList implements Initializable {
 		
 	}
 	
+	/**
+	 * ferme de formulaire
+	 */
 	private void unloadForm() {
 		
 		paneform.getChildren().clear();
@@ -159,18 +190,27 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
+	/**
+	 * Methode qui permet de joindre un lobby
+	 */
 	private void join() {
 		
-		if(lightLobby != null) {
+		if (lightLobby != null) {
 			Player.getInstance().joinLobby(lightLobby.getID());
 		}
 	}
 	
+	/**
+	 * Methode qui permet de se mettre prêt lorsque l'on a rejoint un lobby
+	 */
 	private void ready() {
 		
 		Player.getInstance().setReady();
 	}
 	
+	/**
+	 * Methode qui permet de quitter un lobby lorsque l'on est a l'intérieur
+	 */
 	private void quit() {
 		
 		Player.getInstance().quitLobby();
