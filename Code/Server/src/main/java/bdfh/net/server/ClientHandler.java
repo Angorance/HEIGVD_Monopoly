@@ -1,8 +1,8 @@
 package bdfh.net.server;
 
 import bdfh.database.DatabaseConnect;
-import bdfh.game.Lobbies;
-import bdfh.game.Lobby;
+import bdfh.logic.saloon.Lobbies;
+import bdfh.logic.saloon.Lobby;
 import bdfh.net.Handler;
 import bdfh.protocol.Protocoly;
 import bdfh.serializable.BoundParameters;
@@ -205,7 +205,7 @@ public class ClientHandler implements Handler {
 	}
 	
 	/**
-	 * Send game (commands / info) through the output stream.
+	 * Send logic (commands / info) through the output stream.
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */

@@ -1,4 +1,4 @@
-package bdfh.game;
+package bdfh.logic.saloon;
 
 import bdfh.net.notification.NotificationHandler;
 import bdfh.net.server.ClientHandler;
@@ -77,7 +77,7 @@ public class Lobbies {
 	// -------------------------------------------------------------------------
 	
 	/**
-	 * Add a new game to the list of lobbies.
+	 * Add a new logic to the list of lobbies.
 	 */
 	public Lobby createLobby(ClientHandler creator, Parameter param) {
 		

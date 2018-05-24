@@ -1,4 +1,4 @@
-package bdfh.game;
+package bdfh.logic;
 
 import bdfh.net.server.ClientHandler;
 

@@ -1,7 +1,7 @@
 package bdfh.net.notification;
 
-import bdfh.game.Lobbies;
-import bdfh.game.Lobby;
+import bdfh.logic.saloon.Lobbies;
+import bdfh.logic.saloon.Lobby;
 import bdfh.net.Handler;
 import bdfh.protocol.NotifProtocol;
 
@@ -75,7 +75,7 @@ public class NotificationHandler implements Handler {
 	}
 	
 	/**
-	 * Send game (commands / info) through the output stream.
+	 * Send logic (commands / info) through the output stream.
 	 *
 	 * @param cmd Data to send (either a command or info).
 	 */

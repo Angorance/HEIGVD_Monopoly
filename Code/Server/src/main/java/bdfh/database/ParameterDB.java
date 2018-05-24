@@ -39,7 +39,7 @@ public class ParameterDB {
 	}
 	
 	/**
-	 * Update the limits of the game.
+	 * Update the limits of the logic.
 	 */
 	public void updateLimits() {
 		// TODO - call this method each time the administrator update the limits
@@ -52,7 +52,7 @@ public class ParameterDB {
 			Statement statement = db.connect().createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
-			// Get the limits of the game
+			// Get the limits of the logic
 			result.next();
 			
 			int minDice = result.getInt("minDice");
@@ -64,7 +64,7 @@ public class ParameterDB {
 			boolean randomGameGeneration =
 					result.getInt("randomGameGeneration") == 0 ? false : true;
 			
-			// Update the limits of the game
+			// Update the limits of the logic
 			BoundParameters.getInstance()
 					.updateLimits(minDice, maxDice, minMoney, maxMoney, minTime,
 							maxTime, randomGameGeneration);
@@ -74,7 +74,7 @@ public class ParameterDB {
 			
 		} catch (SQLException e) {
 			System.out
-					.print("The database can't get the limits of the game : ");
+					.print("The database can't get the limits of the logic : ");
 			e.printStackTrace();
 			
 		} finally {
@@ -83,7 +83,7 @@ public class ParameterDB {
 	}
 	
 	/**
-	 * Set the limits of the game in the database.
+	 * Set the limits of the logic in the database.
 	 *
 	 * @param minDice Minimum number of dice allowed
 	 * @param maxDice Maximum number of dice allowed
@@ -121,7 +121,7 @@ public class ParameterDB {
 			
 		} catch (SQLException e) {
 			System.out
-					.print("The database can't set the limits of the game : ");
+					.print("The database can't set the limits of the logic : ");
 			e.printStackTrace();
 			
 		} finally {

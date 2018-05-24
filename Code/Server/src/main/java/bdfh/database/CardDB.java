@@ -1,6 +1,6 @@
 package bdfh.database;
 
-import bdfh.game.Card;
+import bdfh.logic.game.Card;
 import java.sql.*;
 
 /**
@@ -53,7 +53,7 @@ public class CardDB {
 			Statement statement = db.connect().createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
-			// Get the cards of the game
+			// Get the cards of the logic
 			int c = 0;
 			
 			while(result.next()) {
@@ -85,7 +85,7 @@ public class CardDB {
 						break;
 				}
 				
-				// Create one card of the game
+				// Create one card of the logic
 				Card card = new Card(cardText, effect);
 				cards[c] = card;
 				++c;
@@ -95,7 +95,7 @@ public class CardDB {
 			statement.close();
 			
 		} catch (SQLException e) {
-			System.out.print("The database can't get the cards of the game : ");
+			System.out.print("The database can't get the cards of the logic : ");
 			e.printStackTrace();
 			
 		} finally {

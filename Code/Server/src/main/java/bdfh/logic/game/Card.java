@@ -1,4 +1,4 @@
-package bdfh.game;
+package bdfh.logic.game;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Card {
 	
-	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD;}
+	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD}
 	
 	private String text;
 	private EFFECTS effect;

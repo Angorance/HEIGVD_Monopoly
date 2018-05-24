@@ -1,4 +1,6 @@
-package bdfh.game;
+package bdfh.logic.game;
+
+import bdfh.net.server.ClientHandler;
 
 /**
  * @author Bryan Curchod
@@ -9,6 +11,8 @@ public class Square {
 	int type;
 	String name;
 	int prix;
+	
+	ClientHandler owner;
 	
 	public Square(){
 	
