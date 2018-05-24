@@ -145,7 +145,7 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 	}
 	
-	public void createItem(LightLobby l) {
+	public void addLobby(LightLobby l) {
 		
 		LobbyDisplayer ld = new LobbyDisplayer(l);
 		lobby.getChildren().add(ld);
