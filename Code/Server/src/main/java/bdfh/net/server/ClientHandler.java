@@ -304,4 +304,13 @@ public class ClientHandler implements Handler {
 		
 		return clientID;
 	}
+	
+	public String getAnswer() {
+		
+		try {
+			return reader.readLine();
+		} catch (IOException e) {
+			return null; // TODO corriger si nécessaire
+		}
+	}
 }

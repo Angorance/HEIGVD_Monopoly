@@ -42,11 +42,13 @@ public class Board {
 	 * @param movement how many case to move
 	 * @return the case where the player stops
 	 */
-	public Square movePlayer(int clientID, int movement){
+	public void movePlayer(int clientID, int movement){
 		int newPos = (playerPosition.get(clientID) + movement) % NB_SQUARE;
 		playerPosition.put(clientID, newPos);
-		
-		return board[newPos];
+	}
+	
+	public Square getCurrentSquare(int playerId){
+		return board[playerPosition.get(playerId)];
 	}
 	
 }

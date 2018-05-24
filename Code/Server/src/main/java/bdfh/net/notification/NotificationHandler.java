@@ -21,7 +21,7 @@ public class NotificationHandler implements Handler {
 	private final static Logger LOG = Logger.getLogger("NotificationHandler");
 	
 	/**
-	 * TODO
+	 * initialize the writer (and the reader) for the notification writing
 	 *
 	 * @param in Input stream to receive commands.
 	 * @param out Output stream to send commands / info.
@@ -57,10 +57,10 @@ public class NotificationHandler implements Handler {
 	}
 	
 	/**
-	 * TODO
+	 * send a notification to the client
 	 *
-	 * @param cmd
-	 * @param param
+	 * @param cmd command of the notification
+	 * @param param parameter of the command
 	 */
 	private void sendData(String cmd, String param) {
 		
