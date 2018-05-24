@@ -2,6 +2,7 @@ package bdfh.database;
 
 import bdfh.logic.game.Square;
 import java.sql.*;
+import java.util.*;
 
 /**
  * Class used to execute queries on the square table.
@@ -39,13 +40,13 @@ public class SquareDB {
 	 *
 	 * @return array of all squares.
 	 */
-	public Square[] getSquares() {
+	public ArrayList<Square> getSquares() {
 		
-		Square[] squares = null;
+		ArrayList<Square> squares = null;
 		
-		String sql = "SELECT S.type, S.name, S.price_id, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
+		String sql = "SELECT S.type, S.name, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
 				+ "FROM square S "
-				+ "INNER JOIN price P ON S.price_id = P.id;";
+				+ "LEFT JOIN price P ON S.price_id = P.id;";
 		
 		try {
 			
@@ -54,41 +55,14 @@ public class SquareDB {
 			ResultSet result = statement.executeQuery(sql);
 			
 			// Get the squares
-			int s = 0;
-			
 			while(result.next()) {
 				
 				/*String type = result.getString(0);
 				String name = result.getString(1);
 				
-				// Get the effect of the card
-				Card.EFFECTS effect = null;
-				
-				switch(actionText) {
-					case "MOVE":
-						effect = Card.EFFECTS.MOVE;
-						break;
-					case "EXAM":
-						effect = Card.EFFECTS.EXAM;
-						break;
-					case "WIN":
-						effect = Card.EFFECTS.WIN;
-						break;
-					case "LOSE":
-						effect = Card.EFFECTS.LOSE;
-						break;
-					case "GOTO":
-						effect = Card.EFFECTS.GOTO;
-						break;
-					case "CARD":
-						effect = Card.EFFECTS.CARD;
-						break;
-				}
-				
-				// Create one card of the logic
+				// Create one card
 				Square square = new Square(cardText, effect);
-				squares[c] = square;
-				++c;*/
+				squares.add(square);*/
 			}
 			
 			// Close the db
