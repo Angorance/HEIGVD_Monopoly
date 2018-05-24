@@ -4,7 +4,7 @@ package bdfh.protocol;
  * Définit le protocole utilisé par les clients et le serveur
  *
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Protocoly {
 	
@@ -27,4 +27,7 @@ public abstract class Protocoly {
 	public static final String ANS_DENIED = "DENIED";
 	public static final String ANS_UNKNOWN = "UKNW";
 	public static final String ANS_BYE = "SEEYA";
+	
+	// commande envoyée au serveur
+	public static final String CMD_START = "START";
 }
