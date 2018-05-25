@@ -89,6 +89,22 @@ public class Notification extends Thread {
 				
 				LightLobbies.getInstance().removeLobby(sub, json);
 				break;
+			
+			case NotifProtocol.NOTIF_START:
+				
+				// Check if my lobby is started
+				if(Client.getInstance().getLobbyID() == Integer.parseInt(json)) {
+					
+					// Quit the notification channel
+					getInstance().pause();
+					
+					// Clean the received lobbies
+					LightLobbies.getInstance().clearLobbies();
+					
+					// Start the game
+					GameHandler.getInstance().start();
+				}
+				break;
 		}
 	}
 	

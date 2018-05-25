@@ -7,8 +7,7 @@ import bdfh.serializable.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 // TODO - Maybe handle better the exceptions...
 
@@ -21,15 +20,15 @@ import java.util.logging.Logger;
  */
 public class Client {
 	
+	private static Logger LOG = Logger.getLogger("Client");
+	
 	private Socket clientSocket = null;
 	private BufferedReader in = null;
 	private PrintWriter out = null;
-	private Thread gamehandler = new Thread(GameHandler.getInstance());
-	
 	private String response;
 	
-	private static Logger LOG = Logger.getLogger("Client");
-	
+	private Thread gamehandler = new Thread(GameHandler.getInstance());
+	private int lobbyID = -1;
 	
 	private Client() {}
 	
@@ -236,10 +235,15 @@ public class Client {
 		sendData(Protocoly.CMD_NEWLOBBY + " " + jsonParam);
 		
 		try {
-			response = in.readLine();
+			String line = in.readLine();
+			String[] s = line.split(" ");
+			response = s[0];
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
+				int lobbyID = Integer.parseInt(s[1]);
+				setLobbyID(lobbyID);
+				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
@@ -270,6 +274,8 @@ public class Client {
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
+				setLobbyID(lobbyID);
+				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
@@ -300,8 +306,6 @@ public class Client {
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				
 				result = true;
-				
-				gamehandler.start();
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -335,6 +339,8 @@ public class Client {
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
+				setLobbyID(-1);
+				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
@@ -345,5 +351,15 @@ public class Client {
 		}
 		
 		return result;
+	}
+	
+	public int getLobbyID() {
+		
+		return lobbyID;
+	}
+	
+	public void setLobbyID(int lobbyID) {
+		
+		this.lobbyID = lobbyID;
 	}
 }

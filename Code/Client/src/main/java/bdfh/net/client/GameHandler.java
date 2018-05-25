@@ -1,8 +1,5 @@
 package bdfh.net.client;
 
-import bdfh.net.protocol.Protocoly;
-import bdfh.serializable.LightLobbies;
-
 import java.io.*;
 import java.util.logging.Logger;
 
@@ -43,18 +40,7 @@ public class GameHandler extends Thread {
 		//String json = s[1];
 		
 		switch (s[0]) {
-			case Protocoly.ANS_START:
-				
-				// Quit the notification channel
-				Notification.getInstance().pause();
-				
-				// Clean the received lobbies
-				LightLobbies.getInstance().clearLobbies();
-				
-				// Start the game
-				// TODO - start the game
-				
-				break;
+		
 		}
 	}
 	
@@ -62,6 +48,10 @@ public class GameHandler extends Thread {
 	public void run() {
 		
 		try {
+			
+			// Start the game (interface)
+			// TODO
+			
 			while (true) {
 				response = in.readLine();
 				handleGame(response);
