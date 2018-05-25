@@ -2,6 +2,7 @@ package bdfh.net.client;
 
 import bdfh.exceptions.ConnectionException;
 import bdfh.gui.controller.Controller_lobbyList;
+import bdfh.logic.usr.Player;
 import bdfh.net.protocol.Protocoly;
 import bdfh.net.protocol.NotifProtocol;
 import bdfh.serializable.LightLobbies;
@@ -93,7 +94,7 @@ public class Notification extends Thread {
 			case NotifProtocol.NOTIF_START:
 				
 				// Check if my lobby is started
-				if(Client.getInstance().getLobbyID() == Integer.parseInt(json)) {
+				if(Player.getInstance().getLobbyID() == Integer.parseInt(json)) {
 					
 					// Quit the notification channel
 					getInstance().pause();
