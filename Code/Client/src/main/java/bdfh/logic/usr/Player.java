@@ -113,6 +113,7 @@ public class Player {
 		
 		boolean result = Client.getInstance().quitLobby();
 		isReady = !result;
+		inLobby = !result;
 		
 		return result;
 	}

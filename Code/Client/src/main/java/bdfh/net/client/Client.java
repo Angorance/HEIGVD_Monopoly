@@ -93,7 +93,6 @@ public class Client {
 			}
 			
 			Notification.getInstance().pause();
-			Notification.getInstance().disconnect();
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Client::disconnect: " + e);
 			throw e;
