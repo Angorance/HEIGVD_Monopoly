@@ -129,7 +129,7 @@ public class Controller_lobbyList implements Initializable {
 			LobbyDisplayer ld = new LobbyDisplayer(l);
 			lobby.getChildren().add(ld);
 			displayerList.put(l.getID(), ld);
-			if(Player.getInstance().isInLobby()) {
+			if (Player.getInstance().getLobbyID() != -1) {
 				join_button.setDisable(true);
 			}
 		});
@@ -188,10 +188,9 @@ public class Controller_lobbyList implements Initializable {
 		detailLobby.setVisible(true);
 		
 		int currendIDLoby = Player.getInstance().getLobbyID();
-		if(currendIDLoby == -1){
-			quit_button.setDisable(true);
-			ready_button.setDisable(true);
-		}else if(currendIDLoby != lightLobby.getID()){
+		
+		if (currendIDLoby == -1 || currendIDLoby != lightLobby.getID()) {
+			join_button.setDisable(false);
 			quit_button.setDisable(true);
 			ready_button.setDisable(true);
 		}
@@ -252,13 +251,12 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void join() {
 		
-		if (lightLobby != null) {
-			if (Player.getInstance().getLobbyID() == -1) {
-				join_button.setDisable(true);
-				quit_button.setDisable(false);
-				ready_button.setDisable(false);
-				Player.getInstance().joinLobby(lightLobby.getID());
-			}
+		System.out.println("id : " + Player.getInstance().getLobbyID());
+		if (Player.getInstance().getLobbyID() == -1) {
+			join_button.setDisable(true);
+			quit_button.setDisable(false);
+			ready_button.setDisable(false);
+			Player.getInstance().joinLobby(lightLobby.getID());
 		}
 	}
 	
