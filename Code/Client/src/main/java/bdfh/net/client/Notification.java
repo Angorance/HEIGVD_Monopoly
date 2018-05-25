@@ -3,8 +3,7 @@ package bdfh.net.client;
 import bdfh.exceptions.ConnectionException;
 import bdfh.gui.controller.Controller_lobbyList;
 import bdfh.logic.usr.Player;
-import bdfh.net.protocol.Protocoly;
-import bdfh.net.protocol.NotifProtocol;
+import bdfh.net.protocol.*;
 import bdfh.serializable.LightLobbies;
 
 import java.io.*;
@@ -14,6 +13,8 @@ import java.util.logging.*;
 /**
  * @author Daniel Gonzalez Lopez
  * @author Bryan Curchod
+ * @author Héléna Line Reymond
+ *
  * @version 1.1
  */
 public class Notification extends Thread {
@@ -22,7 +23,7 @@ public class Notification extends Thread {
 	
 	private Socket notifSocket = null;
 	private BufferedReader in = null;
-	private String line;
+	private String response;
 	
 	private Controller_lobbyList sub;
 	
@@ -48,21 +49,24 @@ public class Notification extends Thread {
 		
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
-			in = new BufferedReader(
-					new InputStreamReader(notifSocket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(notifSocket.getInputStream()));
 			
-			line = in.readLine();
+			response = in.readLine();
+			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
-			LOG.log(Level.INFO, line);
-			
-			handleNotification(line);
+			handleNotification(response);
 			
 		} catch (IOException e) {
-			System.out.println("Notification::connect: " + e);
+			LOG.log(Level.SEVERE, "Notification::connect: " + e);
 			throw e;
 		}
 	}
 	
+	/**
+	 * Handle the notifications of the channel.
+	 *
+	 * @param line  Notification received.
+	 */
 	private void handleNotification(String line) {
 		
 		String[] s = line.split(" ");
@@ -116,14 +120,21 @@ public class Notification extends Thread {
 	 */
 	public void disconnect() throws IOException {
 		
-		pause();
-		
-		if (in != null) {
-			in.close();
-		}
-		
-		if (notifSocket != null) {
-			notifSocket.close();
+		try{
+			// TODO - infinity loop
+			pause();
+			
+			if (in != null) {
+				in.close();
+			}
+			
+			if (notifSocket != null) {
+				notifSocket.close();
+			}
+			
+		} catch(IOException e) {
+			LOG.log(Level.SEVERE, "Notification::disconnect: " + e);
+			throw e;
 		}
 	}
 	
@@ -134,13 +145,14 @@ public class Notification extends Thread {
 			connect();
 			
 			while (true) {
-				line = in.readLine();
+				response = in.readLine();
+				LOG.log(Level.INFO, "RECEIVED: " + response);
 
-				handleNotification(line);
+				handleNotification(response);
 				
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Notification::run: " + e);
 		}
 	}
 	
@@ -148,22 +160,35 @@ public class Notification extends Thread {
 	public void interrupt() {
 		TODO
 	}*/
-
+	
+	/**
+	 * Put the notification channel into pause mode.
+	 */
 	public void pause() {
 		
 		try {
+			// TODO - infinity loop
 			disconnect();
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Notification::pause: " + e);
 		}
 		
 		getInstance().interrupt();
 	}
 	
+	/**
+	 * Put the notification channel into start mode.
+	 */
 	public void unpause() {
 		getInstance().start();
 	}
 	
+	/**
+	 * Add a listener to the notification channel.
+	 *
+	 * @param sub   Subscriber to add.
+	 */
 	public void addSubscriber(Controller_lobbyList sub) {
 		this.sub = sub;
 	}
