@@ -107,7 +107,7 @@ public class Controller_lobbyList implements Initializable {
 		Platform.runLater(() -> {
 			displayerList.get(l.getID()).redraw();
 			
-			if (l.getID() == lightLobby.getID()) {
+			if (lightLobby != null && l.getID() == lightLobby.getID()) {
 				detailLobby(l);
 			}
 		});
