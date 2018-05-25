@@ -52,12 +52,13 @@ public class Client {
 		
 		try {
 			clientSocket = new Socket(Protocoly.SERVER, Protocoly.CPORT);
-			in = new BufferedReader(
-					new InputStreamReader(clientSocket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			out = new PrintWriter(clientSocket.getOutputStream());
 			
+			// Prepare the GameHandler with the current streams
 			GameHandler.getInstance().initialise(in, out);
 			
+			// Check if the connection is successful
 			response = in.readLine();
 			
 			LOG.log(Level.INFO, "RECEIVED: " + response);
@@ -92,6 +93,7 @@ public class Client {
 			}
 			
 			Notification.getInstance().pause();
+			
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Client::disconnect: " + e);
 			throw e;
@@ -198,13 +200,20 @@ public class Client {
 	 */
 	private void sendData(String data) {
 		
-		LOG.log(Level.INFO, "Sending: " + data);
+		LOG.log(Level.INFO, "SENT: " + data);
 		
 		// Print the data and flush the stream.
 		out.println(data);
 		out.flush();
 	}
 	
+	/**
+	 * Handle answers after connection and initialize the bounds of parameters.
+	 *
+	 * @param response  Response to handle.
+	 *
+	 * @return  true if the connection is successful, false otherwise.
+	 */
 	private boolean handleConnectionAnswer(String response) {
 		
 		String[] splitted = response.split(" ", 2);
@@ -236,6 +245,8 @@ public class Client {
 		
 		try {
 			String line = in.readLine();
+			LOG.log(Level.INFO, "RECEIVED: " + line);
+			
 			String[] s = line.split(" ");
 			response = s[0];
 			
@@ -271,6 +282,7 @@ public class Client {
 		
 		try {
 			response = in.readLine();
+			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
@@ -302,6 +314,7 @@ public class Client {
 		
 		try {
 			response = in.readLine();
+			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				
@@ -328,14 +341,12 @@ public class Client {
 		
 		boolean result = false;
 		
-		// Stop the game
-		//gamehandler.interrupt();
-		
 		// Send the command to the server
 		sendData(Protocoly.CMD_QUITLOBBY);
 		
 		try {
 			response = in.readLine();
+			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
@@ -353,11 +364,21 @@ public class Client {
 		return result;
 	}
 	
+	/**
+	 * Get the ID of the player's lobby.
+	 *
+	 * @return  ID >= 0 if the player has a lobby, -1 otherwise.
+	 */
 	public int getLobbyID() {
 		
 		return lobbyID;
 	}
 	
+	/**
+	 * Set the ID of the player's lobby.
+	 *
+	 * @param lobbyID   ID of the lobby (-1 if no lobby).
+	 */
 	public void setLobbyID(int lobbyID) {
 		
 		this.lobbyID = lobbyID;
