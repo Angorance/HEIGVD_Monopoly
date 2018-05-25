@@ -103,9 +103,7 @@ public class Lobby {
 	 *
 	 * @param player Player who wants to quit the logic.
 	 */
-	public synchronized void quitLobby(ClientHandler player) {
-		
-		// TODO - Do it from the Lobbies to be able to notify the Notification observer !!!
+	public synchronized boolean quitLobby(ClientHandler player) {
 		
 		if (!areReady.isEmpty()
 				&& areReady.get(players.indexOf(player)) != null) {
@@ -117,7 +115,10 @@ public class Lobby {
 		
 		if (players.isEmpty()) {
 			Lobbies.getInstance().removeLobby(this);
+			return false;
 		}
+		
+		return true;
 	}
 	
 	/**

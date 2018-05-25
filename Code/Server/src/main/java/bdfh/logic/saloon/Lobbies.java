@@ -121,6 +121,12 @@ public class Lobbies {
 		}
 	}
 	
+	public synchronized void quitLobby(Lobby lobby, ClientHandler player) {
+		if (lobby.quitLobby(player)) {
+			notifySubs(NotifProtocol.NOTIF_UPDATE, lobby);
+		}
+	}
+	
 	
 	// OBSERVABLE --------------------------------------------------------------
 	
