@@ -301,7 +301,7 @@ public class Client {
 				
 				result = true;
 				
-				gamehandler.start();
+				//gamehandler.start();
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -325,7 +325,7 @@ public class Client {
 		boolean result = false;
 		
 		// Stop the game
-		gamehandler.interrupt();
+		//gamehandler.interrupt();
 		
 		// Send the command to the server
 		sendData(Protocoly.CMD_QUITLOBBY);
