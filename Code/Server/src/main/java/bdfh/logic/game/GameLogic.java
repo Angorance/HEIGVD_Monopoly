@@ -1,15 +1,11 @@
 package bdfh.logic.game;
 
 import bdfh.database.CardDB;
-import bdfh.logic.Player;
 import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
-import bdfh.protocol.Protocoly;
 import com.mysql.fabric.xmlrpc.Client;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 import static bdfh.protocol.Protocoly.*;
 /**
@@ -21,6 +17,9 @@ public class GameLogic extends Thread {
 	
 	private static final int NB_DECKCARD = 20;
 	private ArrayDeque<ClientHandler> players;
+	// Map a player to his fortune. The first cell of the tab is the capital,
+	// and the second is the total of his possession (capital + nbHouse + Hypotheques + ... )
+	private Map<Integer, Integer[]> playersFortune;
 	private ArrayDeque<Card> Deck;
 	private Board board;
 	private int nbDice;
@@ -35,6 +34,10 @@ public class GameLogic extends Thread {
 		preparePlayers(lobby);
 		prepareDeck();
 		board = new Board(players);
+		
+		// TODO SPRINT 4 serialisation du plateau de jeu
+		String boardJSON = "";
+		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
 	}
 	
@@ -70,19 +73,23 @@ public class GameLogic extends Thread {
 	 */
 	private void preparePlayers(Lobby lobby) {
 		players = new ArrayDeque<>(lobby.getPlayers().size());
+		playersFortune = new HashMap<>();
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());
 		Random rdm = new Random();
+		int startCapital = lobby.getParam().getMoneyAtTheStart();
 		
 		while(!tab.isEmpty()){
 			int pos = rdm.nextInt(tab.size());
-			players.addFirst((tab.remove(pos)));
+			ClientHandler c = tab.remove(pos);
+			players.addFirst(c);
+			playersFortune.put(c.getClientID(), new Integer[]{lobby.getParam().getMoneyAtTheStart(), lobby.getParam().getMoneyAtTheStart()}); // TODO à vérifier...
 		}
 	}
 	
 	/**
 	 * Roll the dices and move the player
 	 */
-	private void rollDice(){
+	private boolean rollDice(){
 		Random dice = new Random();
 		ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
 		int total = 0;
@@ -105,13 +112,14 @@ public class GameLogic extends Thread {
 		// move the player
 		board.movePlayer(currentPlayer.getClientID(), total);
 		
+		return didADouble;
 	}
 	
 	private void drawCard(){
 		Card drawed = Deck.pop();
 		
 		// notify the players
-		String cardJson = ""; // TODO SPRINT 4
+		String cardJson = ""; // TODO SPRINT 4 sérialisation de la carte
 		notifyPlayers(GAM_DRAW, cardJson);
 		
 		// check if can keep the card, if not, we put it in the end of the deck
@@ -125,17 +133,38 @@ public class GameLogic extends Thread {
 	
 	@Override public void run() {
 		boolean endGame = false;
+		boolean didADouble;
 		while(!endGame){
 			
+			
+			// next player
 			currentPlayer = players.pop();
 			
 			currentPlayer.sendData(GAM_PLAY);
+			// we wait the client signal to roll the dices
+			String answer = currentPlayer.getAnswer();
 			
-			// next player
-			// roll dice
-			//
-			// TODO SPRINT 4 tirer les dés
-			// TODO SPRINT 4 tirer une cartte
+			if(answer != null) {
+				didADouble = rollDice();
+				// get the new player's square
+				Square currentSquare = board.getCurrentSquare(currentPlayer.getClientID());
+				switch (currentSquare.getFamily()) {
+					case CARD:
+						drawCard();
+						break;
+					// TODO SPRINT X ajouter le traitement des autres cases
+				}
+				
+				// end turn
+				if (didADouble) {
+					players.addFirst(currentPlayer);
+					didADouble = false;
+				} else {
+					currentPlayer.sendData(GAM_ENDT);
+					players.addLast(currentPlayer);
+				}
+			} // TODO SPRINT X player inactivity
+			
 		}
 		
 	}
