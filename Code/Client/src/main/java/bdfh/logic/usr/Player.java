@@ -15,7 +15,7 @@ public class Player {
 	
 	private String username;
 	private boolean isReady;
-	private int lobbyID;
+	private int lobbyID = -1;
 	
 	
 	private Player() {}
