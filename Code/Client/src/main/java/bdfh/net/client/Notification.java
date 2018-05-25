@@ -126,6 +126,11 @@ public class Notification extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	/*@Override
+	public void interrupt() {
+		TODO
+	}*/
 
 	public void pause() {
 		
