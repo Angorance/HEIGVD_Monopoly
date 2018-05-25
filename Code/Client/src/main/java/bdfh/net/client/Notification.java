@@ -62,6 +62,24 @@ public class Notification extends Thread {
 		}
 	}
 	
+	@Override
+	public void run() {
+		
+		try {
+			connect();
+			
+			while (true) {
+				response = in.readLine();
+				LOG.log(Level.INFO, "RECEIVED: " + response);
+				
+				handleNotification(response);
+				
+			}
+		} catch (IOException e) {
+			LOG.log(Level.SEVERE, "Notification::run: " + e);
+		}
+	}
+	
 	/**
 	 * Handle the notifications of the channel.
 	 *
@@ -118,11 +136,9 @@ public class Notification extends Thread {
 	 *
 	 * @throws IOException
 	 */
-	public void disconnect() throws IOException {
+	private void disconnect() throws IOException {
 		
 		try{
-			// TODO - infinity loop
-			pause();
 			
 			if (in != null) {
 				in.close();
@@ -138,36 +154,12 @@ public class Notification extends Thread {
 		}
 	}
 	
-	@Override
-	public void run() {
-		
-		try {
-			connect();
-			
-			while (true) {
-				response = in.readLine();
-				LOG.log(Level.INFO, "RECEIVED: " + response);
-
-				handleNotification(response);
-				
-			}
-		} catch (IOException e) {
-			LOG.log(Level.SEVERE, "Notification::run: " + e);
-		}
-	}
-	
-	/*@Override
-	public void interrupt() {
-		TODO
-	}*/
-	
 	/**
 	 * Put the notification channel into pause mode.
 	 */
 	public void pause() {
 		
 		try {
-			// TODO - infinity loop
 			disconnect();
 			
 		} catch (IOException e) {
