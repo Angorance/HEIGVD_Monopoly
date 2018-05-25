@@ -154,7 +154,6 @@ public class Controller_lobbyList implements Initializable {
 		Label[] labelsPlayers = { name_player1, name_player2, name_player3, name_player4 };
 		Label[] labelsReadys = { ready_player1, ready_player2, ready_player3, ready_player4 };
 		
-		System.out.println(players);
 		for(int i = 0; i < labelsPlayers.length; ++i){
 			labelsPlayers[i].setText("-");
 			labelsReadys[i].setText("-");
