@@ -58,13 +58,13 @@ public class SquareDB {
 			// Get the squares
 			while(result.next()) {
 				
-				int position = result.getInt(0);
-				String type = result.getString(1);
-				String name = result.getString(2);
-				int rent = result.getInt(3);
-				int priceHouse = result.getInt(4);
-				int priceHotel = result.getInt(5);
-				int hypothec = result.getInt(6);
+				int position = result.getInt(1);
+				String type = result.getString(2);
+				String name = result.getString(3);
+				int rent = result.getInt(4);
+				int priceHouse = result.getInt(5);
+				int priceHotel = result.getInt(6);
+				int hypothec = result.getInt(7);
 				
 				// Get the family of the card
 				Square.FAMILY family = Square.FAMILY.valueOf(type);

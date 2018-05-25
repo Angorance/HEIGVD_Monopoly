@@ -57,9 +57,9 @@ public class CardDB {
 			// Get the cards
 			while(result.next()) {
 				
-				String cardText = result.getString(0);
-				int quantity = result.getInt(1);
-				String action = result.getString(2);
+				String cardText = result.getString(1);
+				int quantity = result.getInt(2);
+				String action = result.getString(3);
 				
 				// Get the effect of the card
 				Card.EFFECTS effect = Card.EFFECTS.valueOf(action);
