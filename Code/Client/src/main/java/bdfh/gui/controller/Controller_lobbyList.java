@@ -187,7 +187,11 @@ public class Controller_lobbyList implements Initializable {
 		lightLobby = lobby;
 		detailLobby.setVisible(true);
 		
-		if(!Player.getInstance().isInLobby()){
+		int currendIDLoby = Player.getInstance().getLobbyID();
+		if(currendIDLoby == -1){
+			quit_button.setDisable(true);
+			ready_button.setDisable(true);
+		}else if(currendIDLoby != lightLobby.getID()){
 			quit_button.setDisable(true);
 			ready_button.setDisable(true);
 		}
@@ -249,7 +253,7 @@ public class Controller_lobbyList implements Initializable {
 	private void join() {
 		
 		if (lightLobby != null) {
-			if (!Player.getInstance().isInLobby()) {
+			if (Player.getInstance().getLobbyID() == -1) {
 				join_button.setDisable(true);
 				quit_button.setDisable(false);
 				ready_button.setDisable(false);
@@ -274,7 +278,7 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void quit() {
 		
-		if (Player.getInstance().isInLobby()) {
+		if (Player.getInstance().getLobbyID() != -1) {
 			Player.getInstance().quitLobby();
 			ready_button.setDisable(false);
 			join_button.setDisable(false);
