@@ -329,7 +329,7 @@ public class Client {
 		boolean result = false;
 		
 		// Stop the game
-		gamehandler.interrupt();
+		//gamehandler.interrupt();
 		
 		// Send the command to the server
 		sendData(Protocoly.CMD_QUITLOBBY);
