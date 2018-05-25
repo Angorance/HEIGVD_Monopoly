@@ -143,7 +143,7 @@ public class Client {
 				throw new CredentialsException("Problem with Registration");
 			}
 		} catch (IOException e) {
-			System.out.println("Client::register: " + e);
+			LOG.log(Level.SEVERE, "Client::register: " + e);
 			throw e;
 		}
 		
@@ -260,7 +260,7 @@ public class Client {
 			}
 			
 		} catch (IOException e) {
-			System.out.println("Client::createLobby: " + e);
+			LOG.log(Level.SEVERE, "Client::createLobby: " + e);
 			result = false;
 		}
 		
@@ -293,7 +293,7 @@ public class Client {
 			}
 			
 		} catch (IOException e) {
-			System.out.println("Client::joinLobby: " + e);
+			LOG.log(Level.SEVERE, "Client::joinLobby: " + e);
 			result = false;
 		}
 		
@@ -325,7 +325,7 @@ public class Client {
 			}
 			
 		} catch (IOException e) {
-			System.out.println("Client::setReady: " + e);
+			LOG.log(Level.SEVERE, "Client::setReady: " + e);
 			result = false;
 		}
 		
@@ -357,7 +357,7 @@ public class Client {
 			}
 			
 		} catch (IOException e) {
-			System.out.println("Client::quitLobby: " + e);
+			LOG.log(Level.SEVERE, "Client::quitLobby: " + e);
 			result = false;
 		}
 		
