@@ -255,9 +255,6 @@ public class Client {
 				int lobbyID = Integer.parseInt(s[1]);
 				Player.getInstance().setLobbyID(lobbyID);
 				
-				// TODO
-				LOG.log(Level.INFO, "set lobby ID: " + Player.getInstance().getLobbyID());
-				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
 			}
@@ -290,9 +287,6 @@ public class Client {
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				Player.getInstance().setLobbyID(lobbyID);
 				result = true;
-				
-				// TODO
-				LOG.log(Level.INFO, "set lobby ID: " + Player.getInstance().getLobbyID());
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -357,9 +351,6 @@ public class Client {
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				Player.getInstance().setLobbyID(-1);
 				result = true;
-				
-				// TODO
-				LOG.log(Level.INFO, "set lobby ID: " + Player.getInstance().getLobbyID());
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;

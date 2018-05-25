@@ -189,11 +189,21 @@ public class Controller_lobbyList implements Initializable {
 		
 		int currendIDLoby = Player.getInstance().getLobbyID();
 		
-		// TODO
-		if (currendIDLoby == -1 || currendIDLoby != lightLobby.getID()) {
+		// Handle the visibility of the buttons
+		if (currendIDLoby == -1) {
 			join_button.setDisable(false);
 			quit_button.setDisable(true);
 			ready_button.setDisable(true);
+			
+		} else if (currendIDLoby != lightLobby.getID()) {
+			join_button.setDisable(true);
+			quit_button.setDisable(true);
+			ready_button.setDisable(true);
+			
+		} else {
+			join_button.setDisable(true);
+			quit_button.setDisable(false);
+			ready_button.setDisable(false);
 		}
 		
 		List<String> players = lobby.getUsernames();
