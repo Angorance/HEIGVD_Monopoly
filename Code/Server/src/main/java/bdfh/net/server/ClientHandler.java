@@ -11,6 +11,8 @@ import bdfh.serializable.Parameter;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
+import java.net.SocketException;
+import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,9 +63,11 @@ public class ClientHandler implements Handler {
 			String[] param;
 			String[] args;
 			
-			line = reader.readLine();
 			
 			try {
+				
+				line = reader.readLine();
+				
 				args = line.split(" ");
 				
 				cmd = args[0];
@@ -171,12 +175,18 @@ public class ClientHandler implements Handler {
 				byebye();
 				
 				LOG.log(Level.SEVERE,
-						"Client " + clientID + " disconnected suddenly.");
+						"Client " + clientID + " disconnected suddenly. (NullPointerException)");
+			} catch (SocketException e){
+				
+				byebye();
+				LOG.log(Level.SEVERE,
+						"Client " + clientID + " disconnected suddenly. (SocketException)");
 			}
 		}
 	}
 	
-	private void byebye() {
+	@Override
+	public void byebye() {
 		
 		connected = false;
 		
@@ -230,7 +240,7 @@ public class ClientHandler implements Handler {
 			
 			LOG.log(Level.INFO, "Lobby " + lobby.getID() + " created.");
 			
-			sendData(Protocoly.ANS_SUCCESS);
+			sendData(Protocoly.ANS_SUCCESS, Integer.toString(lobby.getID()));
 		} catch (JsonSyntaxException e) {
 			
 			sendData(Protocoly.ANS_DENIED);
@@ -280,7 +290,7 @@ public class ClientHandler implements Handler {
 		if (lobby != null) {
 			int lobbyLeft = lobby.getID();
 			
-			lobby.quitLobby(this);
+			Lobbies.getInstance().quitLobby(lobby, this);
 			lobby = null;
 			
 			LOG.log(Level.INFO,
