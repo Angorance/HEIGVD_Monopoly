@@ -276,6 +276,8 @@ public class ClientHandler implements Handler {
 			LOG.log(Level.INFO, "Player " + clientID + " is ready!");
 			
 			sendData(Protocoly.ANS_SUCCESS);
+			
+			lobby.checkStartingCondition();
 		} else {
 			
 			LOG.log(Level.SEVERE, "Not in a lobby...");

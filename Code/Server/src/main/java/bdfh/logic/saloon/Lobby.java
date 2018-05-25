@@ -66,21 +66,6 @@ public class Lobby {
 			areReady.set(playerIndex, true);
 			++numOfReady;
 			
-			// TODO - Start logic (GameLogic)
-			if (players.size() > 1 && numOfReady == players.size()) {
-				LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
-				
-			// send the START signal to every player in the room
-				startGame();
-			
-				
-				// start the game session
-				
-			} else if (players.size() > 1 && numOfReady > 1) {
-				LOG.log(Level.INFO,
-						"Lobby" + ID + ": AT LEAST 2 PLAYERS READY");
-			}
-			
 			return true;
 		}
 		
@@ -91,10 +76,27 @@ public class Lobby {
 	 * Start the game with this lobby
 	 */
 	private void startGame() {
-		LOG.log(Level.INFO, "All player ready, starting game...");
+		LOG.log(Level.INFO, "Lobby" + ID + ": Starting game...");
 		Lobbies.getInstance().startLobbyGame(this);
 		Lobbies.getInstance().removeLobby(this);
 		new GameLogic(this).start();
+	}
+	
+	public void checkStartingCondition() {
+		
+		if (players.size() > 1 && numOfReady == players.size()) {
+			LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
+			
+			// send the START signal to every player in the room
+			startGame();
+			
+			
+			// start the game session
+			
+		} else if (players.size() > 1 && numOfReady > 1) {
+			LOG.log(Level.INFO,
+					"Lobby" + ID + ": AT LEAST 2 PLAYERS READY");
+		}
 	}
 	
 	/**
