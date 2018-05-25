@@ -6,6 +6,8 @@ import bdfh.logic.saloon.Lobby;
 import com.mysql.fabric.xmlrpc.Client;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static bdfh.protocol.Protocoly.*;
 /**
@@ -26,13 +28,16 @@ public class GameLogic extends Thread {
 	
 	private ClientHandler currentPlayer;
 	
+	private final static Logger LOG = Logger.getLogger("GameLogic");
 	/**
 	 * constructor of a logic session. Define the turns, generate the board, and apply the parameters
 	 * @param lobby lobby that launched a logic
 	 */
 	public GameLogic(Lobby lobby){
+		LOG.log(Level.INFO, "construction du gameLogic");
 		preparePlayers(lobby);
 		prepareDeck();
+		LOG.log(Level.INFO, "Génération du plateau");
 		board = new Board(players);
 		
 		// TODO SPRINT 4 serialisation du plateau de jeu
@@ -45,6 +50,7 @@ public class GameLogic extends Thread {
 	 * Generate a random deck
 	 */
 	private void prepareDeck() {
+		LOG.log(Level.INFO, "Préparation du deck...");
 		Deck = new ArrayDeque<>(NB_DECKCARD);
 		ArrayList<Card> cardList = CardDB.getInstance().getCards();
 		Random rdm = new Random();
@@ -72,6 +78,7 @@ public class GameLogic extends Thread {
 	 * @param lobby
 	 */
 	private void preparePlayers(Lobby lobby) {
+		LOG.log(Level.INFO, "Préparation des joueurs");
 		players = new ArrayDeque<>(lobby.getPlayers().size());
 		playersFortune = new HashMap<>();
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());

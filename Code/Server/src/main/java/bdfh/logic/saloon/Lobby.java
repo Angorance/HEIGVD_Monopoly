@@ -71,10 +71,8 @@ public class Lobby {
 				LOG.log(Level.INFO, "Lobby" + ID + ": ALL PLAYERS READY");
 				
 			// send the START signal to every player in the room
-			for(ClientHandler p : players){
-				p.sendData(Protocoly.GAM_START);
 				startGame();
-				}
+			
 				
 				// start the game session
 				
@@ -93,9 +91,10 @@ public class Lobby {
 	 * Start the game with this lobby
 	 */
 	private void startGame() {
-		
+		LOG.log(Level.INFO, "All player ready, starting game...");
+		Lobbies.getInstance().startLobbyGame(this);
 		Lobbies.getInstance().removeLobby(this);
-		new GameLogic(this);
+		new GameLogic(this).start();
 	}
 	
 	/**
@@ -127,7 +126,6 @@ public class Lobby {
 	 * @return
 	 */
 	public boolean isRunning() {
-		
 		return isRunning;
 	}
 	
