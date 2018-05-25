@@ -189,6 +189,7 @@ public class Controller_lobbyList implements Initializable {
 		
 		int currendIDLoby = Player.getInstance().getLobbyID();
 		
+		// TODO
 		if (currendIDLoby == -1 || currendIDLoby != lightLobby.getID()) {
 			join_button.setDisable(false);
 			quit_button.setDisable(true);
