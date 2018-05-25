@@ -58,10 +58,15 @@ public class LightLobby {
 	
 	public void updateAll(List<String> users, List<Boolean> readys) {
 		usernames.clear();
-		readys.clear();
+		areReady.clear();
 		
-		usernames.addAll(users);
-		areReady.addAll(readys);
+		for (String s : users) {
+			usernames.add(s);
+		}
+		
+		for (boolean b : readys) {
+			areReady.add(b);
+		}
 	}
 	
 	public static LightLobby instancify(String json) {

@@ -5,7 +5,6 @@ import bdfh.gui.controller.Controller_lobbyList;
 import bdfh.net.protocol.Protocoly;
 import bdfh.net.protocol.NotifProtocol;
 import bdfh.serializable.LightLobbies;
-import bdfh.serializable.LightLobby;
 
 import java.io.*;
 import java.net.Socket;

@@ -85,7 +85,6 @@ public class Controller_lobbyList implements Initializable {
 		public void redraw() {
 			
 			int nbPlayers = 0;
-			System.out.println(lLobby.getUsernames());
 			
 			for (String str : lLobby.getUsernames()) {
 				if (!str.isEmpty()) {
@@ -105,7 +104,6 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	public void updateLobby(LightLobby l) {
 		
-		System.out.println(l.getUsernames());
 		Platform.runLater(() -> {
 			displayerList.get(l.getID()).redraw();
 			
