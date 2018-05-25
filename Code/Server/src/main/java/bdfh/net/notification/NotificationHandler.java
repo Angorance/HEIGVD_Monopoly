@@ -44,6 +44,10 @@ public class NotificationHandler implements Handler {
 		
 	}
 	
+	@Override public void byebye() {
+		Lobbies.getInstance().removeSub(this);
+	}
+	
 	/**
 	 * Send the whole list
 	 */
@@ -92,18 +96,19 @@ public class NotificationHandler implements Handler {
 		
 		switch (cmd) {
 			case NotifProtocol.NOTIF_NEW:
-				
-				sendData(NotifProtocol.NOTIF_NEW + " " + json);
+				sendData(NotifProtocol.NOTIF_NEW, json);
 				break;
 				
 			case NotifProtocol.NOTIF_UPDATE:
-				
-				sendData(NotifProtocol.NOTIF_UPDATE + " " + json);
+				sendData(NotifProtocol.NOTIF_UPDATE, json);
 				break;
 				
 			case NotifProtocol.NOTIF_DELETE:
+				sendData(NotifProtocol.NOTIF_DELETE, json);
+				break;
 				
-				sendData(NotifProtocol.NOTIF_DELETE + " " + json);
+			case NotifProtocol.NOTIF_START :
+				sendData(NotifProtocol.NOTIF_START,  Integer.toString(l.getID()));
 				break;
 		}
 	}
