@@ -1,5 +1,6 @@
 package bdfh.gui.controller;
 
+import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.Notification;
 import bdfh.serializable.LightLobbies;
@@ -16,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,10 +41,13 @@ public class Controller_lobbyList implements Initializable {
 	@FXML private JFXButton join_button;
 	@FXML private JFXButton quit_button;
 	@FXML private JFXButton ready_button;
+	@FXML private AnchorPane detailLobby;
 	
 	private HashMap<Integer, LobbyDisplayer> displayerList;
 	
 	private LightLobby lightLobby;
+	
+	private Stage thisStage = null;
 	
 	class LobbyDisplayer extends GridPane {
 		
@@ -124,6 +129,9 @@ public class Controller_lobbyList implements Initializable {
 			LobbyDisplayer ld = new LobbyDisplayer(l);
 			lobby.getChildren().add(ld);
 			displayerList.put(l.getID(), ld);
+			if(Player.getInstance().isInLobby()) {
+				join_button.setDisable(true);
+			}
 		});
 	}
 	
@@ -140,6 +148,35 @@ public class Controller_lobbyList implements Initializable {
 		});
 	}
 	
+	public void startGame() {
+	
+	}
+	
+	/**
+	 * hide the main frame
+	 */
+	/*@Override
+	public void hide() {
+		
+		if (thisStage == null) {
+			thisStage = (Stage) paneHeader.getScene().getWindow();
+		}
+		thisStage.hide();
+	}*/
+	
+	/**
+	 * show the window and reset the display
+	 */
+	/*@Override
+	public void show() {
+		
+		if (thisStage == null) {
+			thisStage = (Stage) paneHeader.getScene().getWindow();
+		}
+		thisStage.show();
+	}*/
+	
+	
 	/**
 	 * Affichage du detail d'un lobby
 	 *
@@ -148,13 +185,19 @@ public class Controller_lobbyList implements Initializable {
 	private void detailLobby(LightLobby lobby) {
 		
 		lightLobby = lobby;
+		detailLobby.setVisible(true);
+		
+		if(!Player.getInstance().isInLobby()){
+			quit_button.setDisable(true);
+			ready_button.setDisable(true);
+		}
 		
 		List<String> players = lobby.getUsernames();
 		List<Boolean> readys = lobby.getAreReady();
 		Label[] labelsPlayers = { name_player1, name_player2, name_player3, name_player4 };
 		Label[] labelsReadys = { ready_player1, ready_player2, ready_player3, ready_player4 };
 		
-		for(int i = 0; i < labelsPlayers.length; ++i){
+		for (int i = 0; i < labelsPlayers.length; ++i) {
 			labelsPlayers[i].setText("-");
 			labelsReadys[i].setText("-");
 		}
@@ -206,7 +249,10 @@ public class Controller_lobbyList implements Initializable {
 	private void join() {
 		
 		if (lightLobby != null) {
-			if(!Player.getInstance().isInLobby()) {
+			if (!Player.getInstance().isInLobby()) {
+				join_button.setDisable(true);
+				quit_button.setDisable(false);
+				ready_button.setDisable(false);
 				Player.getInstance().joinLobby(lightLobby.getID());
 			}
 		}
@@ -217,7 +263,8 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void ready() {
 		
-		if(!Player.getInstance().isReady()){
+		if (!Player.getInstance().isReady()) {
+			ready_button.setDisable(true);
 			Player.getInstance().setReady();
 		}
 	}
@@ -227,8 +274,10 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void quit() {
 		
-		if(Player.getInstance().isInLobby()) {
+		if (Player.getInstance().isInLobby()) {
 			Player.getInstance().quitLobby();
+			ready_button.setDisable(false);
+			join_button.setDisable(false);
 		}
 	}
 	
@@ -243,6 +292,8 @@ public class Controller_lobbyList implements Initializable {
 		paneform.setMouseTransparent(true);
 		
 		displayerList = new HashMap<>();
+		
+		detailLobby.setVisible(false);
 		
 		for (LightLobby l : LightLobbies.getInstance().getLobbies().values()) {
 			LobbyDisplayer ld = new LobbyDisplayer(l);
@@ -284,5 +335,7 @@ public class Controller_lobbyList implements Initializable {
 		});
 		
 		Notification.getInstance().addSubscriber(this);
+		
+		//windowManager.getInstance().setMainFrame(this);
 	}
 }
