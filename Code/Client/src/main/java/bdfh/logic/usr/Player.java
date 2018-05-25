@@ -5,16 +5,17 @@ import bdfh.serializable.BoundParameters;
 
 /**
  * @author Daniel Gonzalez Lopez
+ * @author Héléna Line Reymond
+ *
  * @version 1.0
  */
 public class Player {
-	
 	
 	private static BoundParameters bounds;
 	
 	private String username;
 	private boolean isReady;
-	private boolean inLobby;
+	private int lobbyID;
 	
 	
 	private Player() {}
@@ -28,7 +29,6 @@ public class Player {
 		
 		return Instance.instance;
 	}
-	
 	
 	/**
 	 * Get the username
@@ -63,9 +63,7 @@ public class Player {
 	 */
 	public boolean createLobby(int nbrDice, int money, int mode, int time, boolean randomGeneration) {
 		
-		// Create the lobby on the server
-		inLobby = Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, time, randomGeneration));
-		return inLobby;
+		return Client.getInstance().createLobby(new Parameter(nbrDice, money, mode, time, randomGeneration));
 	}
 	
 	/**
@@ -77,14 +75,27 @@ public class Player {
 	 */
 	public boolean joinLobby(int lobbyID) {
 		
-		inLobby = Client.getInstance().joinLobby(lobbyID);
-		
-		return inLobby;
+		return Client.getInstance().joinLobby(lobbyID);
 	}
 	
-	public boolean isInLobby() {
+	/**
+	 * Get the ID of the player's lobby.
+	 *
+	 * @return  ID >= 0 if the player has a lobby, -1 otherwise.
+	 */
+	public int getLobbyID() {
 		
-		return inLobby;
+		return lobbyID;
+	}
+	
+	/**
+	 * Set the ID of the player's lobby.
+	 *
+	 * @param lobbyID   ID of the lobby (-1 if no lobby).
+	 */
+	public void setLobbyID(int lobbyID) {
+		
+		this.lobbyID = lobbyID;
 	}
 	
 	/**
@@ -94,11 +105,14 @@ public class Player {
 	 */
 	public boolean setReady() {
 		
-		isReady = Client.getInstance().setReady();
-		
-		return isReady;
+		return Client.getInstance().setReady();
 	}
 	
+	/**
+	 * Check if the player is ready.
+	 *
+	 * @return  true if the player is ready, false otherwise.
+	 */
 	public boolean isReady() {
 		
 		return isReady;
@@ -113,7 +127,6 @@ public class Player {
 		
 		boolean result = Client.getInstance().quitLobby();
 		isReady = !result;
-		inLobby = !result;
 		
 		return result;
 	}
@@ -139,11 +152,21 @@ public class Player {
 	
 	}
 	
+	/**
+	 * Set the bounds of the parameters.
+	 *
+	 * @param bounds    Bounds to set.
+	 */
 	public static void setBounds(BoundParameters bounds) {
 		
 		Player.bounds = bounds;
 	}
 	
+	/**
+	 * Get the bounds of the parameters.
+	 *
+	 * @return  bounds of the parameters.
+	 */
 	public static BoundParameters getBounds() {
 		
 		return bounds;

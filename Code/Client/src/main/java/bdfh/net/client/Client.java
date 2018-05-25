@@ -253,7 +253,7 @@ public class Client {
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
 				result = true;
 				int lobbyID = Integer.parseInt(s[1]);
-				setLobbyID(lobbyID);
+				Player.getInstance().setLobbyID(lobbyID);
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -285,8 +285,8 @@ public class Client {
 			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
+				Player.getInstance().setLobbyID(lobbyID);
 				result = true;
-				setLobbyID(lobbyID);
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -349,8 +349,8 @@ public class Client {
 			LOG.log(Level.INFO, "RECEIVED: " + response);
 			
 			if (response.equals(Protocoly.ANS_SUCCESS)) {
+				Player.getInstance().setLobbyID(-1);
 				result = true;
-				setLobbyID(-1);
 				
 			} else if (response.equals(Protocoly.ANS_DENIED)) {
 				result = false;
@@ -362,25 +362,5 @@ public class Client {
 		}
 		
 		return result;
-	}
-	
-	/**
-	 * Get the ID of the player's lobby.
-	 *
-	 * @return  ID >= 0 if the player has a lobby, -1 otherwise.
-	 */
-	public int getLobbyID() {
-		
-		return lobbyID;
-	}
-	
-	/**
-	 * Set the ID of the player's lobby.
-	 *
-	 * @param lobbyID   ID of the lobby (-1 if no lobby).
-	 */
-	public void setLobbyID(int lobbyID) {
-		
-		this.lobbyID = lobbyID;
 	}
 }
