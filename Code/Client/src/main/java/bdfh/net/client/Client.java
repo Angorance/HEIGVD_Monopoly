@@ -91,6 +91,9 @@ public class Client {
 			if (!response.equals(Protocoly.ANS_BYE)) {
 				LOG.log(Level.SEVERE, "Disconnection failed from server.");
 			}
+			
+			Notification.getInstance().pause();
+			Notification.getInstance().disconnect();
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Client::disconnect: " + e);
 			throw e;
