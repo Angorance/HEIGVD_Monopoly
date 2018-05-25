@@ -29,7 +29,6 @@ public abstract class Protocoly {
 	public static final String ANS_BYE = "SEEYA";
 	
 	// commande envoyée du serveur (logique de jeu)
-	public static final String GAM_START = "START";
 	public static final String GAM_PLAY = "PLAY";
 	public static final String GAM_ROLL = "ROLL";
 	public static final String GAM_DRAW = "DRAW";

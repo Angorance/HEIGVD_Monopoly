@@ -20,4 +20,5 @@ public interface Handler {
 	 * @throws IOException
 	 */
 	void handle(InputStream in, OutputStream out) throws IOException;
+	void byebye();
 }

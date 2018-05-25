@@ -30,6 +30,10 @@ public class Lobbies {
 	// SINGLETON ---------------------------------------------------------------
 	private Lobbies() {}
 	
+	public void startLobbyGame(Lobby lobby) {
+		notifySubs(NotifProtocol.NOTIF_START, lobby);
+	}
+	
 	/**
 	 * Internal static class used to create one and only one instance of
 	 * Lobbies to guarantee it follows the singleton model.
@@ -140,6 +144,10 @@ public class Lobbies {
 		for (NotificationHandler n : subList){
 			n.update(cmd, l);
 		}
+	}
+	
+	public void removeSub(NotificationHandler c){
+		subList.remove(c);
 	}
 	
 	// -------------------------------------------------------------------------

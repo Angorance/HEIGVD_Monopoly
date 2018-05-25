@@ -1,7 +1,7 @@
 package bdfh.net.client;
 
 import java.io.*;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author Héléna Line Reymond
@@ -28,6 +28,17 @@ public class GameHandler extends Thread {
 	}
 	
 	/**
+	 * Initialise the game handler with the streams of the client.
+	 *
+	 * @param in    Reader stream.
+	 * @param out   Writer stream.
+	 */
+	public void initialise(BufferedReader in, PrintWriter out) {
+		this.in = in;
+		this.out = out;
+	}
+	
+	/**
 	 * Handle the command received in the game.
 	 *
 	 * @param line  Command received.
@@ -37,11 +48,11 @@ public class GameHandler extends Thread {
 		String[] s = line.split(" ");
 		
 		// TODO - update with information received for the game
-		//String json = s[1];
+		/*String json = s[1];
 		
 		switch (s[0]) {
 		
-		}
+		}*/
 	}
 	
 	@Override
@@ -54,15 +65,12 @@ public class GameHandler extends Thread {
 			
 			while (true) {
 				response = in.readLine();
+				LOG.log(Level.INFO, "RECEIVED: " + response);
+				
 				handleGame(response);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "GameHandler::run: " + e);
 		}
-	}
-	
-	public void initialise(BufferedReader in, PrintWriter out) {
-		this.in = in;
-		this.out = out;
 	}
 }
