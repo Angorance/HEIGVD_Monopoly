@@ -68,4 +68,9 @@ public class Card {
 		
 		return effect;
 	}
+	
+	@Override public String toString() {
+		
+		return "{\"text\" : \"" +text + "\"}";
+	}
 }

@@ -43,7 +43,7 @@ public class SquareDB {
 	 */
 	public ArrayList<Square> getSquares() {
 		
-		ArrayList<Square> squares = null;
+		ArrayList<Square> squares = new ArrayList<>();
 		
 		String sql = "SELECT S.position, S.family, S.name, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
 				+ "FROM square S "
