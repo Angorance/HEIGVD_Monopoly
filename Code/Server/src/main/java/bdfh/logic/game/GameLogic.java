@@ -142,7 +142,7 @@ public class GameLogic extends Thread {
 		Card drawed = Deck.pop();
 		LOG.log(Level.INFO, "Deck après pioche : " + Deck.toString());
 		// notify the players
-		String cardJson = drawed.toString(); // TODO SPRINT 4 sérialisation de la carte
+		String cardJson = drawed.jsonify();
 		notifyPlayers(GAM_DRAW, cardJson);
 		
 		// check if can keep the card, if not, we put it in the end of the deck
@@ -151,7 +151,7 @@ public class GameLogic extends Thread {
 			Deck.addLast(drawed);
 		} else {
 			Deck.addLast(drawed);
-			// TODO PRINT X
+			// TODO SPRINT X
 		}
 	}
 	
