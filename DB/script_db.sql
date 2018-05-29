@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`square` (
     ON UPDATE CASCADE
 );
 
+
 -- -----------------------------------------------------
 -- Set the limits of the game
 -- -----------------------------------------------------
@@ -119,30 +120,76 @@ INSERT INTO `cheseaux-poly`.`parameter`
 (`id`, `minDice`, `maxDice`, `minMoneyAtTheStart`, `maxMoneyAtTheStart`, `minTime`, `maxTime`, `randomGameGeneration`)
 VALUES (1, 2, 4, 1000, 4000, 30, 120, false);
 
+
 -- -----------------------------------------------------
 -- Set the actions of the cards
 -- -----------------------------------------------------
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (1, "MOVE");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (2, "EXAM");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (3, "WIN");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (4, "LOSE");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (5, "GOTO");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (6, "CARD");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (7, "FREE");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (1, "WIN 10");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (2, "WIN 20");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (3, "WIN 25");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (4, "WIN 50");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (5, "WIN 100");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (6, "WIN 200");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (7, "LOSE 15");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (8, "LOSE 20");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (9, "LOSE 50");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (10, "LOSE 100");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (11, "LOSE 150");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (12, "FREE");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (13, "GOTO 0");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (14, "GOTO 1");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (15, "GOTO 10");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (16, "GOTO 16");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (17, "GOTO 39");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (18, "BACK 3");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (19, "MOVE 7");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (20, "MOVE 11");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (21, "EACH 10");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (22, "CHOICE 10 CARD");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (23, "REP 40 115");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (24, "REP 25 100");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (25, "CARD");
+
 
 -- -----------------------------------------------------
 -- Create the cards
 -- -----------------------------------------------------
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (1, "Félicitation, vous avez réussi tous les challenges de RES.", 1, 1);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (2, "Fantastique, vous avez obtenu plus que 5 au dernier labo de POO.", 1, 1);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (3, "Vous n'avez pas rendu à temps votre dernier labo de PCO.", 1, 2);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (4, "Vous avez oublié d'acheter votre billet de parking.", 1, 2);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (5, "Merci d'avoir rempli toutes les évaluations d'enseignants.", 1, 3);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (6, "Vous avez été élu membre du CoRe.", 1, 3);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (7, "Il se trouve que vous vous êtes planté dans la partie assembleur de votre test de SLO.", 1, 4);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (8, "En rendant votre rapport de PRO, vous vous êtes trompé de casier.", 1, 4);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (9, "Aller, qu'est-ce que tu attends ? C'est l'heure d'aller manger !", 1, 5);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (10, "Fin des cours, tu mérites ta pause.", 1, 5);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (11, "Vous avez été injustement pénalisé à votre dernier examen. Le professeur s'en excuse.", 1, 6);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (12, "Grâce au coup de pouce d'un enseignant, vous passez finalement votre branche.", 1, 6);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (13, "Le temps est écoulé ! Vous pouvez sortir de la salle d'examen.", 2, 7);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (1, "Le secrétariat s'est trompé et te reverse 10.-", 1, 1);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (2, "La machine à café a planté. Tu gagnes 20.-", 1, 2);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (3, "Ton acharnement te rapport 25.-", 1, 3);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (4, "En te baladant dans les couloirs, tu aperçois un billet de 50.-", 1, 4);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (5, "Tu aides un pote avec son labo. Cela te rapporte 50.-", 1, 4);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (6, "Reçois 100.- pour avoir gagné le concours d'innovation", 1, 5);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (7, "Tu obtiens ton bachelor et gagnes 100.-", 1, 5);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (8, "Tu reçois les subsides du canton. Tu gagnes 100.-", 1, 5);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (9, "Tu as obtenu la bourse : 200.-", 1, 6);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (10, "Tu as cassé ton badge d'imprimante. Tu paies 15.-", 1, 7);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (11, "Tu as été pris en train de plagier… Tu paies 20.-", 1, 8);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (12, "Le menu de la cantine était spécial, tu as payé 50.-", 1, 9);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (13, "L'impression de ton rapport te coûte 50.-", 1, 9);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (14, "Tu n'as pas payé le parking et tu reçois une amende de 100.-", 1, 10);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (15, "Paie tes frais d'écolage : 150.-", 1, 11);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (16, "A force de venir en voiture, faut payer l'essence : 150.-", 1, 11);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (17, "Rends ta copie d'examen et sors de la salle", 2, 12);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (18, "Vas à la case de départ", 2, 13);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (19, "Tu as oublié ta veste en F01, tu y retournes pour la récupérer", 1, 14);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (20, "L'examen commence…", 2, 15);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (21, "Tu dois aller discuter avec un prof. Vas en reprographie", 1, 16);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (22, "Rends-toi immédiatement au Chill Out", 1, 17);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (23, "Tu as oublié ton chargeur. Recule de 3 cases", 1, 18);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (24, "Un de tes cours est annulé. Avance de 7 cases", 1, 19);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (25, "Tu t'es perdu dans l'école et tu te retrouves 11 cases plus loin", 1, 20);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (26, "Ton anniv', ça fait toujours plaisir. Tous les joueurs te donnent 10.-", 1, 21);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (27, "Vraiment pas de bol. Paie 10.- ou retire une carte", 1, 22);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (28, "Répare tes possessions : 40.-/canapé, 115.-/home cinéma", 1, 23);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (29, "Des andouilles ont saccagé tes possessions. 25.-/canapé, 100.-/home cinéma", 1, 24);
+
+
+-- -----------------------------------------------------
+-- Create the prices
+-- -----------------------------------------------------
+
+
+-- -----------------------------------------------------
+-- Create the squares
+-- -----------------------------------------------------
