@@ -3,6 +3,8 @@ package bdfh.logic.game;
 import bdfh.database.DatabaseConnect;
 import bdfh.database.SquareDB;
 import bdfh.net.server.ClientHandler;
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonArray;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -51,4 +53,14 @@ public class Board {
 		return board[playerPosition.get(playerId)];
 	}
 	
+	public String jsonify() {
+		
+		JsonArray jsonBoard = new JsonArray();
+		
+		for (Square s : board) {
+			jsonBoard.add(s.jsonify());
+		}
+		
+		return GsonSerializer.getInstance().toJson(jsonBoard);
+	}
 }

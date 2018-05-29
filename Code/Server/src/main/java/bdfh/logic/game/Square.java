@@ -1,6 +1,9 @@
 package bdfh.logic.game;
 
 import bdfh.net.server.ClientHandler;
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /**
  * @authors Bryan Curchod, Héléna Line Reymond
@@ -60,5 +63,18 @@ public class Square {
 	public void setOwner(ClientHandler owner) {
 		
 		this.owner = owner;
+	}
+	
+	public String jsonify() {
+		
+		JsonObject jsonSquare = new JsonObject();
+		
+		jsonSquare.add("position", new JsonPrimitive(position));
+		jsonSquare.add("name", new JsonPrimitive(name));
+		jsonSquare.add("family", new JsonPrimitive(family.name()));
+		
+		jsonSquare.add("prices", new JsonPrimitive(prices.jsonify()));
+		
+		return GsonSerializer.getInstance().toJson(jsonSquare);
 	}
 }

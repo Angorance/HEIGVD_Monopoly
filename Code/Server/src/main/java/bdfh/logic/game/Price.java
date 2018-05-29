@@ -1,5 +1,9 @@
 package bdfh.logic.game;
 
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 /**
  * Class used to fix prices for a square.
  *
@@ -46,5 +50,17 @@ public class Price {
 	public int getHypothec() {
 		
 		return hypothec;
+	}
+	
+	public String jsonify() {
+		
+		JsonObject jsonPrice = new JsonObject();
+		
+		jsonPrice.add("rent", new JsonPrimitive(rent));
+		jsonPrice.add("house", new JsonPrimitive(priceHouse));
+		jsonPrice.add("hotel", new JsonPrimitive(priceHotel));
+		jsonPrice.add("hypothec", new JsonPrimitive(hypothec));
+		
+		return GsonSerializer.getInstance().toJson(jsonPrice);
 	}
 }

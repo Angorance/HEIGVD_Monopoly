@@ -40,8 +40,7 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Génération du plateau");
 		board = new Board(players);
 		
-		// TODO SPRINT 4 serialisation du plateau de jeu
-		String boardJSON = "";
+		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
 	}
