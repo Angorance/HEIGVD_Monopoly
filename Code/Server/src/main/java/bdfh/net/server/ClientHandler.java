@@ -1,6 +1,7 @@
 package bdfh.net.server;
 
 import bdfh.database.DatabaseConnect;
+import bdfh.logic.game.GameLogic;
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
 import bdfh.net.Handler;
@@ -30,6 +31,7 @@ public class ClientHandler implements Handler {
 	private int clientID;
 	private String clientUsername;
 	private boolean connected = true;
+	private GameLogic game;
 	
 	private Lobby lobby;
 	
@@ -160,6 +162,20 @@ public class ClientHandler implements Handler {
 					case Protocoly.CMD_NEWLOBBY:
 						
 						createLobby(param[0]);
+						break;
+						
+						// ============================================================================================
+					// commande de phase de jeu
+					case Protocoly.GAM_ROLL :
+						if(game!= null){
+							game.rollDice(this);
+						}
+						break;
+						
+					case Protocoly.GAM_ENDT :
+						if(game != null){
+							game.endTurn(this);
+						}
 						break;
 					
 					default: // WTF ???
@@ -317,12 +333,7 @@ public class ClientHandler implements Handler {
 		return clientID;
 	}
 	
-	public String getAnswer() {
-		
-		try {
-			return reader.readLine();
-		} catch (IOException e) {
-			return null; // TODO corriger si nécessaire
-		}
+	public void setGame(GameLogic game) {
+		this.game = game;
 	}
 }

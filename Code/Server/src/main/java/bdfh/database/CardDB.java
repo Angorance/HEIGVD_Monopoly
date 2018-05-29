@@ -42,7 +42,7 @@ public class CardDB {
 	 */
 	public ArrayList<Card> getCards() {
 		
-		ArrayList<Card> cards = null;
+		ArrayList<Card> cards = new ArrayList<>();
 		
 		String sql = "SELECT C.text, C.quantity, A.type "
 					+ "FROM card C "
