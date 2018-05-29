@@ -5,11 +5,13 @@ import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
 import com.mysql.fabric.xmlrpc.Client;
 
+import javax.swing.plaf.ColorUIResource;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static bdfh.protocol.Protocoly.*;
+
 /**
  * @author Daniel Gonzalez Lopez
  * @author Bryan Curchod
@@ -29,11 +31,14 @@ public class GameLogic extends Thread {
 	private ClientHandler currentPlayer;
 	
 	private final static Logger LOG = Logger.getLogger("GameLogic");
+	
 	/**
 	 * constructor of a logic session. Define the turns, generate the board, and apply the parameters
+	 *
 	 * @param lobby lobby that launched a logic
 	 */
-	public GameLogic(Lobby lobby){
+	public GameLogic(Lobby lobby) {
+		
 		LOG.log(Level.INFO, "construction du gameLogic");
 		preparePlayers(lobby);
 		prepareDeck();
@@ -50,13 +55,14 @@ public class GameLogic extends Thread {
 	 * Generate a random deck
 	 */
 	private void prepareDeck() {
+		
 		LOG.log(Level.INFO, "Préparation du deck...");
 		Deck = new ArrayDeque<>(NB_DECKCARD);
 		ArrayList<Card> cardList = CardDB.getInstance().getCards();
 		Random rdm = new Random();
 		
 		int pos;
-		while(!cardList.isEmpty()){
+		while (!cardList.isEmpty()) {
 			// we get a randomly chosen card
 			pos = rdm.nextInt(cardList.size());
 			Card card = cardList.get(pos);
@@ -65,8 +71,8 @@ public class GameLogic extends Thread {
 			Deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
-			card.setQuantity(card.getQuantity()-1);
-			if(card.getQuantity() <= 0){
+			card.setQuantity(card.getQuantity() - 1);
+			if (card.getQuantity() <= 0) {
 				cardList.remove(card);
 			}
 		}
@@ -75,9 +81,11 @@ public class GameLogic extends Thread {
 	
 	/**
 	 * create and store the players with their own possessions.
+	 *
 	 * @param lobby
 	 */
 	private void preparePlayers(Lobby lobby) {
+		
 		LOG.log(Level.INFO, "Préparation des joueurs");
 		players = new ArrayDeque<>(lobby.getPlayers().size());
 		playersFortune = new HashMap<>();
@@ -85,67 +93,80 @@ public class GameLogic extends Thread {
 		Random rdm = new Random();
 		int startCapital = lobby.getParam().getMoneyAtTheStart();
 		
-		while(!tab.isEmpty()){
+		while (!tab.isEmpty()) {
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
 			players.addFirst(c);
-			playersFortune.put(c.getClientID(), new Integer[]{lobby.getParam().getMoneyAtTheStart(), lobby.getParam().getMoneyAtTheStart()}); // TODO à vérifier...
+			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),
+					lobby.getParam().getMoneyAtTheStart() }); // TODO à vérifier...
 		}
 	}
 	
 	/**
 	 * Roll the dices and move the player
 	 */
-	private boolean rollDice(){
-		Random dice = new Random();
-		ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
-		int total = 0;
-		String rollsStr = "";
-		boolean didADouble = false;
+	public void rollDice(ClientHandler player) {
 		
-		for(int i = 0; i < nbDice; ++i){
-			int roll = dice.nextInt(5) +1;
-			if(rolls.contains(roll)){
-				didADouble = true;
+		if (currentPlayer.getClientID() == player.getClientID()) {
+			Random dice = new Random();
+			ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
+			int total = 0;
+			String rollsStr = "";
+			boolean didADouble = false;
+			
+			for (int i = 0; i < nbDice; ++i) {
+				int roll = dice.nextInt(6) + 1;
+				if (rolls.contains(roll)) {
+					didADouble = true;
+				}
+				
+				rolls.add(roll);
+				total += roll;
+				rollsStr += " " + roll;
+			}
+			// notify the players
+			notifyPlayers(GAM_ROLL, rollsStr);
+			
+			if(!didADouble){
+				players.addLast(players.pop());
 			}
 			
-			rolls.add(roll);
-			total += roll;
-			rollsStr += " " + roll;
+			// move the player
+			board.movePlayer(currentPlayer.getClientID(), total);
+			
 		}
-		// notify the players
-		notifyPlayers(GAM_ROLL, rollsStr);
-		
-		// move the player
-		board.movePlayer(currentPlayer.getClientID(), total);
-		
-		return didADouble;
 	}
 	
-	private void drawCard(){
-		Card drawed = Deck.pop();
+	private void drawCard() {
 		
+		LOG.log(Level.INFO, "Deck avant pioche : " + Deck.toString());
+		Card drawed = Deck.pop();
+		LOG.log(Level.INFO, "Deck après pioche : " + Deck.toString());
 		// notify the players
-		String cardJson = ""; // TODO SPRINT 4 sérialisation de la carte
+		String cardJson = drawed.toString(); // TODO SPRINT 4 sérialisation de la carte
 		notifyPlayers(GAM_DRAW, cardJson);
 		
 		// check if can keep the card, if not, we put it in the end of the deck
-		if(drawed.getEffect() != Card.EFFECTS.FREE){
+		if (drawed.getEffect() != Card.EFFECTS.FREE) {
 			// TODO SPRINT X handling the effect
 			Deck.addLast(drawed);
 		} else {
+			Deck.addLast(drawed);
 			// TODO PRINT X
 		}
 	}
 	
 	@Override public void run() {
+		
 		boolean endGame = false;
-		boolean didADouble;
-		while(!endGame){
+		
+		nextTurn();
+		
+		while (!endGame) {
 			
-			
+			/*
 			// next player
-			currentPlayer = players.pop();
+			currentPlayer = players.getFirst();
 			
 			currentPlayer.sendData(GAM_PLAY);
 			// we wait the client signal to roll the dices
@@ -153,6 +174,8 @@ public class GameLogic extends Thread {
 			
 			if(answer != null) {
 				didADouble = rollDice();
+				
+				drawCard();
 				// get the new player's square
 				Square currentSquare = board.getCurrentSquare(currentPlayer.getClientID());
 				switch (currentSquare.getFamily()) {
@@ -164,21 +187,43 @@ public class GameLogic extends Thread {
 				
 				// end turn
 				if (didADouble) {
-					players.addFirst(currentPlayer);
 					didADouble = false;
 				} else {
 					currentPlayer.sendData(GAM_ENDT);
-					players.addLast(currentPlayer);
+					players.addLast(players.pop());
 				}
 			} // TODO SPRINT X player inactivity
-			
+			*/
 		}
 		
 	}
 	
-	private void notifyPlayers(String cmd, String data){
-		for(ClientHandler c : players){
-			c.sendData(cmd, currentPlayer.getClientUsername() + " " + data);
+	private void nextTurn() {
+		LOG.log(Level.INFO, "nouveau tour");
+		currentPlayer = players.getFirst();
+		notifyPlayers(GAM_PLAY, "");
+	}
+	
+	public void endTurn( ClientHandler c) {
+		if(c.getClientID() == currentPlayer.getClientID()) {
+			LOG.log(Level.INFO, "Fin du tour tour");
+			//players.addLast(currentPlayer);
+			currentPlayer = null;
+			nextTurn();
+		}
+	}
+	
+	private void notifyPlayers(String cmd, String data) {
+		
+		String param = "";
+		
+		if (cmd != GAM_BOARD && currentPlayer != null) {
+			param += currentPlayer.getClientUsername();
+		}
+		
+		param += " " + data;
+		for (ClientHandler c : players) {
+			c.sendData(cmd, param);
 		}
 	}
 }
