@@ -3,6 +3,7 @@ package bdfh.logic.game;
 import bdfh.database.CardDB;
 import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
+import bdfh.protocol.GameProtocol;
 import com.mysql.fabric.xmlrpc.Client;
 
 import javax.swing.plaf.ColorUIResource;
@@ -146,11 +147,11 @@ public class GameLogic extends Thread {
 		notifyPlayers(GAM_DRAW, cardJson);
 		
 		// check if can keep the card, if not, we put it in the end of the deck
-		if (drawed.getEffect() != Card.EFFECTS.FREE) {
+		if (drawed.getAction() != GameProtocol.CARD_FREE) {
 			// TODO SPRINT X handling the effect
 			Deck.addLast(drawed);
 		} else {
-			Deck.addLast(drawed);
+			// Deck.addLast(drawed);
 			// TODO SPRINT X
 		}
 	}

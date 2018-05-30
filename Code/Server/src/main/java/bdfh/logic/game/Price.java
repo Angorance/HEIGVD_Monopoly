@@ -12,23 +12,26 @@ import com.google.gson.JsonPrimitive;
  */
 public class Price {
 
-	private int rent;           // Basic rent of the square
-	private int priceHouse;     // Price for one house
-	private int priceHotel;     // Price for one hotel
-	private int hypothec;       // Amount of the hypothec of the square
+	private int rent;               // Basic rent of the square
+	private int price;              // Price of the room
+	private int priceCouch;         // Price for one couch
+	private int priceHomeCinema;    // Price for one home cinema
+	private int hypothec;           // Amount of the hypothec of the square
 	
 	/**
 	 * Constructor.
 	 *
-	 * @param rent          Basic rent of the square.
-	 * @param priceHouse    Price for one house.
-	 * @param priceHotel    Price for one hotel.
-	 * @param hypothec      Amount of the hypothec of the square.
+	 * @param rent              Basic rent of the square.
+	 * @param price             Price of the room
+	 * @param priceCouch        Price for one couch.
+	 * @param priceHomeCinema   Price for one home cinema.
+	 * @param hypothec          Amount of the hypothec of the square.
 	 */
-	public Price(int rent, int priceHouse, int priceHotel, int hypothec) {
+	public Price(int rent, int price, int priceCouch, int priceHomeCinema, int hypothec) {
 		this.rent = rent;
-		this.priceHouse = priceHouse;
-		this.priceHotel = priceHotel;
+		this.price = price;
+		this.priceCouch = priceCouch;
+		this.priceHomeCinema = priceHomeCinema;
 		this.hypothec = hypothec;
 	}
 	
@@ -37,14 +40,19 @@ public class Price {
 		return rent;
 	}
 	
-	public int getPriceHouse() {
+	public int getPrice() {
 		
-		return priceHouse;
+		return rent;
 	}
 	
-	public int getPriceHotel() {
+	public int getPriceCouch() {
 		
-		return priceHotel;
+		return priceCouch;
+	}
+	
+	public int getPriceHomeCinema() {
+		
+		return priceHomeCinema;
 	}
 	
 	public int getHypothec() {
@@ -57,8 +65,9 @@ public class Price {
 		JsonObject jsonPrice = new JsonObject();
 		
 		jsonPrice.add("rent", new JsonPrimitive(rent));
-		jsonPrice.add("house", new JsonPrimitive(priceHouse));
-		jsonPrice.add("hotel", new JsonPrimitive(priceHotel));
+		jsonPrice.add("price", new JsonPrimitive(price));
+		jsonPrice.add("couch", new JsonPrimitive(priceCouch));
+		jsonPrice.add("homeCinema", new JsonPrimitive(priceHomeCinema));
 		jsonPrice.add("hypothec", new JsonPrimitive(hypothec));
 		
 		return GsonSerializer.getInstance().toJson(jsonPrice);

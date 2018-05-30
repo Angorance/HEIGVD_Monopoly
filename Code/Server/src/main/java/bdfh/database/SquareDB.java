@@ -1,7 +1,6 @@
 package bdfh.database;
 
-import bdfh.logic.game.Price;
-import bdfh.logic.game.Square;
+import bdfh.logic.game.*;
 import java.sql.*;
 import java.util.*;
 
@@ -45,9 +44,10 @@ public class SquareDB {
 		
 		ArrayList<Square> squares = new ArrayList<>();
 		
-		String sql = "SELECT S.position, S.family, S.name, P.rent, P.priceHouse, P.priceHotel, P.hypothec "
+		String sql = "SELECT S.position, S.family, S.name, P.rent, P.price, P.priceCouch, P.priceHomeCinema, P.hypothec "
 				+ "FROM square S "
-				+ "LEFT JOIN price P ON S.price_id = P.id;";
+				+ "LEFT JOIN price P ON S.price_id = P.id "
+				+ "ORDER BY S.position;";
 		
 		try {
 			
@@ -59,21 +59,19 @@ public class SquareDB {
 			while(result.next()) {
 				
 				int position = result.getInt(1);
-				String type = result.getString(2);
+				String family = result.getString(2);
 				String name = result.getString(3);
 				int rent = result.getInt(4);
-				int priceHouse = result.getInt(5);
-				int priceHotel = result.getInt(6);
-				int hypothec = result.getInt(7);
-				
-				// Get the family of the card
-				Square.FAMILY family = Square.FAMILY.valueOf(type);
+				int price = result.getInt(5);
+				int priceCouch = result.getInt(6);
+				int priceHomeCinema = result.getInt(7);
+				int hypothec = result.getInt(8);
 
 				// Create the price if needed
 				Price prices = null;
 				
-				if(priceHouse != 0 && priceHotel != 0 && hypothec != 0) {
-					prices = new Price(rent, priceHouse, priceHotel, hypothec);
+				if(rent != 0) {
+					prices = new Price(rent, price, priceCouch, priceHomeCinema, hypothec);
 				}
 				
 				// Create one card

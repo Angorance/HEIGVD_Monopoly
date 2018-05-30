@@ -1,10 +1,8 @@
 package bdfh.logic.game;
 
+import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import java.util.Random;
+import com.google.gson.*;
 
 /**
  * @author Bryan Curchod
@@ -13,50 +11,22 @@ import java.util.Random;
  */
 public class Card {
 	
-	
-	public enum EFFECTS {MOVE, EXAM, WIN, LOSE, GOTO, CARD, FREE}
-	
 	private String text;        // Text of the card
 	private int quantity;       // Quantity of the card
-	private EFFECTS effect;     // Effect linked to the card
-	private int value;          // Value of the effect
+	private String action;      // Action linked to the card
 	
 	/**
 	 * Constructor.
 	 *
 	 * @param text Text of the card.
 	 * @param quantity Quantity of the card.
-	 * @param effect Effect linked to the card.
+	 * @param action Action linked to the card.
 	 */
-	public Card(String text, int quantity, EFFECTS effect) {
+	public Card(String text, int quantity, String action) {
 		
 		this.text = text;
 		this.quantity = quantity;
-		this.effect = effect;
-		this.value = generateValue();
-	}
-	
-	/**
-	 * Generate the value associated to the card if needed.
-	 *
-	 * @return the value associated to the card.
-	 */
-	private int generateValue() {
-		
-		Random random = new Random();
-		int value = 0;
-		
-		if (effect == EFFECTS.MOVE) {
-			value = random.nextInt(6) + 1;
-			
-		} else if (effect == EFFECTS.WIN || effect == EFFECTS.LOSE) {
-			value = (random.nextInt(10) + 1) * 100;
-			
-		} else if (effect == EFFECTS.GOTO) {
-			value = random.nextInt(40);
-		}
-		
-		return value;
+		this.action = action;
 	}
 	
 	public void setQuantity(int quantity) {
@@ -69,9 +39,14 @@ public class Card {
 		return quantity;
 	}
 	
-	public EFFECTS getEffect() {
+	public String getAction() {
 		
-		return effect;
+		return action.split(" ")[0];
+	}
+	
+	public String getFullAction() {
+		
+		return action;
 	}
 	
 	@Override
@@ -91,9 +66,41 @@ public class Card {
 		
 		JsonObject jsonCard = new JsonObject();
 		
-		jsonCard.add("text", new JsonPrimitive(text));
-		jsonCard.add("effect", new JsonPrimitive(effect.name()));
-		jsonCard.add("value", new JsonPrimitive(value));
+		String cardText = text + "\n";
+		String[] infos = getFullAction().split(" ");
+		
+		switch(getAction()) {
+			
+			case GameProtocol.CARD_MOVE:
+				cardText += "Avance de " + infos[1] + " cases";
+				break;
+				
+			case GameProtocol.CARD_BACK:
+				cardText += "Recule de " + infos[1] + " cases";
+				break;
+				
+			case GameProtocol.CARD_WIN:
+				cardText += "Tu reçois " + infos[1] + " francs";
+				break;
+				
+			case GameProtocol.CARD_LOSE:
+				cardText += "Tu paies " + infos[1] + " francs";
+				break;
+				
+			case GameProtocol.CARD_GOTO:
+				cardText += "Vas sur la case " + infos[1];
+				break;
+				
+			case GameProtocol.CARD_FREE:
+				cardText += "Tu peux conserver cette carte";
+				break;
+				
+			case GameProtocol.CARD_EACH:
+				cardText += "Chaque joueur te donne " + infos[1] + " francs";
+				break;
+		}
+		
+		jsonCard.add("text", new JsonPrimitive(cardText));
 		
 		return GsonSerializer.getInstance().toJson(jsonCard);
 	}
