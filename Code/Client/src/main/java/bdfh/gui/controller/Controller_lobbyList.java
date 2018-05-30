@@ -1,5 +1,6 @@
 package bdfh.gui.controller;
 
+import bdfh.gui.model.Board;
 import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.Notification;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Controller_lobbyList implements Initializable {
+public class Controller_lobbyList implements Initializable, IWindow {
 	
 	@FXML private VBox lobby;
 	@FXML private Label name_player1;
@@ -155,32 +156,40 @@ public class Controller_lobbyList implements Initializable {
 	}
 	
 	public void startGame() {
-	
+		
+		windowManager wm = windowManager.getInstance();
+		
+		if(!wm.hasGameBoard()){
+			new Board();
+		}
+		
+		wm.displayBoard();
+			
 	}
 	
 	/**
 	 * hide the main frame
 	 */
-	/*@Override
+	@Override
 	public void hide() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) paneHeader.getScene().getWindow();
+			thisStage = (Stage) lobby.getScene().getWindow();
 		}
 		thisStage.hide();
-	}*/
+	}
 	
 	/**
 	 * show the window and reset the display
 	 */
-	/*@Override
+	@Override
 	public void show() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) paneHeader.getScene().getWindow();
+			thisStage = (Stage) lobby.getScene().getWindow();
 		}
 		thisStage.show();
-	}*/
+	}
 	
 	
 	/**
@@ -374,6 +383,6 @@ public class Controller_lobbyList implements Initializable {
 		
 		Notification.getInstance().addSubscriber(this);
 		
-		//windowManager.getInstance().setMainFrame(this);
+		windowManager.getInstance().setLobbyList(this);
 	}
 }
