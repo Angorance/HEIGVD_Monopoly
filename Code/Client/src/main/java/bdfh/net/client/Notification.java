@@ -119,7 +119,7 @@ public class Notification extends Thread {
 				if(Player.getInstance().getLobbyID() == Integer.parseInt(json)) {
 					
 					// Quit the notification channel
-					getInstance().pause();
+					pause();
 					
 					// Clean the received lobbies
 					LightLobbies.getInstance().clearLobbies();
@@ -159,14 +159,14 @@ public class Notification extends Thread {
 	 */
 	public void pause() {
 		
+		getInstance().interrupt();
+		
 		try {
 			disconnect();
 			
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Notification::pause: " + e);
 		}
-		
-		getInstance().interrupt();
 	}
 	
 	/**

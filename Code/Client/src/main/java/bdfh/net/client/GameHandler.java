@@ -1,9 +1,13 @@
 package bdfh.net.client;
 
-import bdfh.gui.controller.*;
+import bdfh.gui.controller.Controller_lobbyList;
+import bdfh.net.protocol.GameProtocol;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Héléna Line Reymond
@@ -74,5 +78,36 @@ public class GameHandler extends Thread {
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "GameHandler::run: " + e);
 		}
+	}
+	
+	public int[] rollDice() {
+		
+		sendData(GameProtocol.GAM_ROLL);
+		
+		try {
+			
+			response = in.readLine();
+			
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new int[2];
+	}
+	
+	/**
+	 * Send data (commands) to the server.
+	 *
+	 * @param data Data to send.
+	 */
+	private void sendData(String data) {
+		
+		LOG.log(Level.INFO, "SENT: " + data);
+		
+		// Print the data and flush the stream.
+		out.println(data);
+		out.flush();
 	}
 }

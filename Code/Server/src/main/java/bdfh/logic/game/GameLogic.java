@@ -130,6 +130,7 @@ public class GameLogic extends Thread {
 				total += roll;
 				rollsStr += " " + roll;
 			}
+			
 			// notify the players
 			notifyPlayers(GAM_ROLL, rollsStr);
 			

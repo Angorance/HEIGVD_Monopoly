@@ -134,8 +134,9 @@ public class Player {
 	/**
 	 * TODO
 	 */
-	public void rollDice() {
-	
+	public int[] rollDice() {
+		
+		return new int[2];
 	}
 	
 	/**
