@@ -36,6 +36,11 @@ public class Authentication {
 				// Set the username
 				Player.getInstance().setUsername(username);
 				
+				// Connect to the notification channel
+				Thread notif = new Thread(Notification.getInstance());
+				
+				notif.start();
+				
 				return true;
 			}
 		} catch (CredentialsException e) {

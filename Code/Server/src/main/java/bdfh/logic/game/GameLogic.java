@@ -148,7 +148,7 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	private void drawCard() {
+	public void drawCard() {
 		
 		LOG.log(Level.INFO, "Deck avant pioche : " + Deck.toString());
 		Card drawed = Deck.pop();
