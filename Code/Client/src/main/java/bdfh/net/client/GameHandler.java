@@ -1,6 +1,6 @@
 package bdfh.net.client;
 
-import bdfh.gui.controller.Controller_lobbyList;
+import bdfh.gui.controller.*;
 
 import java.io.*;
 import java.util.logging.*;
@@ -16,8 +16,6 @@ public class GameHandler extends Thread {
 	private BufferedReader in = null;
 	private PrintWriter out = null;
 	private String response;
-	
-	private Controller_lobbyList lobbyList;
 	
 	private GameHandler() {}
 	
@@ -40,11 +38,6 @@ public class GameHandler extends Thread {
 	public void initialise(BufferedReader in, PrintWriter out) {
 		this.in = in;
 		this.out = out;
-	}
-	
-	public void setLobbyList(Controller_lobbyList lobbyList) {
-		
-		this.lobbyList = lobbyList;
 	}
 	
 	/**
@@ -70,7 +63,7 @@ public class GameHandler extends Thread {
 		try {
 			
 			// Start the game (interface)
-			lobbyList.startGame();
+			Controller_lobbyList.startGame();
 			
 			while (true) {
 				response = in.readLine();
