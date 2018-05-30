@@ -1,5 +1,7 @@
 package bdfh.logic.usr;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +13,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class Parameter {
+	
+	private static final int NB_MODES = 2;
 	
 	private static Map<Integer, String> modes = Map.ofEntries(
 			Map.entry(0, "Banqueroute"),
@@ -55,9 +59,21 @@ public class Parameter {
 		this.time = time;
 	}
 	
-	public static Map<Integer, String> getModes() {
+	/**
+	 * Return the list of modes in Strings in order.
+	 *
+	 * @return List of Strings.
+	 */
+	public static List<String> getStringModes() {
 		
-		return modes;
+		ArrayList<String> tmp = new ArrayList<>();
+		
+		for (int i = 0; i < NB_MODES; ++i) {
+		
+			tmp.add(modes.get(i));
+		}
+		
+		return tmp;
 	}
 	
 	public static Map<String, Integer> getModesValues() {
