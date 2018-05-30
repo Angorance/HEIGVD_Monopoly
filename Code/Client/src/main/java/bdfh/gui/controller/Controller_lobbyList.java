@@ -157,14 +157,15 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	
 	public void startGame() {
 		
-		windowManager wm = windowManager.getInstance();
-		
-		if(!wm.hasGameBoard()){
-			new Board();
-		}
-		
-		wm.displayBoard();
+		Platform.runLater(()->{
+			windowManager wm = windowManager.getInstance();
 			
+			if(!wm.hasGameBoard()){
+				new Board();
+			}
+			
+			wm.displayBoard();
+		});
 	}
 	
 	/**

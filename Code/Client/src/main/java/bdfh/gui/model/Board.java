@@ -17,9 +17,9 @@ public class Board {
 		Stage primaryStage = new Stage();
 		try {
 			root = FXMLLoader.load(getClass().getResource(
-					"/gui/view/lobbylist.fxml"));
+					"/gui/view/board.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
-			primaryStage.setScene(new Scene(root, 800, 600));
+			primaryStage.setScene(new Scene(root, 1000, 800));
 			primaryStage.setOnCloseRequest(event -> {
 				try {
 					Client.getInstance().disconnect();
