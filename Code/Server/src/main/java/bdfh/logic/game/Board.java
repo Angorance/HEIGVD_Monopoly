@@ -42,11 +42,15 @@ public class Board {
 	 * move the player in the board of a certain number of square.
 	 * @param clientID  player to move
 	 * @param movement how many case to move
-	 * @return the case where the player stops
+	 * @return true if the player passed the start case
 	 */
-	public void movePlayer(int clientID, int movement){
+	public boolean movePlayer(int clientID, int movement){
+		boolean passedGo = (playerPosition.get(clientID) + movement) >= NB_SQUARE ;
 		int newPos = (playerPosition.get(clientID) + movement) % NB_SQUARE;
 		playerPosition.put(clientID, newPos);
+		
+		return passedGo;
+		
 	}
 	
 	public Square getCurrentSquare(int playerId){

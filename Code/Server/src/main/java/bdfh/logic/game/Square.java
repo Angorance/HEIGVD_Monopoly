@@ -63,7 +63,7 @@ public class Square {
 		this.owner = owner;
 	}
 	
-	public void manageEffect() {
+	public void manageEffect(GameLogic game) {
 		switch (family) {
 			case GameProtocol.SQUA_TAX:
 				
@@ -78,7 +78,7 @@ public class Square {
 				break;
 			
 			case GameProtocol.SQUA_CARD:
-				
+				game.drawCard();
 				break;
 			
 			case GameProtocol.SQUA_START:
