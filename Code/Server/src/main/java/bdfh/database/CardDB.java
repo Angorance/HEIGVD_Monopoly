@@ -45,8 +45,8 @@ public class CardDB {
 		ArrayList<Card> cards = new ArrayList<>();
 		
 		String sql = "SELECT C.text, C.quantity, A.type "
-					+ "FROM card C "
-					+ "INNER JOIN action A ON C.action_id = A.id;";
+					+ "FROM card AS C "
+					+ "INNER JOIN action AS A ON C.action_id = A.id;";
 		
 		try {
 			
@@ -57,9 +57,9 @@ public class CardDB {
 			// Get the cards
 			while(result.next()) {
 				
-				String text = result.getString(1);
-				int quantity = result.getInt(2);
-				String action = result.getString(3);
+				String text = result.getString("text");
+				int quantity = result.getInt("quantity");
+				String action = result.getString("type");
 				
 				// Create one card
 				Card card = new Card(text, quantity, action);

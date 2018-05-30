@@ -45,8 +45,8 @@ public class SquareDB {
 		ArrayList<Square> squares = new ArrayList<>();
 		
 		String sql = "SELECT S.position, S.family, S.name, P.rent, P.price, P.priceCouch, P.priceHomeCinema, P.hypothec "
-				+ "FROM square S "
-				+ "LEFT JOIN price P ON S.price_id = P.id "
+				+ "FROM square AS S "
+				+ "LEFT JOIN price AS P ON S.price_id = P.id "
 				+ "ORDER BY S.position;";
 		
 		try {
@@ -58,14 +58,14 @@ public class SquareDB {
 			// Get the squares
 			while(result.next()) {
 				
-				int position = result.getInt(1);
-				String family = result.getString(2);
-				String name = result.getString(3);
-				int rent = result.getInt(4);
-				int price = result.getInt(5);
-				int priceCouch = result.getInt(6);
-				int priceHomeCinema = result.getInt(7);
-				int hypothec = result.getInt(8);
+				int position = result.getInt("position");
+				String family = result.getString("family");
+				String name = result.getString("name");
+				int rent = result.getInt("rent");
+				int price = result.getInt("price");
+				int priceCouch = result.getInt("priceCouch");
+				int priceHomeCinema = result.getInt("priceHomeCinema");
+				int hypothec = result.getInt("hypothec");
 
 				// Create the price if needed
 				Price prices = null;
