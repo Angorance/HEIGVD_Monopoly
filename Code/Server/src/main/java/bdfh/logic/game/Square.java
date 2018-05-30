@@ -11,7 +11,7 @@ import com.google.gson.JsonPrimitive;
  */
 public class Square {
 	
-	public enum FAMILY {STATION, CARD, COMPANY, RED, GREEN, BLUE, YELLOW, ORANGE, PINK, PURPLE, CYAN}
+	public enum FAMILY {STATION, CARD, COMPANY, RED, SQUASHATATA, GREEN, BLUE, YELLOW, ORANGE, PINK, PURPLE, CYAN}
 	
 	private int position;           // Position of the square
 	private FAMILY family;          // Family of the square
@@ -63,6 +63,33 @@ public class Square {
 	public void setOwner(ClientHandler owner) {
 		
 		this.owner = owner;
+	}
+	
+	public void manageEffect() {
+		switch (family) {
+			case STATION:
+				
+				break;
+				
+			case COMPANY:
+				
+				break;
+				
+			case CARD:
+				
+				break;
+				
+			case RED:
+			case BLUE:
+			case CYAN:
+			case PINK:
+			case GREEN:
+			case ORANGE:
+			case PURPLE:
+			case YELLOW:
+				
+				break;
+		}
 	}
 	
 	public String jsonify() {
