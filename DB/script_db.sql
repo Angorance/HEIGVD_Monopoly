@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`parameter` (
 CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`price` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `rent` INT NOT NULL,
+  `price` INT NULL,
   `priceHouse` INT NULL,
   `priceHotel` INT NULL,
   `hypothec` INT NULL,
