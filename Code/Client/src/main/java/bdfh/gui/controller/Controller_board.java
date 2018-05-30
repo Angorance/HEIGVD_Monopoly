@@ -1,6 +1,7 @@
 package bdfh.gui.controller;
 
 import bdfh.gui.model.windowManager;
+import bdfh.logic.usr.Player;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -144,10 +145,12 @@ public class Controller_board implements Initializable,IWindow {
 		cases.add(case40);
 	}
 	
-	private void movePawn() {
+	public void movePawn() {
 		
 		Random rand = new Random();
 		int n = rand.nextInt(11) + 2;
+		
+		//int[] dices = Player.getInstance().rollDice();
 		
 		int tmp = (pos + n)%40;
 		
