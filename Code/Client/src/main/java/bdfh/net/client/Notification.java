@@ -25,6 +25,8 @@ public class Notification extends Thread {
 	private BufferedReader in = null;
 	private String response;
 	
+	private boolean noGame = true;
+	
 	private Controller_lobbyList sub;
 	
 	private Notification() {}
@@ -68,7 +70,7 @@ public class Notification extends Thread {
 		try {
 			connect();
 			
-			while (true) {
+			while (noGame) {
 				response = in.readLine();
 				LOG.log(Level.INFO, "RECEIVED: " + response);
 				
@@ -126,7 +128,10 @@ public class Notification extends Thread {
 					
 					// Start the game
 					GameHandler.getInstance().start();
+					
+					noGame = false;
 				}
+				
 				break;
 		}
 	}
@@ -159,7 +164,7 @@ public class Notification extends Thread {
 	 */
 	public void pause() {
 		
-		getInstance().interrupt();
+		interrupt();
 		
 		try {
 			disconnect();
@@ -173,7 +178,7 @@ public class Notification extends Thread {
 	 * Put the notification channel into start mode.
 	 */
 	public void unpause() {
-		getInstance().start();
+		start();
 	}
 	
 	/**
