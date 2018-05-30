@@ -118,7 +118,9 @@ public class Square {
 		jsonSquare.add("name", new JsonPrimitive(name));
 		jsonSquare.add("family", new JsonPrimitive(family));
 		
-		jsonSquare.add("prices", new JsonPrimitive(prices.jsonify()));
+		if (prices != null) {
+			jsonSquare.add("prices", new JsonPrimitive(prices.jsonify()));
+		}
 		
 		return GsonSerializer.getInstance().toJson(jsonSquare);
 	}
