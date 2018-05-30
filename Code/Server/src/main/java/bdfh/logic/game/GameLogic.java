@@ -21,13 +21,19 @@ import static bdfh.protocol.Protocoly.*;
 public class GameLogic extends Thread {
 	
 	private static final int NB_DECKCARD = 20;
+	private static final int STANDARD_GO_AMOUNT = 200;
+	private static final int STANDARD_TAXE_AMOUNT = 200;
 	private ArrayDeque<ClientHandler> players;
-	// Map a player to his fortune. The first cell of the tab is the capital,
-	// and the second is the total of his possession (capital + nbHouse + Hypotheques + ... )
-	private Map<Integer, Integer[]> playersFortune;
+	
 	private ArrayDeque<Card> Deck;
 	private Board board;
 	private int nbDice;
+	
+	// Map a player to his fortune. The first cell of the tab is the capital,
+	// and the second is the total of his possession (capital + nbHouse + Hypotheques + ... )
+	private Map<Integer, Integer[]> playersFortune;
+	private final int CAPITAL = 0;
+	private final int VPOSSESSION = 1;
 	
 	private ClientHandler currentPlayer;
 	
@@ -132,7 +138,12 @@ public class GameLogic extends Thread {
 			}
 			
 			// move the player
-			board.movePlayer(currentPlayer.getClientID(), total);
+			boolean passedGo = board.movePlayer(currentPlayer.getClientID(), total);
+			
+			if(passedGo){
+				playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
+				notifyPlayers(GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
+			}
 			
 		}
 	}

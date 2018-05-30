@@ -34,5 +34,9 @@ public abstract class Protocoly {
 	public static final String GAM_DRAW = "DRAW";
 	public static final String GAM_ENDT = "ENDT";
 	public static final String GAM_BOARD = "BOARD";
+	public static final String GAM_PAY = "PAYS";
+	public static final String GAM_GAIN = "GAIN";
+	public static final String GAM_DENY = "DENY";
+	
 	
 }
