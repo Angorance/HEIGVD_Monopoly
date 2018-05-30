@@ -86,7 +86,7 @@ public class Controller_formLobby implements Initializable {
 		}
 		
 		if (mode.getSelectionModel().getSelectedItem()
-				.equals(Parameter.getModes().get(1))) {
+				.equals(Parameter.getStringModes().get(1))) {
 			String timeInt = time.getText();
 			if (timeInt.isEmpty() || !isNumber(timeInt)
 					|| Integer.parseInt(timeInt) < Player.getBounds()
@@ -136,7 +136,7 @@ public class Controller_formLobby implements Initializable {
 		numberDice.getSelectionModel().selectFirst();
 		
 		ObservableList<String> items2 = FXCollections.observableArrayList();
-		items2.addAll(Parameter.getModes().values());
+		items2.addAll(Parameter.getStringModes());
 		mode.setItems(items2);
 		mode.getSelectionModel().selectFirst();
 		
