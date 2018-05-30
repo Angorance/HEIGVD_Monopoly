@@ -54,8 +54,10 @@ public class Controller_connection {
 			setError("Username inconnue");
 		} else if (code == -1) {
 			setError("Mot de passe incorrect");
+		} else{
+			loadFrame();
 		}
-		loadFrame();
+		
 	}
 	
 	void setError(String errorMessage){

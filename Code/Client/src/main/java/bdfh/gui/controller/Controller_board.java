@@ -73,9 +73,8 @@ public class Controller_board implements Initializable,IWindow {
 	private Stage thisStage = null;
 	
 	
-	public void  endGame(){
+	public static void endGame(){
 		windowManager.getInstance().displayLobbyList();
-		//TODO clear le board
 	}
 	
 	@Override public void hide() {

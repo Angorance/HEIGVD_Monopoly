@@ -155,7 +155,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 		});
 	}
 	
-	public void startGame() {
+	public static void startGame() {
 		
 		Platform.runLater(()->{
 			windowManager wm = windowManager.getInstance();
