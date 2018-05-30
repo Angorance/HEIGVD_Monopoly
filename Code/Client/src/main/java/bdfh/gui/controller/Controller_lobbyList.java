@@ -126,9 +126,12 @@ public class Controller_lobbyList implements Initializable {
 	public void newLobby(LightLobby l) {
 		
 		Platform.runLater(() -> {
+			
 			LobbyDisplayer ld = new LobbyDisplayer(l);
 			lobby.getChildren().add(ld);
 			displayerList.put(l.getID(), ld);
+			
+			
 			if (Player.getInstance().getLobbyID() != -1) {
 				join_button.setDisable(true);
 			}
@@ -143,6 +146,9 @@ public class Controller_lobbyList implements Initializable {
 	public void removeLobby(LightLobby l) {
 		
 		Platform.runLater(() -> {
+			if(l.getUsernames().size() == 0 && l.getID() == lightLobby.getID()){
+				detailLobby.setVisible(false);
+			}
 			lobby.getChildren().removeAll(displayerList.get(l.getID()));
 			displayerList.remove(l.getID());
 		});
@@ -185,9 +191,9 @@ public class Controller_lobbyList implements Initializable {
 	private void detailLobby(LightLobby lobby) {
 		
 		lightLobby = lobby;
-		detailLobby.setVisible(true);
-		
 		int currendIDLoby = Player.getInstance().getLobbyID();
+		
+		detailLobby.setVisible(true);
 		
 		// Handle the visibility of the buttons
 		if (currendIDLoby == -1) {
@@ -220,6 +226,7 @@ public class Controller_lobbyList implements Initializable {
 			labelsPlayers[i].setText(players.get(i));
 			labelsReadys[i].setText(readys.get(i) ? "Prêt" : "-");
 		}
+		
 	}
 	
 	/**
@@ -262,11 +269,15 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void join() {
 		
-		System.out.println("id : " + Player.getInstance().getLobbyID());
+		/*Si le joueur est dans aucun lobby*/
 		if (Player.getInstance().getLobbyID() == -1) {
+			
+			/*On laisse la possibilité de rejoindre*/
 			join_button.setDisable(true);
 			quit_button.setDisable(false);
 			ready_button.setDisable(false);
+			
+			/*On rejoint le lobby*/
 			Player.getInstance().joinLobby(lightLobby.getID());
 		}
 	}
@@ -276,8 +287,13 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void ready() {
 		
+		/*Si le player n'est pas prêt*/
 		if (!Player.getInstance().isReady()) {
+			
+			/*On désactive le bouton ready*/
 			ready_button.setDisable(true);
+			
+			/*On met le joueur prêt*/
 			Player.getInstance().setReady();
 		}
 	}
@@ -287,10 +303,19 @@ public class Controller_lobbyList implements Initializable {
 	 */
 	private void quit() {
 		
+		//Si le joueur est dans un lobby
 		if (Player.getInstance().getLobbyID() != -1) {
-			Player.getInstance().quitLobby();
-			ready_button.setDisable(false);
+			
+			/*Si la liste des user du lobby est vide et que la id du lobby dans lequel on a cliquer est égal a notre lobby*/
+			if (lightLobby.getUsernames().isEmpty() && lightLobby.getID() == Player.getInstance().getLobbyID()) {
+				detailLobby.setVisible(false);
+			}
+			
+			/*On réactive les boutons*/
 			join_button.setDisable(false);
+			ready_button.setDisable(false);
+			
+			Player.getInstance().quitLobby();
 		}
 	}
 	
