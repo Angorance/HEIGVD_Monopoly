@@ -1,15 +1,11 @@
 package bdfh.logic.game;
 
-import bdfh.database.CardDB;
+import bdfh.database.DatabaseConnect;
 import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
 import bdfh.protocol.GameProtocol;
-import com.mysql.fabric.xmlrpc.Client;
-
-import javax.swing.plaf.ColorUIResource;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 import static bdfh.protocol.Protocoly.*;
 
@@ -64,7 +60,7 @@ public class GameLogic extends Thread {
 		
 		LOG.log(Level.INFO, "Préparation du deck...");
 		Deck = new ArrayDeque<>(NB_DECKCARD);
-		ArrayList<Card> cardList = CardDB.getInstance().getCards();
+		ArrayList<Card> cardList = DatabaseConnect.getInstance().getCardDB().getCards();
 		Random rdm = new Random();
 		
 		int pos;

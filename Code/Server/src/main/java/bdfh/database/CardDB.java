@@ -30,7 +30,7 @@ public class CardDB {
 	 *
 	 * @return the instance of CardDB.
 	 */
-	public static CardDB getInstance() {
+	protected static CardDB getInstance() {
 		
 		return Instance.instance;
 	}
