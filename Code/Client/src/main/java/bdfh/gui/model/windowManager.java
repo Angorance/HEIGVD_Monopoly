@@ -24,34 +24,35 @@ public class windowManager {
 		return Instance.instance;
 	}
 	
-	public void setConnectionFrame(IWindow lobbyFrame) {
+	public void setBoard(IWindow lobbyFrame) {
 		
-		this.lobbyFrame = lobbyFrame;
+		this.gameFrame = lobbyFrame;
 	}
 	
-	public void setMainFrame(IWindow gameFrame) {
+	public void setLobbyList(IWindow gameFrame) {
 		
-		this.gameFrame = gameFrame;
+		this.lobbyFrame = gameFrame;
 	}
 	
-	public boolean hasMainframe() {
+	public boolean hasGameBoard() {
 		
 		return gameFrame != null;
 	}
 	
-	public void displayMainFrame() {
-		
-		if (gameFrame != null && lobbyFrame != null) {
-			lobbyFrame.hide();
-			gameFrame.show();
-		}
-	}
-	
-	public void displayConnectionFrame() {
+	public void displayLobbyList() {
 		
 		if (gameFrame != null && lobbyFrame != null) {
 			lobbyFrame.show();
 			gameFrame.hide();
+			
+		}
+	}
+	
+	public void displayBoard() {
+		
+		if (gameFrame != null && lobbyFrame != null) {
+			gameFrame.show();
+			lobbyFrame.hide();
 		}
 	}
 }

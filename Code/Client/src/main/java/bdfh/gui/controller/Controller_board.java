@@ -1,5 +1,6 @@
 package bdfh.gui.controller;
 
+import bdfh.gui.model.windowManager;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,13 +10,14 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class Controller_board implements Initializable {
+public class Controller_board implements Initializable,IWindow {
 	
 	
 	@FXML private FlowPane case1;
@@ -67,6 +69,28 @@ public class Controller_board implements Initializable {
 	private ArrayList<FlowPane> cases = new ArrayList<>();
 	
 	private int pos = 0;
+	
+	private Stage thisStage = null;
+	
+	
+	public void  endGame(){
+		windowManager.getInstance().displayLobbyList();
+		//TODO clear le board
+	}
+	
+	@Override public void hide() {
+		if(thisStage == null){
+			thisStage = (Stage) buy_button.getScene().getWindow();
+		}
+		thisStage.hide();
+	}
+	
+	@Override public void show() {
+		if(thisStage == null){
+			thisStage = (Stage) buy_button.getScene().getWindow();
+		}
+		thisStage.show();
+	}
 	
 	public class pawnDisplay extends AnchorPane {
 		
@@ -147,5 +171,7 @@ public class Controller_board implements Initializable {
 				movePawn();
 			}
 		});
+		
+		windowManager.getInstance().setBoard(this);
 	}
 }
