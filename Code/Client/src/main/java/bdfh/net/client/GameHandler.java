@@ -1,12 +1,19 @@
 package bdfh.net.client;
 
+import bdfh.gui.controller.Controller_board;
 import bdfh.gui.controller.Controller_lobbyList;
-import bdfh.logic.usr.Player;
 import bdfh.net.protocol.GameProtocol;
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +24,8 @@ import java.util.logging.Logger;
 public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
+	
+	HashMap<Integer, Pair<String, Integer>> players = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -37,10 +46,11 @@ public class GameHandler extends Thread {
 	/**
 	 * Initialise the game handler with the streams of the client.
 	 *
-	 * @param in    Reader stream.
-	 * @param out   Writer stream.
+	 * @param in Reader stream.
+	 * @param out Writer stream.
 	 */
 	public void initialise(BufferedReader in, PrintWriter out) {
+		
 		this.in = in;
 		this.out = out;
 	}
@@ -48,18 +58,22 @@ public class GameHandler extends Thread {
 	/**
 	 * Handle the command received in the game.
 	 *
-	 * @param line  Command received.
+	 * @param line Command received.
 	 */
 	private void handleGame(String line) {
 		
-		String[] s = line.split(" ");
+		String[] split = line.split(" ");
 		
-		// TODO - update with information received for the game
-		/*String json = s[1];
-		
-		switch (s[0]) {
-		
-		}*/
+		switch (split[0]) {
+			case GameProtocol.GAM_PLYR:
+				managePlayers(split[1]);
+				break;
+				
+			case GameProtocol.GAM_ROLL:
+				manageRoll(split);
+				break;
+			
+		}
 	}
 	
 	@Override
@@ -81,38 +95,19 @@ public class GameHandler extends Thread {
 		}
 	}
 	
-	public int[] rollDice() {
-		
-		int[] tmp = null;
+	public void rollDice() {
 		
 		sendData(GameProtocol.GAM_ROLL);
+	}
+	
+	public void endTurn() {
 		
-		try {
-			
-			response = in.readLine();
-			
-			String[] splitted = response.split(" ");
-			
-			if (splitted[1].equals(Player.getInstance().getUsername())) {
-				
-				tmp = new int[splitted.length - 2];
-				
-				for (int i = 2; i < splitted.length; ++i) {
-					tmp[i - 2] = Integer.parseInt(splitted[i]);
-				}
-			} else {
-				// TODO LOG - Problem with username received
-			}
-			
-		} catch (IOException e) {
-			// TODO LOG
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO LOG
-			e.printStackTrace();
-		}
+		sendData(GameProtocol.GAM_ENDT);
+	}
+	
+	public HashMap<Integer, Pair<String,Integer>> getPlayers() {
 		
-		return tmp;
+		return players;
 	}
 	
 	/**
@@ -127,5 +122,31 @@ public class GameHandler extends Thread {
 		// Print the data and flush the stream.
 		out.println(data);
 		out.flush();
+	}
+	
+	private void manageRoll(String[] str) {
+		
+		ArrayList tmp = new ArrayList();
+		
+		for (int i = 2; i < str.length; ++i) {
+			tmp.add(Integer.parseInt(str[i]));
+		}
+		
+		Controller_board.movePawn(Integer.parseInt(str[1]), tmp);
+	}
+	
+	private void managePlayers(String json) {
+		
+		JsonArray jsonPlayers = GsonSerializer.getInstance().fromJson(json, JsonArray.class);
+		
+		for (JsonElement je : jsonPlayers) {
+			JsonObject jo = je.getAsJsonObject();
+			
+			int id = jo.get("id").getAsInt();
+			String username = jo.get("username").getAsString();
+			int capital = jo.get("capital").getAsInt();
+			
+			players.put(id, new Pair<> (username, capital));
+		}
 	}
 }
