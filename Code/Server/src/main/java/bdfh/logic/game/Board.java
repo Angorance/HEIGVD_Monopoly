@@ -75,7 +75,9 @@ public class Board {
 	 * @param s
 	 */
 	public void manageEffect(GameLogic game, Square s) {
+		
 		switch (s.getFamily()) {
+			
 			case GameProtocol.SQUA_TAX:
 				
 				break;
@@ -102,19 +104,7 @@ public class Board {
 				game.drawCard();
 				break;
 			
-			case GameProtocol.SQUA_START:
-				
-				break;
-			
-			case GameProtocol.SQUA_EXAM:
-				
-				break;
-			
 			case GameProtocol.SQUA_GO_EXAM:
-				
-				break;
-			
-			case GameProtocol.SQUA_BREAK:
 				
 				break;
 			
