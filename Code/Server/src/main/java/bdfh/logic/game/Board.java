@@ -88,7 +88,9 @@ public class Board {
 				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()){
 					int amount = 0;
 					// TODO we have to check how many company the owner possess
-					//game.payPlayer(s.getOwner(), amount);
+					game.manageMoney(game.getCurrentPlayer(), amount * -1);
+					game.manageMoney(s.getOwner(), amount);
+					
 				} else if (s.getOwner() == null){
 					// TODO offerToBuy this case
 					
