@@ -48,6 +48,7 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Génération du plateau");
 		board = new Board(players);
 		
+		// TODO envoyer l'id, le username et le capital de chacun des joueurs {id, username, capital}
 		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
@@ -151,6 +152,13 @@ public class GameLogic extends Thread {
 				notifyPlayers(GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
 			}
 			
+			// MANAGING THE CASE EFFECT
+			Square current = board.getCurrentSquare(currentPlayer.getClientID());
+			if(current.isBuyable() && current.getOwner() == null){
+				currentPlayer.sendData(GAM_FREE, Integer.toString(current.getPosition()));
+			} else {
+				board.manageEffect(this, current);
+			}
 		}
 	}
 	
@@ -326,7 +334,7 @@ public class GameLogic extends Thread {
 		String param = "";
 		
 		if (cmd != GAM_BOARD && currentPlayer != null) {
-			param += currentPlayer.getClientUsername();
+			param += currentPlayer.getClientID();
 		}
 		
 		param += " " + data;

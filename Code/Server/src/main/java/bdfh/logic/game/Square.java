@@ -1,9 +1,11 @@
 package bdfh.logic.game;
 
 import bdfh.net.server.ClientHandler;
-import bdfh.protocol.GameProtocol;
+import static  bdfh.protocol.GameProtocol.*;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.*;
+
+import java.util.*;
 
 /**
  * @authors Bryan Curchod, Héléna Line Reymond
@@ -12,6 +14,7 @@ import com.google.gson.*;
 public class Square {
 	
 	private int position;           // Position of the square
+	private static final List<String> nonBuyable = List.of(SQUA_START, SQUA_GO_EXAM, SQUA_EXAM, SQUA_TAX, SQUA_CARD, SQUA_BREAK);
 	private String family;          // Family of the square
 	private String name;            // Name of the square
 	private Price prices;           // Prices of the square
@@ -63,59 +66,8 @@ public class Square {
 		this.owner = owner;
 	}
 	
-	public void manageEffect(GameLogic game) {
-		switch (family) {
-			case GameProtocol.SQUA_TAX:
-				
-				break;
-				
-			case GameProtocol.SQUA_INSTITUTE:
-				
-				break;
-				
-			case GameProtocol.SQUA_COMPANY:
-				if(this.owner != null && this.owner.getClientID() == game.getCurrentPlayerID()){
-					int amount = 0;
-					// TODO we have to check how many company the owner possess
-					//game.payPlayer(this.owner, amount);
-				} else if (this.owner == null){
-					// TODO offerToBuy this case
-					
-				}
-				// we have to check how many company the player
-				break;
-			
-			case GameProtocol.SQUA_CARD:
-				//game.drawCard();
-				break;
-			
-			case GameProtocol.SQUA_START:
-				
-				break;
-			
-			case GameProtocol.SQUA_EXAM:
-				
-				break;
-			
-			case GameProtocol.SQUA_GO_EXAM:
-				
-				break;
-			
-			case GameProtocol.SQUA_BREAK:
-				
-				break;
-				
-			case GameProtocol.SQUA_RED:
-			case GameProtocol.SQUA_BLUE:
-			case GameProtocol.SQUA_CYAN:
-			case GameProtocol.SQUA_PINK:
-			case GameProtocol.SQUA_GREEN:
-			case GameProtocol.SQUA_ORANGE:
-			case GameProtocol.SQUA_BROWN:
-			case GameProtocol.SQUA_YELLOW:
-				
-				break;
-		}
+	public boolean isBuyable(){
+		return !nonBuyable.contains(this.family);
 	}
 	
 	public String jsonify() {
