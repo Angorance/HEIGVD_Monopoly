@@ -4,14 +4,14 @@ import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.GameHandler;
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -61,6 +61,17 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private FlowPane case38;
 	@FXML private FlowPane case39;
 	@FXML private FlowPane case40;
+	
+	@FXML private Label label_username;
+	@FXML private Label label_player1;
+	@FXML private Label label_player2;
+	@FXML private Label label_player3;
+	@FXML private Label label_player4;
+	@FXML private Label label_capital1;
+	@FXML private Label label_capital2;
+	@FXML private Label label_capital3;
+	@FXML private Label label_capital4;
+	
 	@FXML private JFXButton buy_button;
 	@FXML private JFXButton sell_button;
 	@FXML private JFXButton hyp_button;
@@ -68,27 +79,32 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton endTurn_button;
 	
 	private static ArrayList<FlowPane> cases = new ArrayList<>();
-	private static HashMap<Integer,pawnDisplay> displayerList;
-	private static HashMap<Integer,Integer> posPlayer;
+	private Label[] labelPlayers = new Label[4];
+	private Label[] labelCapitals = new Label[4];
+	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();;
+	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();;
 	
 	private int pos = 0;
 	
 	private Stage thisStage = null;
 	
 	
-	public static void endGame(){
+	public static void endGame() {
+		
 		windowManager.getInstance().displayLobbyList();
 	}
 	
 	@Override public void hide() {
-		if(thisStage == null){
+		
+		if (thisStage == null) {
 			thisStage = (Stage) buy_button.getScene().getWindow();
 		}
 		thisStage.hide();
 	}
 	
 	@Override public void show() {
-		if(thisStage == null){
+		
+		if (thisStage == null) {
 			thisStage = (Stage) buy_button.getScene().getWindow();
 		}
 		thisStage.show();
@@ -97,13 +113,14 @@ public class Controller_board implements Initializable, IWindow {
 	public class pawnDisplay extends AnchorPane {
 		
 		public pawnDisplay(String color/*TODO Mettre le joueur en parametre*/) {
+			
 			this.setStyle(
 					"-fx-pref-width: 25px; -fx-background-radius: 25px; -fx-pref-height: 25px;-fx-border-radius: 25px; -fx-border-width: 4px; -fx-background-color: "
 							+ color + ";");
 		}
 	}
 	
-	private void initCases() {
+	private void init() {
 		
 		cases.add(case1);
 		cases.add(case2);
@@ -145,26 +162,41 @@ public class Controller_board implements Initializable, IWindow {
 		cases.add(case38);
 		cases.add(case39);
 		cases.add(case40);
+		
+		labelPlayers[0] = label_player1;
+		labelPlayers[1] = label_player2;
+		labelPlayers[2] = label_player3;
+		labelPlayers[3] = label_player4;
+		
+		labelCapitals[0] = label_capital1;
+		labelCapitals[1] = label_capital2;
+		labelCapitals[2] = label_capital3;
+		labelCapitals[3] = label_capital4;
+		
+		
 	}
 	
 	public static void movePawn(int idPlayer, List<Integer> dices) {
 		
-		int pos = posPlayer.get(idPlayer);
-		int sumDice = 0;
-		
-		for(int i : dices){
-			sumDice += i;
-		}
-		
-		int tmp = (pos + sumDice)%40;
-		pawnDisplay tmpPD = displayerList.get(idPlayer);
-		cases.get(pos).getChildren().removeAll(tmpPD);
-		cases.get(tmp).getChildren().add(tmpPD);
-		
-		posPlayer.put(idPlayer,tmp);
+		Platform.runLater(() -> {
+			int pos = posPlayer.get(idPlayer);
+			int sumDice = 0;
+			
+			for (int i : dices) {
+				sumDice += i;
+			}
+			
+			int tmp = (pos + sumDice) % 40;
+			pawnDisplay tmpPD = displayerList.get(idPlayer);
+			cases.get(pos).getChildren().removeAll(tmpPD);
+			cases.get(tmp).getChildren().add(tmpPD);
+			
+			posPlayer.put(idPlayer, tmp);
+		});
 	}
 	
-	private void rollDice(){
+	private void rollDice() {
+		
 		Player.getInstance().rollDice();
 	}
 	
@@ -175,24 +207,28 @@ public class Controller_board implements Initializable, IWindow {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		displayerList = new HashMap<>();
+		init();
 		
-		initCases();
+		label_username.setText(Player.getInstance().getUsername());
 		
-		String[] color = {"RED","BLUE","GREEN","YELLOW"};
+		String[] color = { "RED", "BLUE", "GREEN", "YELLOW" };
 		
-		int typeColor = 0;
-		for(int idPlayer : GameHandler.getInstance().getPlayers().keySet()){
-			pawnDisplay pd = new pawnDisplay(color[typeColor]);
+		int cnt = 0;
+		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
+			pawnDisplay pd = new pawnDisplay(color[cnt]);
 			cases.get(0).getChildren().add(pd);
-			displayerList.put(idPlayer,pd);
+			displayerList.put(idPlayer, pd);
+			posPlayer.put(idPlayer, 0);
 			
-			Pair<String,Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
+			Pair<String, Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
 			String username = pair.getKey();
 			int capital = pair.getValue();
-			//TODO ajout des username et capital
+			
+ 			labelPlayers[cnt].setText(username);
+			labelCapitals[cnt].setText(String.valueOf(capital));
+			cnt++;
 		}
-
+		
 		
 		rollDice_button.setOnAction(new EventHandler<ActionEvent>() {
 			

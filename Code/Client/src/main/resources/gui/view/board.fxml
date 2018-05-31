@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:controller="bdfh.gui.controller.Controller_board" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_board">
    <children>
       <GridPane layoutX="78.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -131,14 +131,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" />
         </rowConstraints>
          <children>
-            <Label text="Joueur 1" GridPane.rowIndex="1" />
-            <Label text="Joueur 2" GridPane.rowIndex="2" />
-            <Label text="Joueur 3" GridPane.rowIndex="3" />
-            <Label text="Joueur 4" GridPane.rowIndex="4" />
-            <Label text="Fortune" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Fortune" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Fortune" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Fortune" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="label_player1" text="-" GridPane.rowIndex="1" />
+            <Label fx:id="label_player2" text="-" GridPane.rowIndex="2" />
+            <Label fx:id="label_player3" text="-" GridPane.rowIndex="3" />
+            <Label fx:id="label_player4" text="-" GridPane.rowIndex="4" />
+            <Label fx:id="label_capital1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="label_capital2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="label_capital3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="label_capital4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Information joueur" GridPane.columnSpan="2" />
          </children>
       </GridPane>
@@ -154,5 +154,6 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
    </children>
 </AnchorPane>
