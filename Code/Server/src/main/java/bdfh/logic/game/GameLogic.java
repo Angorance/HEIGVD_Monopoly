@@ -79,6 +79,7 @@ public class GameLogic extends Thread {
 		}
 		
 		notifyPlayers(GAM_PLYR, GsonSerializer.getInstance().toJson(playerList));
+		
 	}
 	
 	/**
@@ -365,9 +366,11 @@ public class GameLogic extends Thread {
 		}
 		
 		param += " " + data;
+		LOG.log(Level.INFO, "sending to players : " + cmd + param);
 		for (ClientHandler c : players) {
 			c.sendData(cmd, param);
 		}
+		
 	}
 	
 	public int getCurrentPlayerID() {
