@@ -61,16 +61,23 @@ public class SquareDB {
 				int position = result.getInt("position");
 				String family = result.getString("family");
 				String name = result.getString("name");
-				int rent = result.getInt("rent");
-				int price = result.getInt("price");
-				int priceCouch = result.getInt("priceCouch");
-				int priceHomeCinema = result.getInt("priceHomeCinema");
-				int hypothec = result.getInt("hypothec");
+				
+				Integer rent = result.getInt("rent");
+				Integer price = result.getInt("price");
+				Integer priceCouch = result.getInt("priceCouch");
+				Integer priceHomeCinema = result.getInt("priceHomeCinema");
+				Integer hypothec = result.getInt("hypothec");
+				
+				rent = rent == 0 ? null : rent;
+				price = price == 0 ? null : price;
+				priceCouch = priceCouch == 0 ? null : priceCouch;
+				priceHomeCinema = priceHomeCinema == 0 ? null : priceHomeCinema;
+				hypothec = hypothec == 0 ? null : hypothec;
 
 				// Create the price if needed
 				Price prices = null;
 				
-				if(rent != 0) {
+				if(rent != null) {
 					prices = new Price(rent, price, priceCouch, priceHomeCinema, hypothec);
 				}
 				

@@ -2,7 +2,6 @@ package bdfh.logic.game;
 
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 /**
  * Class used to fix prices for a square.
@@ -12,11 +11,11 @@ import com.google.gson.JsonPrimitive;
  */
 public class Price {
 
-	private int rent;               // Basic rent of the square
-	private int price;              // Price of the room
-	private int priceCouch;         // Price for one couch
-	private int priceHomeCinema;    // Price for one home cinema
-	private int hypothec;           // Amount of the hypothec of the square
+	private Integer rent;               // Basic rent of the square
+	private Integer price;              // Price of the room
+	private Integer priceCouch;         // Price for one couch
+	private Integer priceHomeCinema;    // Price for one home cinema
+	private Integer hypothec;           // Amount of the hypothec of the square
 	
 	/**
 	 * Constructor.
@@ -27,7 +26,7 @@ public class Price {
 	 * @param priceHomeCinema   Price for one home cinema.
 	 * @param hypothec          Amount of the hypothec of the square.
 	 */
-	public Price(int rent, int price, int priceCouch, int priceHomeCinema, int hypothec) {
+	public Price(Integer rent, Integer price, Integer priceCouch, Integer priceHomeCinema, Integer hypothec) {
 		this.rent = rent;
 		this.price = price;
 		this.priceCouch = priceCouch;
@@ -35,40 +34,45 @@ public class Price {
 		this.hypothec = hypothec;
 	}
 	
-	public int getRent() {
+	public Integer getRent() {
 		
 		return rent;
 	}
 	
-	public int getPrice() {
+	public Integer getPrice() {
 		
 		return rent;
 	}
 	
-	public int getPriceCouch() {
+	public Integer getPriceCouch() {
 		
 		return priceCouch;
 	}
 	
-	public int getPriceHomeCinema() {
+	public Integer getPriceHomeCinema() {
 		
 		return priceHomeCinema;
 	}
 	
-	public int getHypothec() {
+	public Integer getHypothec() {
 		
 		return hypothec;
 	}
 	
+	/**
+	 * Change Price Object into String JSON.
+	 *
+	 * @return  String JSON.
+	 */
 	public String jsonify() {
 		
 		JsonObject jsonPrice = new JsonObject();
 		
-		jsonPrice.add("rent", new JsonPrimitive(rent));
-		jsonPrice.add("price", new JsonPrimitive(price));
-		jsonPrice.add("couch", new JsonPrimitive(priceCouch));
-		jsonPrice.add("homeCinema", new JsonPrimitive(priceHomeCinema));
-		jsonPrice.add("hypothec", new JsonPrimitive(hypothec));
+		jsonPrice.addProperty("rent", rent);
+		jsonPrice.addProperty("price", price);
+		jsonPrice.addProperty("couch", priceCouch);
+		jsonPrice.addProperty("homeCinema", priceHomeCinema);
+		jsonPrice.addProperty("hypothec", hypothec);
 		
 		return GsonSerializer.getInstance().toJson(jsonPrice);
 	}

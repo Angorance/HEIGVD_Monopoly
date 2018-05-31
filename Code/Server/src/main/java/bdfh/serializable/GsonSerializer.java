@@ -1,6 +1,6 @@
 package bdfh.serializable;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -8,7 +8,7 @@ import com.google.gson.Gson;
  */
 public class GsonSerializer {
 	
-	private Gson gson = new Gson();
+	private Gson gson = new GsonBuilder().serializeNulls().create();
 	
 	private GsonSerializer() {}
 	
