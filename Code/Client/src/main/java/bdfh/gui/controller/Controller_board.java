@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.*;
 
-public class Controller_board implements Initializable,IWindow {
+public class Controller_board implements Initializable, IWindow {
 	
 	
 	@FXML private FlowPane case1;
