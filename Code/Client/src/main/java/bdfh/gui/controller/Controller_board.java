@@ -176,7 +176,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	public static void movePawn(int idPlayer, List<Integer> dices) {
+	public void movePawn(int idPlayer, List<Integer> dices) {
 		
 		Platform.runLater(() -> {
 			int pos = posPlayer.get(idPlayer);
@@ -190,19 +190,28 @@ public class Controller_board implements Initializable, IWindow {
 			pawnDisplay tmpPD = displayerList.get(idPlayer);
 			cases.get(pos).getChildren().removeAll(tmpPD);
 			cases.get(tmp).getChildren().add(tmpPD);
-			
 			posPlayer.put(idPlayer, tmp);
 		});
 	}
 	
 	private void rollDice() {
-		
 		Player.getInstance().rollDice();
 	}
 	
 	private void endTurn() {
 		
 		Player.getInstance().endTurn();
+		
+	}
+	
+	public void notifyTurn(){
+		if(Player.getInstance().isMyTurn()){
+			rollDice_button.setDisable(false);
+			endTurn_button.setDisable(true);
+		}else{
+			rollDice_button.setDisable(true);
+			endTurn_button.setDisable(true);
+		}
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -229,7 +238,6 @@ public class Controller_board implements Initializable, IWindow {
 			cnt++;
 		}
 		
-		
 		rollDice_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
@@ -247,5 +255,7 @@ public class Controller_board implements Initializable, IWindow {
 		});
 		
 		windowManager.getInstance().setBoard(this);
+		
+		GameHandler.getInstance().setSub(this);
 	}
 }

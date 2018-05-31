@@ -122,6 +122,7 @@ public class GameHandler extends Thread {
 	public void endTurn() {
 		
 		Player.getInstance().setMyTurn(false);
+		sub.notifyTurn();
 		sendData(GameProtocol.GAM_ENDT);
 	}
 	
@@ -184,6 +185,7 @@ public class GameHandler extends Thread {
 	
 		if (Player.getInstance().getUsername().equals(players.get(playerID).getKey())) {
 			Player.getInstance().setMyTurn(true);
+			sub.notifyTurn();
 		}
 	}
 }
