@@ -35,6 +35,8 @@ public class GameHandler extends Thread {
 	private PrintWriter out = null;
 	private String response;
 	
+	private Controller_board sub;
+	
 	private GameHandler() {}
 	
 	private static class Instance {
@@ -57,6 +59,11 @@ public class GameHandler extends Thread {
 		
 		this.in = in;
 		this.out = out;
+	}
+	
+	public void setSub(Controller_board board) {
+		
+		sub = board;
 	}
 	
 	/**
@@ -150,7 +157,7 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		Controller_board.movePawn(Integer.parseInt(str[1]), tmp);
+		sub.movePawn(Integer.parseInt(str[1]), tmp);
 	}
 	
 	private void managePlayers(String json) {
