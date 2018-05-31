@@ -137,9 +137,9 @@ public class Player {
 	 *
 	 * @return Result of dice.
 	 */
-	public int[] rollDice() {
+	public void rollDice() {
 		
-		return GameHandler.getInstance().rollDice();
+		GameHandler.getInstance().rollDice();
 	}
 	
 	/**
