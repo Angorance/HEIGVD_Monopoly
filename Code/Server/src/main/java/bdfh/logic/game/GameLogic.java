@@ -72,8 +72,8 @@ public class GameLogic extends Thread {
 			JsonPrimitive capital = new JsonPrimitive(capitalDepart);
 			
 			player.add("id", id);
-			player.add("username", id);
-			player.add("capital", id);
+			player.add("username", username);
+			player.add("capital", capital);
 			
 			playerList.add(player);
 		}
