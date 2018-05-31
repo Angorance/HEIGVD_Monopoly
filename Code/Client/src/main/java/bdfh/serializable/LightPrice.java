@@ -23,7 +23,7 @@ public class LightPrice {
 	
 	private void setRent(Integer rent) {
 		
-		this.rent = rent;
+		this.rent = (rent == -1 ? null : rent);
 	}
 	
 	public Integer getPrice() {
@@ -33,7 +33,7 @@ public class LightPrice {
 	
 	private void setPrice(Integer price) {
 		
-		this.price = price;
+		this.price = (price == -1 ? null : price);
 	}
 	
 	public Integer getPriceCouch() {
@@ -43,7 +43,7 @@ public class LightPrice {
 	
 	private void setPriceCouch(Integer priceCouch) {
 		
-		this.priceCouch = priceCouch;
+		this.priceCouch = (priceCouch == -1 ? null : priceCouch);
 	}
 	
 	public Integer getPriceHomeCinema() {
@@ -53,7 +53,7 @@ public class LightPrice {
 	
 	private void setPriceHomeCinema(Integer priceHomeCinema) {
 		
-		this.priceHomeCinema = priceHomeCinema;
+		this.priceHomeCinema = (priceHomeCinema == -1 ? null : priceHomeCinema);
 	}
 	
 	public Integer getHypothec() {
@@ -63,7 +63,7 @@ public class LightPrice {
 	
 	private void setHypothec(Integer hypothec) {
 		
-		this.hypothec = hypothec;
+		this.hypothec = (hypothec == -1 ? null : hypothec);
 	}
 	
 	/**
@@ -92,11 +92,11 @@ public class LightPrice {
 		LightPrice tmp = new LightPrice();
 		
 		// Set the attributes
-		tmp.setRent(GsonSerializer.getInstance().fromJson("rent", Integer.class));
-		tmp.setPrice(GsonSerializer.getInstance().fromJson("price", Integer.class));
-		tmp.setPriceCouch(GsonSerializer.getInstance().fromJson("priceCouch", Integer.class));
-		tmp.setPriceHomeCinema(GsonSerializer.getInstance().fromJson("priceHomeCinema", Integer.class));
-		tmp.setHypothec(GsonSerializer.getInstance().fromJson("hypothec", Integer.class));
+		tmp.setRent(jo.get("rent").getAsInt());
+		tmp.setPrice(jo.get("price").getAsInt()); // TODO - A CHECKER
+		tmp.setPriceCouch(jo.get("couch").getAsInt());
+		tmp.setPriceHomeCinema(jo.get("homeCinema").getAsInt());
+		tmp.setHypothec(jo.get("hypothec").getAsInt());
 		
 		return tmp;
 	}

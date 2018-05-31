@@ -8,7 +8,7 @@ import com.google.gson.*;
  */
 public class GsonSerializer {
 	
-	private Gson gson = new GsonBuilder().serializeNulls().create();
+	private Gson gson = new Gson();
 	
 	private GsonSerializer() {}
 	
