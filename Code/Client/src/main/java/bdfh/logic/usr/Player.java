@@ -1,6 +1,7 @@
 package bdfh.logic.usr;
 
 import bdfh.net.client.Client;
+import bdfh.net.client.GameHandler;
 import bdfh.serializable.BoundParameters;
 
 /**
@@ -132,11 +133,13 @@ public class Player {
 	}
 	
 	/**
-	 * TODO
+	 * Call the rollDice method of the GameHandler and return the result.
+	 *
+	 * @return Result of dice.
 	 */
 	public int[] rollDice() {
 		
-		return new int[2];
+		return GameHandler.getInstance().rollDice();
 	}
 	
 	/**
