@@ -4,6 +4,12 @@ import bdfh.database.DatabaseConnect;
 import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
 import bdfh.protocol.GameProtocol;
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import java.util.*;
 import java.util.logging.*;
 
@@ -49,9 +55,30 @@ public class GameLogic extends Thread {
 		board = new Board(players);
 		
 		// TODO envoyer l'id, le username et le capital de chacun des joueurs {id, username, capital}
+		sendPlayers(lobby.getParam().getMoneyAtTheStart());
 		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
+	}
+	
+	private void sendPlayers(int capitalDepart) {
+		
+		JsonArray playerList = new JsonArray();
+		
+		for(ClientHandler c : players){
+			JsonObject player = new JsonObject();
+			JsonPrimitive id = new JsonPrimitive(c.getClientID());
+			JsonPrimitive username = new JsonPrimitive(c.getClientUsername());
+			JsonPrimitive capital = new JsonPrimitive(capitalDepart);
+			
+			player.add("id", id);
+			player.add("username", id);
+			player.add("capital", id);
+			
+			playerList.add(player);
+		}
+		
+		notifyPlayers(GAM_PLYR, GsonSerializer.getInstance().toJson(playerList));
 	}
 	
 	/**
