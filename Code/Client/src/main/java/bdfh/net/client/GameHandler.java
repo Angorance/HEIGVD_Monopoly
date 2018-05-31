@@ -1,6 +1,7 @@
 package bdfh.net.client;
 
 import bdfh.gui.controller.Controller_lobbyList;
+import bdfh.logic.usr.Player;
 import bdfh.net.protocol.GameProtocol;
 
 import java.io.BufferedReader;
@@ -82,19 +83,34 @@ public class GameHandler extends Thread {
 	
 	public int[] rollDice() {
 		
+		int[] tmp = null;
+		
 		sendData(GameProtocol.GAM_ROLL);
 		
 		try {
 			
 			response = in.readLine();
 			
+			String[] splitted = response.split(" ");
 			
+			if (splitted[0].equals(Player.getInstance().getUsername())) {
+				
+				tmp = new int[splitted.length - 1];
+				
+				for (int i = 1; i < splitted.length; ++i) {
+					tmp[i-1] = Integer.parseInt(splitted[i]);
+				}
+			}
 			
 		} catch (IOException e) {
+			// TODO LOG
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO LOG
 			e.printStackTrace();
 		}
 		
-		return new int[2];
+		return tmp;
 	}
 	
 	/**
