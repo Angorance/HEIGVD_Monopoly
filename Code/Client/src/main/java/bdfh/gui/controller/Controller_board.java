@@ -65,9 +65,9 @@ public class Controller_board implements Initializable,IWindow {
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
 	
-	private ArrayList<FlowPane> cases = new ArrayList<>();
-	
-	private HashMap<Integer,pawnDisplay> displayerList;
+	private static ArrayList<FlowPane> cases = new ArrayList<>();
+	private static HashMap<Integer,pawnDisplay> displayerList;
+	private static HashMap<Integer,Integer> posPlayer;
 	
 	private int pos = 0;
 	
@@ -145,8 +145,11 @@ public class Controller_board implements Initializable,IWindow {
 		cases.add(case40);
 	}
 	
-	public void movePawn(int idPlayer, List<Integer> dices) {
+	public static void movePawn(int idPlayer, List<Integer> dices) {
+		
+		int pos = posPlayer.get(idPlayer);
 		int sumDice = 0;
+		
 		for(int i : dices){
 			sumDice += i;
 		}
@@ -155,7 +158,8 @@ public class Controller_board implements Initializable,IWindow {
 		pawnDisplay tmpPD = displayerList.get(idPlayer);
 		cases.get(pos).getChildren().removeAll(tmpPD);
 		cases.get(tmp).getChildren().add(tmpPD);
-		pos = tmp;
+		
+		posPlayer.put(idPlayer,tmp);
 	}
 	
 	private void rollDice(){
