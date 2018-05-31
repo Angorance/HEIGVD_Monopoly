@@ -204,17 +204,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	public void turnStart(){
-		if(Player.getInstance().isMyTurn()){
-			rollDice_button.setDisable(true);
-			endTurn_button.setDisable(false);
-		}else{
-			rollDice_button.setDisable(true);
-			endTurn_button.setDisable(true);
-		}
-	}
-	
-	public void turnEnd(){
+	public void notifyTurn(){
 		if(Player.getInstance().isMyTurn()){
 			rollDice_button.setDisable(false);
 			endTurn_button.setDisable(true);
