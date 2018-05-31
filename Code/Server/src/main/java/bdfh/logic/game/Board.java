@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Board {
 	
-	private static final int NB_SQUARE = 40;
+	public static final int NB_SQUARE = 40;
 	private Map<Integer, Integer> playerPosition;
 	private Square[] board = new Square[NB_SQUARE];
 	

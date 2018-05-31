@@ -162,37 +162,67 @@ public class GameLogic extends Thread {
 		
 		// check if can keep the card, if not, we put it in the end of the deck
 		if (drawed.getAction() != GameProtocol.CARD_FREE) {
-			// TODO SPRINT X handling the effect
 			
 			String[] fullAction = drawed.getFullAction().split(" ");
 			
 			// Handle the effect
+			int value;
+			
 			switch(drawed.getAction()) {
 				
 				case GameProtocol.CARD_MOVE:
-					managePosition(currentPlayer, Integer.parseInt(fullAction[1]));
+					value = Integer.parseInt(fullAction[1]);
+					board.movePlayer(getCurrentPlayerID(), value);
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a avancé de " + value + " cases et se "
+							+ "trouve ici : " + board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
 					break;
 					
 				case GameProtocol.CARD_BACK:
-					managePosition(currentPlayer, Integer.parseInt(fullAction[1]) * -1);
+					value = Integer.parseInt(fullAction[1]);
+					board.movePlayer(getCurrentPlayerID(), value * -1);
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a reculé de " + value + " cases et se "
+							+ "trouve ici : " + board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
 					break;
 					
 				case GameProtocol.CARD_WIN:
+					int amount = Integer.parseInt(fullAction[1]);
+					manageMoney(currentPlayer, amount);
+					notifyPlayers(GAM_GAIN, String.valueOf(amount));
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".-");
 					break;
 					
 				case GameProtocol.CARD_LOSE:
+					amount = Integer.parseInt(fullAction[1]);
+					manageMoney(currentPlayer, amount * -1);
+					notifyPlayers(GAM_PAY, String.valueOf(amount * -1));
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 					break;
 					
 				case GameProtocol.CARD_GOTO:
-					break;
+					value = Integer.parseInt(fullAction[1]);
+					int actualPosition = board.getCurrentSquare(getCurrentPlayerID()).getPosition();
 					
-				case GameProtocol.CARD_CARD:
+					// Get the number of squares the player has to move to go to the square given
+					if(value > actualPosition) {
+						value = value - actualPosition;
+					
+					} else if (value < actualPosition) {
+						value = Board.NB_SQUARE - 1 - actualPosition + value;
+					}
+					
+					board.movePlayer(getCurrentPlayerID(), value);
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " s'est déplacé sur la case : " +
+							board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
 					break;
 					
 				case GameProtocol.CARD_EACH:
 					
-					int amount = Integer.parseInt(fullAction[1]);
-					LOG.log(Level.INFO, currentPlayer.getClientUsername() + "a recu " + amount + ".- de chaque joueur.");
+					amount = Integer.parseInt(fullAction[1]);
 					
 					// Each player pays the current player
 					for(ClientHandler player : players) {
@@ -206,12 +236,16 @@ public class GameLogic extends Thread {
 					amount = (amount * (players.size() - 1));
 					manageMoney(currentPlayer, amount);
 					notifyPlayers(GAM_GAIN, String.valueOf(amount));
+					
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".- de chaque joueur.");
 					break;
 					
 				case GameProtocol.CARD_CHOICE:
+					// TODO
 					break;
 					
 				case GameProtocol.CARD_REP:
+					// TODO
 					break;
 			}
 			
@@ -299,16 +333,6 @@ public class GameLogic extends Thread {
 	public int getCurrentPlayerID() {
 		
 		return currentPlayer.getClientID();
-	}
-	
-	/**
-	 * Update the position of a player (move or go forward).
-	 *
-	 * @param player    Target of the change.
-	 * @param value     Value to increment to the position.
-	 */
-	private void managePosition(ClientHandler player, int value) {
-		// TODO
 	}
 	
 	/**
