@@ -117,7 +117,6 @@ public class Square {
 		jsonSquare.add("position", new JsonPrimitive(position));
 		jsonSquare.add("name", new JsonPrimitive(name));
 		jsonSquare.add("family", new JsonPrimitive(family));
-		jsonSquare.add("owner", new JsonPrimitive(owner.getClientUsername()));
 		
 		if (prices != null) {
 			jsonSquare.add("prices", new JsonPrimitive(prices.jsonify()));

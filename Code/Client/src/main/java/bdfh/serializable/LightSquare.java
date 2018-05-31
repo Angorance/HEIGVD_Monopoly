@@ -97,7 +97,6 @@ public class LightSquare {
 		tmp.setPosition(jo.get("position").getAsInt());
 		tmp.setFamily(jo.get("family").getAsString());
 		tmp.setName(jo.get("name").getAsString());
-		tmp.setOwner(jo.get("owner").getAsString());
 		
 		// Set the prices
 		String prices = jo.get("prices").getAsString();
