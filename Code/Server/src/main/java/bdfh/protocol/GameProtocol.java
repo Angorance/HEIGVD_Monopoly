@@ -37,4 +37,5 @@ public abstract class GameProtocol {
 	public static final String SQUA_YELLOW = "YELLOW";
 	public static final String SQUA_GREEN = "GREEN";
 	public static final String SQUA_BLUE = "BLUE";
+	
 }

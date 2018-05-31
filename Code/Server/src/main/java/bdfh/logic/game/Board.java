@@ -3,6 +3,7 @@ package bdfh.logic.game;
 import bdfh.database.DatabaseConnect;
 import bdfh.database.SquareDB;
 import bdfh.net.server.ClientHandler;
+import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
 
@@ -66,5 +67,65 @@ public class Board {
 		}
 		
 		return GsonSerializer.getInstance().toJson(jsonBoard);
+	}
+	
+	/**
+	 *
+	 * @param game
+	 * @param s
+	 */
+	public void manageEffect(GameLogic game, Square s) {
+		switch (s.getFamily()) {
+			case GameProtocol.SQUA_TAX:
+				
+				break;
+			
+			case GameProtocol.SQUA_INSTITUTE:
+				
+				break;
+			
+			case GameProtocol.SQUA_COMPANY:
+				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()){
+					int amount = 0;
+					// TODO we have to check how many company the owner possess
+					//game.payPlayer(s.getOwner(), amount);
+				} else if (s.getOwner() == null){
+					// TODO offerToBuy this case
+					
+				}
+				// we have to check how many company the player
+				break;
+			
+			case GameProtocol.SQUA_CARD:
+				game.drawCard();
+				break;
+			
+			case GameProtocol.SQUA_START:
+				
+				break;
+			
+			case GameProtocol.SQUA_EXAM:
+				
+				break;
+			
+			case GameProtocol.SQUA_GO_EXAM:
+				
+				break;
+			
+			case GameProtocol.SQUA_BREAK:
+				
+				break;
+			
+			case GameProtocol.SQUA_RED:
+			case GameProtocol.SQUA_BLUE:
+			case GameProtocol.SQUA_CYAN:
+			case GameProtocol.SQUA_PINK:
+			case GameProtocol.SQUA_GREEN:
+			case GameProtocol.SQUA_ORANGE:
+			case GameProtocol.SQUA_BROWN:
+			case GameProtocol.SQUA_YELLOW:
+				
+				break;
+		}
 	}
 }
