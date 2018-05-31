@@ -14,9 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller_board implements Initializable,IWindow {
 	
@@ -68,6 +66,8 @@ public class Controller_board implements Initializable,IWindow {
 	@FXML private JFXButton endTurn_button;
 	
 	private ArrayList<FlowPane> cases = new ArrayList<>();
+	
+	private HashMap<Integer,pawnDisplay> displayerList;
 	
 	private int pos = 0;
 	
@@ -145,36 +145,42 @@ public class Controller_board implements Initializable,IWindow {
 		cases.add(case40);
 	}
 	
-	public void movePawn() {
-		
-		int[] dices = Player.getInstance().rollDice();
+	public void movePawn(int idPlayer, List<Integer> dices) {
 		int sumDice = 0;
 		for(int i : dices){
 			sumDice += i;
 		}
 		
-		
 		int tmp = (pos + sumDice)%40;
-		Node node = cases.get(pos).getChildren().remove(0);
-		cases.get(tmp).getChildren().add(node);
+		pawnDisplay tmpPD = displayerList.get(idPlayer);
+		cases.get(pos).getChildren().removeAll(tmpPD);
+		cases.get(tmp).getChildren().add(tmpPD);
 		pos = tmp;
 	}
 	
+	private void rollDice(){
+		Player.getInstance().rollDice();
+	}
+	
 	private void endTurn() {
-		
+	
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		displayerList = new HashMap<>();
+		
 		initCases();
 		
-		cases.get(0).getChildren().add(new pawnDisplay("RED"));
+		pawnDisplay pd = new pawnDisplay("RED");
+		cases.get(0).getChildren().add(pd);
+		displayerList.put(1,pd);
 		
 		rollDice_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
 				
-				movePawn();
+				rollDice();
 			}
 		});
 		
