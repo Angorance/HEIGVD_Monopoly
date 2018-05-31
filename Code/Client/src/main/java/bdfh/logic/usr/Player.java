@@ -142,6 +142,11 @@ public class Player {
 		GameHandler.getInstance().rollDice();
 	}
 	
+	public void endTurn() {
+		
+		GameHandler.getInstance().endTurn();
+	}
+	
 	/**
 	 * TODO
 	 */

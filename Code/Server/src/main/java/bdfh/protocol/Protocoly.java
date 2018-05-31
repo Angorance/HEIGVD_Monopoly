@@ -30,6 +30,7 @@ public abstract class Protocoly {
 	
 	// commande envoyée du serveur (logique de jeu)
 	public static final String GAM_PLAY = "PLAY"; // indique au joueur que c'est son tour
+	public static final String GAM_PLYR = "PLYR"; // envoie la liste des joueurs et leur capitaux
 	public static final String GAM_ROLL = "ROLL"; // commande pour lancer les dés
 	public static final String GAM_DRAW = "DRAW"; // informe le joueur de la carte tirée
 	public static final String GAM_ENDT = "ENDT"; // commande de fin de tour
