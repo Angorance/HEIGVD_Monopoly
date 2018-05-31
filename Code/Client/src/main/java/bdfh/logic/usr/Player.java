@@ -18,6 +18,8 @@ public class Player {
 	private boolean isReady;
 	private int lobbyID = -1;
 	
+	private boolean myTurn = false;
+	
 	
 	private Player() {}
 	
@@ -49,6 +51,16 @@ public class Player {
 	public void setUsername(String username) {
 		
 		this.username = username;
+	}
+	
+	public boolean isMyTurn() {
+		
+		return myTurn;
+	}
+	
+	public void setMyTurn(boolean myTurn) {
+		
+		this.myTurn = myTurn;
 	}
 	
 	/**

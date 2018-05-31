@@ -58,17 +58,6 @@ public class Board {
 		return board[playerPosition.get(playerId)];
 	}
 	
-	public String jsonify() {
-		
-		JsonArray jsonBoard = new JsonArray();
-		
-		for (Square s : board) {
-			jsonBoard.add(s.jsonify());
-		}
-		
-		return GsonSerializer.getInstance().toJson(jsonBoard);
-	}
-	
 	/**
 	 *
 	 * @param game
@@ -119,5 +108,17 @@ public class Board {
 				
 				break;
 		}
+	}
+	
+	
+	public String jsonify() {
+		
+		JsonArray jsonBoard = new JsonArray();
+		
+		for (Square s : board) {
+			jsonBoard.add(s.jsonify());
+		}
+		
+		return GsonSerializer.getInstance().toJson(jsonBoard);
 	}
 }

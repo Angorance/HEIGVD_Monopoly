@@ -2,8 +2,10 @@ package bdfh.net.client;
 
 import bdfh.gui.controller.Controller_board;
 import bdfh.gui.controller.Controller_lobbyList;
+import bdfh.logic.usr.Player;
 import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.LightBoard;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,6 +21,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class GameHandler extends Thread {
@@ -26,6 +29,7 @@ public class GameHandler extends Thread {
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
 	HashMap<Integer, Pair<String, Integer>> players = new HashMap<>();
+	LightBoard board = null;
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -65,8 +69,16 @@ public class GameHandler extends Thread {
 		String[] split = line.split(" ");
 		
 		switch (split[0]) {
+			case GameProtocol.GAM_BOARD:
+				manageBoard(split[1]);
+				break;
+				
 			case GameProtocol.GAM_PLYR:
 				managePlayers(split[1]);
+				break;
+				
+			case GameProtocol.GAM_PLAY:
+				manageCurrentPlayer(split[1]);
 				break;
 				
 			case GameProtocol.GAM_ROLL:
@@ -102,12 +114,18 @@ public class GameHandler extends Thread {
 	
 	public void endTurn() {
 		
+		Player.getInstance().setMyTurn(false);
 		sendData(GameProtocol.GAM_ENDT);
 	}
 	
 	public HashMap<Integer, Pair<String,Integer>> getPlayers() {
 		
 		return players;
+	}
+	
+	public LightBoard getBoard() {
+		
+		return board;
 	}
 	
 	/**
@@ -147,6 +165,18 @@ public class GameHandler extends Thread {
 			int capital = jo.get("capital").getAsInt();
 			
 			players.put(id, new Pair<> (username, capital));
+		}
+	}
+	
+	private void manageBoard(String json) {
+	
+		board = LightBoard.instancify(json);
+	}
+	
+	private void manageCurrentPlayer(String playerID) {
+	
+		if (Player.getInstance().getUsername().equals(players.get(playerID).getKey())) {
+			Player.getInstance().setMyTurn(true);
 		}
 	}
 }

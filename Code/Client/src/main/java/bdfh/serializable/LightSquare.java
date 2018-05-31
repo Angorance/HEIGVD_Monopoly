@@ -89,7 +89,7 @@ public class LightSquare {
 	 *
 	 * @return  a LightSquare.
 	 */
-	private static LightSquare instancify(JsonObject jo) {
+	public static LightSquare instancify(JsonObject jo) {
 		
 		LightSquare tmp = new LightSquare();
 		
