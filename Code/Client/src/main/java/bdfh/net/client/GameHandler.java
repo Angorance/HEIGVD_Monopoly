@@ -93,13 +93,15 @@ public class GameHandler extends Thread {
 			
 			String[] splitted = response.split(" ");
 			
-			if (splitted[0].equals(Player.getInstance().getUsername())) {
+			if (splitted[1].equals(Player.getInstance().getUsername())) {
 				
-				tmp = new int[splitted.length - 1];
+				tmp = new int[splitted.length - 2];
 				
-				for (int i = 1; i < splitted.length; ++i) {
-					tmp[i-1] = Integer.parseInt(splitted[i]);
+				for (int i = 2; i < splitted.length; ++i) {
+					tmp[i - 2] = Integer.parseInt(splitted[i]);
 				}
+			} else {
+				// TODO LOG - Problem with username received
 			}
 			
 		} catch (IOException e) {
