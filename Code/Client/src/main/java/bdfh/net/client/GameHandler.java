@@ -3,10 +3,17 @@ package bdfh.net.client;
 import bdfh.gui.controller.Controller_board;
 import bdfh.gui.controller.Controller_lobbyList;
 import bdfh.net.protocol.GameProtocol;
+import bdfh.serializable.GsonSerializer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +24,8 @@ import java.util.logging.Logger;
 public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
+	
+	HashMap<Integer, Pair<String, Integer>> players = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -56,6 +65,10 @@ public class GameHandler extends Thread {
 		String[] split = line.split(" ");
 		
 		switch (split[0]) {
+			case GameProtocol.GAM_PLYR:
+				managePlayers(split[1]);
+				break;
+				
 			case GameProtocol.GAM_ROLL:
 				manageRoll(split);
 				break;
@@ -87,6 +100,16 @@ public class GameHandler extends Thread {
 		sendData(GameProtocol.GAM_ROLL);
 	}
 	
+	public void endTurn() {
+		
+		sendData(GameProtocol.GAM_ENDT);
+	}
+	
+	public HashMap<Integer, Pair<String,Integer>> getPlayers() {
+		
+		return players;
+	}
+	
 	/**
 	 * Send data (commands) to the server.
 	 *
@@ -103,14 +126,27 @@ public class GameHandler extends Thread {
 	
 	private void manageRoll(String[] str) {
 		
-		int[] tmp;
-		
-		tmp = new int[str.length - 2];
+		ArrayList tmp = new ArrayList();
 		
 		for (int i = 2; i < str.length; ++i) {
-			tmp[i - 2] = Integer.parseInt(str[i]);
+			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		Controller_board_movePawn(str[1], tmp);
+		Controller_board.movePawn(Integer.parseInt(str[1]), tmp);
+	}
+	
+	private void managePlayers(String json) {
+		
+		JsonArray jsonPlayers = GsonSerializer.getInstance().fromJson(json, JsonArray.class);
+		
+		for (JsonElement je : jsonPlayers) {
+			JsonObject jo = je.getAsJsonObject();
+			
+			int id = jo.get("id").getAsInt();
+			String username = jo.get("username").getAsString();
+			int capital = jo.get("capital").getAsInt();
+			
+			players.put(id, new Pair<> (username, capital));
+		}
 	}
 }
