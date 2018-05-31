@@ -8,60 +8,60 @@ import com.google.gson.*;
  */
 public class LightPrice {
 	
-	private int rent;               // Basic rent of the square
-	private int price;              // Price of the room
-	private int priceCouch;         // Price for one couch
-	private int priceHomeCinema;    // Price for one home cinema
-	private int hypothec;           // Amount of the hypothec of the square
+	private Integer rent;               // Basic rent of the square
+	private Integer price;              // Price of the room
+	private Integer priceCouch;         // Price for one couch
+	private Integer priceHomeCinema;    // Price for one home cinema
+	private Integer hypothec;           // Amount of the hypothec of the square
 	
 	public LightPrice() {}
 	
-	public int getRent() {
+	public Integer getRent() {
 		
 		return rent;
 	}
 	
-	private void setRent(int rent) {
+	private void setRent(Integer rent) {
 		
 		this.rent = rent;
 	}
 	
-	public int getPrice() {
+	public Integer getPrice() {
 		
 		return price;
 	}
 	
-	private void setPrice(int price) {
+	private void setPrice(Integer price) {
 		
 		this.price = price;
 	}
 	
-	public int getPriceCouch() {
+	public Integer getPriceCouch() {
 		
 		return priceCouch;
 	}
 	
-	private void setPriceCouch(int priceCouch) {
+	private void setPriceCouch(Integer priceCouch) {
 		
 		this.priceCouch = priceCouch;
 	}
 	
-	public int getPriceHomeCinema() {
+	public Integer getPriceHomeCinema() {
 		
 		return priceHomeCinema;
 	}
 	
-	private void setPriceHomeCinema(int priceHomeCinema) {
+	private void setPriceHomeCinema(Integer priceHomeCinema) {
 		
 		this.priceHomeCinema = priceHomeCinema;
 	}
 	
-	public int getHypothec() {
+	public Integer getHypothec() {
 		
 		return hypothec;
 	}
 	
-	private void setHypothec(int hypothec) {
+	private void setHypothec(Integer hypothec) {
 		
 		this.hypothec = hypothec;
 	}
@@ -92,11 +92,11 @@ public class LightPrice {
 		LightPrice tmp = new LightPrice();
 		
 		// Set the attributes
-		tmp.setRent(jo.get("rent").getAsInt());
-		tmp.setPrice(jo.get("price").getAsInt());
-		tmp.setPriceCouch(jo.get("priceCouch").getAsInt());
-		tmp.setPriceHomeCinema(jo.get("priceHomeCinema").getAsInt());
-		tmp.setHypothec(jo.get("hypothec").getAsInt());
+		tmp.setRent(GsonSerializer.getInstance().fromJson("rent", Integer.class));
+		tmp.setPrice(GsonSerializer.getInstance().fromJson("price", Integer.class));
+		tmp.setPriceCouch(GsonSerializer.getInstance().fromJson("priceCouch", Integer.class));
+		tmp.setPriceHomeCinema(GsonSerializer.getInstance().fromJson("priceHomeCinema", Integer.class));
+		tmp.setHypothec(GsonSerializer.getInstance().fromJson("hypothec", Integer.class));
 		
 		return tmp;
 	}
