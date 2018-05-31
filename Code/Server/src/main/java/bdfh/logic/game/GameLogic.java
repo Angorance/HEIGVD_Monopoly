@@ -145,6 +145,21 @@ public class GameLogic extends Thread {
 		}
 	}
 	
+	
+	/**
+	 * make a transaction between two players
+	 * @param amount amount of transaction
+	 * @param gainer player that receive the money
+	 * @param loser player that gives the money
+	 */
+	private void makeTransaction(int amount, ClientHandler gainer, ClientHandler loser) {
+		playersFortune.get(gainer.getClientID())[CAPITAL] += amount;
+		playersFortune.get(loser.getClientID())[CAPITAL] -= amount;
+		// notifyPlayers();
+		//notifyPlayers(GAM_PAY , amount + " " + gainer.getClientUsername());
+		
+	}
+	
 	public void drawCard() {
 		
 		LOG.log(Level.INFO, "Deck avant pioche : " + Deck.toString());
@@ -233,5 +248,14 @@ public class GameLogic extends Thread {
 		for (ClientHandler c : players) {
 			c.sendData(cmd, param);
 		}
+	}
+	
+	public int getCurrentPlayerID() {
+		
+		return currentPlayer.getClientID();
+	}
+	
+	public void payPlayer(ClientHandler owner, int amount) {
+		makeTransaction(amount, owner, currentPlayer);
 	}
 }
