@@ -365,8 +365,8 @@ public class GameLogic extends Thread {
 			param += currentPlayer.getClientID();
 		}
 		
-		param += " " + data;
-		LOG.log(Level.INFO, "sending to players : " + cmd + param);
+		param += data;
+		LOG.log(Level.INFO, "sending to players : " + cmd + " " + param);
 		for (ClientHandler c : players) {
 			c.sendData(cmd, param);
 		}
