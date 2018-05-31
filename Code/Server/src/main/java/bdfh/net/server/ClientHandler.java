@@ -177,6 +177,11 @@ public class ClientHandler implements Handler {
 							game.endTurn(this);
 						}
 						break;
+						
+					case Protocoly.GAM_BUYS :
+						if(game != null){
+							game.buySquare(this, Integer.valueOf(param[1]));
+						}
 					
 					default: // WTF ???
 						sendData("U wot m8 ?");

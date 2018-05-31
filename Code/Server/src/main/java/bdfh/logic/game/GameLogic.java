@@ -30,6 +30,7 @@ public class GameLogic extends Thread {
 	private ArrayDeque<Card> Deck;
 	private Board board;
 	private int nbDice;
+	private int totalLastRoll;
 	
 	// Map a player to his fortune. The first cell of the tab is the capital,
 	// and the second is the total of his possession (capital + nbHouse + Hypotheques + ... )
@@ -137,8 +138,18 @@ public class GameLogic extends Thread {
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
 			players.addFirst(c);
-			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),
-					lobby.getParam().getMoneyAtTheStart() }); // TODO à vérifier...
+			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 }); // TODO à vérifier...
+		}
+	}
+	
+	public void buySquare(ClientHandler caller, int posSquare){
+		if(caller.getClientID() == currentPlayer.getClientID()){
+			Price price = board.getSquare(posSquare).getPrices();
+			notifyPlayers(GAM_PAY, Integer.toString(price.getPrice()));
+			notifyPlayers(GAM_BUYS, Integer.toString(posSquare));
+			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += price.getHypothec();
+			manageMoney(currentPlayer, -1*price.getPrice());
+			board.setOwner(currentPlayer, posSquare);
 		}
 	}
 	
@@ -173,6 +184,7 @@ public class GameLogic extends Thread {
 			}
 			
 			// move the player
+			totalLastRoll = total;
 			boolean passedGo = board.movePlayer(currentPlayer.getClientID(), total);
 			
 			if(passedGo){
@@ -188,6 +200,11 @@ public class GameLogic extends Thread {
 				board.manageEffect(this, current);
 			}
 		}
+	}
+	
+	public int getTotalLastRoll() {
+		
+		return totalLastRoll;
 	}
 	
 	/**
