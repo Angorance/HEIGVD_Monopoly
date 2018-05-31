@@ -191,6 +191,10 @@ public class Controller_board implements Initializable, IWindow {
 			cases.get(pos).getChildren().removeAll(tmpPD);
 			cases.get(tmp).getChildren().add(tmpPD);
 			posPlayer.put(idPlayer, tmp);
+			if(Player.getInstance().isMyTurn()){
+				rollDice_button.setDisable(true);
+				endTurn_button.setDisable(false);
+			}
 		});
 	}
 	
