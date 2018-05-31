@@ -146,10 +146,8 @@ INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (18, "BACK 3");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (19, "MOVE 7");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (20, "MOVE 11");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (21, "EACH 10");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (22, "CHOICE 10 CARD");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (23, "REP 40 115");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (24, "REP 25 100");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (25, "CARD");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (22, "REP 40 115");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (23, "REP 25 100");
 
 
 -- -----------------------------------------------------
@@ -181,9 +179,8 @@ INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUE
 INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (24, "Un de tes cours est annulé. Avance de 7 cases", 1, 19);
 INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (25, "Tu t'es perdu dans l'école et tu te retrouves 11 cases plus loin", 1, 20);
 INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (26, "Ton anniv', ça fait toujours plaisir. Tous les joueurs te donnent 10.-", 1, 21);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (27, "Vraiment pas de bol. Paie 10.- ou retire une carte", 1, 22);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (28, "Répare tes possessions : 40.-/canapé, 115.-/home cinéma", 1, 23);
-INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (29, "Des andouilles ont saccagé tes possessions. 25.-/canapé, 100.-/home cinéma", 1, 24);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (28, "Répare tes possessions : 40.-/canapé, 115.-/home cinéma", 1, 22);
+INSERT INTO `cheseaux-poly`.`card` (`id`, `text`, `quantity`, `action_id`) VALUES (29, "Des andouilles ont saccagé tes possessions. 25.-/canapé, 100.-/home cinéma", 1, 23);
 
 
 -- -----------------------------------------------------
