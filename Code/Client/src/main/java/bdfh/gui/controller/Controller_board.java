@@ -169,7 +169,8 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void endTurn() {
-	
+		
+		Player.getInstance().endTurn();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
