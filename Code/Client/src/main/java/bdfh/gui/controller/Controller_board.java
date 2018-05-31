@@ -175,24 +175,21 @@ public class Controller_board implements Initializable, IWindow {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		displayerList = new HashMap<>();
-		displayerList.keySet()
 		
 		initCases();
 		
 		String[] color = {"RED","BLUE","GREEN","YELLOW"};
 		
 		int typeColor = 0;
-		for(int idPlayer : GameHandler.getInstance().getPlayers.keySet()){
+		for(int idPlayer : GameHandler.getInstance().getPlayers().keySet()){
 			pawnDisplay pd = new pawnDisplay(color[typeColor]);
 			cases.get(0).getChildren().add(pd);
 			displayerList.put(idPlayer,pd);
-		}
-		
-		for(Pair<String,Integer> pair : GameHandler.getInstance().getPlayers){
+			
+			Pair<String,Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
 			String username = pair.getKey();
 			int capital = pair.getValue();
-			
-			//Add username et capital
+			//TODO ajout des username et capital
 		}
 
 		
