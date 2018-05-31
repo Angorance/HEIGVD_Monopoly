@@ -145,37 +145,83 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	
 	/**
-	 * make a transaction between two players
-	 * @param amount amount of transaction
-	 * @param gainer player that receive the money
-	 * @param loser player that gives the money
+	 * Draw a card for the current player and manage its effect.
 	 */
-	private void makeTransaction(int amount, ClientHandler gainer, ClientHandler loser) {
-		playersFortune.get(gainer.getClientID())[CAPITAL] += amount;
-		playersFortune.get(loser.getClientID())[CAPITAL] -= amount;
-		// notifyPlayers();
-		//notifyPlayers(GAM_PAY , amount + " " + gainer.getClientUsername());
-		
-	}
-	
 	public void drawCard() {
 		
 		LOG.log(Level.INFO, "Deck avant pioche : " + Deck.toString());
 		Card drawed = Deck.pop();
 		LOG.log(Level.INFO, "Deck après pioche : " + Deck.toString());
+		
 		// notify the players
-		String cardJson = drawed.jsonify();
-		notifyPlayers(GAM_DRAW, cardJson);
+		notifyPlayers(GAM_DRAW, drawed.jsonify());
+		
+		// wait the confirmation of the current player before handling the effect
+		
 		
 		// check if can keep the card, if not, we put it in the end of the deck
 		if (drawed.getAction() != GameProtocol.CARD_FREE) {
 			// TODO SPRINT X handling the effect
+			
+			String[] fullAction = drawed.getFullAction().split(" ");
+			
+			// Handle the effect
+			switch(drawed.getAction()) {
+				
+				case GameProtocol.CARD_MOVE:
+					managePosition(currentPlayer, Integer.parseInt(fullAction[1]));
+					break;
+					
+				case GameProtocol.CARD_BACK:
+					managePosition(currentPlayer, Integer.parseInt(fullAction[1]) * -1);
+					break;
+					
+				case GameProtocol.CARD_WIN:
+					break;
+					
+				case GameProtocol.CARD_LOSE:
+					break;
+					
+				case GameProtocol.CARD_GOTO:
+					break;
+					
+				case GameProtocol.CARD_CARD:
+					break;
+					
+				case GameProtocol.CARD_EACH:
+					
+					int amount = Integer.parseInt(fullAction[1]);
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + "a recu " + amount + ".- de chaque joueur.");
+					
+					// Each player pays the current player
+					for(ClientHandler player : players) {
+						
+						if(player != currentPlayer) {
+							manageMoney(player, amount * -1);
+						}
+					}
+					
+					// The current player receives the money
+					amount = (amount * (players.size() - 1));
+					manageMoney(currentPlayer, amount);
+					notifyPlayers(GAM_GAIN, String.valueOf(amount));
+					break;
+					
+				case GameProtocol.CARD_CHOICE:
+					break;
+					
+				case GameProtocol.CARD_REP:
+					break;
+			}
+			
+			// Put the card at the end of the deck
 			Deck.addLast(drawed);
+			
 		} else {
-			// Deck.addLast(drawed);
+			
 			// TODO SPRINT X
+			// add the card to its owner
 		}
 	}
 	
@@ -255,7 +301,25 @@ public class GameLogic extends Thread {
 		return currentPlayer.getClientID();
 	}
 	
-	public void payPlayer(ClientHandler owner, int amount) {
-		makeTransaction(amount, owner, currentPlayer);
+	/**
+	 * Update the position of a player (move or go forward).
+	 *
+	 * @param player    Target of the change.
+	 * @param value     Value to increment to the position.
+	 */
+	private void managePosition(ClientHandler player, int value) {
+		// TODO
+	}
+	
+	/**
+	 * Update the money of a player (add or remove money).
+	 *
+	 * @param player    Target of the change.
+	 * @param amount    Amount to add/remove.
+	 */
+	private void manageMoney(ClientHandler player, int amount) {
+		playersFortune.get(player.getClientID())[CAPITAL] += amount;
+		
+		// TODO - check if the game is over for the player
 	}
 }
