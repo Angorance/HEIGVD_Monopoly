@@ -48,9 +48,19 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Génération du plateau");
 		board = new Board(players);
 		
+		// TODO envoyer l'id, le username et le capital de chacun des joueurs {id, username, capital}
 		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
+	}
+	
+	/**
+	 * Get the current player of the turn.
+	 *
+	 * @return  the current player.
+	 */
+	public ClientHandler getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	/**
@@ -142,6 +152,13 @@ public class GameLogic extends Thread {
 				notifyPlayers(GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
 			}
 			
+			// MANAGING THE CASE EFFECT
+			Square current = board.getCurrentSquare(currentPlayer.getClientID());
+			if(current.isBuyable() && current.getOwner() == null){
+				currentPlayer.sendData(GAM_FREE, Integer.toString(current.getPosition()));
+			} else {
+				board.manageEffect(this, current);
+			}
 		}
 	}
 	
@@ -240,10 +257,6 @@ public class GameLogic extends Thread {
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".- de chaque joueur.");
 					break;
 					
-				case GameProtocol.CARD_CHOICE:
-					// TODO
-					break;
-					
 				case GameProtocol.CARD_REP:
 					// TODO
 					break;
@@ -321,7 +334,7 @@ public class GameLogic extends Thread {
 		String param = "";
 		
 		if (cmd != GAM_BOARD && currentPlayer != null) {
-			param += currentPlayer.getClientUsername();
+			param += currentPlayer.getClientID();
 		}
 		
 		param += " " + data;
@@ -341,7 +354,7 @@ public class GameLogic extends Thread {
 	 * @param player    Target of the change.
 	 * @param amount    Amount to add/remove.
 	 */
-	private void manageMoney(ClientHandler player, int amount) {
+	public void manageMoney(ClientHandler player, int amount) {
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
 		// TODO - check if the game is over for the player
