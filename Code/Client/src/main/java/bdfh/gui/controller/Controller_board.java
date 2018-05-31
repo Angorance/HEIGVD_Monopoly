@@ -2,6 +2,7 @@ package bdfh.gui.controller;
 
 import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
+import bdfh.net.client.GameHandler;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,11 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.*;
 
-public class Controller_board implements Initializable,IWindow {
+public class Controller_board implements Initializable, IWindow {
 	
 	
 	@FXML private FlowPane case1;
@@ -167,7 +169,8 @@ public class Controller_board implements Initializable,IWindow {
 	}
 	
 	private void endTurn() {
-	
+		
+		Player.getInstance().endTurn();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -176,9 +179,20 @@ public class Controller_board implements Initializable,IWindow {
 		
 		initCases();
 		
-		pawnDisplay pd = new pawnDisplay("RED");
-		cases.get(0).getChildren().add(pd);
-		displayerList.put(1,pd);
+		String[] color = {"RED","BLUE","GREEN","YELLOW"};
+		
+		int typeColor = 0;
+		for(int idPlayer : GameHandler.getInstance().getPlayers().keySet()){
+			pawnDisplay pd = new pawnDisplay(color[typeColor]);
+			cases.get(0).getChildren().add(pd);
+			displayerList.put(idPlayer,pd);
+			
+			Pair<String,Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
+			String username = pair.getKey();
+			int capital = pair.getValue();
+			//TODO ajout des username et capital
+		}
+
 		
 		rollDice_button.setOnAction(new EventHandler<ActionEvent>() {
 			

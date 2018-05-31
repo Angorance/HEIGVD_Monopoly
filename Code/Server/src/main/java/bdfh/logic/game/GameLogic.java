@@ -82,6 +82,15 @@ public class GameLogic extends Thread {
 	}
 	
 	/**
+	 * Get the current player of the turn.
+	 *
+	 * @return  the current player.
+	 */
+	public ClientHandler getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
+	/**
 	 * Generate a random deck
 	 */
 	private void prepareDeck() {
@@ -275,10 +284,6 @@ public class GameLogic extends Thread {
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".- de chaque joueur.");
 					break;
 					
-				case GameProtocol.CARD_CHOICE:
-					// TODO
-					break;
-					
 				case GameProtocol.CARD_REP:
 					// TODO
 					break;
@@ -376,7 +381,7 @@ public class GameLogic extends Thread {
 	 * @param player    Target of the change.
 	 * @param amount    Amount to add/remove.
 	 */
-	private void manageMoney(ClientHandler player, int amount) {
+	public void manageMoney(ClientHandler player, int amount) {
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
 		// TODO - check if the game is over for the player

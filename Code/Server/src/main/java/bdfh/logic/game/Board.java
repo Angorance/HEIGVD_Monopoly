@@ -75,7 +75,9 @@ public class Board {
 	 * @param s
 	 */
 	public void manageEffect(GameLogic game, Square s) {
+		
 		switch (s.getFamily()) {
+			
 			case GameProtocol.SQUA_TAX:
 				
 				break;
@@ -88,7 +90,9 @@ public class Board {
 				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()){
 					int amount = 0;
 					// TODO we have to check how many company the owner possess
-					//game.payPlayer(s.getOwner(), amount);
+					game.manageMoney(game.getCurrentPlayer(), amount * -1);
+					game.manageMoney(s.getOwner(), amount);
+					
 				} else if (s.getOwner() == null){
 					// TODO offerToBuy this case
 					
@@ -100,19 +104,7 @@ public class Board {
 				game.drawCard();
 				break;
 			
-			case GameProtocol.SQUA_START:
-				
-				break;
-			
-			case GameProtocol.SQUA_EXAM:
-				
-				break;
-			
 			case GameProtocol.SQUA_GO_EXAM:
-				
-				break;
-			
-			case GameProtocol.SQUA_BREAK:
 				
 				break;
 			

@@ -47,4 +47,6 @@ public abstract class GameProtocol {
 	public static final String GAM_PAY = "PAYS";
 	public static final String GAM_GAIN = "GAIN";
 	public static final String GAM_DENY = "DENY";
+	public static final String GAM_PLYR = "PLYR";
+	
 }
