@@ -77,7 +77,7 @@ public class Square {
 				if(this.owner != null && this.owner.getClientID() == game.getCurrentPlayerID()){
 					int amount = 0;
 					// TODO we have to check how many company the owner possess
-					game.payPlayer(this.owner, amount);
+					//game.payPlayer(this.owner, amount);
 				} else if (this.owner == null){
 					// TODO offerToBuy this case
 					
@@ -86,7 +86,7 @@ public class Square {
 				break;
 			
 			case GameProtocol.SQUA_CARD:
-				game.drawCard();
+				//game.drawCard();
 				break;
 			
 			case GameProtocol.SQUA_START:

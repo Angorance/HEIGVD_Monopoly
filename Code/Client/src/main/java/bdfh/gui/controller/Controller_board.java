@@ -147,19 +147,23 @@ public class Controller_board implements Initializable,IWindow {
 	
 	public void movePawn() {
 		
-		Random rand = new Random();
-		int n = rand.nextInt(11) + 2;
+		int[] dices = Player.getInstance().rollDice();
+		int sumDice = 0;
+		for(int i : dices){
+			sumDice += i;
+		}
 		
-		//int[] dices = Player.getInstance().rollDice();
 		
-		int tmp = (pos + n)%40;
-		
+		int tmp = (pos + sumDice)%40;
 		Node node = cases.get(pos).getChildren().remove(0);
 		cases.get(tmp).getChildren().add(node);
 		pos = tmp;
-		
+	}
+	
+	private void endTurn() {
 		
 	}
+	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		initCases();
@@ -171,6 +175,14 @@ public class Controller_board implements Initializable,IWindow {
 			@Override public void handle(ActionEvent event) {
 				
 				movePawn();
+			}
+		});
+		
+		endTurn_button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				endTurn();
 			}
 		});
 		
