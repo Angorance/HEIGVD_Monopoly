@@ -68,6 +68,12 @@ public class Price {
 		
 		JsonObject jsonPrice = new JsonObject();
 		
+		rent = rent != null ? rent : -1;
+		price = price != null ? price : -1;
+		priceCouch = priceCouch != null ? priceCouch : -1;
+		priceHomeCinema = priceHomeCinema != null ? priceHomeCinema : -1;
+		hypothec = hypothec != null ? hypothec : -1;
+		
 		jsonPrice.addProperty("rent", rent);
 		jsonPrice.addProperty("price", price);
 		jsonPrice.addProperty("couch", priceCouch);

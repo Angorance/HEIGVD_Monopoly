@@ -99,10 +99,15 @@ public class LightSquare {
 		tmp.setName(jo.get("name").getAsString());
 		
 		// Set the prices
-		String prices = jo.get("prices").getAsString();
-		JsonObject jsonPrices = GsonSerializer.getInstance().fromJson(prices, JsonObject.class);
-		LightPrice newPrices = LightPrice.instancify(jsonPrices);
-		tmp.setPrices(newPrices);
+		try {
+			String prices = jo.get("prices").getAsString();
+			JsonObject jsonPrices = GsonSerializer.getInstance()
+					.fromJson(prices, JsonObject.class);
+			LightPrice newPrices = LightPrice.instancify(jsonPrices);
+			tmp.setPrices(newPrices);
+		} catch (NullPointerException e) {
+			tmp.setPrices(null);
+		}
 		
 		return tmp;
 	}

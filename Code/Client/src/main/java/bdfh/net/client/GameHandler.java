@@ -73,7 +73,7 @@ public class GameHandler extends Thread {
 	 */
 	private void handleGame(String line) {
 		
-		String[] split = line.split(" ");
+		String[] split = line.split(" ", 2);
 		
 		switch (split[0]) {
 			case GameProtocol.GAM_BOARD:
@@ -89,7 +89,7 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GameProtocol.GAM_ROLL:
-				manageRoll(split);
+				manageRoll(split[1].split(" "));
 				break;
 			
 		}
@@ -102,6 +102,12 @@ public class GameHandler extends Thread {
 			
 			// Start the game (interface)
 			Controller_lobbyList.startGame();
+			
+			try {
+				sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			
 			while (true) {
 				response = in.readLine();
@@ -182,8 +188,11 @@ public class GameHandler extends Thread {
 	}
 	
 	private void manageCurrentPlayer(String playerID) {
-	
-		if (Player.getInstance().getUsername().equals(players.get(playerID).getKey())) {
+		
+		String username = Player.getInstance().getUsername();
+		String usernameTurn = players.get(Integer.parseInt(playerID)).getKey();
+		
+		if (username.equals(usernameTurn)) {
 			Player.getInstance().setMyTurn(true);
 			sub.notifyTurn();
 		}

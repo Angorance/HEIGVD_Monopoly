@@ -6,6 +6,7 @@ import bdfh.net.server.ClientHandler;
 import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mysql.fabric.xmlrpc.Client;
 
 import java.util.*;
@@ -171,7 +172,8 @@ public class Board {
 		JsonArray jsonBoard = new JsonArray();
 		
 		for (Square s : board) {
-			jsonBoard.add(s.jsonify());
+			JsonObject jo = GsonSerializer.getInstance().fromJson(s.jsonify(), JsonObject.class);
+			jsonBoard.add(jo);
 		}
 		
 		return GsonSerializer.getInstance().toJson(jsonBoard);
