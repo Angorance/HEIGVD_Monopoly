@@ -3,6 +3,8 @@ package bdfh.gui.controller;
 import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.GameHandler;
+import bdfh.net.protocol.GameProtocol;
+import bdfh.serializable.LightSquare;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -84,10 +87,46 @@ public class Controller_board implements Initializable, IWindow {
 	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();;
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();;
 	
-	private int pos = 0;
-	
 	private Stage thisStage = null;
 	
+	public class pawnDisplay extends AnchorPane {
+		
+		public pawnDisplay(String color) {
+			
+			this.setStyle(
+					"-fx-pref-width: 25px; -fx-background-radius: 25px; -fx-pref-height: 25px;-fx-border-radius: 25px; -fx-border-width: 4px; -fx-background-color: "
+							+ color + ";");
+		}
+	}
+	
+	public class squareDisplayer extends BorderPane{
+		
+		public squareDisplayer(LightSquare square){
+			String famility = square.getFamily();
+			
+			switch (famility){
+				case GameProtocol.SQUA_BROWN :
+					break;
+				case GameProtocol.SQUA_CYAN :
+					break;
+				case GameProtocol.SQUA_PINK :
+					break;
+				case GameProtocol.SQUA_ORANGE :
+					break;
+				case GameProtocol.SQUA_RED :
+					break;
+				case GameProtocol.SQUA_YELLOW :
+					break;
+				case GameProtocol.SQUA_GREEN :
+					break;
+				case GameProtocol.SQUA_BLUE :
+					break;
+				default :
+					break;
+					
+			}
+		}
+	}
 	
 	public static void endGame() {
 		
@@ -108,16 +147,6 @@ public class Controller_board implements Initializable, IWindow {
 			thisStage = (Stage) buy_button.getScene().getWindow();
 		}
 		thisStage.show();
-	}
-	
-	public class pawnDisplay extends AnchorPane {
-		
-		public pawnDisplay(String color/*TODO Mettre le joueur en parametre*/) {
-			
-			this.setStyle(
-					"-fx-pref-width: 25px; -fx-background-radius: 25px; -fx-pref-height: 25px;-fx-border-radius: 25px; -fx-border-width: 4px; -fx-background-color: "
-							+ color + ";");
-		}
 	}
 	
 	private void init() {
@@ -226,6 +255,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		String[] color = { "RED", "BLUE", "GREEN", "YELLOW" };
 		
+		System.out.println(GameHandler.getInstance().getPlayers());
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
 			pawnDisplay pd = new pawnDisplay(color[cnt]);
