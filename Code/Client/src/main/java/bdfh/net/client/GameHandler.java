@@ -9,7 +9,7 @@ import bdfh.serializable.LightBoard;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
-	HashMap<Integer, Pair<String, Integer>> players = new HashMap<>();
+	HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
 	LightBoard board = null;
 	
 	private BufferedReader in = null;
@@ -92,6 +92,9 @@ public class GameHandler extends Thread {
 				manageRoll(split[1].split(" "));
 				break;
 			
+			case GameProtocol.GAM_GAIN:
+				manageGain(split[1].split(" "));
+				break;
 		}
 	}
 	
@@ -126,7 +129,7 @@ public class GameHandler extends Thread {
 		sendData(GameProtocol.GAM_ENDT);
 	}
 	
-	public HashMap<Integer, Pair<String,Integer>> getPlayers() {
+	public HashMap<Integer, MutablePair<String,Integer>> getPlayers() {
 		
 		return players;
 	}
@@ -172,7 +175,7 @@ public class GameHandler extends Thread {
 			String username = jo.get("username").getAsString();
 			int capital = jo.get("capital").getAsInt();
 			
-			players.put(id, new Pair<> (username, capital));
+			players.put(id, new MutablePair<> (username, capital));
 		}
 		
 		synchronized (this) {
@@ -209,5 +212,15 @@ public class GameHandler extends Thread {
 		synchronized (this) {
 			this.notify();
 		}
+	}
+	
+	
+	private void manageGain(String[] split) {
+		
+		int newCap = players.get(split[0]).getValue() + Integer.parseInt(split[1]);
+		
+		players.get(split[0]).setRight(newCap);
+		
+		sub.updateBoard();
 	}
 }
