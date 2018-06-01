@@ -4,6 +4,7 @@ import bdfh.net.Worker;
 import bdfh.protocol.Protocoly;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.logging.*;
 
 
@@ -13,7 +14,9 @@ import java.util.logging.*;
  */
 public class NotificationServer implements Runnable {
 	
-	ServerSocket srv;
+	private ServerSocket srv;
+	
+	private static ArrayList<NotificationHandler> notifiers = new ArrayList<>();
 	
 	private final static Logger LOG = Logger.getLogger("NotificationServer");
 	
@@ -57,10 +60,11 @@ public class NotificationServer implements Runnable {
 				
 				Socket newClient = srv.accept();
 				
-				Worker cw = new Worker(newClient, new NotificationHandler());
+				NotificationHandler tmp = new NotificationHandler(newClient);
 				
-				Thread worker = new Thread(cw);
-				worker.start();
+				notifiers.add(tmp);
+				
+				tmp.init();
 				
 				LOG.log(Level.INFO, "Notif: Client accepted. Worker created and started");
 				
@@ -69,5 +73,10 @@ public class NotificationServer implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void removeNotifier(NotificationHandler n) {
+		
+		notifiers.remove(n);
 	}
 }
