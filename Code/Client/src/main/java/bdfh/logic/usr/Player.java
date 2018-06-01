@@ -14,6 +14,7 @@ public class Player {
 	
 	private static BoundParameters bounds;
 	
+	private int id;
 	private String username;
 	private boolean isReady;
 	private int lobbyID = -1;
@@ -31,6 +32,16 @@ public class Player {
 	public static Player getInstance() {
 		
 		return Instance.instance;
+	}
+	
+	public int getID() {
+		
+		return id;
+	}
+	
+	public void setID(int id) {
+		
+		this.id = id;
 	}
 	
 	/**

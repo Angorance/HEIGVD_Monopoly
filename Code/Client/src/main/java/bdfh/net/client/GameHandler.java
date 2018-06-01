@@ -211,6 +211,10 @@ public class GameHandler extends Thread {
 			
 			players.put(id, new MutablePair<>(username, capital));
 			examState.put(id, false);
+			
+			if (Player.getInstance().getUsername().equals(username)) {
+				Player.getInstance().setID(id);
+			}
 		}
 	}
 	
