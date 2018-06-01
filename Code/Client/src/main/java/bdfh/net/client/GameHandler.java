@@ -14,9 +14,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +31,7 @@ public class GameHandler extends Thread {
 	LightBoard board = null;
 	
 	// Map a player ID to his exam state.
-	private Map<Integer, Boolean> examState;
+	private HashMap<Integer, Boolean> examState = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;

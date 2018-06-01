@@ -5,14 +5,11 @@ import bdfh.net.server.ClientHandler;
 import bdfh.logic.saloon.Lobby;
 import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 import java.util.*;
 import java.util.logging.*;
 
-import static bdfh.protocol.Protocoly.*;
 import static bdfh.protocol.GameProtocol.*;
 
 /**
@@ -97,6 +94,29 @@ public class GameLogic extends Thread {
 	}
 	
 	/**
+	 * Get the presence of the current player in the exam.
+	 *
+	 * @param ID the player to check.
+	 *
+	 * @return true if he's in exam, false otherwise.
+	 */
+	public boolean getExamState(int ID) {
+		return examState.get(ID)[PRESENCE] == 0 ? false : true;
+	}
+	
+	/**
+	 * Update the presence of the current player in the exam.
+	 *
+	 * @param state     true if in the exam, false otherwise.
+	 * @param nbrTurn   number of turns since the player is in exam.
+	 */
+	public void setExamState(boolean state, int nbrTurn) {
+		
+		Integer presence = state ? 1 : 0;
+		examState.put(getCurrentPlayerID(), new Integer[]{presence, nbrTurn});
+	}
+	
+	/**
 	 * Generate a random deck
 	 */
 	private void prepareDeck() {
@@ -132,8 +152,11 @@ public class GameLogic extends Thread {
 	private void preparePlayers(Lobby lobby) {
 		
 		LOG.log(Level.INFO, "Préparation des joueurs");
+		
 		players = new ArrayDeque<>(lobby.getPlayers().size());
 		playersFortune = new HashMap<>();
+		examState = new HashMap<>();
+		
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());
 		Random rdm = new Random();
 		int startCapital = lobby.getParam().getMoneyAtTheStart();
@@ -142,7 +165,8 @@ public class GameLogic extends Thread {
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
 			players.addFirst(c);
-			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 }); // TODO à vérifier...
+			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
+			examState.put(c.getClientID(), new Integer[]{0, 0});
 		}
 		
 		
