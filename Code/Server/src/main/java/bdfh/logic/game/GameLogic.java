@@ -22,9 +22,10 @@ import static bdfh.protocol.GameProtocol.*;
  */
 public class GameLogic extends Thread {
 	
+	private final static Logger LOG = Logger.getLogger("GameLogic");
+	
 	private static final int NB_DECKCARD = 20;
 	private static final int STANDARD_GO_AMOUNT = 200;
-	private static final int STANDARD_TAXE_AMOUNT = 200;
 	private ArrayDeque<ClientHandler> players;
 	
 	private ArrayDeque<Card> Deck;
@@ -33,14 +34,18 @@ public class GameLogic extends Thread {
 	private int totalLastRoll;
 	
 	// Map a player to his fortune. The first cell of the tab is the capital,
-	// and the second is the total of his possession (capital + nbHouse + Hypotheques + ... )
+	// and the second is the total of his possession (capital + nbHouse + Hypothecs + ... )
 	private Map<Integer, Integer[]> playersFortune;
 	private final int CAPITAL = 0;
 	private final int VPOSSESSION = 1;
 	
-	private ClientHandler currentPlayer;
+	// Map a player to his exam state. The first cell of the tab is the presence in the exam,
+	// and the second is the number of turns since he's in the exam
+	private Map<Integer, Integer[]> examState;
+	private final int PRESENCE = 0;
+	private final int TURN = 1;
 	
-	private final static Logger LOG = Logger.getLogger("GameLogic");
+	private ClientHandler currentPlayer;
 	
 	/**
 	 * constructor of a logic session. Define the turns, generate the board, and apply the parameters
