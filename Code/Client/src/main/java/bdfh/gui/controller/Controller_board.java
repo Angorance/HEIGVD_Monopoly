@@ -24,49 +24,6 @@ import java.net.URL;
 import java.util.*;
 
 public class Controller_board implements Initializable, IWindow {
-	
-	
-	/*@FXML private FlowPane case1;
-	@FXML private FlowPane case2;
-	@FXML private FlowPane case3;
-	@FXML private FlowPane case4;
-	@FXML private FlowPane case5;
-	@FXML private FlowPane case6;
-	@FXML private FlowPane case7;
-	@FXML private FlowPane case8;
-	@FXML private FlowPane case9;
-	@FXML private FlowPane case10;
-	@FXML private FlowPane case11;
-	@FXML private FlowPane case12;
-	@FXML private FlowPane case13;
-	@FXML private FlowPane case14;
-	@FXML private FlowPane case15;
-	@FXML private FlowPane case16;
-	@FXML private FlowPane case17;
-	@FXML private FlowPane case18;
-	@FXML private FlowPane case19;
-	@FXML private FlowPane case20;
-	@FXML private FlowPane case21;
-	@FXML private FlowPane case22;
-	@FXML private FlowPane case23;
-	@FXML private FlowPane case24;
-	@FXML private FlowPane case25;
-	@FXML private FlowPane case26;
-	@FXML private FlowPane case27;
-	@FXML private FlowPane case28;
-	@FXML private FlowPane case29;
-	@FXML private FlowPane case30;
-	@FXML private FlowPane case31;
-	@FXML private FlowPane case32;
-	@FXML private FlowPane case33;
-	@FXML private FlowPane case34;
-	@FXML private FlowPane case35;
-	@FXML private FlowPane case36;
-	@FXML private FlowPane case37;
-	@FXML private FlowPane case38;
-	@FXML private FlowPane case39;
-	@FXML private FlowPane case40;*/
-	
 	@FXML private GridPane board;
 	
 	@FXML private Label label_username;
@@ -113,7 +70,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		private void add(String color, FlowPane fp, AnchorPane ap) {
 			
-			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 3px");
+			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
 			this.setTop(ap);
 			this.setCenter(fp);
 		}
@@ -121,7 +78,7 @@ public class Controller_board implements Initializable, IWindow {
 		public squareDisplayer(LightSquare square) {
 			
 			String famility = square.getFamily();
-			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 3px");
+			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px");
 			
 			fp = new FlowPane();
 			ap = new AnchorPane();
@@ -198,48 +155,6 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void init() {
-		
-		/*cases.add(case1);
-		cases.add(case2);
-		cases.add(case3);
-		cases.add(case4);
-		cases.add(case5);
-		cases.add(case6);
-		cases.add(case7);
-		cases.add(case8);
-		cases.add(case9);
-		cases.add(case10);
-		cases.add(case11);
-		cases.add(case12);
-		cases.add(case13);
-		cases.add(case14);
-		cases.add(case15);
-		cases.add(case16);
-		cases.add(case17);
-		cases.add(case18);
-		cases.add(case19);
-		cases.add(case20);
-		cases.add(case21);
-		cases.add(case22);
-		cases.add(case23);
-		cases.add(case24);
-		cases.add(case25);
-		cases.add(case26);
-		cases.add(case27);
-		cases.add(case28);
-		cases.add(case29);
-		cases.add(case30);
-		cases.add(case31);
-		cases.add(case32);
-		cases.add(case33);
-		cases.add(case34);
-		cases.add(case35);
-		cases.add(case36);
-		cases.add(case37);
-		cases.add(case38);
-		cases.add(case39);
-		cases.add(case40);*/
-		
 		
 		int col = 0;
 		int row = 10;
