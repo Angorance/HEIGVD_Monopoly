@@ -262,7 +262,7 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_LOSE:
 					amount = Integer.parseInt(fullAction[1]);
 					manageMoney(currentPlayer, amount * -1);
-					notifyPlayers(GAM_PAY, String.valueOf(amount * -1));
+					notifyPlayers(GAM_PAY, String.valueOf(amount));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 					break;
@@ -371,7 +371,7 @@ public class GameLogic extends Thread {
 	
 	public void endTurn( ClientHandler c) {
 		if(c.getClientID() == currentPlayer.getClientID()) {
-			LOG.log(Level.INFO, currentPlayer.getClientUsername() + "ended his turn" );
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " ended his turn" );
 			//players.addLast(currentPlayer);
 			currentPlayer = null;
 			nextTurn();
@@ -383,7 +383,7 @@ public class GameLogic extends Thread {
 		String param = "";
 		
 		if (cmd != GAM_BOARD && currentPlayer != null) {
-			param += currentPlayer.getClientID();
+			param += currentPlayer.getClientID() + " ";
 		}
 		
 		param += data;
