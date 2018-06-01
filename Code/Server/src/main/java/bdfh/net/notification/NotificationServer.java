@@ -60,7 +60,12 @@ public class NotificationServer implements Runnable {
 				
 				Socket newClient = srv.accept();
 				
-				notifiers.add(new NotificationHandler(newClient));
+				NotificationHandler tmp = new NotificationHandler(newClient);
+				
+				notifiers.add(tmp);
+				
+				tmp.init();
+				
 				
 				LOG.log(Level.INFO, "Notif: Client accepted. Worker created and started");
 				

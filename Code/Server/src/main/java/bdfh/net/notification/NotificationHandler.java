@@ -34,16 +34,12 @@ public class NotificationHandler {
 	}
 	
 	/**
-	 * initialize the writer (and the reader) for the notification writing
-	 *
-	 * @param in Input stream to receive commands.
-	 * @param out Output stream to send commands / info.
+	 * Initialize the writer (and the reader) for the notification writing
 	 *
 	 * @throws IOException
 	 */
-	public void init(InputStream in, OutputStream out) throws IOException {
+	public void init() throws IOException {
 		
-		writer = new PrintWriter(new OutputStreamWriter(out));
 		boolean connected = true;
 		
 		Lobbies.getInstance().addSubscriber(this);
