@@ -186,10 +186,6 @@ public class GameHandler extends Thread {
 			
 			players.put(id, new MutablePair<>(username, capital));
 		}
-		
-		synchronized (this) {
-			this.notify();
-		}
 	}
 	
 	private void manageBoard(String json) {
@@ -241,5 +237,9 @@ public class GameHandler extends Thread {
 		players.get(id).setRight(newCap);
 		
 		sub.updateBoard();
+	}
+	
+	private void manageMove() {
+	
 	}
 }
