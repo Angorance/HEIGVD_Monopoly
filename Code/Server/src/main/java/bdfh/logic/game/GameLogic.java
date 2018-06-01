@@ -115,7 +115,7 @@ public class GameLogic extends Thread {
 				cardList.remove(card);
 			}
 		}
-		
+		LOG.log(Level.INFO, "deck generated : " + Deck);
 	}
 	
 	/**
@@ -383,7 +383,11 @@ public class GameLogic extends Thread {
 		String param = "";
 		
 		if (cmd != GAM_BOARD && currentPlayer != null) {
-			param += currentPlayer.getClientID() + " ";
+			param += currentPlayer.getClientID();
+		}
+		
+		if(data != ""){
+			param += " ";
 		}
 		
 		param += data;
