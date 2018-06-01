@@ -85,9 +85,7 @@ public class Controller_board implements Initializable, IWindow {
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
 	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();
-	;
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
-	;
 	
 	private Stage thisStage = null;
 	
