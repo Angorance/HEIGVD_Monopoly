@@ -418,39 +418,8 @@ public class GameLogic extends Thread {
 		nextTurn();
 		
 		while (!endGame) {
-			
-			/*
-			// next player
-			currentPlayer = players.getFirst();
-			
-			currentPlayer.sendData(GAM_PLAY);
-			// we wait the client signal to roll the dices
-			String answer = currentPlayer.getAnswer();
-			
-			if(answer != null) {
-				didADouble = rollDice();
-				
-				drawCard();
-				// get the new player's square
-				Square currentSquare = board.getCurrentSquare(currentPlayer.getClientID());
-				switch (currentSquare.getFamily()) {
-					case CARD:
-						drawCard();
-						break;
-					// TODO SPRINT X ajouter le traitement des autres cases
-				}
-				
-				// end turn
-				if (didADouble) {
-					didADouble = false;
-				} else {
-					currentPlayer.sendData(GAM_ENDT);
-					players.addLast(players.pop());
-				}
-			} // TODO SPRINT X player inactivity
-			*/
+			// TODO
 		}
-		
 	}
 	
 	private void nextTurn() {
