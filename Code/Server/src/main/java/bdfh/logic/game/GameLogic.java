@@ -58,12 +58,6 @@ public class GameLogic extends Thread {
 		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
-		
-		try {
-			sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void sendPlayers(int capitalDepart) {
