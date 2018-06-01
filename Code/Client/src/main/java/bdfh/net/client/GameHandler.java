@@ -101,7 +101,7 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GameProtocol.GAM_MOV:
-				manageMove();
+				manageMove(split[1].split(" "));
 				break;
 		}
 	}
@@ -191,6 +191,10 @@ public class GameHandler extends Thread {
 	private void manageBoard(String json) {
 		
 		board = LightBoard.instancify(json);
+		
+		synchronized (this) {
+			this.notify();
+		}
 	}
 	
 	private void manageCurrentPlayer(String playerID) {
@@ -239,7 +243,8 @@ public class GameHandler extends Thread {
 		sub.updateBoard();
 	}
 	
-	private void manageMove() {
+	private void manageMove(String[] split) {
 	
+		sub.move(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
 	}
 }
