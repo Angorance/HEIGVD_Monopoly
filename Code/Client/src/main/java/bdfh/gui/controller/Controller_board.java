@@ -26,7 +26,7 @@ import java.util.*;
 public class Controller_board implements Initializable, IWindow {
 	
 	
-	@FXML private FlowPane case1;
+	/*@FXML private FlowPane case1;
 	@FXML private FlowPane case2;
 	@FXML private FlowPane case3;
 	@FXML private FlowPane case4;
@@ -65,10 +65,9 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private FlowPane case37;
 	@FXML private FlowPane case38;
 	@FXML private FlowPane case39;
-	@FXML private FlowPane case40;
+	@FXML private FlowPane case40;*/
 	
-	
-	//@FXML private GridPane board;
+	@FXML private GridPane board;
 	
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
@@ -114,7 +113,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		private void add(String color, FlowPane fp, AnchorPane ap) {
 			
-			ap.setStyle("-fx-border-color: " + color + ";");
+			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 3px");
 			this.setTop(ap);
 			this.setCenter(fp);
 		}
@@ -122,6 +121,7 @@ public class Controller_board implements Initializable, IWindow {
 		public squareDisplayer(LightSquare square) {
 			
 			String famility = square.getFamily();
+			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 3px");
 			
 			fp = new FlowPane();
 			ap = new AnchorPane();
@@ -157,6 +157,10 @@ public class Controller_board implements Initializable, IWindow {
 					this.setCenter(fp);
 					break;
 			}
+		}
+		
+		public FlowPane getFP(){
+			return fp;
 		}
 	}
 	
@@ -195,7 +199,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void init() {
 		
-		cases.add(case1);
+		/*cases.add(case1);
 		cases.add(case2);
 		cases.add(case3);
 		cases.add(case4);
@@ -234,8 +238,33 @@ public class Controller_board implements Initializable, IWindow {
 		cases.add(case37);
 		cases.add(case38);
 		cases.add(case39);
-		cases.add(case40);
+		cases.add(case40);*/
 		
+		
+		int col = 0;
+		int row = 10;
+		int line = 0;
+		int nbCase = 0;
+		
+		for(LightSquare square : GameHandler.getInstance().getBoard().getSquares()){
+			
+			squareDisplayer sd = new squareDisplayer(square);
+			cases.add(sd.getFP());
+			if(nbCase == 10){
+				nbCase = 0;
+				line++;
+			}
+			if(line == 0) {
+				board.add(sd, col, row--);
+			}else if(line == 1){
+				board.add(sd, col++, row);
+			}else if(line == 2){
+				board.add(sd, col, row++);
+			}else {
+				board.add(sd, col--, row);
+			}
+			nbCase++;
+		}
 		
 		
 		labelPlayers[0] = label_player1;
@@ -298,14 +327,10 @@ public class Controller_board implements Initializable, IWindow {
 		
 		rollDice_button.setDisable(true);
 		endTurn_button.setDisable(true);
-		
-		init();
-		
 		label_username.setText(Player.getInstance().getUsername());
 		
-		String[] color = { "RED", "BLUE", "GREEN", "YELLOW" };
-		synchronized (GameHandler.getInstance()) {
-			if (GameHandler.getInstance().getPlayers().isEmpty()) {
+		synchronized (GameHandler.getInstance()){
+			if(GameHandler.getInstance().getBoard() == null){
 				try {
 					GameHandler.getInstance().wait();
 				} catch (InterruptedException e) {
@@ -313,7 +338,12 @@ public class Controller_board implements Initializable, IWindow {
 				}
 			}
 		}
-		System.out.println(GameHandler.getInstance().getPlayers());
+		
+		init();
+		
+		
+		String[] color = { "RED", "BLUE", "GREEN", "YELLOW" };
+		
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
 			pawnDisplay pd = new pawnDisplay(color[cnt]);
