@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -24,7 +25,19 @@ import java.net.URL;
 import java.util.*;
 
 public class Controller_board implements Initializable, IWindow {
+	
 	@FXML private GridPane board;
+	
+	@FXML private Label canape1;
+	@FXML private Label canape2;
+	@FXML private Label canape3;
+	@FXML private Label canape4;
+	@FXML private Label homecinema;
+	@FXML private Label hypotheque;
+	@FXML private Label prixCanape;
+	@FXML private Label prixHC;
+	@FXML private Label venteCanape;
+	@FXML private Label venteHC;
 	
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
@@ -68,26 +81,26 @@ public class Controller_board implements Initializable, IWindow {
 		private AnchorPane ap;
 		private Label label_House;
 		
-		private void add(String color,int pos) {
+		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
 			label_House = new Label("2");
 			
 			
-			if(pos == 0){
+			if (pos == 0) {
 				ap.setPrefWidth(20);
 				label_House.setRotate(90);
 				this.setRight(ap);
 				
-			}else if(pos == 1){
+			} else if (pos == 1) {
 				ap.setPrefHeight(20);
 				this.setBottom(ap);
-			}else if(pos == 2){
+			} else if (pos == 2) {
 				ap.setPrefWidth(20);
 				label_House.setRotate(270);
 				this.setLeft(ap);
 				
-			}else{
+			} else {
 				ap.setPrefHeight(20);
 				this.setTop(ap);
 			}
@@ -105,41 +118,54 @@ public class Controller_board implements Initializable, IWindow {
 			ap = new AnchorPane();
 			switch (famility) {
 				case GameProtocol.SQUA_BROWN:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_CYAN:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_PINK:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_ORANGE:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_RED:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_YELLOW:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_GREEN:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				case GameProtocol.SQUA_BLUE:
-					add(famility,pos);
+					add(famility, pos);
 					break;
 				default:
 					this.setCenter(fp);
 					break;
 			}
+			
+			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				
+				@Override public void handle(MouseEvent event) {
+					
+					detailSquare(square);
+				}
+			});
 		}
 		
-		public FlowPane getFP(){
+		public FlowPane getFP() {
+			
 			return fp;
 		}
 	}
 	
-	public void updateBoard(){
+	private void detailSquare(LightSquare square) {
+	
+	}
+	
+	public void updateBoard() {
 		
 		Platform.runLater(() -> {
 			int cnt = 0;
@@ -179,23 +205,23 @@ public class Controller_board implements Initializable, IWindow {
 		int line = 0;
 		int nbCase = 0;
 		
-		for(LightSquare square : GameHandler.getInstance().getBoard().getSquares()){
+		for (LightSquare square : GameHandler.getInstance().getBoard().getSquares()) {
 			
-			if(nbCase == 10){
+			if (nbCase == 10) {
 				nbCase = 0;
 				line++;
 			}
 			
-			squareDisplayer sd = new squareDisplayer(square,line);
+			squareDisplayer sd = new squareDisplayer(square, line);
 			cases.add(sd.getFP());
 			
-			if(line == 0) {
+			if (line == 0) {
 				board.add(sd, col, row--);
-			}else if(line == 1){
+			} else if (line == 1) {
 				board.add(sd, col++, row);
-			}else if(line == 2){
+			} else if (line == 2) {
 				board.add(sd, col, row++);
-			}else {
+			} else {
 				board.add(sd, col--, row);
 			}
 			nbCase++;
@@ -212,6 +238,16 @@ public class Controller_board implements Initializable, IWindow {
 		labelCapitals[2] = label_capital3;
 		labelCapitals[3] = label_capital4;
 		
+	}
+	
+	public void move(int idPlayer, int pos){
+		Platform.runLater(() -> {
+			int tmp = posPlayer.get(idPlayer);
+			pawnDisplay tmpPD = displayerList.get(idPlayer);
+			cases.get(tmp).getChildren().removeAll(tmpPD);
+			cases.get(pos).getChildren().add(tmpPD);
+			posPlayer.put(idPlayer, pos);
+		});
 	}
 	
 	public void movePawn(int idPlayer, List<Integer> dices) {
@@ -264,8 +300,8 @@ public class Controller_board implements Initializable, IWindow {
 		endTurn_button.setDisable(true);
 		label_username.setText(Player.getInstance().getUsername());
 		
-		synchronized (GameHandler.getInstance()){
-			if(GameHandler.getInstance().getBoard() == null){
+		synchronized (GameHandler.getInstance()) {
+			if (GameHandler.getInstance().getBoard() == null) {
 				try {
 					GameHandler.getInstance().wait();
 				} catch (InterruptedException e) {
