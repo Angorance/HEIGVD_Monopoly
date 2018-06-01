@@ -103,12 +103,6 @@ public class GameHandler extends Thread {
 			// Start the game (interface)
 			Controller_lobbyList.startGame();
 			
-			try {
-				sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
 			while (true) {
 				response = in.readLine();
 				LOG.log(Level.INFO, "RECEIVED: " + response);
