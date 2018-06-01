@@ -158,7 +158,7 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		sub.movePawn(Integer.parseInt(str[1]), tmp);
+		sub.movePawn(Integer.parseInt(str[0]), tmp);
 	}
 	
 	private void managePlayers(String json) {
