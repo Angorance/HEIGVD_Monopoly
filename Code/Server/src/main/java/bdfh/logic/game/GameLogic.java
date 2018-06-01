@@ -56,7 +56,7 @@ public class GameLogic extends Thread {
 		// send the id, the username, and their capital
 		sendPlayers(lobby.getParam().getMoneyAtTheStart());
 		String boardJSON = board.jsonify();
-		notifyPlayers(GAM_BOARD, boardJSON);
+		notifyPlayers(GameProtocol.GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
 	}
 	
@@ -77,7 +77,7 @@ public class GameLogic extends Thread {
 			playerList.add(player);
 		}
 		
-		notifyPlayers(GAM_PLYR, GsonSerializer.getInstance().toJson(playerList));
+		notifyPlayers(GameProtocol.GAM_PLYR, GsonSerializer.getInstance().toJson(playerList));
 		
 	}
 	
@@ -145,8 +145,8 @@ public class GameLogic extends Thread {
 	public void buySquare(ClientHandler caller, int posSquare){
 		if(caller.getClientID() == currentPlayer.getClientID()){
 			Price price = board.getSquare(posSquare).getPrices();
-			notifyPlayers(GAM_PAY, Integer.toString(price.getPrice()));
-			notifyPlayers(GAM_BUYS, Integer.toString(posSquare));
+			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
+			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += price.getHypothec();
 			manageMoney(currentPlayer, -1*price.getPrice());
 			board.setOwner(currentPlayer, posSquare);
@@ -178,7 +178,7 @@ public class GameLogic extends Thread {
 			}
 			
 			// notify the players
-			notifyPlayers(GAM_ROLL, rollsStr);
+			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
 			
 			if(!didADouble){
 				players.addLast(players.pop());
@@ -191,14 +191,14 @@ public class GameLogic extends Thread {
 			
 			if(passedGo){
 				playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
-				notifyPlayers(GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
+				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
 				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " passed the start square");
 			}
 			
 			// MANAGING THE CASE EFFECT
 			Square current = board.getCurrentSquare(currentPlayer.getClientID());
 			if(current.isBuyable() && current.getOwner() == null){
-				currentPlayer.sendData(GAM_FREE, Integer.toString(current.getPosition()));
+				currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
 			} else {
 				board.manageEffect(this, current);
 			}
@@ -220,7 +220,7 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Deck après pioche : " + Deck.toString());
 		
 		// notify the players
-		notifyPlayers(GAM_DRAW, drawed.jsonify());
+		notifyPlayers(GameProtocol.GAM_DRAW, drawed.jsonify());
 		
 		// wait the confirmation of the current player before handling the effect
 		
@@ -254,7 +254,7 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_WIN:
 					int amount = Integer.parseInt(fullAction[1]);
 					manageMoney(currentPlayer, amount);
-					notifyPlayers(GAM_GAIN, String.valueOf(amount));
+					notifyPlayers(GameProtocol.GAM_GAIN, String.valueOf(amount));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".-");
 					break;
@@ -262,7 +262,7 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_LOSE:
 					amount = Integer.parseInt(fullAction[1]);
 					manageMoney(currentPlayer, amount * -1);
-					notifyPlayers(GAM_PAY, String.valueOf(amount));
+					notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(amount));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 					break;
@@ -300,7 +300,7 @@ public class GameLogic extends Thread {
 					// The current player receives the money
 					amount = (amount * (players.size() - 1));
 					manageMoney(currentPlayer, amount);
-					notifyPlayers(GAM_GAIN, String.valueOf(amount));
+					notifyPlayers(GameProtocol.GAM_GAIN, String.valueOf(amount));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".- de chaque joueur.");
 					break;
@@ -365,7 +365,7 @@ public class GameLogic extends Thread {
 	private void nextTurn() {
 		LOG.log(Level.INFO, "Player queue : " + players.toString());
 		currentPlayer = players.getFirst();
-		notifyPlayers(GAM_PLAY, "");
+		notifyPlayers(GameProtocol.GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
 	}
 	
@@ -382,7 +382,7 @@ public class GameLogic extends Thread {
 		
 		String param = "";
 		
-		if (cmd != GAM_BOARD && currentPlayer != null) {
+		if (cmd != GameProtocol.GAM_BOARD && currentPlayer != null) {
 			param += currentPlayer.getClientID();
 		}
 		

@@ -99,6 +99,10 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_PAY:
 				managePay(split[1].split(" "));
 				break;
+				
+			case GameProtocol.GAM_MOV:
+				manageMove();
+				break;
 		}
 	}
 	
