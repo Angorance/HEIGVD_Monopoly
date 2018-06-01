@@ -114,7 +114,6 @@ public class Controller_board implements Initializable, IWindow {
 			fp = new FlowPane();
 			ap = new AnchorPane();
 			label_House = new Label("0");
-			
 			ap.getChildren().add(label_House);
 			
 			switch (famility) {
@@ -313,5 +312,8 @@ public class Controller_board implements Initializable, IWindow {
 		windowManager.getInstance().setBoard(this);
 		
 		GameHandler.getInstance().setSub(this);
+		synchronized (GameHandler.getInstance()) {
+			GameHandler.getInstance().notify();
+		}
 	}
 }
