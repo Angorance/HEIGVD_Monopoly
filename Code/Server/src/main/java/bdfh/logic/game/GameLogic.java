@@ -53,7 +53,7 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Génération du plateau");
 		board = new Board(players);
 		
-		// TODO envoyer l'id, le username et le capital de chacun des joueurs {id, username, capital}
+		// send the id, the username, and their capital
 		sendPlayers(lobby.getParam().getMoneyAtTheStart());
 		String boardJSON = board.jsonify();
 		notifyPlayers(GAM_BOARD, boardJSON);
@@ -144,6 +144,8 @@ public class GameLogic extends Thread {
 			players.addFirst(c);
 			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 }); // TODO à vérifier...
 		}
+		
+		
 	}
 	
 	public void buySquare(ClientHandler caller, int posSquare){
@@ -367,6 +369,7 @@ public class GameLogic extends Thread {
 	}
 	
 	private void nextTurn() {
+		LOG.log(Level.INFO, "Player queue : " + players.toString());
 		currentPlayer = players.getFirst();
 		notifyPlayers(GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
