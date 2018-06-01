@@ -164,9 +164,9 @@ public class Board {
 			case GameProtocol.SQUA_CARD:
 				game.drawCard();
 				break;
-			
-			case GameProtocol.SQUA_GO_EXAM:
 				
+			case GameProtocol.SQUA_GO_EXAM:
+				game.sendToExam();
 				break;
 			
 			case GameProtocol.SQUA_RED:

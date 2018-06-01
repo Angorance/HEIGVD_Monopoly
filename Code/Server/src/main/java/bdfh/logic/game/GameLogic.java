@@ -41,6 +41,7 @@ public class GameLogic extends Thread {
 	private Map<Integer, Integer[]> examState;
 	private final int PRESENCE = 0;
 	private final int TURN = 1;
+	private final int DOUBLE_DICE = 2;
 	
 	private ClientHandler currentPlayer;
 	
@@ -93,28 +94,53 @@ public class GameLogic extends Thread {
 		return currentPlayer;
 	}
 	
-	/**
-	 * Get the presence of the current player in the exam.
-	 *
-	 * @param ID the player to check.
-	 *
-	 * @return true if he's in exam, false otherwise.
-	 */
-	public boolean getExamState(int ID) {
-		return examState.get(ID)[PRESENCE] == 0 ? false : true;
+	/*************** HANDLE THE STATE OF THE EXAM *************************/
+	public boolean getExamPresence() {
+		
+		return examState.get(getCurrentPlayerID())[PRESENCE] == 0 ? false : true;
 	}
 	
-	/**
-	 * Update the presence of the current player in the exam.
-	 *
-	 * @param state     true if in the exam, false otherwise.
-	 * @param nbrTurn   number of turns since the player is in exam.
-	 */
-	public void setExamState(boolean state, int nbrTurn) {
+	public int getExamTurn() {
+		
+		return examState.get(getCurrentPlayerID())[TURN];
+	}
+	
+	public int getExamNbrDouble() {
+		
+		return examState.get(getCurrentPlayerID())[DOUBLE_DICE];
+	}
+	
+	public void sendToExam() {
+		setExamState(true, 0, 0);
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_EXAM, "");
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a été envoyé en salle d'examen.");
+	}
+	
+	public void leaveExam() {
+		setExamState(false, 0, 0);
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_FRDM, "");
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " est sorti de la salle d'examen.");
+	}
+	
+	public void stayInExam() {
+		setExamState(getExamPresence(), getExamTurn() + 1, 0);
+	}
+	
+	public void didADouble() {
+		setExamState(getExamPresence(), getExamTurn(), getExamNbrDouble() + 1);
+	}
+
+	public void setExamState(boolean state, int nbrTurn, int nbrDouble) {
 		
 		Integer presence = state ? 1 : 0;
-		examState.put(getCurrentPlayerID(), new Integer[]{presence, nbrTurn});
+		examState.put(getCurrentPlayerID(), new Integer[]{presence, nbrTurn, nbrDouble});
 	}
+	
+	/*************** HANDLE THE STATE OF THE EXAM *************************/
 	
 	/**
 	 * Generate a random deck
@@ -166,7 +192,7 @@ public class GameLogic extends Thread {
 			ClientHandler c = tab.remove(pos);
 			players.addFirst(c);
 			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
-			examState.put(c.getClientID(), new Integer[]{0, 0});
+			examState.put(c.getClientID(), new Integer[]{0, 0, 0});
 		}
 		
 		
@@ -198,8 +224,15 @@ public class GameLogic extends Thread {
 			
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = dice.nextInt(6) + 1;
+				
 				if (rolls.contains(roll)) {
 					didADouble = true;
+					
+					// Update for exam state
+					didADouble();
+					
+				} else if (getExamPresence()) {
+					stayInExam();
 				}
 				
 				rolls.add(roll);
@@ -210,24 +243,37 @@ public class GameLogic extends Thread {
 			// notify the players
 			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
 			
-			if(!didADouble){
-				players.addLast(players.pop());
-			}
+			if(!getExamPresence() && getExamNbrDouble() == 3) {
 			
-			// Move the player and check if he passed the start square
-			totalLastRoll = total;
-			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
-			
-			if(board.movePlayer(currentPlayer.getClientID(), total)){
-				handleStartPassed();
-			}
-			
-			// MANAGING THE CASE EFFECT
-			Square current = board.getCurrentSquare(currentPlayer.getClientID());
-			if(current.isBuyable() && current.getOwner() == null){
-				currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
+				// The player has to go in exam
+				sendToExam();
+				
 			} else {
-				board.manageEffect(this, current);
+				
+				// The player can leave the exam
+				if(getExamPresence() && getExamNbrDouble() == 1) {
+					leaveExam();
+				}
+				
+				if (!didADouble) {
+					players.addLast(players.pop());
+				}
+				
+				// Move the player and check if he passed the start square
+				totalLastRoll = total;
+				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
+				
+				if (board.movePlayer(currentPlayer.getClientID(), total)) {
+					handleStartPassed();
+				}
+				
+				// MANAGING THE CASE EFFECT
+				Square current = board.getCurrentSquare(currentPlayer.getClientID());
+				if (current.isBuyable() && current.getOwner() == null) {
+					currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
+				} else {
+					board.manageEffect(this, current);
+				}
 			}
 		}
 	}
@@ -341,6 +387,14 @@ public class GameLogic extends Thread {
 					notifyPlayers(GameProtocol.GAM_GAIN, String.valueOf(amount));
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount + ".- de chaque joueur.");
 					break;
+				
+				case GameProtocol.CARD_EXAM:
+					sendToExam();
+					break;
+				
+				case GameProtocol.CARD_FREE:
+					leaveExam();
+					break;
 					
 				case GameProtocol.CARD_REP:
 					// TODO
@@ -404,6 +458,11 @@ public class GameLogic extends Thread {
 		currentPlayer = players.getFirst();
 		notifyPlayers(GameProtocol.GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
+		
+		// Check if the player can leave the exam
+		if(getExamPresence() && getExamTurn() == 3) {
+			leaveExam();
+		}
 	}
 	
 	public void endTurn( ClientHandler c) {

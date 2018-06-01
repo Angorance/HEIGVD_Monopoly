@@ -14,6 +14,7 @@ public abstract class GameProtocol {
 	public static final String CARD_WIN = "WIN";
 	public static final String CARD_LOSE = "LOSE";
 	public static final String CARD_GOTO = "GOTO";
+	public static final String CARD_EXAM = "EXAM";
 	public static final String CARD_FREE = "FREE";
 	public static final String CARD_EACH = "EACH";
 	public static final String CARD_REP = "REP";
