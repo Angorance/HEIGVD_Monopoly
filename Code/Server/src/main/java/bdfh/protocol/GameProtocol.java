@@ -50,5 +50,6 @@ public abstract class GameProtocol {
 	public static final String GAM_BUYS = "BUYS"; // le joueur devient propriétaire d'une case
 	public static final String GAM_FREE = "FREE"; // le joueur a la possibilité d'acheter une case
 	public static final String GAM_MOV = "MOVE"; // le joueur doit bouger
-	
+	public static final String GAM_EXAM = "EXAM"; // le joueur est envoyé en salle d'examen
+	public static final String GAM_FREEDOM = "FREEDOM"; // le joueur est sorti de salle d'examen
 }
