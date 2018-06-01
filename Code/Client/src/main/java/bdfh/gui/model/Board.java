@@ -17,7 +17,7 @@ public class Board {
 		Stage primaryStage = new Stage();
 		try {
 			root = FXMLLoader.load(getClass().getResource(
-					"/gui/view/board.fxml"));
+					"/gui/view/board_test.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
 			primaryStage.setScene(new Scene(root, 1000, 800));
 			primaryStage.setOnCloseRequest(event -> {
