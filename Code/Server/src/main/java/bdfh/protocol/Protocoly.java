@@ -28,19 +28,4 @@ public abstract class Protocoly {
 	public static final String ANS_UNKNOWN = "UKNW";
 	public static final String ANS_BYE = "SEEYA";
 	
-	// commande envoyée du serveur (logique de jeu)
-	public static final String GAM_PLAY = "PLAY"; // indique au joueur que c'est son tour
-	public static final String GAM_PLYR = "PLYR"; // envoie la liste des joueurs et leur capitaux
-	public static final String GAM_ROLL = "ROLL"; // commande pour lancer les dés
-	public static final String GAM_DRAW = "DRAW"; // informe le joueur de la carte tirée
-	public static final String GAM_ENDT = "ENDT"; // commande de fin de tour
-	public static final String GAM_BOARD = "BOARD"; // transmission du plateau de jeu
-	public static final String GAM_PAY = "PAYS"; // le joueur indiqué a perdu X
-	public static final String GAM_GAIN = "GAIN"; // le joueur indiqué a gagné X
-	public static final String GAM_DENY = "DENY"; // le joueur refuse le paiement
-	public static final String GAM_BUYS = "BUYS"; // le joueur refuse le paiement
-	public static final String GAM_FREE = "FREE"; // le joueur refuse le paiement
-	
-	
-	
 }

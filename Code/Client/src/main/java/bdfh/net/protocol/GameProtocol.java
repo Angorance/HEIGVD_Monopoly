@@ -14,10 +14,8 @@ public abstract class GameProtocol {
 	public static final String CARD_WIN = "WIN";
 	public static final String CARD_LOSE = "LOSE";
 	public static final String CARD_GOTO = "GOTO";
-	public static final String CARD_CARD = "CARD";
 	public static final String CARD_FREE = "FREE";
 	public static final String CARD_EACH = "EACH";
-	public static final String CARD_CHOICE = "CHOICE";
 	public static final String CARD_REP = "REP";
 	
 	// Squares
@@ -48,5 +46,6 @@ public abstract class GameProtocol {
 	public static final String GAM_GAIN = "GAIN";
 	public static final String GAM_DENY = "DENY";
 	public static final String GAM_PLYR = "PLYR";
+	public static final String GAM_MOV = "MOVE";
 	
 }

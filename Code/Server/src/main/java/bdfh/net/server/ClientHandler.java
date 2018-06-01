@@ -5,6 +5,7 @@ import bdfh.logic.game.GameLogic;
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
 import bdfh.net.Handler;
+import bdfh.protocol.GameProtocol;
 import bdfh.protocol.Protocoly;
 import bdfh.serializable.BoundParameters;
 import bdfh.serializable.GsonSerializer;
@@ -166,19 +167,19 @@ public class ClientHandler implements Handler {
 						
 						// ============================================================================================
 					// commande de phase de jeu
-					case Protocoly.GAM_ROLL :
+					case GameProtocol.GAM_ROLL :
 						if(game!= null){
 							game.rollDice(this);
 						}
 						break;
 						
-					case Protocoly.GAM_ENDT :
+					case GameProtocol.GAM_ENDT :
 						if(game != null){
 							game.endTurn(this);
 						}
 						break;
 						
-					case Protocoly.GAM_BUYS :
+					case GameProtocol.GAM_BUYS :
 						if(game != null){
 							game.buySquare(this, Integer.valueOf(param[1]));
 						}
