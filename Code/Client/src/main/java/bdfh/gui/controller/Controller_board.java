@@ -313,8 +313,9 @@ public class Controller_board implements Initializable, IWindow {
 		
 		windowManager.getInstance().setBoard(this);
 		
-		GameHandler.getInstance().setSub(this);
 		synchronized (GameHandler.getInstance()) {
+			
+			GameHandler.getInstance().setSub(this);
 			GameHandler.getInstance().notify();
 		}
 	}

@@ -191,6 +191,10 @@ public class GameHandler extends Thread {
 	private void manageBoard(String json) {
 		
 		board = LightBoard.instancify(json);
+		
+		synchronized (this) {
+			this.notify();
+		}
 	}
 	
 	private void manageCurrentPlayer(String playerID) {
