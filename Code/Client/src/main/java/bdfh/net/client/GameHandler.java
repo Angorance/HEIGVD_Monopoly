@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,9 @@ public class GameHandler extends Thread {
 	
 	HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
 	LightBoard board = null;
+	
+	// Map a player ID to his exam state.
+	private Map<Integer, Boolean> examState;
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -103,6 +107,14 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_MOV:
 				manageMove(split[1].split(" "));
 				break;
+				
+			case GameProtocol.GAM_EXAM:
+				examState.put(Integer.parseInt(split[1]), true);
+				break;
+			
+			case GameProtocol.GAM_FRDM:
+				examState.put(Integer.parseInt(split[1]), false);
+				break;
 		}
 	}
 	
@@ -142,6 +154,17 @@ public class GameHandler extends Thread {
 		return players;
 	}
 	
+	/**
+	 * Check if the player is stuck in the exam or not.
+	 *
+	 * @param playerID  Player to check.
+	 *
+	 * @return  true if he's in exam, false otherwise.
+	 */
+	public boolean getExamState(int playerID) {
+		return examState.get(playerID);
+	}
+	
 	public LightBoard getBoard() {
 		
 		return board;
@@ -169,7 +192,9 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		sub.movePawn(Integer.parseInt(str[0]), tmp);
+		if(!getExamState(Player.getInstance().getID())) {
+			sub.movePawn(Integer.parseInt(str[0]), tmp);
+		}
 	}
 	
 	private void managePlayers(String json) {
@@ -185,6 +210,7 @@ public class GameHandler extends Thread {
 			int capital = jo.get("capital").getAsInt();
 			
 			players.put(id, new MutablePair<>(username, capital));
+			examState.put(id, false);
 		}
 	}
 	

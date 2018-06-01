@@ -48,5 +48,5 @@ public abstract class GameProtocol {
 	public static final String GAM_PLYR = "PLYR";
 	public static final String GAM_MOV = "MOVE";
 	public static final String GAM_EXAM = "EXAM";
-	public static final String GAM_FREEDOM = "FREEDOM";
+	public static final String GAM_FRDM = "FRDM";
 }
