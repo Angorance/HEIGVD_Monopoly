@@ -127,7 +127,7 @@ public class Notification extends Thread {
 					LightLobbies.getInstance().clearLobbies();
 					
 					// Start the game
-					GameHandler.getInstance().init();
+					GameHandler.getInstance().start();
 					
 					noGame = false;
 				}
