@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 public class LightBoard {
 	
-	ArrayList<LightSquare> board = new ArrayList<>();
+	ArrayList<LightSquare> squares = new ArrayList<>();
 	
 	/*private LightBoard() {}
 	
@@ -25,6 +26,11 @@ public class LightBoard {
 		return Instance.instance;
 	}*/
 	
+	public List<LightSquare> getSquares() {
+		
+		return squares;
+	}
+	
 	public static LightBoard instancify(String json) {
 		
 		LightBoard tmp = new LightBoard();
@@ -34,7 +40,7 @@ public class LightBoard {
 		
 		for (JsonElement je : jsonBoard) {
 			
-			tmp.board.add(LightSquare.instancify(je.getAsJsonObject()));
+			tmp.squares.add(LightSquare.instancify(je.getAsJsonObject()));
 		}
 		
 		return tmp;
