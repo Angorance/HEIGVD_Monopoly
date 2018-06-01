@@ -185,6 +185,10 @@ public class GameHandler extends Thread {
 			int capital = jo.get("capital").getAsInt();
 			
 			players.put(id, new MutablePair<>(username, capital));
+			
+			if (Player.getInstance().getUsername().equals(username)) {
+				Player.getInstance().setID(id);
+			}
 		}
 	}
 	
