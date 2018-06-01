@@ -67,14 +67,40 @@ public class Board {
 	 * @return true if the player passed the start case
 	 */
 	public boolean movePlayer(int clientID, int movement) {
-		//TODO MANAGE NEGATIVE MOVEMENT
+		
 		int oldPos =  playerPosition.get(clientID);
-		int newPos = (oldPos + movement) % NB_SQUARE;
-		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos );
-		boolean passedGo = newPos < oldPos;
+		int newPos;
+		
+		if(movement > 0) {
+			newPos = (oldPos + movement) % NB_SQUARE;
+		} else {
+			newPos = (oldPos + movement) + NB_SQUARE;
+		}
+		
 		playerPosition.put(clientID, newPos);
 		
+		// Notify
+		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos );
+		
+		boolean passedGo = newPos < oldPos && movement > 0;
 		return passedGo;
+	}
+	
+	/**
+	 * Set the new position of the player in the board.
+	 *
+	 * @param clientID player to move
+	 * @param position new position of the player
+	 *
+	 * @return true if the player passed the start case
+	 */
+	public void setPlayerPosition(int clientID, int position) {
+		
+		int oldPos =  playerPosition.get(clientID);
+		playerPosition.put(clientID, position);
+		
+		// Notify
+		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + position);
 	}
 	
 	/**
