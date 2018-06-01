@@ -14,9 +14,9 @@ import java.util.logging.*;
  */
 public class NotificationServer implements Runnable {
 	
-	ServerSocket srv;
+	private ServerSocket srv;
 	
-	ArrayList<NotificationHandler> notifiers = new ArrayList<>();
+	private static ArrayList<NotificationHandler> notifiers = new ArrayList<>();
 	
 	private final static Logger LOG = Logger.getLogger("NotificationServer");
 	
@@ -66,7 +66,6 @@ public class NotificationServer implements Runnable {
 				
 				tmp.init();
 				
-				
 				LOG.log(Level.INFO, "Notif: Client accepted. Worker created and started");
 				
 			} catch (Exception e) {
@@ -74,5 +73,10 @@ public class NotificationServer implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void removeNotifier(NotificationHandler n) {
+		
+		notifiers.remove(n);
 	}
 }

@@ -93,27 +93,33 @@ public class NotificationHandler {
 	
 	public void update(String cmd, Lobby l) {
 		
-		String json = l.jsonify();
-		
-		LOG.log(Level.INFO, cmd + " Lobby: " + json);
-		
-		switch (cmd) {
-			case NotifProtocol.NOTIF_NEW:
-				sendData(NotifProtocol.NOTIF_NEW, json);
-				break;
+		if (socket.isClosed()) {
 			
-			case NotifProtocol.NOTIF_UPDATE:
-				sendData(NotifProtocol.NOTIF_UPDATE, json);
-				break;
+			NotificationServer.removeNotifier(this);
 			
-			case NotifProtocol.NOTIF_DELETE:
-				sendData(NotifProtocol.NOTIF_DELETE, json);
-				break;
+		} else {
 			
-			case NotifProtocol.NOTIF_START:
-				sendData(NotifProtocol.NOTIF_START,
-						Integer.toString(l.getID()));
-				break;
+			String json = l.jsonify();
+			
+			LOG.log(Level.INFO, cmd + " Lobby: " + json);
+			
+			switch (cmd) {
+				case NotifProtocol.NOTIF_NEW:
+					sendData(NotifProtocol.NOTIF_NEW, json);
+					break;
+				
+				case NotifProtocol.NOTIF_UPDATE:
+					sendData(NotifProtocol.NOTIF_UPDATE, json);
+					break;
+				
+				case NotifProtocol.NOTIF_DELETE:
+					sendData(NotifProtocol.NOTIF_DELETE, json);
+					break;
+				
+				case NotifProtocol.NOTIF_START:
+					sendData(NotifProtocol.NOTIF_START, Integer.toString(l.getID()));
+					break;
+			}
 		}
 	}
 }
