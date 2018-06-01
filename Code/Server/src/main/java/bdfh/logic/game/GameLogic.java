@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.logging.*;
 
 import static bdfh.protocol.Protocoly.*;
+import static bdfh.protocol.GameProtocol.*;
 
 /**
  * @author Daniel Gonzalez Lopez

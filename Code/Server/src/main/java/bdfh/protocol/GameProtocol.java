@@ -37,7 +37,6 @@ public abstract class GameProtocol {
 	public static final String SQUA_GREEN = "GREEN";
 	public static final String SQUA_BLUE = "BLUE";
 	
-	
 	// commande envoyée du serveur (logique de jeu)
 	public static final String GAM_PLAY = "PLAY"; // indique au joueur que c'est son tour
 	public static final String GAM_PLYR = "PLYR"; // envoie la liste des joueurs et leur capitaux
@@ -48,8 +47,7 @@ public abstract class GameProtocol {
 	public static final String GAM_PAY = "PAYS"; // le joueur indiqué a perdu X
 	public static final String GAM_GAIN = "GAIN"; // le joueur indiqué a gagné X
 	public static final String GAM_DENY = "DENY"; // le joueur refuse le paiement
-	public static final String GAM_BUYS = "BUYS"; // le joueur refuse le paiement
-	public static final String GAM_FREE = "FREE"; // le joueur refuse le paiement
-	public static final String GAM_MOV = "MOVE";
+	public static final String GAM_BUYS = "BUYS"; // le joueur devient propriétaire d'une case
+	public static final String GAM_FREE = "FREE"; // le joueur a la possibilité d'acheter une case
 	
 }
