@@ -84,8 +84,10 @@ public class Controller_board implements Initializable, IWindow {
 	private static ArrayList<FlowPane> cases = new ArrayList<>();
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
-	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();;
-	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();;
+	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();
+	;
+	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
+	;
 	
 	private Stage thisStage = null;
 	
@@ -99,31 +101,42 @@ public class Controller_board implements Initializable, IWindow {
 		}
 	}
 	
-	public class squareDisplayer extends BorderPane{
+	public class squareDisplayer extends BorderPane {
 		
-		public squareDisplayer(LightSquare square){
+		private FlowPane fp;
+		private AnchorPane ap;
+		private Label label_House;
+		
+		public squareDisplayer(LightSquare square) {
+			
 			String famility = square.getFamily();
 			
-			switch (famility){
-				case GameProtocol.SQUA_BROWN :
+			fp = new FlowPane();
+			ap = new AnchorPane();
+			label_House = new Label("0");
+			
+			ap.getChildren().add(label_House);
+			
+			switch (famility) {
+				case GameProtocol.SQUA_BROWN:
 					break;
-				case GameProtocol.SQUA_CYAN :
+				case GameProtocol.SQUA_CYAN:
 					break;
-				case GameProtocol.SQUA_PINK :
+				case GameProtocol.SQUA_PINK:
 					break;
-				case GameProtocol.SQUA_ORANGE :
+				case GameProtocol.SQUA_ORANGE:
 					break;
-				case GameProtocol.SQUA_RED :
+				case GameProtocol.SQUA_RED:
 					break;
-				case GameProtocol.SQUA_YELLOW :
+				case GameProtocol.SQUA_YELLOW:
 					break;
-				case GameProtocol.SQUA_GREEN :
+				case GameProtocol.SQUA_GREEN:
 					break;
-				case GameProtocol.SQUA_BLUE :
+				case GameProtocol.SQUA_BLUE:
 					break;
-				default :
+				default:
 					break;
-					
+				
 			}
 		}
 	}
@@ -202,7 +215,6 @@ public class Controller_board implements Initializable, IWindow {
 		labelCapitals[2] = label_capital3;
 		labelCapitals[3] = label_capital4;
 		
-		
 	}
 	
 	public void movePawn(int idPlayer, List<Integer> dices) {
@@ -220,7 +232,7 @@ public class Controller_board implements Initializable, IWindow {
 			cases.get(pos).getChildren().removeAll(tmpPD);
 			cases.get(tmp).getChildren().add(tmpPD);
 			posPlayer.put(idPlayer, tmp);
-			if(Player.getInstance().isMyTurn()){
+			if (Player.getInstance().isMyTurn()) {
 				rollDice_button.setDisable(true);
 				endTurn_button.setDisable(false);
 			}
@@ -228,6 +240,7 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void rollDice() {
+		
 		Player.getInstance().rollDice();
 	}
 	
@@ -237,11 +250,12 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	public void notifyTurn(){
-		if(Player.getInstance().isMyTurn()){
+	public void notifyTurn() {
+		
+		if (Player.getInstance().isMyTurn()) {
 			rollDice_button.setDisable(false);
 			endTurn_button.setDisable(true);
-		}else{
+		} else {
 			rollDice_button.setDisable(true);
 			endTurn_button.setDisable(true);
 		}
@@ -254,7 +268,15 @@ public class Controller_board implements Initializable, IWindow {
 		label_username.setText(Player.getInstance().getUsername());
 		
 		String[] color = { "RED", "BLUE", "GREEN", "YELLOW" };
-		
+		synchronized (GameHandler.getInstance()) {
+			if (GameHandler.getInstance().getPlayers().isEmpty()) {
+				try {
+					GameHandler.getInstance().wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		System.out.println(GameHandler.getInstance().getPlayers());
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
@@ -267,7 +289,7 @@ public class Controller_board implements Initializable, IWindow {
 			String username = pair.getKey();
 			int capital = pair.getValue();
 			
- 			labelPlayers[cnt].setText(username);
+			labelPlayers[cnt].setText(username);
 			labelCapitals[cnt].setText(String.valueOf(capital));
 			cnt++;
 		}
