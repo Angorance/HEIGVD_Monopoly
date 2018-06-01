@@ -6,7 +6,6 @@ import bdfh.logic.saloon.Lobby;
 import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -48,7 +47,6 @@ public class GameLogic extends Thread {
 	 * @param lobby lobby that launched a logic
 	 */
 	public GameLogic(Lobby lobby) {
-		
 		LOG.log(Level.INFO, "construction du gameLogic");
 		preparePlayers(lobby);
 		prepareDeck();
@@ -150,6 +148,7 @@ public class GameLogic extends Thread {
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += price.getHypothec();
 			manageMoney(currentPlayer, -1*price.getPrice());
 			board.setOwner(currentPlayer, posSquare);
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " bought the square " + posSquare);
 		}
 	}
 	
@@ -185,11 +184,13 @@ public class GameLogic extends Thread {
 			
 			// move the player
 			totalLastRoll = total;
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 			boolean passedGo = board.movePlayer(currentPlayer.getClientID(), total);
 			
 			if(passedGo){
 				playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
 				notifyPlayers(GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
+				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " passed the start square");
 			}
 			
 			// MANAGING THE CASE EFFECT
@@ -360,14 +361,14 @@ public class GameLogic extends Thread {
 	}
 	
 	private void nextTurn() {
-		LOG.log(Level.INFO, "nouveau tour");
 		currentPlayer = players.getFirst();
 		notifyPlayers(GAM_PLAY, "");
+		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
 	}
 	
 	public void endTurn( ClientHandler c) {
 		if(c.getClientID() == currentPlayer.getClientID()) {
-			LOG.log(Level.INFO, "Fin du tour tour");
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + "ended his turn" );
 			//players.addLast(currentPlayer);
 			currentPlayer = null;
 			nextTurn();
