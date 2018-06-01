@@ -162,12 +162,14 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void updateBoard(){
 		
-		int cnt = 0;
-		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
-			int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getValue();
-			labelCapitals[cnt].setText(String.valueOf(capital));
-			cnt++;
-		}
+		Platform.runLater(() -> {
+			int cnt = 0;
+			for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
+				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getValue();
+				labelCapitals[cnt].setText(String.valueOf(capital));
+				cnt++;
+			}
+		});
 	}
 	
 	public static void endGame() {
