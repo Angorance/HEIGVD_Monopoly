@@ -18,6 +18,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.net.URL;
 import java.util.*;
@@ -318,7 +319,7 @@ public class Controller_board implements Initializable, IWindow {
 			displayerList.put(idPlayer, pd);
 			posPlayer.put(idPlayer, 0);
 			
-			Pair<String, Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
+			MutablePair<String, Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
 			String username = pair.getKey();
 			int capital = pair.getValue();
 			

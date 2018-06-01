@@ -79,15 +79,15 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_BOARD:
 				manageBoard(split[1]);
 				break;
-				
+			
 			case GameProtocol.GAM_PLYR:
 				managePlayers(split[1]);
 				break;
-				
+			
 			case GameProtocol.GAM_PLAY:
 				manageCurrentPlayer(split[1]);
 				break;
-				
+			
 			case GameProtocol.GAM_ROLL:
 				manageRoll(split[1].split(" "));
 				break;
@@ -129,7 +129,7 @@ public class GameHandler extends Thread {
 		sendData(GameProtocol.GAM_ENDT);
 	}
 	
-	public HashMap<Integer, MutablePair<String,Integer>> getPlayers() {
+	public HashMap<Integer, MutablePair<String, Integer>> getPlayers() {
 		
 		return players;
 	}
@@ -166,7 +166,8 @@ public class GameHandler extends Thread {
 	
 	private void managePlayers(String json) {
 		
-		JsonArray jsonPlayers = GsonSerializer.getInstance().fromJson(json, JsonArray.class);
+		JsonArray jsonPlayers = GsonSerializer.getInstance()
+				.fromJson(json, JsonArray.class);
 		
 		for (JsonElement je : jsonPlayers) {
 			JsonObject jo = je.getAsJsonObject();
@@ -175,7 +176,7 @@ public class GameHandler extends Thread {
 			String username = jo.get("username").getAsString();
 			int capital = jo.get("capital").getAsInt();
 			
-			players.put(id, new MutablePair<> (username, capital));
+			players.put(id, new MutablePair<>(username, capital));
 		}
 		
 		synchronized (this) {
@@ -184,7 +185,7 @@ public class GameHandler extends Thread {
 	}
 	
 	private void manageBoard(String json) {
-	
+		
 		board = LightBoard.instancify(json);
 	}
 	
@@ -217,9 +218,10 @@ public class GameHandler extends Thread {
 	
 	private void manageGain(String[] split) {
 		
-		int newCap = players.get(split[0]).getValue() + Integer.parseInt(split[1]);
+		int newCap = players.get(Integer.parseInt(split[0])).getRight()
+				+ Integer.parseInt(split[1]);
 		
-		players.get(split[0]).setRight(newCap);
+		players.get(Integer.parseInt(split[0])).setRight(newCap);
 		
 		sub.updateBoard();
 	}
