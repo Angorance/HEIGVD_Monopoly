@@ -238,6 +238,7 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_MOVE:
 					value = Integer.parseInt(fullAction[1]);
 					board.movePlayer(getCurrentPlayerID(), value);
+					notifyPlayers(GAM_MOVE, String.valueOf(board.getCurrentSquare(getCurrentPlayerID()).getPosition()));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a avancé de " + value + " cases et se "
 							+ "trouve ici : " + board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
@@ -246,7 +247,8 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_BACK:
 					value = Integer.parseInt(fullAction[1]);
 					board.movePlayer(getCurrentPlayerID(), value * -1);
-					
+					notifyPlayers(GAM_MOVE, String.valueOf(board.getCurrentSquare(getCurrentPlayerID()).getPosition()));
+
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a reculé de " + value + " cases et se "
 							+ "trouve ici : " + board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
 					break;
@@ -280,6 +282,7 @@ public class GameLogic extends Thread {
 					}
 					
 					board.movePlayer(getCurrentPlayerID(), value);
+					notifyPlayers(GAM_MOVE, String.valueOf(board.getCurrentSquare(getCurrentPlayerID()).getPosition()));
 					
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " s'est déplacé sur la case : " +
 							board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
