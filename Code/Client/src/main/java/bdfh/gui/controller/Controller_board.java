@@ -68,47 +68,65 @@ public class Controller_board implements Initializable, IWindow {
 		private AnchorPane ap;
 		private Label label_House;
 		
-		private void add(String color, FlowPane fp, AnchorPane ap) {
+		private void add(String color,int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			this.setTop(ap);
+			label_House = new Label("2");
+			
+			
+			if(pos == 0){
+				ap.setPrefWidth(20);
+				label_House.setRotate(90);
+				this.setRight(ap);
+				
+			}else if(pos == 1){
+				ap.setPrefHeight(20);
+				this.setBottom(ap);
+			}else if(pos == 2){
+				ap.setPrefWidth(20);
+				label_House.setRotate(270);
+				this.setLeft(ap);
+				
+			}else{
+				ap.setPrefHeight(20);
+				this.setTop(ap);
+			}
+			
+			ap.getChildren().add(label_House);
 			this.setCenter(fp);
 		}
 		
-		public squareDisplayer(LightSquare square) {
+		public squareDisplayer(LightSquare square, int pos) {
 			
 			String famility = square.getFamily();
 			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px");
 			
 			fp = new FlowPane();
 			ap = new AnchorPane();
-			label_House = new Label("0");
-			ap.getChildren().add(label_House);
-			
 			switch (famility) {
 				case GameProtocol.SQUA_BROWN:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_CYAN:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_PINK:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_ORANGE:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_RED:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_YELLOW:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_GREEN:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				case GameProtocol.SQUA_BLUE:
-					add(famility, fp, ap);
+					add(famility,pos);
 					break;
 				default:
 					this.setCenter(fp);
@@ -163,12 +181,14 @@ public class Controller_board implements Initializable, IWindow {
 		
 		for(LightSquare square : GameHandler.getInstance().getBoard().getSquares()){
 			
-			squareDisplayer sd = new squareDisplayer(square);
-			cases.add(sd.getFP());
 			if(nbCase == 10){
 				nbCase = 0;
 				line++;
 			}
+			
+			squareDisplayer sd = new squareDisplayer(square,line);
+			cases.add(sd.getFP());
+			
 			if(line == 0) {
 				board.add(sd, col, row--);
 			}else if(line == 1){
