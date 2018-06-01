@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -65,6 +66,9 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private FlowPane case39;
 	@FXML private FlowPane case40;
 	
+	
+	//@FXML private GridPane board;
+	
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
 	@FXML private Label label_player2;
@@ -107,6 +111,13 @@ public class Controller_board implements Initializable, IWindow {
 		private AnchorPane ap;
 		private Label label_House;
 		
+		private void add(String color, FlowPane fp, AnchorPane ap) {
+			
+			ap.setStyle("-fx-border-color: " + color + ";");
+			this.setTop(ap);
+			this.setCenter(fp);
+		}
+		
 		public squareDisplayer(LightSquare square) {
 			
 			String famility = square.getFamily();
@@ -118,24 +129,32 @@ public class Controller_board implements Initializable, IWindow {
 			
 			switch (famility) {
 				case GameProtocol.SQUA_BROWN:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_CYAN:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_PINK:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_ORANGE:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_RED:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_YELLOW:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_GREEN:
+					add(famility, fp, ap);
 					break;
 				case GameProtocol.SQUA_BLUE:
+					add(famility, fp, ap);
 					break;
 				default:
+					this.setCenter(fp);
 					break;
-				
 			}
 		}
 	}
@@ -199,10 +218,12 @@ public class Controller_board implements Initializable, IWindow {
 		cases.add(case34);
 		cases.add(case35);
 		cases.add(case36);
-		cases.add(case36);
+		cases.add(case37);
 		cases.add(case38);
 		cases.add(case39);
 		cases.add(case40);
+		
+		
 		
 		labelPlayers[0] = label_player1;
 		labelPlayers[1] = label_player2;
