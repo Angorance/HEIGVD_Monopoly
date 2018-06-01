@@ -279,7 +279,7 @@ public class GameLogic extends Thread {
 						value = value - actualPosition;
 					
 					} else if (value < actualPosition) {
-						value = Board.NB_SQUARE - 1 - actualPosition + value;
+						value = Board.NB_SQUARE - actualPosition + value;
 					}
 					
 					board.movePlayer(getCurrentPlayerID(), value);
