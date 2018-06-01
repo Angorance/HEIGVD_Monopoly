@@ -175,7 +175,9 @@ public class GameHandler extends Thread {
 			players.put(id, new Pair<> (username, capital));
 		}
 		
-		this.notify();
+		synchronized (this) {
+			this.notify();
+		}
 	}
 	
 	private void manageBoard(String json) {
@@ -193,6 +195,8 @@ public class GameHandler extends Thread {
 			sub.notifyTurn();
 		}
 		
-		this.notify();
+		synchronized (this) {
+			this.notify();
+		}
 	}
 }
