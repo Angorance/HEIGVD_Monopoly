@@ -341,4 +341,8 @@ public class ClientHandler implements Handler {
 	public void setGame(GameLogic game) {
 		this.game = game;
 	}
+	
+	public String toString(){
+		return getClientID() + "-" +getClientUsername();
+	}
 }
