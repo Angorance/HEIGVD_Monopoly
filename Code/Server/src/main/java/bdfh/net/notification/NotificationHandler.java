@@ -6,6 +6,7 @@ import bdfh.net.Handler;
 import bdfh.protocol.NotifProtocol;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,12 +14,24 @@ import java.util.logging.Logger;
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
-public class NotificationHandler implements Handler {
+public class NotificationHandler {
 	
-	private BufferedReader reader;
+	private Socket socket;
 	private PrintWriter writer;
 	
 	private final static Logger LOG = Logger.getLogger("NotificationHandler");
+	
+	public NotificationHandler(Socket s) {
+		
+		socket = s;
+		
+		try {
+			writer = new PrintWriter(s.getOutputStream());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * initialize the writer (and the reader) for the notification writing
@@ -28,23 +41,17 @@ public class NotificationHandler implements Handler {
 	 *
 	 * @throws IOException
 	 */
-	public void handle(InputStream in, OutputStream out) throws IOException {
+	public void init(InputStream in, OutputStream out) throws IOException {
 		
-		reader = new BufferedReader(new InputStreamReader(in));
 		writer = new PrintWriter(new OutputStreamWriter(out));
 		boolean connected = true;
 		
 		Lobbies.getInstance().addSubscriber(this);
 		sendLobbyList();
-		
-		// Dialog management
-		while (connected) {
-			// TODO ???
-		}
-		
 	}
 	
-	@Override public void byebye() {
+	public void byebye() {
+		
 		Lobbies.getInstance().removeSub(this);
 	}
 	
@@ -98,17 +105,18 @@ public class NotificationHandler implements Handler {
 			case NotifProtocol.NOTIF_NEW:
 				sendData(NotifProtocol.NOTIF_NEW, json);
 				break;
-				
+			
 			case NotifProtocol.NOTIF_UPDATE:
 				sendData(NotifProtocol.NOTIF_UPDATE, json);
 				break;
-				
+			
 			case NotifProtocol.NOTIF_DELETE:
 				sendData(NotifProtocol.NOTIF_DELETE, json);
 				break;
-				
-			case NotifProtocol.NOTIF_START :
-				sendData(NotifProtocol.NOTIF_START,  Integer.toString(l.getID()));
+			
+			case NotifProtocol.NOTIF_START:
+				sendData(NotifProtocol.NOTIF_START,
+						Integer.toString(l.getID()));
 				break;
 		}
 	}
