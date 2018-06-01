@@ -95,6 +95,10 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_GAIN:
 				manageGain(split[1].split(" "));
 				break;
+				
+			case GameProtocol.GAM_PAY:
+				managePay(split[1].split(" "));
+				break;
 		}
 	}
 	
@@ -218,10 +222,19 @@ public class GameHandler extends Thread {
 	
 	private void manageGain(String[] split) {
 		
-		int newCap = players.get(Integer.parseInt(split[0])).getRight()
-				+ Integer.parseInt(split[1]);
+		updateCapital(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+	}
+	
+	private void managePay(String[] split) {
 		
-		players.get(Integer.parseInt(split[0])).setRight(newCap);
+		updateCapital(Integer.parseInt(split[0]), -1 * Integer.parseInt(split[1]));
+	}
+	
+	private void updateCapital(int id, int value) {
+		
+		int newCap = players.get(id).getRight() + value;
+		
+		players.get(id).setRight(newCap);
 		
 		sub.updateBoard();
 	}
