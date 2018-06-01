@@ -262,6 +262,9 @@ public class Controller_board implements Initializable, IWindow {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		rollDice_button.setDisable(true);
+		endTurn_button.setDisable(true);
+		
 		init();
 		
 		label_username.setText(Player.getInstance().getUsername());
