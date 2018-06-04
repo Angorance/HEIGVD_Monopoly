@@ -20,6 +20,7 @@ public class Square {
 	private String family;          // Family of the square
 	private String name;            // Name of the square
 	private Price prices;           // Prices of the square
+	private boolean isMortgaged = false; // define if the square is mortgages (== "hypothéquée")
 	
 	private ClientHandler owner;    // Owner of the square
 	
@@ -89,5 +90,13 @@ public class Square {
 		}
 		
 		return GsonSerializer.getInstance().toJson(jsonSquare);
+	}
+	
+	public boolean isMortgaged() {
+		return isMortgaged;
+	}
+	
+	public void setMortgaged(boolean mortgaged) {
+		isMortgaged = mortgaged;
 	}
 }

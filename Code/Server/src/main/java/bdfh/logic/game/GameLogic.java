@@ -488,4 +488,33 @@ public class GameLogic extends Thread {
 		
 		// TODO - check if the game is over for the player
 	}
+	
+	/**
+	 * set a square in mortgage
+	 * @param caller player that attempt to put a property in mortgage
+	 * @param posProperty property to put in mortgage
+	 */
+	public void setMortgaged(ClientHandler caller, Integer posProperty) {
+		if(caller.getClientID() == currentPlayer.getClientID() && board.getSquare(posProperty).isProperty()){
+			// TODO check if the square has couch installed
+			board.setMortgaged(currentPlayer,posProperty);
+			int price  = (board.getSquare(posProperty).getPrices().getHypothec());
+			manageMoney(currentPlayer, -price);
+			notifyPlayers(GAM_GAIN, Integer.toString(price));
+		}
+	}
+	
+	/**
+	 * disencumbrance a square (cancel a mortgage)
+	 * @param caller player that attempt to cancel a mortgage
+	 * @param posProperty property to cancel the mortgage
+	 */
+	public void disencumbrance(ClientHandler caller, Integer posProperty) {
+		if(caller.getClientID() == currentPlayer.getClientID()){
+			board.cancelMortgaged(currentPlayer,posProperty);
+			int price  = (int)(board.getSquare(posProperty).getPrices().getHypothec() * 1.10);
+			manageMoney(currentPlayer, price);
+			notifyPlayers(GAM_PAY, Integer.toString(price));
+		}
+	}
 }

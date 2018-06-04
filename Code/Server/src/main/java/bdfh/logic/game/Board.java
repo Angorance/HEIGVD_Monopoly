@@ -130,7 +130,7 @@ public class Board {
 				break;
 			
 			case GameProtocol.SQUA_INSTITUTE:
-				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()) {
+				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID() && !s.isMortgaged()) {
 					int baseRent = s.getPrices().getRent();
 					int factor = howManyPossession(s.getOwner().getClientID(), s.getFamily());
 					int totalToPay = baseRent * (int) Math.pow(2, factor - 1);
@@ -143,7 +143,7 @@ public class Board {
 				break;
 			
 			case GameProtocol.SQUA_COMPANY: // IL Y EN A DEUX
-				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()) {
+				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID() && !s.isMortgaged()) {
 					// TODO we have to check how many company the owner possess
 					int factor = s.getPrices().getRent();
 					int howManyPossession = howManyPossession(s.getOwner().getClientID(), s.getFamily());
@@ -177,6 +177,9 @@ public class Board {
 			case GameProtocol.SQUA_ORANGE:
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_YELLOW:
+				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayer().getClientID() && !s.isMortgaged()){
+					// TODO payer le loyaer
+				}
 				
 				break;
 		}
@@ -230,5 +233,21 @@ public class Board {
 		}
 		
 		return GsonSerializer.getInstance().toJson(jsonBoard);
+	}
+	
+	public void setMortgaged(ClientHandler caller, int posProperty){
+		Square requested = board[posProperty];
+		
+		if(requested.getOwner().getClientID() == caller.getClientID()){
+			requested.setMortgaged(true);
+		}
+	}
+	
+	public void cancelMortgaged(ClientHandler caller, int posProperty){
+		Square requested = board[posProperty];
+		
+		if(requested.getOwner().getClientID() == caller.getClientID()){
+			requested.setMortgaged(false);
+		}
 	}
 }

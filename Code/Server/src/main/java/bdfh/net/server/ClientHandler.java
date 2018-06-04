@@ -14,7 +14,6 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.*;
 import java.net.SocketException;
-import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -183,6 +182,15 @@ public class ClientHandler implements Handler {
 						if(game != null){
 							game.buySquare(this, Integer.valueOf(param[1]));
 						}
+						break;
+						
+					case GameProtocol.GAM_HYPOT :
+							game.setMortgaged(this, Integer.valueOf(param[1]));
+						break;
+						
+					case GameProtocol.GAM_NHYPOT :
+						game.disencumbrance(this, Integer.valueOf(param[1]));
+						break;
 					
 					default: // WTF ???
 						sendData("U wot m8 ?");
