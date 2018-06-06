@@ -177,9 +177,7 @@ public class Board {
 			case GameProtocol.SQUA_ORANGE:
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_YELLOW:
-				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayer().getClientID() && !s.isMortgaged()){
-					// TODO payer le loyaer
-				}
+				handleProperty(game, s);
 				
 				break;
 		}
@@ -195,6 +193,40 @@ public class Board {
 		}
 		
 		return count;
+	}
+	
+	/**
+	 * Tell if a player possesses all squares of a given family.
+	 *
+	 * @param clientID Player id.
+	 * @param family Family of the square.
+	 *
+	 * @return True if the player possesses all family, false otherwise.
+	 */
+	public boolean hasFullFamily(int clientID, String family) {
+		
+		switch (family) {
+			
+			case GameProtocol.SQUA_RED:
+			case GameProtocol.SQUA_CYAN:
+			case GameProtocol.SQUA_PINK:
+			case GameProtocol.SQUA_GREEN:
+			case GameProtocol.SQUA_ORANGE:
+			case GameProtocol.SQUA_YELLOW:
+				if (howManyPossession(clientID, family) == 3) {
+					return true;
+				}
+				
+				break;
+				
+			case GameProtocol.SQUA_BROWN:
+			case GameProtocol.SQUA_BLUE:
+				if (howManyPossession(clientID, family) == 2) {
+					return true;
+				}
+		}
+		
+		return false;
 	}
 	
 	public void setOwner(ClientHandler buyer, int squarePos) {
@@ -249,5 +281,41 @@ public class Board {
 		if(requested.getOwner().getClientID() == caller.getClientID()){
 			requested.setMortgaged(false);
 		}
+	}
+	
+	/**
+	 * Allows to handle the payment of a property tax.
+	 * The amount depends on the number of Couches / HomeCinema or if it's empty.
+	 *
+	 * @param game
+	 * @param s
+	 */
+	private void handleProperty(GameLogic game, Square s) {
+		ClientHandler owner = s.getOwner();
+		ClientHandler player = game.getCurrentPlayer();
+		
+		if(owner != null && owner.getClientID() != player.getClientID() && !s.isMortgaged()){
+			// TODO payer le loyer selon canap et homeciné
+		}
+	}
+	
+	/**
+	 * Allows to check if couches are well dispatched over the square's family.
+	 *
+	 * @param s
+	 * @return
+	 */
+	public boolean checkCouchRepartition(Square s) {
+		
+		// TODO - Optimize
+		for (Square tmp : board) {
+			if (tmp.getFamily().equals(s.getFamily()) && !tmp.equals(s)) {
+				if (tmp.getNbCouch() < s.getNbCouch()) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
 	}
 }

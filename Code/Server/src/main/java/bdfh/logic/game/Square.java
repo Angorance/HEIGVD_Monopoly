@@ -22,6 +22,9 @@ public class Square {
 	private Price prices;           // Prices of the square
 	private boolean isMortgaged = false; // define if the square is mortgages (== "hypothéquée")
 	
+	int nbCouch = 0;
+	boolean homeCinema = false;
+	
 	private ClientHandler owner;    // Owner of the square
 	
 	/**
@@ -98,5 +101,50 @@ public class Square {
 	
 	public void setMortgaged(boolean mortgaged) {
 		isMortgaged = mortgaged;
+	}
+	
+	/**
+	 * Allows to add or remove a couch from the square.
+	 *
+	 * @param val
+	 */
+	public void toggleCouch(int val) {
+		nbCouch += val;
+	}
+	
+	/**
+	 * Get the number of couches already on the square.
+	 *
+	 * @return number of couches
+	 */
+	public int getNbCouch() {
+		return nbCouch;
+	}
+	
+	/**
+	 * Allows to add or remove a home cinema from the square.
+	 *
+	 * @param val
+	 */
+	public void toggleHomeCinema(boolean val) {
+		homeCinema = val;
+	}
+	
+	/**
+	 * Get if the square has or not a home cinema.
+	 *
+	 * @return true if home cinema, false otherwise.
+	 */
+	public boolean hasHomeCinema() {
+		return homeCinema;
+	}
+	
+	/**
+	 * Get the level of the square, hence the level of how much it costs when on the square.
+	 *
+	 * @return Level of rent.
+	 */
+	public int getLevelRent() {
+		return homeCinema ? 5 : nbCouch;
 	}
 }

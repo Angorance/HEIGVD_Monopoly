@@ -164,7 +164,7 @@ public class ClientHandler implements Handler {
 						createLobby(param[0]);
 						break;
 						
-						// ============================================================================================
+					// ============================================================================================
 					// commande de phase de jeu
 					case GameProtocol.GAM_ROLL :
 						if(game!= null){
@@ -180,16 +180,32 @@ public class ClientHandler implements Handler {
 						
 					case GameProtocol.GAM_BUYS :
 						if(game != null){
-							game.buySquare(this, Integer.valueOf(param[1]));
+							game.buySquare(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
 						}
 						break;
 						
 					case GameProtocol.GAM_HYPOT :
-							game.setMortgaged(this, Integer.valueOf(param[1]));
+							game.setMortgaged(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
 						break;
 						
 					case GameProtocol.GAM_NHYPOT :
-						game.disencumbrance(this, Integer.valueOf(param[1]));
+						game.disencumbrance(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
+						break;
+						
+					case GameProtocol.GAM_BCOUCH:
+						game.buyCouch(this, Integer.parseInt(param[0]));
+						break;
+					
+					case GameProtocol.GAM_SCOUCH:
+						// TODO game.sellCouch(this, Integer.parseInt(param[0]));
+						break;
+					
+					case GameProtocol.GAM_BHCINE:
+						game.buyHomeCinema(this, Integer.parseInt(param[0]));
+						break;
+					
+					case GameProtocol.GAM_SHCINE:
+						// TODO game.sellHomeCinema(this, Integer.parseInt(param[0]));
 						break;
 					
 					default: // WTF ???

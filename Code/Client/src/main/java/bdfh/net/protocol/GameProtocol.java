@@ -49,4 +49,9 @@ public abstract class GameProtocol {
 	public static final String GAM_MOV = "MOVE";
 	public static final String GAM_EXAM = "EXAM";
 	public static final String GAM_FRDM = "FRDM";
+	
+	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
+	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
+	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
+	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
 }
