@@ -48,7 +48,7 @@
                   <JFXButton fx:id="buy_button" layoutX="51.0" layoutY="390.0" style="-fx-background-color: cdcdcd;" text="Acheter" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="51.0" />
                   <JFXButton fx:id="sell_button" layoutX="192.0" layoutY="391.0" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: cdcdcd;" text="Vendre" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0" />
                   <JFXButton fx:id="hyp_button" layoutX="332.0" layoutY="192.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="50.0" />
-                  <Label alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" text="Titre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                  <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" text="Titre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -61,6 +61,7 @@
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -71,26 +72,28 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Canapé 1" />
-                        <Label text="Canapé 2" GridPane.rowIndex="1" />
-                        <Label text="Canapé 3" GridPane.rowIndex="2" />
-                        <Label text="Canapé 4" GridPane.rowIndex="3" />
-                        <Label text="Home Cinéma" GridPane.rowIndex="4" />
-                        <Label fx:id="canape1" text="-" GridPane.columnIndex="1" />
-                        <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="canape4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="homecinema" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Hypotèque" GridPane.rowIndex="5" />
-                        <Label fx:id="hypotheque" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text="Prix canapé" GridPane.rowIndex="6" />
-                        <Label fx:id="prixCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Prix Home Cinéma" GridPane.rowIndex="7" />
-                        <Label fx:id="prixHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label text="Vente Canapé" GridPane.rowIndex="8" />
-                        <Label text="Vente Home Cinema" GridPane.rowIndex="9" />
-                        <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="Loyer canapé 1" GridPane.rowIndex="1" />
+                        <Label text="Loyer canapé 2" GridPane.rowIndex="2" />
+                        <Label text="Loyer canapé 3" GridPane.rowIndex="3" />
+                        <Label text="Loyer canapé 4" GridPane.rowIndex="4" />
+                        <Label text="Loyer Home Cinéma" GridPane.rowIndex="5" />
+                        <Label fx:id="canape1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="canape4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="homecinema" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Prix hypotèque" GridPane.rowIndex="6" />
+                        <Label fx:id="hypotheque" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Prix canapé" GridPane.rowIndex="7" />
+                        <Label fx:id="prixCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="Prix Home Cinéma" GridPane.rowIndex="8" />
+                        <Label fx:id="prixHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="Vente Canapé" GridPane.rowIndex="9" />
+                        <Label text="Vente Home Cinema" GridPane.rowIndex="10" />
+                        <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label text="Loyer de base" />
+                        <Label fx:id="base" text="-" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
