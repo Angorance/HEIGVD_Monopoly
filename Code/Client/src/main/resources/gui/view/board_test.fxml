@@ -137,5 +137,6 @@
          </font>
       </Label>
       <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
+      <AnchorPane fx:id="popup" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

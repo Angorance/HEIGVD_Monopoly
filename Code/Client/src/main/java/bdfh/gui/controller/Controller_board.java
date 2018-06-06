@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -21,12 +22,14 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.MutablePair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class Controller_board implements Initializable, IWindow {
 	
 	@FXML private GridPane board;
+	@FXML private AnchorPane popup;
 	
 	@FXML private Label nameSquare;
 	@FXML private Label base;
@@ -65,8 +68,45 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
 	
-	
 	private Stage thisStage = null;
+	
+	public void loadPopup() {
+		/* we load the form fxml*/
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup.fxml"));
+		
+		/*Create a instance of the controller of bank account form*/
+		Controller_popup cp = new Controller_popup(this);
+		
+		/*Sets the controller associated with the root object*/
+		loader.setController(cp);
+		
+		popup.setVisible(true);
+		popup.setMouseTransparent(false);
+		
+		try {
+			AnchorPane pane = loader.load();
+			popup.getChildren().add(pane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void unloadPopup() {
+		
+		popup.getChildren().clear();
+		popup.setMouseTransparent(true);
+		popup.setVisible(false);
+	}
+	
+	public void useCard() {
+		Player.getInstance().useFreedomCard();
+		unloadPopup();
+	}
+	
+	public void payTax() {
+		Player.getInstance().payExamTax();
+		unloadPopup();
+	}
 	
 	public class pawnDisplay extends AnchorPane {
 		
@@ -381,9 +421,10 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	private void rollDice() {
+	public void rollDice() {
 		
 		Player.getInstance().rollDice();
+		unloadPopup();
 	}
 	
 	private void endTurn() {
@@ -404,6 +445,9 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
+		popup.setMouseTransparent(true);
+		popup.setVisible(false);
 		
 		rollDice_button.setDisable(true);
 		endTurn_button.setDisable(true);
