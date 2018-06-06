@@ -1,5 +1,6 @@
 package bdfh.serializable;
 
+import bdfh.net.protocol.GameProtocol;
 import com.google.gson.*;
 
 /**
@@ -64,6 +65,33 @@ public class LightPrice {
 	private void setHypothec(Integer hypothec) {
 		
 		this.hypothec = (hypothec == -1 ? null : hypothec);
+	}
+	
+	/**
+	 * Get all the possible rents.
+	 * - Simple rent
+	 * - Rent for 1-2-3-4 couches
+	 * - Rent for 1 home cinema
+	 *
+	 * @return  array with all rents.
+	 */
+	public int[] getRents() {
+		
+		int[] rents = new int[6];
+		
+		// Simple rent
+		rents[0] = getRent();
+		
+		// Rents with couch(es)
+		rents[1] = getRent() * GameProtocol.RENT_TO_1C;
+		rents[2] = getRent() * GameProtocol.RENT_TO_2C;
+		rents[3] = getRent() * GameProtocol.RENT_TO_3C;
+		rents[4] = getRent() * GameProtocol.RENT_TO_4C;
+		
+		// Rent with home cinema
+		rents[5] = getRent() * GameProtocol.RENT_TO_1H;
+		
+		return rents;
 	}
 	
 	/**

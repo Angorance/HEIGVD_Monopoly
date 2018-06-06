@@ -49,4 +49,11 @@ public abstract class GameProtocol {
 	public static final String GAM_MOV = "MOVE";
 	public static final String GAM_EXAM = "EXAM";
 	public static final String GAM_FRDM = "FRDM";
+	
+	// Factors used to calculate rents
+	public static final int RENT_TO_1C = 5;
+	public static final int RENT_TO_2C = 15;
+	public static final int RENT_TO_3C = 30;
+	public static final int RENT_TO_4C = 45;
+	public static final int RENT_TO_1H = 54;
 }
