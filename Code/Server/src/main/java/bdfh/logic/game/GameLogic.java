@@ -43,6 +43,8 @@ public class GameLogic extends Thread {
 	private final int TURN = 1;
 	private final int DOUBLE_DICE = 2;
 	
+	private Map<Integer, List<Card>> examCards;
+	
 	private ClientHandler currentPlayer;
 	
 	/**
@@ -140,6 +142,38 @@ public class GameLogic extends Thread {
 		examState.put(getCurrentPlayerID(), new Integer[]{presence, nbrTurn, nbrDouble});
 	}
 	
+	public void useFreedomCard() {
+		
+		// Put the card at the end of the deck
+		Card card = examCards.get(getCurrentPlayerID()).get(0);
+		Deck.addLast(card);
+		examCards.get(getCurrentPlayerID()).remove(card);
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_FRDM_U, "");
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a utilisé une carte de sortie d'examen.");
+		
+		// Leave the exam
+		leaveExam();
+	}
+	
+	public void payExamTax() {
+		
+		// Pay the tax
+		int amount = board.getExamSquare().getPrices().getRent();
+		manageMoney(currentPlayer, amount * -1);
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(amount));
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
+		
+		notifyPlayers(GameProtocol.GAM_FRDM_T, "");
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé la taxe de sortie d'examen.");
+		
+		// Leave the exam
+		leaveExam();
+	}
+	
 	/*************** HANDLE THE STATE OF THE EXAM *************************/
 	
 	/**
@@ -182,6 +216,7 @@ public class GameLogic extends Thread {
 		players = new ArrayDeque<>(lobby.getPlayers().size());
 		playersFortune = new HashMap<>();
 		examState = new HashMap<>();
+		examCards = new HashMap<>();
 		
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());
 		Random rdm = new Random();
@@ -193,6 +228,7 @@ public class GameLogic extends Thread {
 			players.addFirst(c);
 			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
 			examState.put(c.getClientID(), new Integer[]{0, 0, 0});
+			examCards.put(c.getClientID(), new ArrayList<>());
 		}
 		
 		
@@ -296,7 +332,7 @@ public class GameLogic extends Thread {
 		notifyPlayers(GameProtocol.GAM_DRAW, drawed.jsonify());
 		
 		// wait the confirmation of the current player before handling the effect
-		
+		// TODO
 		
 		// check if can keep the card, if not, we put it in the end of the deck
 		if (drawed.getAction() != GameProtocol.CARD_FREE) {
@@ -391,10 +427,6 @@ public class GameLogic extends Thread {
 				case GameProtocol.CARD_EXAM:
 					sendToExam();
 					break;
-				
-				case GameProtocol.CARD_FREE:
-					leaveExam();
-					break;
 					
 				case GameProtocol.CARD_REP:
 					// TODO
@@ -406,8 +438,12 @@ public class GameLogic extends Thread {
 			
 		} else {
 			
-			// TODO SPRINT X
-			// add the card to its owner
+			// Add the card to its owner
+			examCards.get(getCurrentPlayerID()).add(drawed);
+			
+			// Notify
+			notifyPlayers(GameProtocol.GAM_FRDM_C, "");
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu une carte de sortie d'examen.");
 		}
 	}
 	

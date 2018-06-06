@@ -2,6 +2,7 @@ package bdfh.logic.usr;
 
 import bdfh.net.client.Client;
 import bdfh.net.client.GameHandler;
+import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.BoundParameters;
 
 /**
@@ -20,6 +21,7 @@ public class Player {
 	private int lobbyID = -1;
 	
 	private boolean myTurn = false;
+	private boolean hasFreedomCard = false;
 	
 	
 	private Player() {}
@@ -72,6 +74,16 @@ public class Player {
 	public void setMyTurn(boolean myTurn) {
 		
 		this.myTurn = myTurn;
+	}
+	
+	public boolean hasFreedomCard() {
+		
+		return hasFreedomCard;
+	}
+	
+	public void setHasFreedomCard(boolean hasFreedomCard) {
+		
+		this.hasFreedomCard = hasFreedomCard;
 	}
 	
 	/**
@@ -182,6 +194,22 @@ public class Player {
 	 */
 	public void sell() {
 	
+	}
+	
+	/**
+	 * Use a card the leave the exam.
+	 */
+	public void useFreedomCard() {
+		
+		GameHandler.getInstance().useFreedomCard();
+	}
+	
+	/**
+	 * Pay the tax to leave the exam.
+	 */
+	public void payExamTax() {
+		
+		GameHandler.getInstance().payExamTax();
 	}
 	
 	/**

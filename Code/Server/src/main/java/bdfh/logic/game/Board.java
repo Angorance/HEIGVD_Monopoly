@@ -223,6 +223,27 @@ public class Board {
 		return returned;
 	}
 	
+	/**
+	 * Get the square of the exam.
+	 *
+	 * @return square of the exam.
+	 */
+	public Square getExamSquare() {
+		
+		Square exam = null;
+		
+		for(int i = 0; i < NB_SQUARE; i++) {
+			
+			exam = board[i];
+			
+			if(exam.getFamily() == GameProtocol.SQUA_EXAM) {
+				break;
+			}
+		}
+		
+		return exam;
+	}
+	
 	public String jsonify() {
 		
 		JsonArray jsonBoard = new JsonArray();
