@@ -196,6 +196,10 @@ public class ClientHandler implements Handler {
 						game.useFreedomCard();
 						break;
 					
+					case GameProtocol.GAM_FRDM_T :
+						game.payExamTax();
+						break;
+					
 					default: // WTF ???
 						sendData("U wot m8 ?");
 						

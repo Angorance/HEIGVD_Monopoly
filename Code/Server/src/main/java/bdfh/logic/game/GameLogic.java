@@ -157,6 +157,23 @@ public class GameLogic extends Thread {
 		leaveExam();
 	}
 	
+	public void payExamTax() {
+		
+		// Pay the tax
+		int amount = board.getExamSquare().getPrices().getRent();
+		manageMoney(currentPlayer, amount * -1);
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(amount));
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
+		
+		notifyPlayers(GameProtocol.GAM_FRDM_T, "");
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé la taxe de sortie d'examen.");
+		
+		// Leave the exam
+		leaveExam();
+	}
+	
 	/*************** HANDLE THE STATE OF THE EXAM *************************/
 	
 	/**
