@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -21,13 +22,17 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.MutablePair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class Controller_board implements Initializable, IWindow {
 	
 	@FXML private GridPane board;
+	@FXML private AnchorPane popup;
 	
+	@FXML private Label nameSquare;
+	@FXML private Label base;
 	@FXML private Label canape1;
 	@FXML private Label canape2;
 	@FXML private Label canape3;
@@ -58,12 +63,50 @@ public class Controller_board implements Initializable, IWindow {
 	private static ArrayList<FlowPane> cases = new ArrayList<>();
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
+	private Label[] labelLoyer = new Label[6];
 	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();
 	
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
 	
-	
 	private Stage thisStage = null;
+	
+	public void loadPopup() {
+		/* we load the form fxml*/
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup.fxml"));
+		
+		/*Create a instance of the controller of bank account form*/
+		Controller_popup cp = new Controller_popup(this);
+		
+		/*Sets the controller associated with the root object*/
+		loader.setController(cp);
+		
+		popup.setVisible(true);
+		popup.setMouseTransparent(false);
+		
+		try {
+			AnchorPane pane = loader.load();
+			popup.getChildren().add(pane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void unloadPopup() {
+		
+		popup.getChildren().clear();
+		popup.setMouseTransparent(true);
+		popup.setVisible(false);
+	}
+	
+	public void useCard() {
+		Player.getInstance().useFreedomCard();
+		unloadPopup();
+	}
+	
+	public void payTax() {
+		Player.getInstance().payExamTax();
+		unloadPopup();
+	}
 	
 	public class pawnDisplay extends AnchorPane {
 		
@@ -141,7 +184,36 @@ public class Controller_board implements Initializable, IWindow {
 				case GameProtocol.SQUA_BLUE:
 					add(famility, pos);
 					break;
-				default:
+				case GameProtocol.SQUA_TAX:
+					this.setCenter(fp);
+					this.setTop(new Label("TAX"));
+					break;
+				case GameProtocol.SQUA_INSTITUTE:
+					this.setCenter(fp);
+					this.setTop(new Label("INSTITUTE"));
+					break;
+				case GameProtocol.SQUA_COMPANY:
+					this.setTop(new Label("COMPANY"));
+					this.setCenter(fp);
+					break;
+				case GameProtocol.SQUA_CARD:
+					this.setCenter(fp);
+					this.setTop(new Label("Tirer une carte"));
+					break;
+				case GameProtocol.SQUA_START:
+					this.setTop(new Label("START"));
+					this.setCenter(fp);
+					break;
+				case GameProtocol.SQUA_EXAM:
+					this.setTop(new Label("EXAM"));
+					this.setCenter(fp);
+					break;
+				case GameProtocol.SQUA_GO_EXAM:
+					this.setTop(new Label("GO EXAM"));
+					this.setCenter(fp);
+					break;
+				case GameProtocol.SQUA_BREAK:
+					this.setTop(new Label("PAUSE"));
 					this.setCenter(fp);
 					break;
 			}
@@ -162,7 +234,76 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void detailSquare(LightSquare square) {
+		
+		String famility = square.getFamily();
+		switch (famility) {
+			case GameProtocol.SQUA_BROWN:
+			case GameProtocol.SQUA_CYAN:
+			case GameProtocol.SQUA_PINK:
+			case GameProtocol.SQUA_ORANGE:
+			case GameProtocol.SQUA_RED:
+			case GameProtocol.SQUA_YELLOW:
+			case GameProtocol.SQUA_GREEN:
+			case GameProtocol.SQUA_BLUE:
+				infoProperties(square);
+				break;
+			case GameProtocol.SQUA_INSTITUTE:
+				//TODO mettre info
+				break;
+			case GameProtocol.SQUA_COMPANY:
+				//TODO mettre info
+				break;
+			default:
+				reset();
+				break;
+			
+		}
+		
+	}
 	
+	private void reset() {
+		
+		for (int i = 0; i < labelLoyer.length; ++i) {
+			labelLoyer[i].setText("-");
+		}
+		
+		hypotheque.setText("-");
+		prixCanape.setText("-");
+		prixHC.setText("-");
+		venteCanape.setText("-");
+		venteHC.setText("-");
+		
+		buy_button.setDisable(true);
+		hyp_button.setDisable(true);
+		sell_button.setDisable(true);
+	}
+	
+	private void infoProperties(LightSquare square) {
+		
+		String name = square.getName();
+		int price = square.getPrices().getPrice();
+		int hyp = square.getPrices().getHypothec();
+		int can = square.getPrices().getPriceCouch();
+		int hc = square.getPrices().getPriceHomeCinema();
+		int vcan = can / 2;
+		int vhc = hc / 2;
+		
+		int cnt = 0;
+		for (int i : square.getPrices().getRents()) {
+			labelLoyer[cnt].setText(String.valueOf(i));
+			cnt++;
+		}
+		nameSquare.setText(name);
+		hypotheque.setText(String.valueOf(hyp));
+		prixCanape.setText(String.valueOf(can));
+		prixHC.setText(String.valueOf(hc));
+		venteCanape.setText(String.valueOf(vcan));
+		venteHC.setText(String.valueOf(vhc));
+		
+		//TODO à modifier
+		buy_button.setDisable(false);
+		hyp_button.setDisable(false);
+		sell_button.setDisable(false);
 	}
 	
 	public void updateBoard() {
@@ -238,9 +379,17 @@ public class Controller_board implements Initializable, IWindow {
 		labelCapitals[2] = label_capital3;
 		labelCapitals[3] = label_capital4;
 		
+		labelLoyer[0] = base;
+		labelLoyer[1] = canape1;
+		labelLoyer[2] = canape2;
+		labelLoyer[3] = canape3;
+		labelLoyer[4] = canape4;
+		labelLoyer[5] = homecinema;
+		
 	}
 	
-	public void move(int idPlayer, int pos){
+	public void move(int idPlayer, int pos) {
+		
 		Platform.runLater(() -> {
 			int tmp = posPlayer.get(idPlayer);
 			pawnDisplay tmpPD = displayerList.get(idPlayer);
@@ -272,9 +421,10 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	private void rollDice() {
+	public void rollDice() {
 		
 		Player.getInstance().rollDice();
+		unloadPopup();
 	}
 	
 	private void endTurn() {
@@ -295,6 +445,9 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
+		popup.setMouseTransparent(true);
+		popup.setVisible(false);
 		
 		rollDice_button.setDisable(true);
 		endTurn_button.setDisable(true);

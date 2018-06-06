@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="222.0" prefWidth="697.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" layoutX="49.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="133.0" prefWidth="600.0">
+               <children>
+                  <AnchorPane prefHeight="132.0" prefWidth="600.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 10;">
+                     <children>
+                        <JFXButton fx:id="button_useCard" layoutX="34.0" layoutY="54.0" style="-fx-background-color: gray;" styleClass="NeutralButton" text="Utiliser la carte" AnchorPane.leftAnchor="50.0" />
+                        <JFXButton fx:id="button_rollDice" layoutX="469.0" layoutY="54.0" style="-fx-background-color: gray;" styleClass="GreenButton" text="Lancer les dés" AnchorPane.rightAnchor="50.0" />
+                        <JFXButton fx:id="button_payTax" layoutX="259.0" layoutY="54.0" style="-fx-background-color: gray;" styleClass="NeutralButton" text="Payer la taxe" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -53,10 +53,20 @@ public abstract class GameProtocol {
 	public static final String GAM_MOV = "MOVE"; // le joueur doit bouger
 	public static final String GAM_EXAM = "EXAM"; // le joueur est envoyé en salle d'examen
 	public static final String GAM_FRDM = "FRDM"; // le joueur est sorti de salle d'examen
+	public static final String GAM_FRDM_C = "FRDM_C";   // le joueur a reçu une carte de sortie d'examen
+	public static final String GAM_FRDM_U = "FRDM_U";   // le joueur a utilisé une carte de sortie d'examen
+	public static final String GAM_FRDM_T = "FRDM_T";   // le joueur a payé la taxe de sortie d'examen
 	public static final String GAM_HYPOT = "HPTQ"; // le joueur met en hypothèque une propriété
 	public static final String GAM_NHYPOT = "NHPTQ"; // le joueur lève l'hypothèque d'une propriété
 	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
 	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
 	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
 	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
+
+	// Factors used to calculate rents
+	public static final int RENT_TO_1C = 5;
+	public static final int RENT_TO_2C = 15;
+	public static final int RENT_TO_3C = 30;
+	public static final int RENT_TO_4C = 45;
+	public static final int RENT_TO_1H = 54;
 }

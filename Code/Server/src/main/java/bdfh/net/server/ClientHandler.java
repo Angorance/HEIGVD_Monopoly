@@ -208,6 +208,14 @@ public class ClientHandler implements Handler {
 						// TODO game.sellHomeCinema(this, Integer.parseInt(param[0]));
 						break;
 					
+					case GameProtocol.GAM_FRDM_U :
+						game.useFreedomCard();
+						break;
+					
+					case GameProtocol.GAM_FRDM_T :
+						game.payExamTax();
+						break;
+					
 					default: // WTF ???
 						sendData("U wot m8 ?");
 						
