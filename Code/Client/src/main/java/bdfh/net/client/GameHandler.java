@@ -308,4 +308,12 @@ public class GameHandler extends Thread {
 	public void useFreedomCard() {
 		sendData(GameProtocol.GAM_FRDM_U);
 	}
+	
+	/**
+	 * Pay the tax to leave the exam.
+	 */
+	public void payExamTax() {
+		
+		sendData(GameProtocol.GAM_FRDM_T);
+	}
 }

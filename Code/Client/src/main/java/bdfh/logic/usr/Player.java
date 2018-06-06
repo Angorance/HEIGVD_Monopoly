@@ -205,6 +205,14 @@ public class Player {
 	}
 	
 	/**
+	 * Pay the tax to leave the exam.
+	 */
+	public void payExamTax() {
+		
+		GameHandler.getInstance().payExamTax();
+	}
+	
+	/**
 	 * Set the bounds of the parameters.
 	 *
 	 * @param bounds    Bounds to set.
