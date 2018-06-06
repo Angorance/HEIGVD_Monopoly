@@ -177,26 +177,7 @@ public class Board {
 			case GameProtocol.SQUA_ORANGE:
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_YELLOW:
-				
-				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayer().getClientID() && !s.isMortgaged()){
-					
-					// Get the rent to pay
-					int rent = s.getPrices().getRents()[s.getLevelRent()];
-					
-					// The current player pay the rent
-					game.manageMoney(game.getCurrentPlayer(), rent * -1);
-					
-					game.notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(rent));
-					LOG.log(Level.INFO, game.getCurrentPlayer().getClientUsername() + " a payé " + rent + ".- de loyer à " + s.getOwner().getClientUsername() + ".");
-					
-					// The owner of the square receives the rent
-					game.manageMoney(s.getOwner(), rent);
-					
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN, String.valueOf(rent));
-					LOG.log(Level.INFO, s.getOwner().getClientUsername() + " a reçu " + rent + ".- de loyer de " + game.getCurrentPlayer().getClientUsername() + ".");
-				}
 				handleProperty(game, s);
-				
 				break;
 		}
 	}
@@ -313,7 +294,21 @@ public class Board {
 		ClientHandler player = game.getCurrentPlayer();
 		
 		if(owner != null && owner.getClientID() != player.getClientID() && !s.isMortgaged()){
-			// TODO payer le loyer selon canap et homeciné
+			
+			// Get the rent to pay
+			int rent = s.getPrices().getRents()[s.getLevelRent()];
+			
+			// The current player pay the rent
+			game.manageMoney(player, rent * -1);
+			
+			game.notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(rent));
+			LOG.log(Level.INFO, player.getClientUsername() + " a payé " + rent + ".- de loyer à " + owner.getClientUsername() + ".");
+			
+			// The owner of the square receives the rent
+			game.manageMoney(owner, rent);
+			
+			game.notifyPlayers(owner, GameProtocol.GAM_GAIN, String.valueOf(rent));
+			LOG.log(Level.INFO, owner.getClientUsername() + " a reçu " + rent + ".- de loyer de " + player.getClientUsername() + ".");
 		}
 	}
 	
