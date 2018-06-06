@@ -30,8 +30,9 @@ public class GameHandler extends Thread {
 	HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
 	LightBoard board = null;
 	
-	// Map a player ID to his exam state.
+	// Map a player ID to his exam state and to his freedom cards
 	private HashMap<Integer, Boolean> examState = new HashMap<>();
+	private HashMap<Integer, Integer> examCards = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -112,6 +113,31 @@ public class GameHandler extends Thread {
 			
 			case GameProtocol.GAM_FRDM:
 				examState.put(Integer.parseInt(split[1]), false);
+				break;
+
+			case GameProtocol.GAM_FRDM_C:
+
+				// The player received a freedom card
+				int oldNumber = examCards.get(Integer.parseInt(split[1]));
+				examCards.put(Integer.parseInt(split[1]), oldNumber + 1);
+				
+				// Update the player
+				Player.getInstance().setHasFreedomCard(true);
+				break;
+
+			case GameProtocol.GAM_FRDM_U:
+
+				// The player used a freedom card
+				oldNumber = examCards.get(Integer.parseInt(split[1]));
+				examCards.put(Integer.parseInt(split[1]), oldNumber - 1);
+				
+				// Update the player
+				if(examCards.get(Integer.parseInt(split[1])) > 0) {
+					
+					Player.getInstance().setHasFreedomCard(true);
+				} else {
+					Player.getInstance().setHasFreedomCard(false);
+				}
 				break;
 		}
 	}
@@ -209,6 +235,7 @@ public class GameHandler extends Thread {
 			
 			players.put(id, new MutablePair<>(username, capital));
 			examState.put(id, false);
+			examCards.put(id, 0);
 			
 			if (Player.getInstance().getUsername().equals(username)) {
 				Player.getInstance().setID(id);
@@ -250,8 +277,7 @@ public class GameHandler extends Thread {
 			this.notify();
 		}
 	}
-	
-	
+
 	private void manageGain(String[] split) {
 		
 		updateCapital(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
@@ -274,5 +300,12 @@ public class GameHandler extends Thread {
 	private void manageMove(String[] split) {
 	
 		sub.move(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+	}
+	
+	/**
+	 * Use a card the leave the exam.
+	 */
+	public void useFreedomCard() {
+		sendData(GameProtocol.GAM_FRDM_U);
 	}
 }

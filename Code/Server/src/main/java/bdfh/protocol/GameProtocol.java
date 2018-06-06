@@ -53,6 +53,8 @@ public abstract class GameProtocol {
 	public static final String GAM_MOV = "MOVE"; // le joueur doit bouger
 	public static final String GAM_EXAM = "EXAM"; // le joueur est envoyé en salle d'examen
 	public static final String GAM_FRDM = "FRDM"; // le joueur est sorti de salle d'examen
+	public static final String GAM_FRDM_C = "FRDM_C";   // le joueur a reçu une carte de sortie d'examen
+	public static final String GAM_FRDM_U = "FRDM_U";   // le joueur a utilisé une carte de sortie d'examen
 	public static final String GAM_HYPOT = "HPTQ"; // le joueur met en hypothèque une propriété
 	public static final String GAM_NHYPOT = "NHPTQ"; // le joueur lève l'hypothèque d'une propriété
 

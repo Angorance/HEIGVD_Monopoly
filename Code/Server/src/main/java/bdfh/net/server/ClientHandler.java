@@ -192,6 +192,10 @@ public class ClientHandler implements Handler {
 						game.disencumbrance(this, Integer.valueOf(param[1]));
 						break;
 					
+					case GameProtocol.GAM_FRDM_U :
+						game.useFreedomCard();
+						break;
+					
 					default: // WTF ???
 						sendData("U wot m8 ?");
 						
