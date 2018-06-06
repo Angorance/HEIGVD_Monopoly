@@ -177,8 +177,23 @@ public class Board {
 			case GameProtocol.SQUA_ORANGE:
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_YELLOW:
+				
 				if(s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayer().getClientID() && !s.isMortgaged()){
-					// TODO payer le loyaer
+					
+					// Get the rent to pay
+					int rent = s.getPrices().getRents()[s.getLevelRent()];
+					
+					// The current player pay the rent
+					game.manageMoney(game.getCurrentPlayer(), rent * -1);
+					
+					game.notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(rent));
+					LOG.log(Level.INFO, game.getCurrentPlayer().getClientUsername() + " a payé " + rent + ".- de loyer à " + s.getOwner().getClientUsername() + ".");
+					
+					// The owner of the square receives the rent
+					game.manageMoney(s.getOwner(), rent);
+					
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN, String.valueOf(rent));
+					LOG.log(Level.INFO, s.getOwner().getClientUsername() + " a reçu " + rent + ".- de loyer de " + game.getCurrentPlayer().getClientUsername() + ".");
 				}
 				
 				break;
@@ -221,27 +236,6 @@ public class Board {
 		}
 		
 		return returned;
-	}
-	
-	/**
-	 * Get the square of the exam.
-	 *
-	 * @return square of the exam.
-	 */
-	public Square getExamSquare() {
-		
-		Square exam = null;
-		
-		for(int i = 0; i < NB_SQUARE; i++) {
-			
-			exam = board[i];
-			
-			if(exam.getFamily() == GameProtocol.SQUA_EXAM) {
-				break;
-			}
-		}
-		
-		return exam;
 	}
 	
 	public String jsonify() {

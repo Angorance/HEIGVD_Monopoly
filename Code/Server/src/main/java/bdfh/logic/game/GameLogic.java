@@ -160,7 +160,7 @@ public class GameLogic extends Thread {
 	public void payExamTax() {
 		
 		// Pay the tax
-		int amount = board.getExamSquare().getPrices().getRent();
+		int amount = board.getCurrentSquare(getCurrentPlayerID()).getPrices().getRent();
 		manageMoney(currentPlayer, amount * -1);
 		
 		// Notify
@@ -412,6 +412,9 @@ public class GameLogic extends Thread {
 						
 						if(player != currentPlayer) {
 							manageMoney(player, amount * -1);
+							
+							notifyPlayers(player, GameProtocol.GAM_PAY, String.valueOf(amount));
+							LOG.log(Level.INFO, player.getClientUsername() + " a donné " + amount + ".- à " + currentPlayer.getClientUsername() + ".");
 						}
 					}
 					
@@ -479,7 +482,7 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	private void notifyPlayers(String cmd, String data) {
+	public void notifyPlayers(String cmd, String data) {
 		
 		String param = "";
 		
@@ -496,7 +499,23 @@ public class GameLogic extends Thread {
 		for (ClientHandler c : players) {
 			c.sendData(cmd, param);
 		}
+	}
+	
+	public void notifyPlayers(ClientHandler player, String cmd, String data) {
 		
+		String param = Integer.toString(player.getClientID());
+		
+		if(data != ""){
+			param += " ";
+		}
+		
+		param += data;
+		
+		LOG.log(Level.INFO, "sending to players : " + cmd + " " + param);
+		
+		for (ClientHandler c : players) {
+			c.sendData(cmd, param);
+		}
 	}
 	
 	public int getCurrentPlayerID() {
