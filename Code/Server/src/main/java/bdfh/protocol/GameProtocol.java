@@ -77,6 +77,8 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_1COMP = 4;
 	public static final int RENT_TO_2COMP = 10;
 	
+	public static final double RATE_HYPOTHEQUE = 1.1;
+	
 	public static final int SUCCESS = 0;
 	public static final int NOT_ENOUGH_MONEY = 1;
 	public static final int NOT_ENOUGH_COUCHES = 2;
