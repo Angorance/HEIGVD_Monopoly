@@ -417,10 +417,10 @@ public class Controller_board implements Initializable, IWindow {
 				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getValue();
 				MutablePair<Boolean,Boolean> pair = GameHandler.getInstance().getExamStates().get(idPlayer);
 				boolean isPrison = pair.getKey();
-				boolean asCard = pair.getValue();
+				boolean hasCard = pair.getValue();
 				labelCapitals[cnt].setText(String.valueOf(capital));
 				labelPrisons[cnt].setText(isPrison ? "X" : "");
-				labelCartes[cnt].setText(asCard ? "X" : "");
+				labelCartes[cnt].setText(hasCard ? "X" : "");
 				cnt++;
 			}
 		});
@@ -637,13 +637,13 @@ public class Controller_board implements Initializable, IWindow {
 			String username = pair.getKey();
 			int capital = pair.getValue();
 			boolean isPrison =  pair2.getKey();
-			boolean asCard = pair2.getValue();
+			boolean hasCard = pair2.getValue();
 			
 			labelPlayers[cnt].setText(username);
 			labelCapitals[cnt].setText(String.valueOf(capital));
 			
 			labelPrisons[cnt].setText(isPrison ? "X" : "");
-			labelCartes[cnt].setText(asCard ? "X" : "");
+			labelCartes[cnt].setText(hasCard ? "X" : "");
 			
 			cnt++;
 		}
