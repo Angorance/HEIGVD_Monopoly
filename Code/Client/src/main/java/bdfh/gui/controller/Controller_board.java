@@ -522,11 +522,11 @@ public class Controller_board implements Initializable, IWindow {
 	public void move(int idPlayer, int pos) {
 		
 		Platform.runLater(() -> {
-			int tmp = posPlayer.get(idPlayer);
+			int tmp = GameHandler.getInstance().getPlayers().get(idPlayer).getPosition();
 			pawnDisplay tmpPD = displayerList.get(idPlayer);
 			cases.get(tmp).getChildren().removeAll(tmpPD);
 			cases.get(pos).getChildren().add(tmpPD);
-			posPlayer.put(idPlayer, pos);
+			GameHandler.getInstance().getPlayers().get(idPlayer).setPosition(pos);
 			
 			detailSquare(GameHandler.getInstance().getBoard().getSquares().get(pos));
 		});
