@@ -630,7 +630,7 @@ public class GameLogic extends Thread {
 	/**
 	 * Allows a player to buy a couch for the given square if the conditions are fulfilled.
 	 *
-	 * @param caller Player trying to buy.
+	 * @param player Player trying to buy.
 	 * @param squareId Position of the square (ID).
 	 */
 	public synchronized int buyCouch(ClientHandler player, int squareId) {
@@ -639,11 +639,11 @@ public class GameLogic extends Thread {
 		int price = square.getPrices().getPriceCouch();
 		int sellPrice = square.getPrices().getSellingCouchPrice();
 		
-		if (board.hasFullFamily(caller.getClientID(), square.getFamily())) {
+		if (board.hasFullFamily(player.getClientID(), square.getFamily())) {
 			
 			if (!square.hasHomeCinema() || square.getNbCouch() != 4) {
 				
-				if (playersFortune.get(caller.getClientID())[CAPITAL] < price) {
+				if (playersFortune.get(player.getClientID())[CAPITAL] < price) {
 					
 					return NOT_ENOUGH_MONEY;
 				} else if (!board.checkCouchRepartition(square)) {
@@ -652,7 +652,7 @@ public class GameLogic extends Thread {
 				} else {
 					
 					square.toggleCouch(1);
-					manageMoney(caller, -1 * price);
+					manageMoney(player, -1 * price);
 					playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
 					
 					return SUCCESS;
@@ -740,9 +740,6 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	public synchronized int sellCouch(ClientHandler player, int squareId, int n) {
-	
-		return SUCCESS;
 	/**
 	 * TODO
 	 * @param player
