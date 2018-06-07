@@ -468,7 +468,31 @@ public class GameLogic extends Thread {
 					break;
 				
 				case GameProtocol.CARD_REP:
-					// TODO
+					int nbCouches = 0;
+					int nbHomeCinema = 0;
+					
+					// Check all the possessions of the player
+					for(int s = 0; s < Board.NB_SQUARE; s++) {
+						
+						if(board.getSquare(s).getOwner() == currentPlayer) {
+							
+							nbCouches += board.getSquare(s).getNbCouch();
+							nbHomeCinema += board.getSquare(s).hasHomeCinema() ? 1 : 0;
+						}
+					}
+					
+					// Pay the reparation
+					int repCouch = Integer.parseInt(fullAction[1]);
+					int repHome = Integer.parseInt(fullAction[2]);
+					int totalAmount = (repCouch * nbCouches) + (repHome * nbHomeCinema);
+					
+					manageMoney(currentPlayer, totalAmount * -1);
+					
+					// Notify
+					notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(totalAmount));
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a réparé ses canapés et home cinémas "
+							+ "pour un total de " + totalAmount + " francs.");
+					
 					break;
 			}
 			
