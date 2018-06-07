@@ -160,6 +160,11 @@ public class GameHandler extends Thread {
 				sub.updateBoard();
 				
 				break;
+				
+			case GameProtocol.GAM_BUYS:
+				int pos = Integer.parseInt(split[2]);
+				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(split[1])));
+				break;
 		}
 	}
 	

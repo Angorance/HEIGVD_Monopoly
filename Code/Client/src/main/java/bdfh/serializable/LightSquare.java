@@ -15,7 +15,7 @@ public class LightSquare {
 	private String family;          // Family of the square
 	private String name;            // Name of the square
 	private LightPrice prices;      // Prices of the square
-	private String owner;           // Owner of the square
+	private LightPlayer owner;           // Owner of the square
 	
 	public LightSquare() {}
 
@@ -59,12 +59,12 @@ public class LightSquare {
 		this.prices = prices;
 	}
 	
-	public String getOwner() {
+	public LightPlayer getOwner() {
 		
 		return owner;
 	}
 	
-	public void setOwner(String owner) {
+	public void setOwner(LightPlayer owner) {
 		
 		this.owner = owner;
 	}
