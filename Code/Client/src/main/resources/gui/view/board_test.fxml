@@ -140,6 +140,19 @@
                         <Label fx:id="loyer1_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
+                  <GridPane fx:id="infoTax" layoutX="33.0" layoutY="85.0" prefHeight="222.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Prix" />
+                        <Label fx:id="price_tax" text="-" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
                   <GridPane fx:id="buttons_properties" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -166,6 +179,7 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
                      </rowConstraints>
                      <children>
                         <JFXButton fx:id="buy_buttonInstitute" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" />
@@ -181,6 +195,7 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
                      </rowConstraints>
                      <children>
                         <JFXButton fx:id="buy_buttonCompany" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" />
