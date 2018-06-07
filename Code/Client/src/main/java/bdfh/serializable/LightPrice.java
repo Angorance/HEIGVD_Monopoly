@@ -85,11 +85,10 @@ public class LightPrice {
 		
 		int[] rents = new int[6];
 		
-		// Simple rent
-		rents[0] = getRent();
-		
-		// Rents for colored squares
 		if(getPriceCouch() != null) {
+			
+			// Simple rent
+			rents[0] = getRent();
 			
 			// Rents with couch(es)
 			rents[1] = getRent() * GameProtocol.RENT_TO_1COUC;
@@ -103,10 +102,10 @@ public class LightPrice {
 		} else {
 			
 			// Rents for institutes
-			rents[1] = getRent() * GameProtocol.RENT_TO_1INST;
-			rents[2] = getRent() * GameProtocol.RENT_TO_2INST;
-			rents[3] = getRent() * GameProtocol.RENT_TO_3INST;
-			rents[4] = getRent() * GameProtocol.RENT_TO_4INST;
+			rents[0] = getRent() * GameProtocol.RENT_TO_1INST;
+			rents[1] = getRent() * GameProtocol.RENT_TO_2INST;
+			rents[2] = getRent() * GameProtocol.RENT_TO_3INST;
+			rents[3] = getRent() * GameProtocol.RENT_TO_4INST;
 		}
 		
 		return rents;
