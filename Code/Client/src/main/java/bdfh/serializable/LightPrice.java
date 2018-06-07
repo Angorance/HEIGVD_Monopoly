@@ -83,9 +83,11 @@ public class LightPrice {
 	 */
 	public int[] getRents() {
 		
-		int[] rents = new int[6];
+		int[] rents;
 		
 		if(getPriceCouch() != null) {
+			
+			rents = new int[6];
 			
 			// Simple rent
 			rents[0] = getRent();
@@ -100,6 +102,8 @@ public class LightPrice {
 			rents[5] = getRent() * GameProtocol.RENT_TO_1HOME;
 			
 		} else {
+			
+			rents = new int[4];
 			
 			// Rents for institutes
 			rents[0] = getRent() * GameProtocol.RENT_TO_1INST;
