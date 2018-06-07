@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import static bdfh.protocol.GameProtocol.GAM_GAIN;
 import static bdfh.protocol.GameProtocol.GAM_PAY;
+import static bdfh.protocol.GameProtocol.SQUA_START;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -435,6 +436,10 @@ public class GameLogic extends Thread {
 					
 					// Move the player
 					board.setPlayerPosition(getCurrentPlayerID(), position);
+					
+					if (board.getCurrentSquare(position).getFamily() == SQUA_START) {
+						handleStartPassed();
+					}
 					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(
