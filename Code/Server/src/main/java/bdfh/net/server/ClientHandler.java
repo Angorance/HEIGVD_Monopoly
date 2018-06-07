@@ -17,6 +17,11 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static bdfh.protocol.GameProtocol.*;
+import static bdfh.protocol.Protocoly.ANS_DENIED;
+import static bdfh.protocol.Protocoly.ANS_ERR;
+import static bdfh.protocol.Protocoly.ANS_SUCCESS;
+
 /**
  * Handle de dialog with a client
  *
@@ -52,8 +57,7 @@ public class ClientHandler implements Handler {
 		
 		DatabaseConnect database = DatabaseConnect.getInstance();
 		
-		String bounds = GsonSerializer.getInstance()
-				.toJson(BoundParameters.getInstance());
+		String bounds = GsonSerializer.getInstance().toJson(BoundParameters.getInstance());
 		
 		sendData(Protocoly.ANS_CONN, bounds);
 		
@@ -78,8 +82,7 @@ public class ClientHandler implements Handler {
 				param = new String[args.length - 1];
 				System.arraycopy(args, 1, param, 0, param.length);
 				
-				LOG.log(Level.INFO,
-						"CMD RECEIVED BY PLAYER" + clientID + ": " + line);
+				LOG.log(Level.INFO, "CMD RECEIVED BY PLAYER" + clientID + ": " + line);
 				
 				// instruction processing
 				switch (cmd) {
@@ -95,8 +98,7 @@ public class ClientHandler implements Handler {
 					case Protocoly.CMD_LOGIN: // USER LOGIN
 						
 						// we try to log the user in
-						int result = database.getPlayerDB()
-								.playerExists(param[0], param[1]);
+						int result = database.getPlayerDB().playerExists(param[0], param[1]);
 						
 						if (result == 0) {
 							sendData(Protocoly.ANS_UNKNOWN);
@@ -109,12 +111,11 @@ public class ClientHandler implements Handler {
 							LOG.log(Level.INFO, "Wrong credentials");
 							
 						} else {
-							sendData(Protocoly.ANS_SUCCESS);
+							sendData(ANS_SUCCESS);
 							clientID = result;
 							clientUsername = param[0];
 							
-							LOG.log(Level.INFO,
-									"User " + clientID + " connected");
+							LOG.log(Level.INFO, "User " + clientID + " connected");
 						}
 						
 						
@@ -122,14 +123,12 @@ public class ClientHandler implements Handler {
 					
 					case Protocoly.CMD_RGSTR: // USER REGISTER
 						
-						if (database.getPlayerDB()
-								.createPlayer(param[0], param[1])) {
+						if (database.getPlayerDB().createPlayer(param[0], param[1])) {
 							// username free, we retrieve the user ID
-							clientID = database.getPlayerDB()
-									.playerExists(param[0], param[1]);
+							clientID = database.getPlayerDB().playerExists(param[0], param[1]);
 							clientUsername = param[0];
 							
-							sendData(Protocoly.ANS_SUCCESS);
+							sendData(ANS_SUCCESS);
 							
 							LOG.log(Level.INFO, "User created in database");
 							
@@ -137,8 +136,8 @@ public class ClientHandler implements Handler {
 							// username already taken
 							sendData(Protocoly.ANS_DENIED);
 							
-							LOG.log(Level.INFO, "Registration failed: "
-									+ "Username already in database.");
+							LOG.log(Level.INFO,
+									"Registration failed: " + "Username already in database.");
 							
 						}
 						
@@ -166,58 +165,67 @@ public class ClientHandler implements Handler {
 					
 					// ============================================================================================
 					// commande de phase de jeu
-					case GameProtocol.GAM_ROLL :
-						if(game!= null){
+					case GameProtocol.GAM_ROLL:
+						if (game != null) {
 							game.rollDice(this);
 						}
 						break;
 					
-					case GameProtocol.GAM_ENDT :
-						if(game != null){
+					case GameProtocol.GAM_ENDT:
+						if (game != null) {
 							game.endTurn(this);
 						}
 						break;
 					
-					case GameProtocol.GAM_BUYS :
-						if(game != null){
-							game.buySquare(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+					case GameProtocol.GAM_BUYS:
+						if (game != null) {
+							handleResponse(game.buySquare(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						}
 						break;
 					
-					case GameProtocol.GAM_HYPOT :
-						game.setMortgaged(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+					case GameProtocol.GAM_SELL:
+						handleResponse(game.sellSquare(this, Integer.valueOf(param[0])));
+						break;
+						
+					case GameProtocol.GAM_HYPOT:
+						handleResponse(game.setMortgaged(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						break;
 					
-					case GameProtocol.GAM_NHYPOT :
-						game.disencumbrance(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+					case GameProtocol.GAM_NHYPOT:
+						handleResponse(game.disencumbrance(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						break;
-					
-					case GameProtocol.GAM_SELL :
-						game.sellSquare(this, Integer.valueOf(param[0]));
-						break;
-					
 					
 					case GameProtocol.GAM_BCOUCH:
-						game.buyCouch(this, Integer.parseInt(param[0]));
+						handleResponse(game.buyCouch(this, Integer.parseInt(param[0])));
 						break;
 					
 					case GameProtocol.GAM_SCOUCH:
-						game.sellCouch(this, Integer.parseInt(param[0]), false);
+						if (game.sellCouch(this, Integer.parseInt(param[0]), false)) {
+							sendData(ANS_SUCCESS);
+						} else {
+							sendData(ANS_DENIED);
+						}
+						
 						break;
 					
 					case GameProtocol.GAM_BHCINE:
-						game.buyHomeCinema(this, Integer.parseInt(param[0]));
+						handleResponse(game.buyHomeCinema(this, Integer.parseInt(param[0])));
 						break;
 					
 					case GameProtocol.GAM_SHCINE:
-						game.sellHomeCinema(this, Integer.parseInt(param[0]));
+						if (game.sellHomeCinema(this, Integer.parseInt(param[0]))) {
+							sendData(ANS_SUCCESS);
+						} else {
+							sendData(ANS_DENIED);
+						}
+						
 						break;
 					
-					case GameProtocol.GAM_FRDM_U :
+					case GameProtocol.GAM_FRDM_U:
 						game.useFreedomCard();
 						break;
 					
-					case GameProtocol.GAM_FRDM_T :
+					case GameProtocol.GAM_FRDM_T:
 						game.payExamTax();
 						break;
 					
@@ -235,12 +243,50 @@ public class ClientHandler implements Handler {
 				
 				LOG.log(Level.SEVERE,
 						"Client " + clientID + " disconnected suddenly. (NullPointerException)");
-			} catch (SocketException e){
+			} catch (SocketException e) {
 				
 				byebye();
 				LOG.log(Level.SEVERE,
 						"Client " + clientID + " disconnected suddenly. (SocketException)");
 			}
+		}
+	}
+	
+	/**
+	 * Handle the responses of the server to the client based on ERROR codes and messages.
+	 *
+	 * @param err Error code.
+	 */
+	private void handleResponse(int err) {
+		
+		switch (err) {
+			case SUCCESS: // 0
+				sendData(ANS_SUCCESS);
+				break;
+			
+			case NOT_ENOUGH_MONEY: // 1
+				sendData(ANS_ERR, ERR1);
+				break;
+			
+			case NOT_ENOUGH_COUCHES: // 2
+				sendData(ANS_ERR, ERR2);
+				break;
+			
+			case BAD_DISTRIBUTION: // 3
+				sendData(ANS_ERR, ERR3);
+				break;
+			
+			case FULL: // 4
+				sendData(ANS_ERR, ERR4);
+				break;
+			
+			case NOT_FULL_FAMILY: // 5
+				sendData(ANS_ERR, ERR5);
+				break;
+			
+			case NOT_YOUR_TURN: // 6
+				sendData(ANS_ERR, ERR6);
+				break;
 		}
 	}
 	
@@ -292,14 +338,13 @@ public class ClientHandler implements Handler {
 		
 		try {
 			
-			Parameter p = GsonSerializer.getInstance()
-					.fromJson(param, Parameter.class);
+			Parameter p = GsonSerializer.getInstance().fromJson(param, Parameter.class);
 			
 			lobby = Lobbies.getInstance().createLobby(this, p);
 			
 			LOG.log(Level.INFO, "Lobby " + lobby.getID() + " created.");
 			
-			sendData(Protocoly.ANS_SUCCESS, Integer.toString(lobby.getID()));
+			sendData(ANS_SUCCESS, Integer.toString(lobby.getID()));
 		} catch (JsonSyntaxException e) {
 			
 			sendData(Protocoly.ANS_DENIED);
@@ -310,15 +355,13 @@ public class ClientHandler implements Handler {
 	
 	private void joinLobby(String lobbyID) {
 		
-		lobby = Lobbies.getInstance()
-				.joinLobby(this, Integer.parseInt(lobbyID));
+		lobby = Lobbies.getInstance().joinLobby(this, Integer.parseInt(lobbyID));
 		
 		if (lobby != null) {
 			
-			LOG.log(Level.INFO,
-					"Player " + clientID + " joined lobby " + lobby.getID());
+			LOG.log(Level.INFO, "Player " + clientID + " joined lobby " + lobby.getID());
 			
-			sendData(Protocoly.ANS_SUCCESS);
+			sendData(ANS_SUCCESS);
 		} else {
 			
 			LOG.log(Level.SEVERE, "Impossible to join lobby.");
@@ -334,7 +377,7 @@ public class ClientHandler implements Handler {
 			
 			LOG.log(Level.INFO, "Player " + clientID + " is ready!");
 			
-			sendData(Protocoly.ANS_SUCCESS);
+			sendData(ANS_SUCCESS);
 			
 			lobby.checkStartingCondition();
 		} else {
@@ -354,10 +397,9 @@ public class ClientHandler implements Handler {
 			Lobbies.getInstance().quitLobby(lobby, this);
 			lobby = null;
 			
-			LOG.log(Level.INFO,
-					"Player " + clientID + " left lobby" + lobbyLeft);
+			LOG.log(Level.INFO, "Player " + clientID + " left lobby" + lobbyLeft);
 			
-			sendData(Protocoly.ANS_SUCCESS);
+			sendData(ANS_SUCCESS);
 		} else {
 			
 			sendData(Protocoly.ANS_DENIED);
@@ -377,10 +419,12 @@ public class ClientHandler implements Handler {
 	}
 	
 	public void setGame(GameLogic game) {
+		
 		this.game = game;
 	}
 	
-	public String toString(){
-		return getClientID() + "-" +getClientUsername();
+	public String toString() {
+		
+		return getClientID() + "-" + getClientUsername();
 	}
 }
