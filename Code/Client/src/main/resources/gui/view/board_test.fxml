@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_board">
    <children>
-      <GridPane fx:id="board" layoutX="78.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+      <GridPane fx:id="board" layoutX="50.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
         <columnConstraints>
           <ColumnConstraints hgrow="NEVER" minWidth="100.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
@@ -45,9 +45,9 @@
                   <InnerShadow choke="0.66" />
                </effect>
                <children>
-                  <JFXButton fx:id="buy_button" layoutX="51.0" layoutY="390.0" style="-fx-background-color: cdcdcd;" text="Acheter" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="51.0" />
-                  <JFXButton fx:id="sell_button" layoutX="192.0" layoutY="391.0" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: cdcdcd;" text="Vendre" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0" />
-                  <JFXButton fx:id="hyp_button" layoutX="332.0" layoutY="192.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="50.0" />
+                  <JFXButton fx:id="buy_buttonProp" layoutX="34.0" layoutY="379.0" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat propriété" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="33.0" />
+                  <JFXButton fx:id="buy_buttonCanape" layoutX="193.0" layoutY="377.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Achat canapé" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="161.0" />
+                  <JFXButton fx:id="hyp_button" layoutX="332.0" layoutY="390.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="32.0" />
                   <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" text="Titre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <font>
                         <Font size="29.0" />
@@ -96,6 +96,8 @@
                         <Label fx:id="base" text="-" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
+                  <JFXButton fx:id="sell_buttonProp" layoutX="34.0" layoutY="414.0" style="-fx-background-color: cdcdcd;" text="Vendre propriété" />
+                  <JFXButton fx:id="sell_buttonCanape" layoutX="192.0" layoutY="414.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vendre canapé" />
                </children>
             </AnchorPane>
          </children>
@@ -124,8 +126,8 @@
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Information joueur" GridPane.columnSpan="2" />
          </children>
       </GridPane>
-      <JFXButton fx:id="rollDice_button" layoutX="161.0" layoutY="728.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="163.0" />
-      <JFXButton fx:id="endTurn_button" layoutX="375.0" layoutY="728.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="487.0" />
+      <JFXButton fx:id="rollDice_button" layoutX="163.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="163.0" />
+      <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
       <TextFlow layoutX="750.0" layoutY="297.0" prefHeight="403.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="50.0">
          <effect>
             <InnerShadow />
@@ -137,6 +139,7 @@
          </font>
       </Label>
       <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
-      <AnchorPane fx:id="popup" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="popup" mouseTransparent="true" prefHeight="800.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="message" layoutX="50.0" layoutY="42.0" prefHeight="17.0" prefWidth="650.0" text="Label" />
    </children>
 </AnchorPane>

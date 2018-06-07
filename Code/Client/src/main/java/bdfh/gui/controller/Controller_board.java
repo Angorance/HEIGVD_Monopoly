@@ -54,8 +54,11 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label label_capital3;
 	@FXML private Label label_capital4;
 	
-	@FXML private JFXButton buy_button;
-	@FXML private JFXButton sell_button;
+	@FXML private JFXButton buy_buttonProp;
+	@FXML private JFXButton buy_buttonCanape;
+	@FXML private JFXButton sell_buttonProp;
+	@FXML private JFXButton sell_buttonCanape;
+	
 	@FXML private JFXButton hyp_button;
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
@@ -99,11 +102,13 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	public void useCard() {
+		
 		Player.getInstance().useFreedomCard();
 		unloadPopup();
 	}
 	
 	public void payTax() {
+		
 		Player.getInstance().payExamTax();
 		unloadPopup();
 	}
@@ -259,9 +264,12 @@ public class Controller_board implements Initializable, IWindow {
 		venteCanape.setText("-");
 		venteHC.setText("-");
 		
-		buy_button.setDisable(true);
+		buy_buttonProp.setDisable(true);
+		buy_buttonCanape.setDisable(true);
+		sell_buttonProp.setDisable(true);
+		sell_buttonCanape.setDisable(true);
 		hyp_button.setDisable(true);
-		sell_button.setDisable(true);
+		
 	}
 	
 	private void infoProperties(LightSquare square) {
@@ -287,9 +295,11 @@ public class Controller_board implements Initializable, IWindow {
 		venteHC.setText(String.valueOf(vhc));
 		
 		//TODO à modifier
-		buy_button.setDisable(false);
+		buy_buttonProp.setDisable(false);
+		buy_buttonCanape.setDisable(false);
+		sell_buttonProp.setDisable(false);
+		sell_buttonCanape.setDisable(false);
 		hyp_button.setDisable(false);
-		sell_button.setDisable(false);
 	}
 	
 	public void updateBoard() {
@@ -312,7 +322,7 @@ public class Controller_board implements Initializable, IWindow {
 	@Override public void hide() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) buy_button.getScene().getWindow();
+			thisStage = (Stage) buy_buttonProp.getScene().getWindow();
 		}
 		thisStage.hide();
 	}
@@ -320,7 +330,7 @@ public class Controller_board implements Initializable, IWindow {
 	@Override public void show() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) buy_button.getScene().getWindow();
+			thisStage = (Stage) buy_buttonProp.getScene().getWindow();
 		}
 		thisStage.show();
 	}
@@ -485,6 +495,7 @@ public class Controller_board implements Initializable, IWindow {
 				endTurn();
 			}
 		});
+		
 		
 		windowManager.getInstance().setBoard(this);
 		
