@@ -59,4 +59,9 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_3C = 30;
 	public static final int RENT_TO_4C = 45;
 	public static final int RENT_TO_1H = 54;
+	
+	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
+	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
+	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
+	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
 }

@@ -2,6 +2,7 @@ package bdfh.net.client;
 
 import bdfh.exceptions.*;
 import bdfh.logic.usr.*;
+import bdfh.net.protocol.GameProtocol;
 import bdfh.net.protocol.Protocoly;
 import bdfh.serializable.*;
 
@@ -19,6 +20,10 @@ import java.util.logging.*;
  * @version 1.0
  */
 public class Client {
+	
+	private static int COUCH = 0;
+	private static int CINE = 1;
+	
 	
 	private static Logger LOG = Logger.getLogger("Client");
 	
@@ -362,5 +367,36 @@ public class Client {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * Allows the player to buy or sell either a couch or a home cinema.
+	 * Send the command to the server and manage the response.
+	 *
+	 * @param buy
+	 * @param type
+	 * @param pos
+	 */
+	public void buySellImprovements(boolean buy, int type, int pos) {
+		
+		if (type == COUCH) {
+			if (buy) {
+				// Send the command to the server
+				sendData(GameProtocol.GAM_BCOUCH + " " + pos);
+			} else {
+				// Send the command to the server
+				sendData(GameProtocol.GAM_SCOUCH + " " + pos);
+			}
+		} else if (type == CINE) {
+			if (buy) {
+				// Send the command to the server
+				sendData(GameProtocol.GAM_BHCINE + " " + pos);
+			} else {
+				// Send the command to the server
+				sendData(GameProtocol.GAM_SHCINE + " " + pos);
+			}
+		}
+		
+		// TODO - Manage response !!!
 	}
 }

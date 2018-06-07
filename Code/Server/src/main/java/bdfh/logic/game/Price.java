@@ -50,9 +50,19 @@ public class Price {
 		return priceCouch;
 	}
 	
+	public Integer getSellingCouchPrice() {
+		
+		return priceCouch / 2;
+	}
+	
 	public Integer getPriceHomeCinema() {
 		
 		return priceHomeCinema;
+	}
+	
+	public Integer getSellingHomeCinemaPrice() {
+		
+		return priceHomeCinema / 2;
 	}
 	
 	public Integer getHypothec() {
