@@ -138,8 +138,12 @@ public class GameLogic extends Thread {
 		
 		setExamState(true, 0, 0);
 		
+		// Move the player
+		Square exam = board.getExamSquare();
+		board.setPlayerPosition(getCurrentPlayerID(), exam.getPosition());
+		
 		// Notify
-		notifyPlayers(GameProtocol.GAM_EXAM, "");
+		notifyPlayers(GameProtocol.GAM_EXAM, Integer.toString(exam.getPosition()));
 		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a été envoyé en salle d'examen.");
 	}
 	
