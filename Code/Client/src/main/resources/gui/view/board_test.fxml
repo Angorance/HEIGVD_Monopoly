@@ -207,10 +207,12 @@
             </AnchorPane>
          </children>
       </GridPane>
-      <GridPane layoutX="750.0" layoutY="50.0" prefHeight="210.0" prefWidth="200.0" AnchorPane.rightAnchor="50.0">
+      <GridPane layoutX="750.0" layoutY="50.0" prefHeight="210.0" prefWidth="235.0" AnchorPane.rightAnchor="15.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" valignment="CENTER" />
@@ -229,11 +231,21 @@
             <Label fx:id="label_capital3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="label_capital4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Information joueur" GridPane.columnSpan="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Prison" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Carte" GridPane.columnIndex="3" />
+            <Label fx:id="prison_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="prison_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="prison_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="prison_player4" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="carte_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="carte_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label fx:id="carte_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="carte_player4" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <JFXButton fx:id="rollDice_button" layoutX="163.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="163.0" />
       <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
-      <TextFlow layoutX="750.0" layoutY="297.0" prefHeight="403.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="50.0">
+      <TextFlow layoutX="750.0" layoutY="297.0" prefHeight="403.0" prefWidth="235.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="15.0">
          <effect>
             <InnerShadow />
          </effect>

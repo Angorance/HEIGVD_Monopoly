@@ -78,6 +78,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private GridPane infoTax;
 	@FXML private Label price_tax;
 	
+	/*Info player*/
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
 	@FXML private Label label_player2;
@@ -87,12 +88,23 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label label_capital2;
 	@FXML private Label label_capital3;
 	@FXML private Label label_capital4;
+	@FXML private Label prison_player1;
+	@FXML private Label prison_player2;
+	@FXML private Label prison_player3;
+	@FXML private Label prison_player4;
+	@FXML private Label carte_player1;
+	@FXML private Label carte_player2;
+	@FXML private Label carte_player3;
+	@FXML private Label carte_player4;
+	
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
 	
 	private static ArrayList<FlowPane> cases = new ArrayList<>();
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
+	private Label[] labelPrisons = new Label[4];
+	private Label[] labelCartes  = new Label[4];
 	private Label[] label_rentProp = new Label[6];
 	private Label[] label_rentComp = new Label[2];
 	private Label[] label_rentInst = new Label[4];
@@ -277,7 +289,7 @@ public class Controller_board implements Initializable, IWindow {
 			case GameProtocol.SQUA_COMPANY:
 				infoCompany(square);
 				break;
-			case GameProtocol.SQUA_TAX :
+			case GameProtocol.SQUA_TAX:
 				infoTax(square);
 				break;
 			default:
@@ -351,7 +363,6 @@ public class Controller_board implements Initializable, IWindow {
 		
 		price_company.setText(String.valueOf(price));
 		
-		System.out.println("Rents Inst : " + square.getPrices().getRents());
 		int cnt = 0;
 		for (String s : square.getPrices().getCompaniesRents()) {
 			label_rentComp[cnt].setText(s);
@@ -376,7 +387,6 @@ public class Controller_board implements Initializable, IWindow {
 		price_institute.setText(String.valueOf(price));
 		
 		int cnt = 0;
-		System.out.println("Rents Inst : " + square.getPrices().getRents());
 		for (int i : square.getPrices().getRents()) {
 			label_rentInst[cnt].setText(String.valueOf(i));
 			cnt++;
@@ -487,6 +497,16 @@ public class Controller_board implements Initializable, IWindow {
 		label_rentComp[0] = loyer1_company;
 		label_rentComp[1] = loyer2_company;
 		
+		labelPrisons[0] = prison_player1;
+		labelPrisons[1] = prison_player2;
+		labelPrisons[2] = prison_player3;
+		labelPrisons[3] = prison_player4;
+		
+		labelCartes[0] = carte_player1;
+		labelCartes[1] = carte_player2;
+		labelCartes[2] = carte_player3;
+		labelCartes[3] = carte_player4;
+		
 	}
 	
 	public void move(int idPlayer, int pos) {
@@ -552,9 +572,9 @@ public class Controller_board implements Initializable, IWindow {
 	private void sellHouse() {
 		
 		if (true/*canSellCouch*/) {
-			//square.sellCouch();
+			square.sellCouch();
 		} else {
-			//square.sellHomeCinema();
+			square.sellHomeCinema();
 		}
 		
 	}
@@ -562,18 +582,18 @@ public class Controller_board implements Initializable, IWindow {
 	private void buyHouse() {
 		
 		if (true/*canBuyCouch*/) {
-			//square.buyCouch();
+			square.buyCouch();
 		} else {
-			//square.buyHomeCinema();
+			square.buyHomeCinema();
 		}
 	}
 	
 	private void sellProp() {
-		//square.sellSquare();
+		square.sellSquare();
 	}
 	
 	private void buyProp() {
-		//square.buySquare();
+		square.buySquare();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
