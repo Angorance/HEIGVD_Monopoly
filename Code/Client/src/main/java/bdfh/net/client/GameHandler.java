@@ -108,7 +108,9 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GameProtocol.GAM_EXAM:
-				examState.put(Integer.parseInt(split[1]), true);
+				String[] infos = split[1].split(" ");
+				examState.put(Integer.parseInt(infos[0]), true);
+				manageMove(infos);
 				break;
 			
 			case GameProtocol.GAM_FRDM:
