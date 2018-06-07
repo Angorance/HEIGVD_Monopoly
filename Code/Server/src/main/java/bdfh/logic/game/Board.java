@@ -20,7 +20,7 @@ public class Board {
 	private final static Logger LOG = Logger.getLogger("Board");
 	
 	public static final int NB_SQUARE = 40;
-	private Map<String, ArrayList<Integer>> listPossession;
+	private Map<String, LinkedList<Square>> SquareByFamily;
 	private Map<Integer, Integer> playerPosition;
 	private Square[] board = new Square[NB_SQUARE];
 	
@@ -32,7 +32,7 @@ public class Board {
 	public Board(ArrayDeque<ClientHandler> players) {
 		
 		playerPosition = new HashMap<>();
-		listPossession = new TreeMap<>();
+		SquareByFamily = new TreeMap<>();
 		
 		for (ClientHandler c : players) {
 			playerPosition.put(c.getClientID(), 0);
@@ -41,19 +41,8 @@ public class Board {
 		// init the game board
 		for (Square s : DatabaseConnect.getInstance().getSquareDB().getSquares()) {
 			board[s.getPosition()] = s;
-			
-			if (s.isBuyable() && !listPossession.containsKey(s.getFamily())) {
-				
-				switch (s.getFamily()) {
-					case GameProtocol.SQUA_INSTITUTE:
-						listPossession.put(s.getFamily(), new ArrayList<>(Arrays.asList(-1, -1, -1, -1)));
-					case GameProtocol.SQUA_COMPANY:
-						listPossession.put(s.getFamily(), new ArrayList<>(Arrays.asList(-1, -1)));
-					default:
-						listPossession.put(s.getFamily(), new ArrayList<>(Arrays.asList(-1, -1, -1)));
-					
-				}
-			}
+			SquareByFamily.merge(s.getFamily(), new LinkedList<>(), (old, newV) -> old);
+			SquareByFamily.get(s.getFamily()).add(s);
 		}
 		
 	}
@@ -162,7 +151,6 @@ public class Board {
 			
 			case GameProtocol.SQUA_COMPANY: // IL Y EN A DEUX
 				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID() && !s.isMortgaged()) {
-					// TODO we have to check how many company the owner possess
 					int factor = s.getPrices().getRent();
 					int howManyPossession = howManyPossession(s.getOwner().getClientID(), s.getFamily());
 					if ( howManyPossession == 2) {
@@ -184,7 +172,7 @@ public class Board {
 			case GameProtocol.SQUA_CARD:
 				game.drawCard();
 				break;
-				
+			
 			case GameProtocol.SQUA_GO_EXAM:
 				game.sendToExam();
 				break;
@@ -205,8 +193,8 @@ public class Board {
 	private int howManyPossession(int clientID, String family) {
 		
 		int count = 0;
-		for (Integer i : listPossession.get(family)) {
-			if (i == clientID) {
+		for (Square i : SquareByFamily.get(family)) {
+			if (i.getOwner().getClientID() == clientID) {
 				count++;
 			}
 		}
@@ -237,7 +225,7 @@ public class Board {
 				}
 				
 				break;
-				
+			
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_BLUE:
 				if (howManyPossession(clientID, family) == 2) {
@@ -251,17 +239,11 @@ public class Board {
 	public void setOwner(ClientHandler possessor, int squarePos) {
 		
 		board[squarePos].setOwner(possessor);
-		
-		listPossession.get(board[squarePos].getFamily()).remove(0);
-		listPossession.get(board[squarePos].getFamily()).add(possessor.getClientID());
 	}
 	
 	public void removeOwner(ClientHandler oldOwner, int squarePos) {
 		
 		board[squarePos].setOwner(null);
-		
-		listPossession.get(board[squarePos].getFamily()).remove(Integer.valueOf(oldOwner.getClientID()));
-		listPossession.get(board[squarePos].getFamily()).add(0, -1);
 	}
 	
 	public Square getSquare(int posSquare) {
@@ -339,13 +321,9 @@ public class Board {
 	 * @return
 	 */
 	public boolean checkCouchRepartition(Square s) {
-		
-		// TODO - Optimize
-		for (Square tmp : board) {
-			if (tmp.getFamily().equals(s.getFamily()) && !tmp.equals(s)) {
-				if (tmp.getNbCouch() < s.getNbCouch()) {
-					return false;
-				}
+		for (Square tmp : SquareByFamily.get(s.getFamily())) {
+			if (!tmp.equals(s) && tmp.getNbCouch() < s.getNbCouch()) {
+				return false;
 			}
 		}
 		
