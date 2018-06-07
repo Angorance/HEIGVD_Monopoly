@@ -85,10 +85,12 @@ public abstract class GameProtocol {
 	public static final int BAD_DISTRIBUTION = 3;
 	public static final int FULL = 4;
 	public static final int NOT_FULL_FAMILY = 5;
+	public static final int NOT_YOUR_TURN = 6;
 	
 	public static final String ERR1 = "Vous n'avez pas assez d'argent.";
 	public static final String ERR2 = "Il n'y a pas assez de canapés sur la case.";
 	public static final String ERR3 = "Vous n'avez pas assez de canapés dans les autres cases de la même famille.";
 	public static final String ERR4 = "Il y a trop de canapés / Home Cinema sur cette case";
 	public static final String ERR5 = "Vous ne possédez pas encore toutes les cases de la famille.";
+	public static final String ERR6 = "C'est n'est pas à votre tour de jouer.";
 }

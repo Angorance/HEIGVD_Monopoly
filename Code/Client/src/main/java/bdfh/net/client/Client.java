@@ -383,6 +383,7 @@ public class Client {
 			if (buy) {
 				// Send the command to the server
 				sendData(GameProtocol.GAM_BCOUCH + " " + pos);
+				
 			} else {
 				// Send the command to the server
 				sendData(GameProtocol.GAM_SCOUCH + " " + pos);
@@ -397,7 +398,7 @@ public class Client {
 			}
 		}
 		
-		// TODO - Manage response !!!
+		manageResponse();
 	}
 	
 	/**
@@ -413,6 +414,8 @@ public class Client {
 		} else {
 			sendData(GameProtocol.GAM_NHYPOT + " " + position);
 		}
+		
+		manageResponse();
 	}
 	
 	/**
@@ -428,5 +431,11 @@ public class Client {
 		} else {
 			sendData((GameProtocol.GAM_SELL + " " + position));
 		}
+		
+		manageResponse();
+	}
+	
+	private void manageResponse(){
+		// TODO - manage Response !
 	}
 }

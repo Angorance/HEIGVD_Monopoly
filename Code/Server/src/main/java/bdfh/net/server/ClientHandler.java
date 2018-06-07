@@ -179,22 +179,21 @@ public class ClientHandler implements Handler {
 					
 					case GameProtocol.GAM_BUYS:
 						if (game != null) {
-							game.buySquare(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+							handleResponse(game.buySquare(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						}
 						break;
 					
+					case GameProtocol.GAM_SELL:
+						handleResponse(game.sellSquare(this, Integer.valueOf(param[0])));
+						break;
+						
 					case GameProtocol.GAM_HYPOT:
-						game.setMortgaged(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+						handleResponse(game.setMortgaged(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						break;
 					
 					case GameProtocol.GAM_NHYPOT:
-						game.disencumbrance(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
+						handleResponse(game.disencumbrance(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
 						break;
-					
-					case GameProtocol.GAM_SELL:
-						game.sellSquare(this, Integer.valueOf(param[0]));
-						break;
-					
 					
 					case GameProtocol.GAM_BCOUCH:
 						handleResponse(game.buyCouch(this, Integer.parseInt(param[0])));
@@ -283,6 +282,10 @@ public class ClientHandler implements Handler {
 			
 			case NOT_FULL_FAMILY: // 5
 				sendData(ANS_ERR, ERR5);
+				break;
+			
+			case NOT_YOUR_TURN: // 6
+				sendData(ANS_ERR, ERR6);
 				break;
 		}
 	}

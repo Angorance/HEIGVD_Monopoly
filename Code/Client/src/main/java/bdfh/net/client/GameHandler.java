@@ -28,9 +28,11 @@ public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
-	HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
+	private HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
+	private HashMap<Integer, MutablePair<Boolean, Boolean>> examStates = new HashMap<>();
 	//ArrayList<LightPlayer> players = new ArrayList<>();
-	LightBoard board = null;
+	
+	private LightBoard board = null;
 	
 	// Map a player ID to his exam state and to his freedom cards
 	private HashMap<Integer, Boolean> examState = new HashMap<>();
@@ -111,36 +113,75 @@ public class GameHandler extends Thread {
 				
 			case GameProtocol.GAM_EXAM:
 				String[] infos = split[1].split(" ");
-				examState.put(Integer.parseInt(infos[0]), true);
+				int id = Integer.parseInt(infos[0]);
+				examState.put(id, true);
+				examStates.put(id, new MutablePair<>(true, examCards.get(id) > 0));
 				manageMove(infos);
+				
+				// Refresh
+				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
+				
 				break;
 			
 			case GameProtocol.GAM_FRDM:
-				examState.put(Integer.parseInt(split[1]), false);
+				id = Integer.parseInt(split[1]);
+				examState.put(id, false);
+				examStates.put(id, new MutablePair<>(false, examCards.get(id) > 0));
+				
+				// Refresh
+				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
 				break;
 
 			case GameProtocol.GAM_FRDM_C:
 
 				// The player received a freedom card
 				int oldNumber = examCards.get(Integer.parseInt(split[1]));
-				examCards.put(Integer.parseInt(split[1]), oldNumber + 1);
+				id = Integer.parseInt(split[1]);
+				examCards.put(id, oldNumber + 1);
+				
+				examStates.put(id, new MutablePair<>(examState.get(id), examCards.get(id) > 0));
 				
 				// Update the player
 				Player.getInstance().setHasFreedomCard(true);
+				
+				// Refresh
+				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
 				break;
 
 			case GameProtocol.GAM_FRDM_U:
 
 				// The player used a freedom card
 				oldNumber = examCards.get(Integer.parseInt(split[1]));
-				examCards.put(Integer.parseInt(split[1]), oldNumber - 1);
+				id = Integer.parseInt(split[1]);
+				examCards.put(id, oldNumber - 1);
 				
 				// Update the player
-				if(examCards.get(Integer.parseInt(split[1])) > 0) {
+				if(examCards.get(id) > 0) {
 					
 					Player.getInstance().setHasFreedomCard(true);
 				} else {
 					Player.getInstance().setHasFreedomCard(false);
+				}
+				
+				examStates.put(id, new MutablePair<>(false, examCards.get(id) > 0));
+				
+				// Refresh
+				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
 				}
 				break;
 		}
@@ -180,6 +221,11 @@ public class GameHandler extends Thread {
 	public HashMap<Integer, MutablePair<String, Integer>> getPlayers() {
 		
 		return players;
+	}
+	
+	public HashMap<Integer, MutablePair<Boolean, Boolean>> getExamStates() {
+		
+		return examStates;
 	}
 	
 	/**
@@ -238,6 +284,7 @@ public class GameHandler extends Thread {
 			int capital = jo.get("capital").getAsInt();
 			
 			players.put(id, new MutablePair<>(username, capital));
+			examStates.put(id, new MutablePair<>(false, false));
 			examState.put(id, false);
 			examCards.put(id, 0);
 			
