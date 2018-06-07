@@ -538,7 +538,7 @@ public class GameLogic extends Thread {
 	 * @param player    Target of the change.
 	 * @param amount    Amount to add/remove.
 	 */
-	public void manageMoney(ClientHandler player, int amount) {
+	public synchronized void manageMoney(ClientHandler player, int amount) {
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
 		// TODO - check if the game is over for the player
