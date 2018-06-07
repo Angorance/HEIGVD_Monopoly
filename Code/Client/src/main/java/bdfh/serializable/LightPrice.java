@@ -68,10 +68,16 @@ public class LightPrice {
 	}
 	
 	/**
-	 * Get all the possible rents.
+	 * Get all the possible rents for colored square and institutes.
+	 *
 	 * - Simple rent
 	 * - Rent for 1-2-3-4 couches
 	 * - Rent for 1 home cinema
+	 *
+	 * - Rent for 1 institute
+	 * - Rent for 2 institutes
+	 * - Rent for 3 institutes
+	 * - Rent for 4 institutes
 	 *
 	 * @return  array with all rents.
 	 */
@@ -79,17 +85,47 @@ public class LightPrice {
 		
 		int[] rents = new int[6];
 		
-		// Simple rent
-		rents[0] = getRent();
+		if(getPriceCouch() != null) {
+			
+			// Simple rent
+			rents[0] = getRent();
+			
+			// Rents with couch(es)
+			rents[1] = getRent() * GameProtocol.RENT_TO_1COUC;
+			rents[2] = getRent() * GameProtocol.RENT_TO_2COUC;
+			rents[3] = getRent() * GameProtocol.RENT_TO_3COUC;
+			rents[4] = getRent() * GameProtocol.RENT_TO_4COUC;
+			
+			// Rent with home cinema
+			rents[5] = getRent() * GameProtocol.RENT_TO_1HOME;
+			
+		} else {
+			
+			// Rents for institutes
+			rents[0] = getRent() * GameProtocol.RENT_TO_1INST;
+			rents[1] = getRent() * GameProtocol.RENT_TO_2INST;
+			rents[2] = getRent() * GameProtocol.RENT_TO_3INST;
+			rents[3] = getRent() * GameProtocol.RENT_TO_4INST;
+		}
 		
-		// Rents with couch(es)
-		rents[1] = getRent() * GameProtocol.RENT_TO_1C;
-		rents[2] = getRent() * GameProtocol.RENT_TO_2C;
-		rents[3] = getRent() * GameProtocol.RENT_TO_3C;
-		rents[4] = getRent() * GameProtocol.RENT_TO_4C;
+		return rents;
+	}
+	
+	/**
+	 * Get all the possible rents for companies square.
+	 *
+	 * - Rent for 1 company
+	 * - Rent for 2 companies
+	 *
+	 * @return  array with all rents.
+	 */
+	public String[] getCompaniesRents() {
 		
-		// Rent with home cinema
-		rents[5] = getRent() * GameProtocol.RENT_TO_1H;
+		String[] rents = new String[2];
+		
+		// Rents
+		rents[0] = GameProtocol.RENT_TO_1COMP + "x le résultat des dés";
+		rents[1] = GameProtocol.RENT_TO_2COMP + "x le résultat des dés";
 		
 		return rents;
 	}

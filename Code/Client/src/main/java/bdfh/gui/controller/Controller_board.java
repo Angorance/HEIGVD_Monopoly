@@ -229,8 +229,9 @@ public class Controller_board implements Initializable, IWindow {
 	private void detailSquare(LightSquare square) {
 		
 		this.square = square;
-		String famility = square.getFamily();
-		switch (famility) {
+		
+		String family = square.getFamily();
+		switch (family) {
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_CYAN:
 			case GameProtocol.SQUA_PINK:
@@ -419,6 +420,8 @@ public class Controller_board implements Initializable, IWindow {
 				rollDice_button.setDisable(true);
 				endTurn_button.setDisable(false);
 			}
+			
+			detailSquare(GameHandler.getInstance().getBoard().getSquares().get(tmp));
 		});
 	}
 	
@@ -446,19 +449,28 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void sellHouse() {
+		if(true/*canSellCouch*/){
+			//square.sellCouch();
+		}else{
+			//square.sellHomeCinema();
+		}
 	
 	}
 	
 	private void buyHouse() {
-	
+		if(true/*canBuyCouch*/){
+			//square.buyCouch();
+		}else{
+			//square.buyHomeCinema();
+		}
 	}
 	
 	private void sellProp() {
-	
+		//square.sellSquare();
 	}
 	
 	private void buyProp() {
-	
+		//square.buySquare();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {

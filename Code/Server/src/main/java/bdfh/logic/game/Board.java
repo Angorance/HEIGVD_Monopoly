@@ -69,13 +69,7 @@ public class Board {
 	public boolean movePlayer(int clientID, int movement) {
 		
 		int oldPos =  playerPosition.get(clientID);
-		int newPos;
-		
-		if(movement > 0) {
-			newPos = (oldPos + movement) % NB_SQUARE;
-		} else {
-			newPos = (oldPos + movement) + NB_SQUARE;
-		}
+		int newPos = ((oldPos + movement) + NB_SQUARE) % NB_SQUARE;
 		
 		playerPosition.put(clientID, newPos);
 		// Notify
@@ -248,12 +242,12 @@ public class Board {
 		return false;
 	}
 	
-	public void setOwner(ClientHandler buyer, int squarePos) {
+	public void setOwner(ClientHandler possessor, int squarePos) {
 		
-		board[squarePos].setOwner(buyer);
+		board[squarePos].setOwner(possessor);
 		
 		listPossession.get(board[squarePos].getFamily()).remove(0);
-		listPossession.get(board[squarePos].getFamily()).add(buyer.getClientID());
+		listPossession.get(board[squarePos].getFamily()).add(possessor.getClientID());
 	}
 	
 	public void removeOwner(ClientHandler oldOwner, int squarePos) {
