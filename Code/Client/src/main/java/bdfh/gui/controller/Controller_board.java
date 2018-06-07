@@ -335,6 +335,7 @@ public class Controller_board implements Initializable, IWindow {
 			cnt++;
 		}
 		nameSquare.setText(name);
+		price_prop.setText(String.valueOf(price));
 		hypotheque.setText(String.valueOf(hyp));
 		prixCanape.setText(String.valueOf(can));
 		prixHC.setText(String.valueOf(hc));
