@@ -121,7 +121,7 @@ public class Board {
 			
 			exam = board[s];
 			
-			if(exam.getFamily() == GameProtocol.SQUA_EXAM) {
+			if(exam.getFamily().equals(GameProtocol.SQUA_EXAM)) {
 				break;
 			}
 		}
