@@ -4,6 +4,7 @@ import bdfh.gui.model.windowManager;
 import bdfh.logic.usr.Player;
 import bdfh.net.client.GameHandler;
 import bdfh.net.protocol.GameProtocol;
+import bdfh.serializable.LightPlayer;
 import bdfh.serializable.LightSquare;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -360,7 +361,8 @@ public class Controller_board implements Initializable, IWindow {
 		buttons_Company.setVisible(true);
 		buttons_Institute.setVisible(false);
 		
-		String name = square.getName();
+		String name = "Compagnie";
+		nameSquare.setText(name);
 		int price = square.getPrices().getPrice();
 		
 		price_company.setText(String.valueOf(price));
@@ -383,9 +385,10 @@ public class Controller_board implements Initializable, IWindow {
 		buttons_Company.setVisible(false);
 		buttons_Institute.setVisible(true);
 		
-		String name = square.getName();
+		String name = "Institue";
 		int price = square.getPrices().getPrice();
 		
+		nameSquare.setText(name);
 		price_institute.setText(String.valueOf(price));
 		
 		int cnt = 0;
@@ -406,7 +409,8 @@ public class Controller_board implements Initializable, IWindow {
 		buttons_Company.setVisible(false);
 		buttons_Institute.setVisible(false);
 		
-		String name = square.getName();
+		String name = "Taxe";
+		nameSquare.setText(name);
 		int price = square.getPrices().getRent();
 		price_tax.setText(String.valueOf(price));
 	}
@@ -416,10 +420,9 @@ public class Controller_board implements Initializable, IWindow {
 		Platform.runLater(() -> {
 			int cnt = 0;
 			for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
-				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getValue();
-				MutablePair<Boolean,Boolean> pair = GameHandler.getInstance().getExamStates().get(idPlayer);
-				boolean isPrison = pair.getKey();
-				boolean hasCard = pair.getValue();
+				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getCapital();
+				boolean isPrison = GameHandler.getInstance().getPlayers().get(idPlayer).isInExam();
+				boolean hasCard = GameHandler.getInstance().getPlayers().get(idPlayer).getFreeCards() > 0;
 				labelCapitals[cnt].setText(String.valueOf(capital));
 				labelPrisons[cnt].setText(isPrison ? "X" : "");
 				labelCartes[cnt].setText(hasCard ? "X" : "");
@@ -532,7 +535,7 @@ public class Controller_board implements Initializable, IWindow {
 	public void movePawn(int idPlayer, List<Integer> dices) {
 		
 		Platform.runLater(() -> {
-			int pos = posPlayer.get(idPlayer);
+			int pos = GameHandler.getInstance().getPlayers().get(idPlayer).getPosition();
 			int sumDice = 0;
 			
 			for (int i : dices) {
@@ -543,7 +546,7 @@ public class Controller_board implements Initializable, IWindow {
 			pawnDisplay tmpPD = displayerList.get(idPlayer);
 			cases.get(pos).getChildren().removeAll(tmpPD);
 			cases.get(tmp).getChildren().add(tmpPD);
-			posPlayer.put(idPlayer, tmp);
+			GameHandler.getInstance().getPlayers().get(idPlayer).setPosition(tmp);
 			if (Player.getInstance().isMyTurn()) {
 				rollDice_button.setDisable(true);
 				endTurn_button.setDisable(false);
@@ -632,14 +635,11 @@ public class Controller_board implements Initializable, IWindow {
 			pawnDisplay pd = new pawnDisplay(color[cnt]);
 			cases.get(0).getChildren().add(pd);
 			displayerList.put(idPlayer, pd);
-			posPlayer.put(idPlayer, 0);
-			
-			MutablePair<String, Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
-			MutablePair<Boolean, Boolean> pair2 = GameHandler.getInstance().getExamStates().get(idPlayer);
-			String username = pair.getKey();
-			int capital = pair.getValue();
-			boolean isPrison =  pair2.getKey();
-			boolean hasCard = pair2.getValue();
+			LightPlayer lp = GameHandler.getInstance().getPlayers().get(idPlayer);
+			String username = lp.getUsername();
+			int capital = lp.getCapital();
+			boolean isPrison =  lp.isInExam();
+			boolean hasCard = lp.getFreeCards() > 0;
 			
 			labelPlayers[cnt].setText(username);
 			labelPlayers[cnt].setStyle("-fx-text-fill: " + color[cnt]);
