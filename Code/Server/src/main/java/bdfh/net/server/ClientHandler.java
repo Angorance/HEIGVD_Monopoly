@@ -309,14 +309,16 @@ public class ClientHandler implements Handler {
 	 */
 	public void sendData(String cmd, String param) {
 		
-		String toSend = cmd;
-		
-		if (param != "") {
-			toSend += " " + param;
+		if (writer != null) {
+			String toSend = cmd;
+			
+			if (param != "") {
+				toSend += " " + param;
+			}
+			
+			writer.println(toSend);
+			writer.flush();
 		}
-		
-		writer.println(toSend);
-		writer.flush();
 	}
 	
 	/**
@@ -426,5 +428,14 @@ public class ClientHandler implements Handler {
 	public String toString() {
 		
 		return getClientID() + "-" + getClientUsername();
+	}
+	
+	/**
+	 * Used only for JUnit tests !!!
+	 * @param username
+	 */
+	public void setPlayer(int id, String username) {
+		this.clientID = id;
+		this.clientUsername = username;
 	}
 }

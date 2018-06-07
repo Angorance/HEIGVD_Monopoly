@@ -425,7 +425,7 @@ public class GameLogic extends Thread {
 					// Move the player
 					board.setPlayerPosition(getCurrentPlayerID(), position);
 					
-					if (board.getCurrentSquare(position).getFamily().equals(SQUA_START)) {
+					if (board.getSquare(position).getFamily().equals(SQUA_START)) {
 						handleStartPassed();
 					}
 					
