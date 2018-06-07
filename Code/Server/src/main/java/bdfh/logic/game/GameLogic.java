@@ -13,8 +13,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static bdfh.protocol.GameProtocol.GAM_GAIN;
-import static bdfh.protocol.GameProtocol.GAM_PAY;
+import static bdfh.protocol.GameProtocol.*;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -618,10 +617,8 @@ public class GameLogic extends Thread {
 	 *
 	 * @param player Player trying to buy.
 	 * @param squareId Position of the square (ID).
-	 *
-	 * TODO - Change return type for messages to client
 	 */
-	public void buyCouch(ClientHandler player, int squareId) {
+	public synchronized int buyCouch(ClientHandler player, int squareId) {
 		
 		Square square = board.getSquare(squareId);
 		int price = square.getPrices().getPriceCouch();
@@ -633,23 +630,25 @@ public class GameLogic extends Thread {
 				
 				if (playersFortune.get(player.getClientID())[CAPITAL] < price) {
 					
-					// TODO - Not enough money bro
+					return NOT_ENOUGH_MONEY;
 				} else if (!board.checkCouchRepartition(square)) {
 					
-					// TODO - Too much couches in this square compared to others
+					return BAD_DISTRIBUTION;
 				} else {
 					
 					square.toggleCouch(1);
 					manageMoney(player, -1 * price);
 					playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
+					
+					return SUCCESS;
 				}
 			} else {
 				
-				// TODO - No more place (too much couches or home cinema)
+				return FULL;
 			}
 		} else {
 			
-			// TODO - Doesn't have full family, can't buy couch.
+			return NOT_FULL_FAMILY;
 		}
 	}
 	
@@ -658,10 +657,8 @@ public class GameLogic extends Thread {
 	 *
 	 * @param player Player trying to buy.
 	 * @param squareId Position of the square (ID).
-	 *
-	 * TODO - Change return type for messages to client
 	 */
-	public void buyHomeCinema(ClientHandler player, int squareId) {
+	public synchronized int buyHomeCinema(ClientHandler player, int squareId) {
 		
 		Square square = board.getSquare(squareId);
 		int price = square.getPrices().getPriceCouch();
@@ -669,21 +666,33 @@ public class GameLogic extends Thread {
 		
 		if (square.getNbCouch() != 4) {
 			
-			// TODO - Not enough couches
+			return NOT_ENOUGH_COUCHES;
 		} else if (square.hasHomeCinema()) {
 			
-			// TODO - Already home cinema...
+			return FULL;
 		} else if (!board.checkCouchRepartition(square)) {
 			
-			// TODO - Too much couches in this square compared to others
+			return BAD_DISTRIBUTION;
 		} else if (playersFortune.get(player.getClientID())[CAPITAL] < price) {
 			
-			// TODO - Not enough money bro
+			return NOT_ENOUGH_MONEY;
 		} else {
 			
 			square.toggleHomeCinema(true);
 			manageMoney(player, -1 * price);
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
+			
+			return SUCCESS;
 		}
+	}
+	
+	public synchronized int sellCouch(ClientHandler player, int squareId, int n) {
+	
+		return SUCCESS;
+	}
+	
+	public synchronized int sellHomeCinema(ClientHandler player, int squareId) {
+		
+		return SUCCESS;
 	}
 }

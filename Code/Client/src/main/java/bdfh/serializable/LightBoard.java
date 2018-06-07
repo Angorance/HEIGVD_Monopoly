@@ -26,7 +26,7 @@ public class LightBoard {
 		return Instance.instance;
 	}*/
 	
-	public List<LightSquare> getSquares() {
+	public ArrayList<LightSquare> getSquares() {
 		
 		return squares;
 	}
