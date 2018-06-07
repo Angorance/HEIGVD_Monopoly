@@ -22,8 +22,8 @@ public class Square {
 	private Price prices;           // Prices of the square
 	private boolean isMortgaged = false; // define if the square is mortgages (== "hypothéquée")
 	
-	int nbCouch = 0;
-	boolean homeCinema = false;
+	private int nbCouch = 0;
+	private boolean homeCinema = false;
 	
 	private ClientHandler owner;    // Owner of the square
 	
