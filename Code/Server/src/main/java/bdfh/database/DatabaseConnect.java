@@ -13,9 +13,9 @@ public class DatabaseConnect {
 	
 	private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
 	//private static final String DATABASE_URL = "jdbc:mysql://10.168.1.9:3306/cheseaux-poly";
-	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/cheseaux-poly";
-	private static final String USERNAME = "root";//"cheseaux-poly_server";
-	private static final String PASSWORD = "1q2w3e4r";//"ch3$e@ux_p0Ly";
+	private static final String DATABASE_URL = "jdbc:mysql://192.168.1.104:3306/cheseaux-poly";
+	private static final String USERNAME = "cheseaux-poly_server";
+	private static final String PASSWORD = "ch3$e@ux_p0Ly";
 	
 	private Connection connection;
 	private Properties properties;

@@ -24,11 +24,10 @@ public class GameLogic extends Thread {
 	
 	private final static Logger LOG = Logger.getLogger("GameLogic");
 	
-	private static final int NB_DECKCARD = 20; // TODO - Pour quoi faire ?
 	private static final int STANDARD_GO_AMOUNT = 200;
 	private ArrayDeque<ClientHandler> players;
 	
-	private ArrayDeque<Card> Deck;
+	private ArrayDeque<Card> deck;
 	private Board board;
 	private int nbDice;
 	private int totalLastRoll;
@@ -179,7 +178,7 @@ public class GameLogic extends Thread {
 		
 		// Put the card at the end of the deck
 		Card card = examCards.get(getCurrentPlayerID()).get(0);
-		Deck.addLast(card);
+		deck.addLast(card);
 		examCards.get(getCurrentPlayerID()).remove(card);
 		
 		// Notify
@@ -215,7 +214,7 @@ public class GameLogic extends Thread {
 	private void prepareDeck() {
 		
 		LOG.log(Level.INFO, "Préparation du deck...");
-		Deck = new ArrayDeque<>(NB_DECKCARD);
+		deck = new ArrayDeque<>();
 		ArrayList<Card> cardList = DatabaseConnect.getInstance().getCardDB().getCards();
 		Random rdm = new Random();
 		
@@ -226,7 +225,7 @@ public class GameLogic extends Thread {
 			Card card = cardList.get(pos);
 			
 			// we add it to the deck
-			Deck.addFirst(card);
+			deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
 			card.setQuantity(card.getQuantity() - 1);
@@ -234,7 +233,7 @@ public class GameLogic extends Thread {
 				cardList.remove(card);
 			}
 		}
-		LOG.log(Level.INFO, "deck generated : " + Deck);
+		LOG.log(Level.INFO, "deck generated : " + deck);
 	}
 	
 	/**
@@ -345,9 +344,9 @@ public class GameLogic extends Thread {
 	 */
 	public void drawCard() {
 		
-		LOG.log(Level.INFO, "Deck avant pioche : " + Deck.toString());
-		Card drawed = Deck.pop();
-		LOG.log(Level.INFO, "Deck après pioche : " + Deck.toString());
+		LOG.log(Level.INFO, "deck avant pioche : " + deck.toString());
+		Card drawed = deck.pop();
+		LOG.log(Level.INFO, "deck après pioche : " + deck.toString());
 		
 		// notify the players
 		notifyPlayers(GameProtocol.GAM_DRAW, drawed.jsonify());
@@ -473,7 +472,7 @@ public class GameLogic extends Thread {
 			}
 			
 			// Put the card at the end of the deck
-			Deck.addLast(drawed);
+			deck.addLast(drawed);
 			
 		} else {
 			
@@ -738,11 +737,13 @@ public class GameLogic extends Thread {
 	}
 	
 	/**
-	 * TODO
+	 * Sell one or all couches of the player for the given square.
+	 *
 	 * @param player
 	 * @param squareId
 	 * @param all
-	 * @return
+	 *
+	 * @return True if succeed, false otherwise.
 	 */
 	public synchronized boolean sellCouch(ClientHandler player, int squareId, boolean all) {
 		
@@ -765,10 +766,12 @@ public class GameLogic extends Thread {
 	}
 	
 	/**
-	 * TODO
+	 * Sell a home cinema of the player for the given square.
+	 *
 	 * @param player
 	 * @param squareId
-	 * @return
+	 *
+	 * @return True if succeed, false otherwise.
 	 */
 	public synchronized boolean sellHomeCinema(ClientHandler player, int squareId) {
 		
