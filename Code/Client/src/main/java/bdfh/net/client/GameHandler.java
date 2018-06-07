@@ -6,6 +6,7 @@ import bdfh.logic.usr.Player;
 import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.LightBoard;
+import bdfh.serializable.LightPlayer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,7 +28,8 @@ public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
-	HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
+	//HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
+	//ArrayList<LightPlayer> players = new ArrayList<>();
 	LightBoard board = null;
 	
 	// Map a player ID to his exam state and to his freedom cards
@@ -231,7 +233,7 @@ public class GameHandler extends Thread {
 		for (JsonElement je : jsonPlayers) {
 			JsonObject jo = je.getAsJsonObject();
 			
-			int id = jo.get("id").getAsInt();
+			/*int id = jo.get("id").getAsInt();
 			String username = jo.get("username").getAsString();
 			int capital = jo.get("capital").getAsInt();
 			
@@ -241,7 +243,9 @@ public class GameHandler extends Thread {
 			
 			if (Player.getInstance().getUsername().equals(username)) {
 				Player.getInstance().setID(id);
-			}
+			}*/
+			
+			players.add(LightPlayer.instancify(jo));
 		}
 	}
 	

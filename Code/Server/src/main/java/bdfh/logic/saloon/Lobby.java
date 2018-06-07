@@ -2,7 +2,6 @@ package bdfh.logic.saloon;
 
 import bdfh.logic.game.GameLogic;
 import bdfh.net.server.ClientHandler;
-import bdfh.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.Parameter;
 import com.google.gson.JsonArray;

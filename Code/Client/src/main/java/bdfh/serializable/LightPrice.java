@@ -157,7 +157,7 @@ public class LightPrice {
 		
 		// Set the attributes
 		tmp.setRent(jo.get("rent").getAsInt());
-		tmp.setPrice(jo.get("price").getAsInt()); // TODO - A CHECKER
+		tmp.setPrice(jo.get("price").getAsInt());
 		tmp.setPriceCouch(jo.get("couch").getAsInt());
 		tmp.setPriceHomeCinema(jo.get("homeCinema").getAsInt());
 		tmp.setHypothec(jo.get("hypothec").getAsInt());

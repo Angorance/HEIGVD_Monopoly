@@ -23,7 +23,7 @@ public class Parameter {
 	 * @param nbrDice               Number of dice in the logic
 	 * @param moneyAtTheStart       Money given at the start
 	 */
-	Parameter(int nbrDice, int moneyAtTheStart, int mode, int time) {
+	public Parameter(int nbrDice, int moneyAtTheStart, int mode, int time) {
 		this(nbrDice, moneyAtTheStart, mode, time, false);
 	}
 	
@@ -34,7 +34,7 @@ public class Parameter {
 	 * @param moneyAtTheStart       Money given at the start
 	 * @param randomGeneration      True if random logic generation allowed, false otherwise
 	 */
-	Parameter(int nbrDice, int moneyAtTheStart, int mode, int time,  boolean randomGeneration) {
+	public Parameter(int nbrDice, int moneyAtTheStart, int mode, int time,  boolean randomGeneration) {
 		this.nbrDice = nbrDice;
 		this.moneyAtTheStart = moneyAtTheStart;
 		this.randomGeneration = randomGeneration;

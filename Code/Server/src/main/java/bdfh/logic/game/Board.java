@@ -261,7 +261,7 @@ public class Board {
 	public Square getSquare(int posSquare) {
 		
 		Square returned = null;
-		if (posSquare > 0 && posSquare < NB_SQUARE) {
+		if (posSquare >= 0 && posSquare < NB_SQUARE) {
 			returned = board[posSquare];
 		}
 		
