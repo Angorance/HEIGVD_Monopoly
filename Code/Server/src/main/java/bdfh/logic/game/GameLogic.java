@@ -619,7 +619,7 @@ public class GameLogic extends Thread {
 			
 			int price = board.getSquare(posProperty).getPrices().getHypothec();
 			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
-			manageMoney(currentPlayer, (int)(price * -1.10));
+			manageMoney(currentPlayer, (int)(price * -RATE_HYPOTHEQUE));
 			notifyPlayers(GAM_PAY, Integer.toString(price));
 		}
 	}

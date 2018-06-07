@@ -19,7 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.IOException;
@@ -74,6 +73,10 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton buy_buttonCompany;
 	@FXML private JFXButton sell_buttonCompany;
 	@FXML private JFXButton hyp_buttonCompany;
+	
+	/*Info tax*/
+	@FXML private GridPane infoTax;
+	@FXML private Label price_tax;
 	
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
@@ -269,10 +272,13 @@ public class Controller_board implements Initializable, IWindow {
 				infoProperties(square);
 				break;
 			case GameProtocol.SQUA_INSTITUTE:
-				InfoInstitute(square);
+				infoInstitute(square);
 				break;
 			case GameProtocol.SQUA_COMPANY:
 				infoCompany(square);
+				break;
+			case GameProtocol.SQUA_TAX :
+				infoTax(square);
 				break;
 			default:
 				reset();
@@ -283,6 +289,7 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void reset() {
+		
 		infoProperties.setVisible(false);
 		infoCompany.setVisible(false);
 		infoInstitute.setVisible(false);
@@ -296,6 +303,7 @@ public class Controller_board implements Initializable, IWindow {
 		infoProperties.setVisible(true);
 		infoCompany.setVisible(false);
 		infoInstitute.setVisible(false);
+		infoTax.setVisible(false);
 		buttons_properties.setVisible(true);
 		buttons_Company.setVisible(false);
 		buttons_Institute.setVisible(false);
@@ -333,6 +341,7 @@ public class Controller_board implements Initializable, IWindow {
 		infoProperties.setVisible(false);
 		infoCompany.setVisible(true);
 		infoInstitute.setVisible(false);
+		infoTax.setVisible(false);
 		buttons_properties.setVisible(false);
 		buttons_Company.setVisible(true);
 		buttons_Institute.setVisible(false);
@@ -351,11 +360,12 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	private void InfoInstitute(LightSquare square) {
+	private void infoInstitute(LightSquare square) {
 		
 		infoProperties.setVisible(false);
 		infoCompany.setVisible(false);
 		infoInstitute.setVisible(true);
+		infoTax.setVisible(false);
 		buttons_properties.setVisible(false);
 		buttons_Company.setVisible(false);
 		buttons_Institute.setVisible(true);
@@ -367,11 +377,26 @@ public class Controller_board implements Initializable, IWindow {
 		
 		int cnt = 0;
 		System.out.println("Rents Inst : " + square.getPrices().getRents());
-		for(int i : square.getPrices().getRents()){
+		for (int i : square.getPrices().getRents()) {
 			label_rentInst[cnt].setText(String.valueOf(i));
 			cnt++;
 		}
 		
+	}
+	
+	private void infoTax(LightSquare square) {
+		
+		infoProperties.setVisible(false);
+		infoCompany.setVisible(false);
+		infoInstitute.setVisible(false);
+		infoTax.setVisible(true);
+		buttons_properties.setVisible(false);
+		buttons_Company.setVisible(false);
+		buttons_Institute.setVisible(false);
+		
+		String name = square.getName();
+		int price = square.getPrices().getRent();
+		price_tax.setText(String.valueOf(price));
 	}
 	
 	public void updateBoard() {
