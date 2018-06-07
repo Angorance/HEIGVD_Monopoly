@@ -302,6 +302,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void reset() {
 		
+		nameSquare.setText("");
 		infoProperties.setVisible(false);
 		infoCompany.setVisible(false);
 		infoInstitute.setVisible(false);
