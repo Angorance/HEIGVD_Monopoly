@@ -642,6 +642,7 @@ public class Controller_board implements Initializable, IWindow {
 			boolean hasCard = pair2.getValue();
 			
 			labelPlayers[cnt].setText(username);
+			labelPlayers[cnt].setStyle("-fx-text-fill: " + color[cnt]);
 			labelCapitals[cnt].setText(String.valueOf(capital));
 			
 			labelPrisons[cnt].setText(isPrison ? "X" : "");
