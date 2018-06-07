@@ -226,8 +226,12 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
+		// Don't move the player if he's in exam and load the popup choice
 		if(!players.get(Player.getInstance().getID()).isInExam()) {
+			
 			sub.movePawn(Integer.parseInt(str[0]), tmp);
+		} else {
+			sub.loadPopup();
 		}
 	}
 	
