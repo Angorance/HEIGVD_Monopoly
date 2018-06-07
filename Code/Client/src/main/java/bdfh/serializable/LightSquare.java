@@ -72,31 +72,31 @@ public class LightSquare {
 	/**
 	 * TODO
 	 */
-	public void buySquare(int pos) {
+	public void buySquare() {
 	
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void sellSquare(int pos) {
+	public void sellSquare() {
 	
 	}
 	
-	public void buyCouch(int pos) {
-		Client.getInstance().buySellImprovements(true, 0, pos);
+	public void buyCouch() {
+		Client.getInstance().buySellImprovements(true, 0, position);
 	}
 	
-	public void buyHomeCinema(int pos) {
-		Client.getInstance().buySellImprovements(true, 1, pos);
+	public void buyHomeCinema() {
+		Client.getInstance().buySellImprovements(true, 1, position);
 	}
 	
-	public void sellCouch(int pos) {
-		Client.getInstance().buySellImprovements(false, 0, pos);
+	public void sellCouch() {
+		Client.getInstance().buySellImprovements(false, 0, position);
 	}
 	
-	public void sellHomeCinema(int pos) {
-		Client.getInstance().buySellImprovements(false, 1, pos);
+	public void sellHomeCinema() {
+		Client.getInstance().buySellImprovements(false, 1, position);
 	}
 	
 	/**

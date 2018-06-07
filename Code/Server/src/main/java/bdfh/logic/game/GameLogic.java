@@ -700,13 +700,54 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	public synchronized int sellCouch(ClientHandler player, int squareId, int n) {
-	
-		return SUCCESS;
+	/**
+	 * TODO
+	 * @param player
+	 * @param squareId
+	 * @param all
+	 * @return
+	 */
+	public synchronized boolean sellCouch(ClientHandler player, int squareId, boolean all) {
+		
+		Square square = board.getSquare(squareId);
+		int sellPrice = square.getPrices().getSellingCouchPrice();
+		
+		if (square.getNbCouch() > 0) {
+			
+			int n =  all ? square.getNbCouch() : 1;
+			
+			square.toggleCouch(-1 * n);
+			manageMoney(player, -1 * n * sellPrice);
+			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= n * sellPrice;
+			
+			return true;
+			
+		} else {
+			return false;
+		}
 	}
 	
-	public synchronized int sellHomeCinema(ClientHandler player, int squareId) {
+	/**
+	 * TODO
+	 * @param player
+	 * @param squareId
+	 * @return
+	 */
+	public synchronized boolean sellHomeCinema(ClientHandler player, int squareId) {
 		
-		return SUCCESS;
+		Square square = board.getSquare(squareId);
+		int sellPrice = square.getPrices().getSellingHomeCinemaPrice();
+		
+		if (square.hasHomeCinema()) {
+			
+			square.toggleHomeCinema(false);
+			manageMoney(player, -1 * sellPrice);
+			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= sellPrice;
+			
+			return true;
+			
+		} else {
+			return false;
+		}
 	}
 }
