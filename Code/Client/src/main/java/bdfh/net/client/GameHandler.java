@@ -10,7 +10,6 @@ import bdfh.serializable.LightPlayer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,15 +27,15 @@ public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
-	private HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
-	private HashMap<Integer, MutablePair<Boolean, Boolean>> examStates = new HashMap<>();
-	//ArrayList<LightPlayer> players = new ArrayList<>();
+	//private HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
+	//private HashMap<Integer, MutablePair<Boolean, Boolean>> examStates = new HashMap<>();
+	Map<Integer, LightPlayer> players = new HashMap<>();
 	
 	private LightBoard board = null;
 	
 	// Map a player ID to his exam state and to his freedom cards
-	private HashMap<Integer, Boolean> examState = new HashMap<>();
-	private HashMap<Integer, Integer> examCards = new HashMap<>();
+	//private HashMap<Integer, Boolean> examState = new HashMap<>();
+	//private HashMap<Integer, Integer> examCards = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
@@ -114,40 +113,32 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_EXAM:
 				String[] infos = split[1].split(" ");
 				int id = Integer.parseInt(infos[0]);
-				examState.put(id, true);
-				examStates.put(id, new MutablePair<>(true, examCards.get(id) > 0));
+				
+				players.get(id).setInPrison(true);
 				manageMove(infos);
 				
 				// Refresh
 				sub.updateBoard();
 				
-				synchronized (this) {
-					this.notify();
-				}
-				
 				break;
 			
 			case GameProtocol.GAM_FRDM:
 				id = Integer.parseInt(split[1]);
-				examState.put(id, false);
-				examStates.put(id, new MutablePair<>(false, examCards.get(id) > 0));
+				
+				players.get(id).setInPrison(false);
 				
 				// Refresh
 				sub.updateBoard();
 				
-				synchronized (this) {
-					this.notify();
-				}
 				break;
 
 			case GameProtocol.GAM_FRDM_C:
 
 				// The player received a freedom card
-				int oldNumber = examCards.get(Integer.parseInt(split[1]));
-				id = Integer.parseInt(split[1]);
-				examCards.put(id, oldNumber + 1);
 				
-				examStates.put(id, new MutablePair<>(examState.get(id), examCards.get(id) > 0));
+				id = Integer.parseInt(split[1]);
+				
+				players.get(id).setFreeCards(1);
 				
 				// Update the player
 				Player.getInstance().setHasFreedomCard(true);
@@ -155,34 +146,25 @@ public class GameHandler extends Thread {
 				// Refresh
 				sub.updateBoard();
 				
-				synchronized (this) {
-					this.notify();
-				}
 				break;
 
 			case GameProtocol.GAM_FRDM_U:
 
 				// The player used a freedom card
-				oldNumber = examCards.get(Integer.parseInt(split[1]));
 				id = Integer.parseInt(split[1]);
-				examCards.put(id, oldNumber - 1);
+				
+				players.get(id).setFreeCards(-1);
+				players.get(id).setInPrison(false);
 				
 				// Update the player
-				if(examCards.get(id) > 0) {
+				if(players.get(id).getFreeCards() == 0) {
 					
-					Player.getInstance().setHasFreedomCard(true);
-				} else {
 					Player.getInstance().setHasFreedomCard(false);
 				}
-				
-				examStates.put(id, new MutablePair<>(false, examCards.get(id) > 0));
 				
 				// Refresh
 				sub.updateBoard();
 				
-				synchronized (this) {
-					this.notify();
-				}
 				break;
 		}
 	}
@@ -218,25 +200,9 @@ public class GameHandler extends Thread {
 		sendData(GameProtocol.GAM_ENDT);
 	}
 	
-	public HashMap<Integer, MutablePair<String, Integer>> getPlayers() {
+	public Map<Integer, LightPlayer> getPlayers() {
 		
 		return players;
-	}
-	
-	public HashMap<Integer, MutablePair<Boolean, Boolean>> getExamStates() {
-		
-		return examStates;
-	}
-	
-	/**
-	 * Check if the player is stuck in the exam or not.
-	 *
-	 * @param playerID  Player to check.
-	 *
-	 * @return  true if he's in exam, false otherwise.
-	 */
-	public boolean getExamState(int playerID) {
-		return examState.get(playerID);
 	}
 	
 	public LightBoard getBoard() {
@@ -266,7 +232,7 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		if(!getExamState(Player.getInstance().getID())) {
+		if(!players.get(Player.getInstance().getID()).isInExam()) {
 			sub.movePawn(Integer.parseInt(str[0]), tmp);
 		}
 	}
@@ -279,20 +245,9 @@ public class GameHandler extends Thread {
 		for (JsonElement je : jsonPlayers) {
 			JsonObject jo = je.getAsJsonObject();
 			
-			int id = jo.get("id").getAsInt();
-			String username = jo.get("username").getAsString();
-			int capital = jo.get("capital").getAsInt();
+			LightPlayer tmp = LightPlayer.instancify(jo);
 			
-			players.put(id, new MutablePair<>(username, capital));
-			examStates.put(id, new MutablePair<>(false, false));
-			examState.put(id, false);
-			examCards.put(id, 0);
-			
-			if (Player.getInstance().getUsername().equals(username)) {
-				Player.getInstance().setID(id);
-			}
-			
-			//players.add(LightPlayer.instancify(jo));
+			players.put(tmp.getId(), tmp);
 		}
 	}
 	
@@ -308,7 +263,7 @@ public class GameHandler extends Thread {
 	private void manageCurrentPlayer(String playerID) {
 		
 		String username = Player.getInstance().getUsername();
-		String usernameTurn = players.get(Integer.parseInt(playerID)).getKey();
+		String usernameTurn = players.get(Integer.parseInt(playerID)).getUsername();
 		
 		if (username.equals(usernameTurn)) {
 			Player.getInstance().setMyTurn(true);
@@ -343,9 +298,7 @@ public class GameHandler extends Thread {
 	
 	private void updateCapital(int id, int value) {
 		
-		int newCap = players.get(id).getRight() + value;
-		
-		players.get(id).setRight(newCap);
+		players.get(id).addCapital(value);
 		
 		sub.updateBoard();
 	}
