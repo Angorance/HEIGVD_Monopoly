@@ -163,7 +163,7 @@ public class ClientHandler implements Handler {
 						
 						createLobby(param[0]);
 						break;
-						
+					
 					// ============================================================================================
 					// commande de phase de jeu
 					case GameProtocol.GAM_ROLL :
@@ -171,33 +171,38 @@ public class ClientHandler implements Handler {
 							game.rollDice(this);
 						}
 						break;
-						
+					
 					case GameProtocol.GAM_ENDT :
 						if(game != null){
 							game.endTurn(this);
 						}
 						break;
-						
+					
 					case GameProtocol.GAM_BUYS :
 						if(game != null){
-							game.buySquare(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
+							game.buySquare(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
 						}
 						break;
-						
+					
 					case GameProtocol.GAM_HYPOT :
-							game.setMortgaged(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
+						game.setMortgaged(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
 						break;
-						
+					
 					case GameProtocol.GAM_NHYPOT :
-						game.disencumbrance(this, Integer.valueOf(param[1])); // TODO -  pas sûr...
+						game.disencumbrance(this, Integer.valueOf(param[0])); // TODO -  pas sûr...
 						break;
-						
+					
+					case GameProtocol.GAM_SELL :
+						game.sellSquare(this, Integer.valueOf(param[0]));
+						break;
+					
+					
 					case GameProtocol.GAM_BCOUCH:
 						game.buyCouch(this, Integer.parseInt(param[0]));
 						break;
 					
 					case GameProtocol.GAM_SCOUCH:
-						// TODO game.sellCouch(this, Integer.parseInt(param[0]));
+						game.sellCouch(this, Integer.parseInt(param[0]), false);
 						break;
 					
 					case GameProtocol.GAM_BHCINE:
@@ -205,7 +210,7 @@ public class ClientHandler implements Handler {
 						break;
 					
 					case GameProtocol.GAM_SHCINE:
-						// TODO game.sellHomeCinema(this, Integer.parseInt(param[0]));
+						game.sellHomeCinema(this, Integer.parseInt(param[0]));
 						break;
 					
 					case GameProtocol.GAM_FRDM_U :
