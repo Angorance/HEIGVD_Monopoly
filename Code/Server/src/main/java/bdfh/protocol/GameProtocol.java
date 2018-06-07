@@ -70,4 +70,12 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_3C = 30;
 	public static final int RENT_TO_4C = 45;
 	public static final int RENT_TO_1H = 54;
+	
+	public static final int SUCCESS = 0;
+	public static final int NOT_ENOUGH_MONEY = 1;
+	public static final int NOT_ENOUGH_COUCHES = 2;
+	public static final int BAD_DISTRIBUTION = 3;
+	public static final int FULL = 4;
+	public static final int NOT_FULL_FAMILY = 5;
+	
 }

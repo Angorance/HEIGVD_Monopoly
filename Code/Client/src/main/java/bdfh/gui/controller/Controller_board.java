@@ -73,6 +73,8 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private Stage thisStage = null;
 	
+	private LightSquare square;
+	
 	public void loadPopup() {
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup.fxml"));
@@ -226,6 +228,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void detailSquare(LightSquare square) {
 		
+		this.square = square;
 		String famility = square.getFamily();
 		switch (famility) {
 			case GameProtocol.SQUA_BROWN:
@@ -392,6 +395,8 @@ public class Controller_board implements Initializable, IWindow {
 			cases.get(tmp).getChildren().removeAll(tmpPD);
 			cases.get(pos).getChildren().add(tmpPD);
 			posPlayer.put(idPlayer, pos);
+			
+			detailSquare(GameHandler.getInstance().getBoard().getSquares().get(pos));
 		});
 	}
 	
@@ -438,6 +443,22 @@ public class Controller_board implements Initializable, IWindow {
 			rollDice_button.setDisable(true);
 			endTurn_button.setDisable(true);
 		}
+	}
+	
+	private void sellHouse() {
+	
+	}
+	
+	private void buyHouse() {
+	
+	}
+	
+	private void sellProp() {
+	
+	}
+	
+	private void buyProp() {
+	
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -493,6 +514,34 @@ public class Controller_board implements Initializable, IWindow {
 			@Override public void handle(ActionEvent event) {
 				
 				endTurn();
+			}
+		});
+		
+		buy_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				buyProp();
+			}
+		});
+		
+		sell_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				sellProp();
+			}
+		});
+		
+		buy_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				buyHouse();
+			}
+		});
+		
+		sell_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				sellHouse();
 			}
 		});
 		
