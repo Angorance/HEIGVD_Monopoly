@@ -31,7 +31,11 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private GridPane board;
 	@FXML private AnchorPane popup;
 	
+	/*Info properties*/
+	@FXML private GridPane infoProperties;
+	@FXML private GridPane buttons_properties;
 	@FXML private Label nameSquare;
+	@FXML private Label price_prop;
 	@FXML private Label base;
 	@FXML private Label canape1;
 	@FXML private Label canape2;
@@ -43,6 +47,33 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label prixHC;
 	@FXML private Label venteCanape;
 	@FXML private Label venteHC;
+	@FXML private JFXButton buy_buttonProp;
+	@FXML private JFXButton buy_buttonCanape;
+	@FXML private JFXButton sell_buttonProp;
+	@FXML private JFXButton sell_buttonCanape;
+	@FXML private JFXButton hyp_button;
+	
+	/*Info Institute*/
+	@FXML private GridPane infoInstitute;
+	@FXML private GridPane buttons_Institute;
+	@FXML private Label price_institute;
+	@FXML private Label loyer1_institute;
+	@FXML private Label loyer2_institute;
+	@FXML private Label loyer3_institute;
+	@FXML private Label loyer4_institute;
+	@FXML private JFXButton buy_buttonInstitute;
+	@FXML private JFXButton sell_buttonInstitute;
+	@FXML private JFXButton hyp_buttonInstitute;
+	
+	/*Info Company*/
+	@FXML private GridPane buttons_Company;
+	@FXML private GridPane infoCompany;
+	@FXML private Label price_company;
+	@FXML private Label loyer1_company;
+	@FXML private Label loyer2_company;
+	@FXML private JFXButton buy_buttonCompany;
+	@FXML private JFXButton sell_buttonCompany;
+	@FXML private JFXButton hyp_buttonCompany;
 	
 	@FXML private Label label_username;
 	@FXML private Label label_player1;
@@ -53,20 +84,15 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label label_capital2;
 	@FXML private Label label_capital3;
 	@FXML private Label label_capital4;
-	
-	@FXML private JFXButton buy_buttonProp;
-	@FXML private JFXButton buy_buttonCanape;
-	@FXML private JFXButton sell_buttonProp;
-	@FXML private JFXButton sell_buttonCanape;
-	
-	@FXML private JFXButton hyp_button;
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
 	
 	private static ArrayList<FlowPane> cases = new ArrayList<>();
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
-	private Label[] labelLoyer = new Label[6];
+	private Label[] label_rentProp = new Label[6];
+	private Label[] label_rentComp = new Label[2];
+	private Label[] label_rentInst = new Label[4];
 	private static HashMap<Integer, pawnDisplay> displayerList = new HashMap<>();
 	
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
@@ -243,10 +269,10 @@ public class Controller_board implements Initializable, IWindow {
 				infoProperties(square);
 				break;
 			case GameProtocol.SQUA_INSTITUTE:
-				//TODO mettre info
+				InfoInstitute(square);
 				break;
 			case GameProtocol.SQUA_COMPANY:
-				//TODO mettre info
+				infoCompany(square);
 				break;
 			default:
 				reset();
@@ -257,26 +283,22 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void reset() {
-		
-		for (int i = 0; i < labelLoyer.length; ++i) {
-			labelLoyer[i].setText("-");
-		}
-		
-		hypotheque.setText("-");
-		prixCanape.setText("-");
-		prixHC.setText("-");
-		venteCanape.setText("-");
-		venteHC.setText("-");
-		
-		buy_buttonProp.setDisable(true);
-		buy_buttonCanape.setDisable(true);
-		sell_buttonProp.setDisable(true);
-		sell_buttonCanape.setDisable(true);
-		hyp_button.setDisable(true);
-		
+		infoProperties.setVisible(false);
+		infoCompany.setVisible(false);
+		infoInstitute.setVisible(false);
+		buttons_properties.setVisible(false);
+		buttons_Company.setVisible(false);
+		buttons_Institute.setVisible(false);
 	}
 	
 	private void infoProperties(LightSquare square) {
+		
+		infoProperties.setVisible(true);
+		infoCompany.setVisible(false);
+		infoInstitute.setVisible(false);
+		buttons_properties.setVisible(true);
+		buttons_Company.setVisible(false);
+		buttons_Institute.setVisible(false);
 		
 		String name = square.getName();
 		int price = square.getPrices().getPrice();
@@ -288,7 +310,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		int cnt = 0;
 		for (int i : square.getPrices().getRents()) {
-			labelLoyer[cnt].setText(String.valueOf(i));
+			label_rentProp[cnt].setText(String.valueOf(i));
 			cnt++;
 		}
 		nameSquare.setText(name);
@@ -304,6 +326,52 @@ public class Controller_board implements Initializable, IWindow {
 		sell_buttonProp.setDisable(false);
 		sell_buttonCanape.setDisable(false);
 		hyp_button.setDisable(false);
+	}
+	
+	private void infoCompany(LightSquare square) {
+		
+		infoProperties.setVisible(false);
+		infoCompany.setVisible(true);
+		infoInstitute.setVisible(false);
+		buttons_properties.setVisible(false);
+		buttons_Company.setVisible(true);
+		buttons_Institute.setVisible(false);
+		
+		String name = square.getName();
+		int price = square.getPrices().getPrice();
+		
+		price_company.setText(String.valueOf(price));
+		
+		System.out.println("Rents Inst : " + square.getPrices().getRents());
+		int cnt = 0;
+		for (String s : square.getPrices().getCompaniesRents()) {
+			label_rentComp[cnt].setText(s);
+			cnt++;
+		}
+		
+	}
+	
+	private void InfoInstitute(LightSquare square) {
+		
+		infoProperties.setVisible(false);
+		infoCompany.setVisible(false);
+		infoInstitute.setVisible(true);
+		buttons_properties.setVisible(false);
+		buttons_Company.setVisible(false);
+		buttons_Institute.setVisible(true);
+		
+		String name = square.getName();
+		int price = square.getPrices().getPrice();
+		
+		price_institute.setText(String.valueOf(price));
+		
+		int cnt = 0;
+		System.out.println("Rents Inst : " + square.getPrices().getRents());
+		for(int i : square.getPrices().getRents()){
+			label_rentInst[cnt].setText(String.valueOf(i));
+			cnt++;
+		}
+		
 	}
 	
 	public void updateBoard() {
@@ -379,12 +447,20 @@ public class Controller_board implements Initializable, IWindow {
 		labelCapitals[2] = label_capital3;
 		labelCapitals[3] = label_capital4;
 		
-		labelLoyer[0] = base;
-		labelLoyer[1] = canape1;
-		labelLoyer[2] = canape2;
-		labelLoyer[3] = canape3;
-		labelLoyer[4] = canape4;
-		labelLoyer[5] = homecinema;
+		label_rentProp[0] = base;
+		label_rentProp[1] = canape1;
+		label_rentProp[2] = canape2;
+		label_rentProp[3] = canape3;
+		label_rentProp[4] = canape4;
+		label_rentProp[5] = homecinema;
+		
+		label_rentInst[0] = loyer1_institute;
+		label_rentInst[1] = loyer2_institute;
+		label_rentInst[2] = loyer3_institute;
+		label_rentInst[3] = loyer4_institute;
+		
+		label_rentComp[0] = loyer1_company;
+		label_rentComp[1] = loyer2_company;
 		
 	}
 	
@@ -449,18 +525,20 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void sellHouse() {
-		if(true/*canSellCouch*/){
+		
+		if (true/*canSellCouch*/) {
 			//square.sellCouch();
-		}else{
+		} else {
 			//square.sellHomeCinema();
 		}
-	
+		
 	}
 	
 	private void buyHouse() {
-		if(true/*canBuyCouch*/){
+		
+		if (true/*canBuyCouch*/) {
 			//square.buyCouch();
-		}else{
+		} else {
 			//square.buyHomeCinema();
 		}
 	}
@@ -532,6 +610,7 @@ public class Controller_board implements Initializable, IWindow {
 		buy_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				buyProp();
 			}
 		});
@@ -539,6 +618,7 @@ public class Controller_board implements Initializable, IWindow {
 		sell_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				sellProp();
 			}
 		});
@@ -546,6 +626,7 @@ public class Controller_board implements Initializable, IWindow {
 		buy_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				buyHouse();
 			}
 		});
@@ -553,6 +634,7 @@ public class Controller_board implements Initializable, IWindow {
 		sell_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				sellHouse();
 			}
 		});

@@ -45,20 +45,18 @@
                   <InnerShadow choke="0.66" />
                </effect>
                <children>
-                  <JFXButton fx:id="buy_buttonProp" layoutX="34.0" layoutY="379.0" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat propriété" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="33.0" />
-                  <JFXButton fx:id="buy_buttonCanape" layoutX="193.0" layoutY="377.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Achat canapé" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="161.0" />
-                  <JFXButton fx:id="hyp_button" layoutX="332.0" layoutY="390.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="32.0" />
                   <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" text="Titre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="34.0" layoutY="58.0" prefHeight="315.0" prefWidth="384.0">
+                  <GridPane fx:id="infoProperties" layoutX="34.0" layoutY="58.0" prefHeight="315.0" prefWidth="384.0" visible="false">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -72,32 +70,124 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Loyer canapé 1" GridPane.rowIndex="1" />
-                        <Label text="Loyer canapé 2" GridPane.rowIndex="2" />
-                        <Label text="Loyer canapé 3" GridPane.rowIndex="3" />
-                        <Label text="Loyer canapé 4" GridPane.rowIndex="4" />
-                        <Label text="Loyer Home Cinéma" GridPane.rowIndex="5" />
-                        <Label fx:id="canape1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="canape4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="homecinema" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text="Prix hypotèque" GridPane.rowIndex="6" />
-                        <Label fx:id="hypotheque" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Prix canapé" GridPane.rowIndex="7" />
-                        <Label fx:id="prixCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label text="Prix Home Cinéma" GridPane.rowIndex="8" />
-                        <Label fx:id="prixHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Label text="Vente Canapé" GridPane.rowIndex="9" />
-                        <Label text="Vente Home Cinema" GridPane.rowIndex="10" />
-                        <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                        <Label text="Loyer de base" />
-                        <Label fx:id="base" text="-" GridPane.columnIndex="1" />
+                        <Label text="Loyer canapé 1" GridPane.rowIndex="2" />
+                        <Label text="Loyer canapé 2" GridPane.rowIndex="3" />
+                        <Label text="Loyer canapé 3" GridPane.rowIndex="4" />
+                        <Label text="Loyer canapé 4" GridPane.rowIndex="5" />
+                        <Label text="Loyer Home Cinéma" GridPane.rowIndex="6" />
+                        <Label fx:id="canape1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="canape4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="homecinema" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Prix hypotèque" GridPane.rowIndex="7" />
+                        <Label fx:id="hypotheque" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="Prix canapé" GridPane.rowIndex="8" />
+                        <Label fx:id="prixCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="Prix Home Cinéma" GridPane.rowIndex="9" />
+                        <Label fx:id="prixHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="Vente Canapé" GridPane.rowIndex="10" />
+                        <Label text="Vente Home Cinema" GridPane.rowIndex="11" />
+                        <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <Label text="Loyer de base" GridPane.rowIndex="1" />
+                        <Label fx:id="base" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Prix" />
+                        <Label fx:id="price_prop" text="-" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
-                  <JFXButton fx:id="sell_buttonProp" layoutX="34.0" layoutY="414.0" style="-fx-background-color: cdcdcd;" text="Vendre propriété" />
-                  <JFXButton fx:id="sell_buttonCanape" layoutX="192.0" layoutY="414.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vendre canapé" />
+                  <GridPane fx:id="infoInstitute" layoutX="33.0" layoutY="58.0" prefHeight="315.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Loyer 1" GridPane.rowIndex="1" />
+                        <Label text="Loyer 2" GridPane.rowIndex="2" />
+                        <Label text="Loyer 3" GridPane.rowIndex="3" />
+                        <Label text="Loyer 4" GridPane.rowIndex="4" />
+                        <Label fx:id="loyer1_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="loyer2_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer3_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="loyer4_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Prix" />
+                        <Label fx:id="price_institute" text="-" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="infoCompany" layoutX="33.0" layoutY="74.0" prefHeight="222.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Loyer 2" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer2_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Prix" />
+                        <Label fx:id="price_company" text="-" GridPane.columnIndex="1" />
+                        <Label text="Loyer 1" GridPane.rowIndex="1" />
+                        <Label fx:id="loyer1_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_properties" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonProp" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat propriété" />
+                        <JFXButton fx:id="buy_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Achat canapé" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="hyp_button" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" GridPane.rowSpan="2" />
+                        <JFXButton fx:id="sell_buttonProp" style="-fx-background-color: cdcdcd;" text="Vendre propriété" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="sell_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vendre canapé" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_Institute" layoutX="33.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonInstitute" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" />
+                        <JFXButton fx:id="sell_buttonInstitute" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="hyp_buttonInstitute" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" GridPane.rowSpan="2" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_Company" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonCompany" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" />
+                        <JFXButton fx:id="sell_buttonCompany" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="hyp_buttonCompany" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" GridPane.rowSpan="2" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
          </children>
