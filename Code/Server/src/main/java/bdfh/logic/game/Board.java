@@ -78,7 +78,6 @@ public class Board {
 		}
 		
 		playerPosition.put(clientID, newPos);
-		
 		// Notify
 		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos );
 		

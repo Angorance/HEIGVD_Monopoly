@@ -161,26 +161,12 @@ public class Controller_board implements Initializable, IWindow {
 			ap = new AnchorPane();
 			switch (famility) {
 				case GameProtocol.SQUA_BROWN:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_CYAN:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_PINK:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_ORANGE:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_RED:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_YELLOW:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_GREEN:
-					add(famility, pos);
-					break;
 				case GameProtocol.SQUA_BLUE:
 					add(famility, pos);
 					break;
