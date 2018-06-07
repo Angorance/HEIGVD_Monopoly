@@ -229,8 +229,9 @@ public class Controller_board implements Initializable, IWindow {
 	private void detailSquare(LightSquare square) {
 		
 		this.square = square;
-		String famility = square.getFamily();
-		switch (famility) {
+		
+		String family = square.getFamily();
+		switch (family) {
 			case GameProtocol.SQUA_BROWN:
 			case GameProtocol.SQUA_CYAN:
 			case GameProtocol.SQUA_PINK:
