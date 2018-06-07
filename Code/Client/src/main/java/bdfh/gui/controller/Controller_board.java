@@ -221,34 +221,34 @@ public class Controller_board implements Initializable, IWindow {
 					break;
 				case GameProtocol.SQUA_TAX:
 					this.setCenter(fp);
-					this.setTop(new Label("TAX"));
+					this.setTop(new Label("Taxe"));
 					break;
 				case GameProtocol.SQUA_INSTITUTE:
 					this.setCenter(fp);
-					this.setTop(new Label("INSTITUTE"));
+					this.setTop(new Label("Institut"));
 					break;
 				case GameProtocol.SQUA_COMPANY:
-					this.setTop(new Label("COMPANY"));
+					this.setTop(new Label("Compagnie"));
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_CARD:
 					this.setCenter(fp);
-					this.setTop(new Label("Tirer une carte"));
+					this.setTop(new Label("Carte chance"));
 					break;
 				case GameProtocol.SQUA_START:
-					this.setTop(new Label("START"));
+					this.setTop(new Label("Start"));
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_EXAM:
-					this.setTop(new Label("EXAM"));
+					this.setTop(new Label("Examen"));
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_GO_EXAM:
-					this.setTop(new Label("GO EXAM"));
+					this.setTop(new Label("Aller en examen"));
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_BREAK:
-					this.setTop(new Label("PAUSE"));
+					this.setTop(new Label("Pause"));
 					this.setCenter(fp);
 					break;
 			}
@@ -385,7 +385,7 @@ public class Controller_board implements Initializable, IWindow {
 		buttons_Company.setVisible(false);
 		buttons_Institute.setVisible(true);
 		
-		String name = "Institue";
+		String name = "Institut";
 		int price = square.getPrices().getPrice();
 		
 		nameSquare.setText(name);
