@@ -183,36 +183,6 @@ public class Player {
 	}
 	
 	/**
-	 * TODO
-	 */
-	public void buySquare(int pos) {
-	
-	}
-	
-	/**
-	 * TODO
-	 */
-	public void sellSquare(int pos) {
-	
-	}
-	
-	public void buyCouch(int pos) {
-		Client.getInstance().buySellImprovements(true, 0, pos);
-	}
-	
-	public void buyHomeCinema(int pos) {
-		Client.getInstance().buySellImprovements(true, 1, pos);
-	}
-	
-	public void sellCouch(int pos) {
-		Client.getInstance().buySellImprovements(false, 0, pos);
-	}
-	
-	public void sellHomeCinema(int pos) {
-		Client.getInstance().buySellImprovements(false, 1, pos);
-	}
-	
-	/**
 	 * Use a card the leave the exam.
 	 */
 	public void useFreedomCard() {
