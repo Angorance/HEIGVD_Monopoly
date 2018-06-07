@@ -319,17 +319,18 @@ public class GameLogic extends Thread {
 				totalLastRoll = total;
 				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 				
-				if (board.movePlayer(currentPlayer.getClientID(), total)) {
-					handleStartPassed();
-				}
-				
-				// MANAGING THE CASE EFFECT
-				Square current = board.getCurrentSquare(currentPlayer.getClientID());
-				if (current.isBuyable() && current.getOwner() == null) {
-					currentPlayer.sendData(GameProtocol.GAM_FREE,
-							Integer.toString(current.getPosition()));
-				} else {
-					board.manageEffect(this, current);
+				if(!getExamPresence()) {
+					if (board.movePlayer(currentPlayer.getClientID(), total)) {
+						handleStartPassed();
+					}
+					
+					// MANAGING THE CASE EFFECT
+					Square current = board.getCurrentSquare(currentPlayer.getClientID());
+					if (current.isBuyable() && current.getOwner() == null) {
+						currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
+					} else {
+						board.manageEffect(this, current);
+					}
 				}
 			}
 		}
