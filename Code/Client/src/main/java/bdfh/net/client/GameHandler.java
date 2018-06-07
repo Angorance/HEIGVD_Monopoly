@@ -118,6 +118,11 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
+				
 				break;
 			
 			case GameProtocol.GAM_FRDM:
@@ -127,6 +132,10 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
 				break;
 
 			case GameProtocol.GAM_FRDM_C:
@@ -138,11 +147,15 @@ public class GameHandler extends Thread {
 				
 				examStates.put(id, new MutablePair<>(examState.get(id), examCards.get(id) > 0));
 				
+				// Update the player
+				Player.getInstance().setHasFreedomCard(true);
+				
 				// Refresh
 				sub.updateBoard();
 				
-				// Update the player
-				Player.getInstance().setHasFreedomCard(true);
+				synchronized (this) {
+					this.notify();
+				}
 				break;
 
 			case GameProtocol.GAM_FRDM_U:
@@ -164,6 +177,10 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				
+				synchronized (this) {
+					this.notify();
+				}
 				break;
 		}
 	}
