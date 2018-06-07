@@ -27,15 +27,9 @@ public class GameHandler extends Thread {
 	
 	private static Logger LOG = Logger.getLogger("GameHandler");
 	
-	//private HashMap<Integer, MutablePair<String, Integer>> players = new HashMap<>();
-	//private HashMap<Integer, MutablePair<Boolean, Boolean>> examStates = new HashMap<>();
-	Map<Integer, LightPlayer> players = new HashMap<>();
+	private Map<Integer, LightPlayer> players = new HashMap<>();
 	
 	private LightBoard board = null;
-	
-	// Map a player ID to his exam state and to his freedom cards
-	//private HashMap<Integer, Boolean> examState = new HashMap<>();
-	//private HashMap<Integer, Integer> examCards = new HashMap<>();
 	
 	private BufferedReader in = null;
 	private PrintWriter out = null;
