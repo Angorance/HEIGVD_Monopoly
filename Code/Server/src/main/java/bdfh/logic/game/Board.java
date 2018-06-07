@@ -115,6 +115,27 @@ public class Board {
 	}
 	
 	/**
+	 * retrieve the exam square.
+	 *
+	 * @return Square of the exam.
+	 */
+	public Square getExamSquare() {
+		
+		Square exam = null;
+		
+		for(int s = 0; s < NB_SQUARE; s++) {
+			
+			exam = board[s];
+			
+			if(exam.getFamily() == GameProtocol.SQUA_EXAM) {
+				break;
+			}
+		}
+		
+		return exam;
+	}
+	
+	/**
 	 * @param game
 	 * @param s
 	 */

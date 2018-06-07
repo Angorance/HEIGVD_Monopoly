@@ -54,8 +54,11 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label label_capital3;
 	@FXML private Label label_capital4;
 	
-	@FXML private JFXButton buy_button;
-	@FXML private JFXButton sell_button;
+	@FXML private JFXButton buy_buttonProp;
+	@FXML private JFXButton buy_buttonCanape;
+	@FXML private JFXButton sell_buttonProp;
+	@FXML private JFXButton sell_buttonCanape;
+	
 	@FXML private JFXButton hyp_button;
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
@@ -69,6 +72,8 @@ public class Controller_board implements Initializable, IWindow {
 	private static HashMap<Integer, Integer> posPlayer = new HashMap<>();
 	
 	private Stage thisStage = null;
+	
+	private LightSquare square;
 	
 	public void loadPopup() {
 		/* we load the form fxml*/
@@ -99,11 +104,13 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	public void useCard() {
+		
 		Player.getInstance().useFreedomCard();
 		unloadPopup();
 	}
 	
 	public void payTax() {
+		
 		Player.getInstance().payExamTax();
 		unloadPopup();
 	}
@@ -221,6 +228,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void detailSquare(LightSquare square) {
 		
+		this.square = square;
 		String famility = square.getFamily();
 		switch (famility) {
 			case GameProtocol.SQUA_BROWN:
@@ -259,9 +267,12 @@ public class Controller_board implements Initializable, IWindow {
 		venteCanape.setText("-");
 		venteHC.setText("-");
 		
-		buy_button.setDisable(true);
+		buy_buttonProp.setDisable(true);
+		buy_buttonCanape.setDisable(true);
+		sell_buttonProp.setDisable(true);
+		sell_buttonCanape.setDisable(true);
 		hyp_button.setDisable(true);
-		sell_button.setDisable(true);
+		
 	}
 	
 	private void infoProperties(LightSquare square) {
@@ -287,9 +298,11 @@ public class Controller_board implements Initializable, IWindow {
 		venteHC.setText(String.valueOf(vhc));
 		
 		//TODO à modifier
-		buy_button.setDisable(false);
+		buy_buttonProp.setDisable(false);
+		buy_buttonCanape.setDisable(false);
+		sell_buttonProp.setDisable(false);
+		sell_buttonCanape.setDisable(false);
 		hyp_button.setDisable(false);
-		sell_button.setDisable(false);
 	}
 	
 	public void updateBoard() {
@@ -312,7 +325,7 @@ public class Controller_board implements Initializable, IWindow {
 	@Override public void hide() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) buy_button.getScene().getWindow();
+			thisStage = (Stage) buy_buttonProp.getScene().getWindow();
 		}
 		thisStage.hide();
 	}
@@ -320,7 +333,7 @@ public class Controller_board implements Initializable, IWindow {
 	@Override public void show() {
 		
 		if (thisStage == null) {
-			thisStage = (Stage) buy_button.getScene().getWindow();
+			thisStage = (Stage) buy_buttonProp.getScene().getWindow();
 		}
 		thisStage.show();
 	}
@@ -382,6 +395,8 @@ public class Controller_board implements Initializable, IWindow {
 			cases.get(tmp).getChildren().removeAll(tmpPD);
 			cases.get(pos).getChildren().add(tmpPD);
 			posPlayer.put(idPlayer, pos);
+			
+			detailSquare(GameHandler.getInstance().getBoard().getSquares().get(pos));
 		});
 	}
 	
@@ -428,6 +443,22 @@ public class Controller_board implements Initializable, IWindow {
 			rollDice_button.setDisable(true);
 			endTurn_button.setDisable(true);
 		}
+	}
+	
+	private void sellHouse() {
+	
+	}
+	
+	private void buyHouse() {
+	
+	}
+	
+	private void sellProp() {
+	
+	}
+	
+	private void buyProp() {
+	
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -485,6 +516,35 @@ public class Controller_board implements Initializable, IWindow {
 				endTurn();
 			}
 		});
+		
+		buy_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				buyProp();
+			}
+		});
+		
+		sell_buttonProp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				sellProp();
+			}
+		});
+		
+		buy_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				buyHouse();
+			}
+		});
+		
+		sell_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				sellHouse();
+			}
+		});
+		
 		
 		windowManager.getInstance().setBoard(this);
 		

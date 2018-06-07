@@ -136,8 +136,12 @@ public class GameLogic extends Thread {
 		
 		setExamState(true, 0, 0);
 		
+		// Move the player
+		Square exam = board.getExamSquare();
+		board.setPlayerPosition(getCurrentPlayerID(), exam.getPosition());
+		
 		// Notify
-		notifyPlayers(GameProtocol.GAM_EXAM, "");
+		notifyPlayers(GameProtocol.GAM_EXAM, Integer.toString(exam.getPosition()));
 		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a été envoyé en salle d'examen.");
 	}
 	
@@ -153,6 +157,11 @@ public class GameLogic extends Thread {
 	public void stayInExam() {
 		
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
+	}
+	
+	public void initializeDouble() {
+		
+		setExamState(getExamPresence(), getExamTurn(), 0);
 	}
 	
 	public void didADouble() {
@@ -430,6 +439,10 @@ public class GameLogic extends Thread {
 					// Move the player
 					board.setPlayerPosition(getCurrentPlayerID(), position);
 					
+					if (board.getCurrentSquare(position).getFamily() == SQUA_START) {
+						handleStartPassed();
+					}
+					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(
 							board.getCurrentSquare(getCurrentPlayerID()).getPosition()));
@@ -496,6 +509,9 @@ public class GameLogic extends Thread {
 		currentPlayer = players.getFirst();
 		notifyPlayers(GameProtocol.GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
+		
+		// Initialize the number of double
+		initializeDouble();
 		
 		// Check if the player can leave the exam
 		if (getExamPresence() && getExamTurn() == 3) {
@@ -570,9 +586,7 @@ public class GameLogic extends Thread {
 	 * @param player Target of the change.
 	 * @param amount Amount to add/remove.
 	 */
-	public void manageMoney(ClientHandler player, int amount) {
-		
-		// TODO - OHO
+	public synchronized void manageMoney(ClientHandler player, int amount) {
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
 		// TODO - check if the game is over for the player
