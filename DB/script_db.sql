@@ -139,7 +139,7 @@ INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (11, "LOSE 150");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (12, "FREE");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (13, "GOTO 0");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (14, "GOTO 1");
-INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (15, "GOTO 10");
+INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (15, "EXAM");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (16, "GOTO 16");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (17, "GOTO 39");
 INSERT INTO `cheseaux-poly`.`action` (`id`, `type`) VALUES (18, "BACK 3");
