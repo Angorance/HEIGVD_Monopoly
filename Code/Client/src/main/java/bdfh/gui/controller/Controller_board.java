@@ -628,11 +628,18 @@ public class Controller_board implements Initializable, IWindow {
 			posPlayer.put(idPlayer, 0);
 			
 			MutablePair<String, Integer> pair = GameHandler.getInstance().getPlayers().get(idPlayer);
+			MutablePair<Boolean, Boolean> pair2 = GameHandler.getInstance().getExamStates().get(idPlayer);
 			String username = pair.getKey();
 			int capital = pair.getValue();
+			boolean isPrison =  pair2.getKey();
+			boolean asCard = pair2.getValue();
 			
 			labelPlayers[cnt].setText(username);
 			labelCapitals[cnt].setText(String.valueOf(capital));
+			
+			labelPrisons[cnt].setText(isPrison ? "X" : "");
+			labelCartes[cnt].setText(asCard ? "X" : "");
+			
 			cnt++;
 		}
 		
