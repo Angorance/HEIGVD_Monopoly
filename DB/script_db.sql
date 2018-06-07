@@ -204,7 +204,7 @@ INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `price
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 16, 50, 400, 200, 200, 200);
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 17, 25, 200, NULL, NULL, 100);
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 18, 200, NULL, NULL, NULL, NULL);
-INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 19, 4, 150, NULL, NULL, 75);
+INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 19, 1, 150, NULL, NULL, 75);
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 20, 50, NULL, NULL, NULL, NULL);
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 21, 18, 220, 150, 150, 110);
 INSERT INTO `cheseaux-poly`.`price` (`id`, `rent`, `price`, `priceCouch`, `priceHomeCinema`, `hypothec`) VALUES ( 22, 100, NULL, NULL, NULL, NULL);
