@@ -399,4 +399,34 @@ public class Client {
 		
 		// TODO - Manage response !!!
 	}
+	
+	/**
+	 * Allows the player to set or cancel a mortgage on a property
+	 * @param set define if the method is called to set (true) or to cancel (false) the mortgage
+	 * @param position position of the concerned property
+	 */
+	public void setCancelMortgage(boolean set, int position) {
+		// TODO validate ~~Bry
+		
+		if(set){
+			sendData(GameProtocol.GAM_HYPOT + " " + position);
+		} else {
+			sendData(GameProtocol.GAM_NHYPOT + " " + position);
+		}
+	}
+	
+	/**
+	 * allows the player to buy or sell a property
+	 * @param buy define if the method is called to buy (true) or to sell (false) the property
+	 * @param position position of the concerned property
+	 */
+	public void buySellSquare(boolean buy, int position) {
+		// TODO validate ~~Bry
+		
+		if(buy){
+			sendData((GameProtocol.GAM_BUYS + " " + position));
+		} else {
+			sendData((GameProtocol.GAM_SELL + " " + position));
+		}
+	}
 }

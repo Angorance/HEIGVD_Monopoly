@@ -45,6 +45,7 @@ public abstract class GameProtocol {
 	public static final String GAM_PAY = "PAYS";
 	public static final String GAM_GAIN = "GAIN";
 	public static final String GAM_BUYS = "BUYS";
+	public static final String GAM_SELL = "SELL";
 	public static final String GAM_DENY = "DENY";
 	public static final String GAM_PLYR = "PLYR";
 	public static final String GAM_MOV = "MOVE";
@@ -72,6 +73,7 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_4INST = 8;
 	public static final int RENT_TO_1COMP = 4;
 	public static final int RENT_TO_2COMP = 10;
+	public static final double RATE_HYPOTHEQUE = 1.1;
 	
 	
 }
