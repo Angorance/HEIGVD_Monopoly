@@ -1,5 +1,6 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Player;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,22 +24,28 @@ public class Controller_popup implements Initializable {
 	}
 	
 	private void useCard() {
+		
 		cb.useCard();
 	}
 	
 	private void rollDice() {
+		
 		cb.rollDice();
 	}
 	
 	private void payTax() {
+		
 		cb.payTax();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		button_useCard.setDisable(Player.getInstance().hasFreedomCard());
+		
 		button_useCard.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				useCard();
 			}
 		});
@@ -46,6 +53,7 @@ public class Controller_popup implements Initializable {
 		button_rollDice.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				rollDice();
 			}
 		});
@@ -53,6 +61,7 @@ public class Controller_popup implements Initializable {
 		button_payTax.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				payTax();
 			}
 		});
