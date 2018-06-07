@@ -357,7 +357,7 @@ public class GameLogic extends Thread {
 		// TODO
 		
 		// check if can keep the card, if not, we put it in the end of the deck
-		if (drawed.getAction() != GameProtocol.CARD_FREE) {
+		if (!drawed.getAction().equals(GameProtocol.CARD_FREE)) {
 			
 			String[] fullAction = drawed.getFullAction().split(" ");
 			
@@ -462,10 +462,6 @@ public class GameLogic extends Thread {
 				
 				case GameProtocol.CARD_EXAM:
 					sendToExam();
-					break;
-				
-				case GameProtocol.CARD_FREE:
-					leaveExam();
 					break;
 				
 				case GameProtocol.CARD_REP:
