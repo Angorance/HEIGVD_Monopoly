@@ -93,7 +93,13 @@ public class NotificationHandler {
 	
 	public void update(String cmd, Lobby l) {
 		
-		if (socket.isClosed()) {
+		if (socket.isClosed() || !socket.isConnected()) {
+			
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			NotificationServer.removeNotifier(this);
 			
