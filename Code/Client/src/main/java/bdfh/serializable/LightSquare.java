@@ -73,14 +73,28 @@ public class LightSquare {
 	 * TODO
 	 */
 	public void buySquare() {
-	
+		Client.getInstance().buySellSquare(true, position);
 	}
 	
 	/**
 	 * TODO
 	 */
 	public void sellSquare() {
+		Client.getInstance().buySellSquare(false, position);
+	}
 	
+	/**
+	 * put a square in mortgage
+	 */
+	public void setMortgage() {
+		Client.getInstance().setCancelMortgage(true, position);
+	}
+	
+	/**
+	 * put a square in mortgage
+	 */
+	public void cancelMortgage() {
+		Client.getInstance().setCancelMortgage(false, position);
 	}
 	
 	public void buyCouch() {
