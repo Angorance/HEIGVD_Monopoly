@@ -44,14 +44,21 @@ public abstract class GameProtocol {
 	public static final String GAM_BOARD = "BOARD";
 	public static final String GAM_PAY = "PAYS";
 	public static final String GAM_GAIN = "GAIN";
+	public static final String GAM_BUYS = "BUYS";
 	public static final String GAM_DENY = "DENY";
 	public static final String GAM_PLYR = "PLYR";
 	public static final String GAM_MOV = "MOVE";
 	public static final String GAM_EXAM = "EXAM";
 	public static final String GAM_FRDM = "FRDM";
+	public static final String GAM_HYPOT = "HPTQ";
+	public static final String GAM_NHYPOT = "NHPTQ";
 	public static final String GAM_FRDM_C = "FRDM_C";
 	public static final String GAM_FRDM_U = "FRDM_U";
 	public static final String GAM_FRDM_T = "FRDM_T";
+	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
+	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
+	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
+	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
 	
 	// Factors used to calculate rents
 	public static final int RENT_TO_1COUC = 5;
@@ -66,8 +73,5 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_1COMP = 4;
 	public static final int RENT_TO_2COMP = 10;
 	
-	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
-	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
-	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
-	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
+	
 }
