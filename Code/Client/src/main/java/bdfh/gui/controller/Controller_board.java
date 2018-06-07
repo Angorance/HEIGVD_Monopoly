@@ -415,7 +415,12 @@ public class Controller_board implements Initializable, IWindow {
 			int cnt = 0;
 			for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
 				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getValue();
+				MutablePair<Boolean,Boolean> pair = GameHandler.getInstance().getExamStates().get(idPlayer);
+				boolean isPrison = pair.getKey();
+				boolean asCard = pair.getValue();
 				labelCapitals[cnt].setText(String.valueOf(capital));
+				labelPrisons[cnt].setText(isPrison ? "X" : "");
+				labelCartes[cnt].setText(asCard ? "X" : "");
 				cnt++;
 			}
 		});
