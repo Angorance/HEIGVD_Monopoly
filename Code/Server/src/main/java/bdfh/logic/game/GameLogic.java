@@ -156,6 +156,11 @@ public class GameLogic extends Thread {
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
 	}
 	
+	public void initializeDouble() {
+		
+		setExamState(getExamPresence(), getExamTurn(), 0);
+	}
+	
 	public void didADouble() {
 		
 		setExamState(getExamPresence(), getExamTurn(), getExamNbrDouble() + 1);
@@ -497,6 +502,9 @@ public class GameLogic extends Thread {
 		currentPlayer = players.getFirst();
 		notifyPlayers(GameProtocol.GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
+		
+		// Initialize the number of double
+		initializeDouble();
 		
 		// Check if the player can leave the exam
 		if (getExamPresence() && getExamTurn() == 3) {
