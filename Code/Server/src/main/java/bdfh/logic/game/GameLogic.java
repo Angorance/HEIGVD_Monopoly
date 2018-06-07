@@ -425,17 +425,14 @@ public class GameLogic extends Thread {
 					// Move the player
 					board.setPlayerPosition(getCurrentPlayerID(), position);
 					
-					if (board.getCurrentSquare(position).getFamily() == SQUA_START) {
+					if (board.getCurrentSquare(position).getFamily().equals(SQUA_START)) {
 						handleStartPassed();
 					}
 					
 					// Notify
-					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(
-							board.getCurrentSquare(getCurrentPlayerID()).getPosition()));
-					LOG.log(Level.INFO,
-							currentPlayer.getClientUsername() + " s'est déplacé sur la case : "
-									+ board.getCurrentSquare(getCurrentPlayerID()).getPosition()
-									+ ".");
+					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(position));
+					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " s'est déplacé sur la case : "
+									+ board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
 					break;
 				
 				case GameProtocol.CARD_EACH:
