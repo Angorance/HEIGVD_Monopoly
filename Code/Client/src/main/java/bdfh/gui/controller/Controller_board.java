@@ -302,6 +302,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void reset() {
 		
+		nameSquare.setText("");
 		infoProperties.setVisible(false);
 		infoCompany.setVisible(false);
 		infoInstitute.setVisible(false);
@@ -334,6 +335,7 @@ public class Controller_board implements Initializable, IWindow {
 			cnt++;
 		}
 		nameSquare.setText(name);
+		price_prop.setText(String.valueOf(price));
 		hypotheque.setText(String.valueOf(hyp));
 		prixCanape.setText(String.valueOf(can));
 		prixHC.setText(String.valueOf(hc));
@@ -640,6 +642,7 @@ public class Controller_board implements Initializable, IWindow {
 			boolean hasCard = pair2.getValue();
 			
 			labelPlayers[cnt].setText(username);
+			labelPlayers[cnt].setStyle("-fx-text-fill: " + color[cnt]);
 			labelCapitals[cnt].setText(String.valueOf(capital));
 			
 			labelPrisons[cnt].setText(isPrison ? "X" : "");

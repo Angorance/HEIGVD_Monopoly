@@ -139,6 +139,8 @@ public class Board {
 			
 			case GameProtocol.SQUA_TAX:
 				game.manageMoney(game.getCurrentPlayer(), s.getPrices().getRent() * -1);
+				
+				game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(s.getPrices().getRent()));
 				LOG.log(Level.INFO,
 						game.getCurrentPlayer().getClientUsername() + " paid " + s.getPrices().getRent() + " (got a Tax)");
 				break;
@@ -149,7 +151,9 @@ public class Board {
 					int factor = howManyPossession(s.getOwner().getClientID(), s.getFamily());
 					int totalToPay = baseRent * (int) Math.pow(2, factor - 1);
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
+					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
 							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay + " to " + s.getOwner()
 									.getClientUsername() + " (" + factor + " Institute possessed)");
@@ -168,7 +172,9 @@ public class Board {
 					int roll = game.getTotalLastRoll();
 					int totalToPay = roll * factor;
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
+					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
 							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay + " to " + s.getOwner()
 									.getClientUsername() + " (rolled a " + roll + ", "+ howManyPossession +" Company possessed)");
