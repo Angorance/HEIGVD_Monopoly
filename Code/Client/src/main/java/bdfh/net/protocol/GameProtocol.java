@@ -54,11 +54,17 @@ public abstract class GameProtocol {
 	public static final String GAM_FRDM_T = "FRDM_T";
 	
 	// Factors used to calculate rents
-	public static final int RENT_TO_1C = 5;
-	public static final int RENT_TO_2C = 15;
-	public static final int RENT_TO_3C = 30;
-	public static final int RENT_TO_4C = 45;
-	public static final int RENT_TO_1H = 54;
+	public static final int RENT_TO_1COUC = 5;
+	public static final int RENT_TO_2COUC = 15;
+	public static final int RENT_TO_3COUC = 30;
+	public static final int RENT_TO_4COUC = 45;
+	public static final int RENT_TO_1HOME = 54;
+	public static final int RENT_TO_1INST = 1;
+	public static final int RENT_TO_2INST = 2;
+	public static final int RENT_TO_3INST = 4;
+	public static final int RENT_TO_4INST = 8;
+	public static final int RENT_TO_1COMP = 4;
+	public static final int RENT_TO_2COMP = 10;
 	
 	public static final String GAM_BCOUCH = "BCOUCH"; // le joueur achète un canapé.
 	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
