@@ -4,6 +4,7 @@ import bdfh.database.DatabaseConnect;
 import bdfh.logic.saloon.Lobby;
 import bdfh.net.server.ClientHandler;
 import bdfh.protocol.GameProtocol;
+import bdfh.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -580,7 +581,7 @@ public class GameLogic extends Thread {
 	 * @param caller player that attempt to put a property in mortgage
 	 * @param posProperty property to put in mortgage
 	 */
-	public void setMortgaged(ClientHandler caller, Integer posProperty) {
+	public int setMortgaged(ClientHandler caller, Integer posProperty) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()
 				&& board.getSquare(posProperty).isProperty()) {
@@ -594,7 +595,9 @@ public class GameLogic extends Thread {
 			playersFortune.get(caller.getClientID())[VPOSSESSION] -= price;
 			manageMoney(currentPlayer, price);
 			notifyPlayers(GAM_GAIN, Integer.toString(price));
+			return SUCCESS;
 		}
+		return NOT_YOUR_TURN;
 	}
 	
 	private void sellAllConstruction(ClientHandler caller, Integer posProperty) {
@@ -611,16 +614,25 @@ public class GameLogic extends Thread {
 	 * @param caller player that attempt to cancel a mortgage
 	 * @param posProperty property to cancel the mortgage
 	 */
-	public void disencumbrance(ClientHandler caller, Integer posProperty) {
+	public int disencumbrance(ClientHandler caller, Integer posProperty) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			board.cancelMortgaged(currentPlayer, posProperty);
+			int price = (int)(board.getSquare(posProperty).getPrices().getHypothec() * RATE_HYPOTHEQUE);
 			
-			int price = board.getSquare(posProperty).getPrices().getHypothec();
+			
+			if (playersFortune.get(caller.getClientID())[CAPITAL] < price) {
+				return NOT_ENOUGH_MONEY;
+			}
+			
+			board.cancelMortgaged(currentPlayer, posProperty);
 			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
-			manageMoney(currentPlayer, (int)(price * -RATE_HYPOTHEQUE));
+			manageMoney(currentPlayer, (int)(price ));
 			notifyPlayers(GAM_PAY, Integer.toString(price));
+			
+			return SUCCESS;
 		}
+		
+		return NOT_YOUR_TURN;
 	}
 	
 	/**
@@ -697,10 +709,14 @@ public class GameLogic extends Thread {
 		}
 	}
 	
-	public void buySquare(ClientHandler caller, int posSquare) {
+	public int buySquare(ClientHandler caller, int posSquare) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
 			Price price = board.getSquare(posSquare).getPrices();
+			
+			if(playersFortune.get(currentPlayer.getClientID())[CAPITAL] < price.getPrice()){
+				return NOT_ENOUGH_MONEY;
+			}
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
@@ -712,10 +728,14 @@ public class GameLogic extends Thread {
 			
 			LOG.log(Level.INFO,
 					currentPlayer.getClientUsername() + " bought the square " + posSquare);
+			
+			return SUCCESS;
 		}
+		
+		return NOT_YOUR_TURN;
 	}
 	
-	public void sellSquare(ClientHandler caller, Integer posSquare) {
+	public int sellSquare(ClientHandler caller, Integer posSquare) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
 			
@@ -733,7 +753,11 @@ public class GameLogic extends Thread {
 			
 			LOG.log(Level.INFO,
 					currentPlayer.getClientUsername() + " sold the square " + posSquare);
+			
+			return SUCCESS;
 		}
+		
+		return NOT_YOUR_TURN;
 	}
 	
 	/**
