@@ -271,16 +271,18 @@ public class Controller_board implements Initializable, IWindow {
 			return fp;
 		}
 		
-		public void redraw(){
-			//label_House.setText(String.valueOf(mySquare.getNumberHouse()));
+		public void redraw() {
+			
+			label_House.setText(String.valueOf(mySquare.getNbCouches()));
 		}
 		
 	}
 	
-	public void redrawSquare(int pos){
+	public void redrawSquare(int pos) {
 		
 		cases.get(pos).redraw();
 	}
+	
 	public void setOwner(int pos, int idPlayer) {
 		
 		String colorUse;
@@ -367,13 +369,111 @@ public class Controller_board implements Initializable, IWindow {
 		venteCanape.setText(String.valueOf(vcan));
 		venteHC.setText(String.valueOf(vhc));
 		
-		//TODO à modifier
-		buy_buttonProp.setDisable(false);
+		/*buy_buttonProp.setDisable(false);
 		buy_buttonCanape.setDisable(false);
 		sell_buttonProp.setDisable(false);
 		sell_buttonCanape.setDisable(false);
-		hyp_button.setDisable(false);
+		hyp_button.setDisable(false);*/
+		propertiesButton();
+		
 	}
+	
+	public void propertiesButton() {
+		
+		String family = square.getFamily();
+		switch (family) {
+			case GameProtocol.SQUA_BROWN:
+			case GameProtocol.SQUA_CYAN:
+			case GameProtocol.SQUA_PINK:
+			case GameProtocol.SQUA_ORANGE:
+			case GameProtocol.SQUA_RED:
+			case GameProtocol.SQUA_YELLOW:
+			case GameProtocol.SQUA_GREEN:
+			case GameProtocol.SQUA_BLUE:
+				propertiesProd();
+				break;
+			case GameProtocol.SQUA_INSTITUTE:
+				propertiesInstitut();
+				break;
+			case GameProtocol.SQUA_COMPANY:
+				propertiesCompany();
+				break;
+			
+		}
+	}
+	
+	private void propertiesProd() {
+		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+			buy_buttonProp.setDisable(false);
+			buy_buttonCanape.setDisable(true);
+			sell_buttonProp.setDisable(true);
+			sell_buttonCanape.setDisable(true);
+			hyp_button.setDisable(true);
+		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
+			boolean hasCine = square.hasCine();
+			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
+			
+			if(square.getNbCouches() == 4){
+				buy_buttonCanape.setText("Achat HC");
+			}else{
+				buy_buttonCanape.setText("Achat canapé");
+			}
+			
+			if(square.hasCine()){
+				sell_buttonCanape.setText("Vente HC");
+			}else{
+				sell_buttonCanape.setText("Vente canapé");
+				
+			}
+			buy_buttonProp.setDisable(true);
+			buy_buttonCanape.setDisable(square.hasCine());
+			sell_buttonProp.setDisable(canSellHouse);
+			sell_buttonCanape.setDisable(!canSellHouse);
+			hyp_button.setDisable(true);
+		}else{
+			buy_buttonProp.setDisable(true);
+			buy_buttonCanape.setDisable(true);
+			sell_buttonProp.setDisable(true);
+			sell_buttonCanape.setDisable(true);
+			hyp_button.setDisable(true);
+		}
+	}
+	
+	private void propertiesInstitut(){
+		if(square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()){
+			buy_buttonInstitute.setDisable(false);
+			sell_buttonInstitute.setDisable(true);
+			hyp_buttonInstitute.setDisable(true);
+		}else if(square.getOwner().getId() == Player.getInstance().getID()){
+			buy_buttonInstitute.setDisable(true);
+			sell_buttonInstitute.setDisable(false);
+			hyp_buttonInstitute.setDisable(false);
+		}else{
+			buy_buttonInstitute.setDisable(true);
+			sell_buttonInstitute.setDisable(true);
+			hyp_buttonInstitute.setDisable(true);
+		}
+	}
+	
+	private void propertiesCompany(){
+		if(square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()){
+			buy_buttonCompany.setDisable(false);
+			sell_buttonCompany.setDisable(true);
+			hyp_buttonCompany.setDisable(true);
+		}else if(square.getOwner().getId() == Player.getInstance().getID()){
+			buy_buttonCompany.setDisable(true);
+			sell_buttonCompany.setDisable(false);
+			hyp_buttonCompany.setDisable(false);
+		}else{
+			buy_buttonInstitute.setDisable(true);
+			sell_buttonInstitute.setDisable(true);
+			hypotheque.setDisable(true);
+		}
+	}
+	
 	
 	private void infoCompany(LightSquare square) {
 		
@@ -613,10 +713,12 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void buyHouse() {
 		
-		if (true/*canBuyCouch*/) {
+		
+		if (square.getNbCouches() < 4) {
 			square.buyCouch();
 		} else {
 			square.buyHomeCinema();
+			
 		}
 	}
 	
