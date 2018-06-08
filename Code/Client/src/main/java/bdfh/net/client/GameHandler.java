@@ -227,15 +227,18 @@ public class GameHandler extends Thread {
 	private void manageRoll(String[] str) {
 		
 		ArrayList tmp = new ArrayList();
+		int id = Integer.parseInt(str[0]);
 		
 		for (int i = 2; i < str.length; ++i) {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
 		// Don't move the player if he's in exam and load the popup choice
-		if(players.get(Player.getInstance().getID()).isInExam() && Player.getInstance().isMyTurn()) {
+		if(players.get(id).isInExam()) {
 			
-			sub.loadPopup();
+			if (Player.getInstance().isMyTurn()) {
+				sub.loadPopup();
+			}
 		} else {
 			
 			sub.movePawn(Integer.parseInt(str[0]), tmp);
