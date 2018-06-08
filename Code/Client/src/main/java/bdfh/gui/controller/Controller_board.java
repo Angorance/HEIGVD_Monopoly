@@ -271,8 +271,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	public void setOwner(LightSquare square,int idPlayer){
-		int pos = square.getPosition();
+	public void setOwner(int pos,int idPlayer){
 		String colorUse;
 		if(idPlayer != -1){
 			colorUse = colorPlayer.get(idPlayer) + "88";
