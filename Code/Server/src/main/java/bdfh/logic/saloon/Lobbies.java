@@ -31,6 +31,7 @@ public class Lobbies {
 	private Lobbies() {}
 	
 	public void startLobbyGame(Lobby lobby) {
+		lobbies.remove(lobby.getID(), lobby);
 		notifySubs(NotifProtocol.NOTIF_START, lobby);
 	}
 	
@@ -140,13 +141,15 @@ public class Lobbies {
 		}
 	}
 	
-	private void notifySubs(String cmd, Lobby l) {
-		for (NotificationHandler n : subList){
+	private synchronized void notifySubs(String cmd, Lobby l) {
+		LinkedList<NotificationHandler> tmp = new LinkedList<>(subList);
+		
+		for (NotificationHandler n : tmp){
 			n.update(cmd, l);
 		}
 	}
 	
-	public void removeSub(NotificationHandler c){
+	public synchronized void removeSub(NotificationHandler c){
 		subList.remove(c);
 	}
 	

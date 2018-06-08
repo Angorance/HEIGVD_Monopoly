@@ -110,11 +110,8 @@ public class NotificationHandler {
 				sendData(NotifProtocol.NOTIF_UPDATE, json);
 				break;
 			
-			case NotifProtocol.NOTIF_DELETE:
-				sendData(NotifProtocol.NOTIF_DELETE, json);
-				break;
-			
 			case NotifProtocol.NOTIF_START:
+				
 				sendData(NotifProtocol.NOTIF_START, Integer.toString(l.getID()));
 				
 				try {
@@ -122,12 +119,17 @@ public class NotificationHandler {
 					
 					if (response.equals("KILL")) {
 						socket.close();
-						NotificationServer.removeNotifier(this);
+						
+						Lobbies.getInstance().removeSub(this);
+						
+						LOG.log(Level.INFO, "Notification sub removed.");
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+			
+			case NotifProtocol.NOTIF_DELETE:
+				sendData(NotifProtocol.NOTIF_DELETE, json);
 				
 				break;
 		}

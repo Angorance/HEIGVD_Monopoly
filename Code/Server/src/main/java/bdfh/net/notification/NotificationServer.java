@@ -75,7 +75,7 @@ public class NotificationServer implements Runnable {
 		}
 	}
 	
-	public static void removeNotifier(NotificationHandler n) {
+	public synchronized static void removeNotifier(NotificationHandler n) {
 		
 		notifiers.remove(n);
 	}
