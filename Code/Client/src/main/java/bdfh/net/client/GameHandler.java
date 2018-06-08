@@ -7,6 +7,7 @@ import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.LightBoard;
 import bdfh.serializable.LightPlayer;
+import bdfh.serializable.LightSquare;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -161,10 +162,20 @@ public class GameHandler extends Thread {
 				
 				break;
 				
-			case GameProtocol.GAM_BUYS:
+			case GameProtocol.GAM_BUYS: //  todo - check
 				String[] param = split[1].split(" ");
 				int pos = Integer.parseInt(param[1]);
+				id = Integer.parseInt(param[0]);
 				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(param[0])));
+				sub.setOwner(pos, id);
+				break;
+			
+			case GameProtocol.GAM_SELL : //     todo - check
+				// id = Integer.parseInt(split[1]);
+				String[] param2 = split[1].split(" ");
+				int pos2 = Integer.parseInt(param2[1]);
+				board.getSquares().get(pos2).setOwner(null);
+				sub.setOwner(pos2, -1);
 				break;
 		}
 	}
