@@ -369,12 +369,12 @@ public class Controller_board implements Initializable, IWindow {
 		venteCanape.setText(String.valueOf(vcan));
 		venteHC.setText(String.valueOf(vhc));
 		
-		/*buy_buttonProp.setDisable(false);
+		buy_buttonProp.setDisable(false);
 		buy_buttonCanape.setDisable(false);
 		sell_buttonProp.setDisable(false);
 		sell_buttonCanape.setDisable(false);
-		hyp_button.setDisable(false);*/
-		propertiesButton();
+		hyp_button.setDisable(false);
+		//propertiesButton();
 		
 	}
 	
