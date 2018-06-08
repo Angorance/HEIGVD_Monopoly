@@ -289,9 +289,6 @@ public class GameLogic extends Thread {
 					
 					// Update for exam state
 					didADouble();
-					
-				} else if (getExamPresence()) {
-					stayInExam();
 				}
 				
 				rolls.add(roll);
@@ -302,7 +299,10 @@ public class GameLogic extends Thread {
 			// notify the players
 			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
 			
-			if (!getExamPresence() && getExamNbrDouble() == 3) {
+			if (getExamPresence() && getExamNbrDouble() == 0) {
+				stayInExam();
+				
+			} else if(!getExamPresence() && getExamNbrDouble() == 3) {
 				
 				// The player has to go in exam
 				sendToExam();
