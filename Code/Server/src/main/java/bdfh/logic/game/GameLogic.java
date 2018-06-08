@@ -289,9 +289,6 @@ public class GameLogic extends Thread {
 					
 					// Update for exam state
 					didADouble();
-					
-				} else if (getExamPresence()) {
-					stayInExam();
 				}
 				
 				rolls.add(roll);
@@ -302,7 +299,10 @@ public class GameLogic extends Thread {
 			// notify the players
 			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
 			
-			if (!getExamPresence() && getExamNbrDouble() == 3) {
+			if (getExamPresence() && getExamNbrDouble() == 0) {
+				stayInExam();
+				
+			} else if(!getExamPresence() && getExamNbrDouble() == 3) {
 				
 				// The player has to go in exam
 				sendToExam();
@@ -620,6 +620,7 @@ public class GameLogic extends Thread {
 			playersFortune.get(caller.getClientID())[VPOSSESSION] -= price;
 			manageMoney(currentPlayer, price);
 			notifyPlayers(GAM_GAIN, Integer.toString(price));
+			notifyPlayers(GAM_HYPOT, Integer.toString(posProperty));
 			return SUCCESS;
 		}
 		return NOT_YOUR_TURN;
@@ -653,6 +654,7 @@ public class GameLogic extends Thread {
 			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
 			manageMoney(currentPlayer, (int)(price ));
 			notifyPlayers(GAM_PAY, Integer.toString(price));
+			notifyPlayers(GAM_NHYPOT, Integer.toString(posProperty));
 			
 			return SUCCESS;
 		}
@@ -688,7 +690,8 @@ public class GameLogic extends Thread {
 						square.toggleCouch(1);
 						manageMoney(player, -1 * price);
 						playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
-						
+						notifyPlayers(GAM_BCOUCH, Integer.toString(squareId));
+						notifyPlayers(GAM_PAY, Integer.toString(sellPrice));
 						return SUCCESS;
 					}
 				} else {
@@ -733,7 +736,8 @@ public class GameLogic extends Thread {
 			square.toggleHomeCinema(true);
 			manageMoney(player, -1 * price);
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
-			
+			notifyPlayers(GAM_BHCINE, Integer.toString(squareId));
+			notifyPlayers(GAM_PAY, Integer.toString(sellPrice));
 			return SUCCESS;
 		}
 	}
@@ -771,16 +775,20 @@ public class GameLogic extends Thread {
 	public int sellSquare(ClientHandler caller, Integer posSquare) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
+			if(board.getSquare(posSquare).getOwner() == null ||
+					board.getSquare(posSquare).getOwner().getClientID() != caller.getClientID()){
+				return NOT_OWNER;
+			}
 			
 			sellAllConstruction(caller, posSquare);
 			
 			Price price = board.getSquare(posSquare).getPrices();
 			
-			notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice()));
+			notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice()/2));
 			notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
 			
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
-			manageMoney(currentPlayer, price.getPrice());
+			manageMoney(currentPlayer, price.getPrice()/2);
 			
 			board.removeOwner(caller, posSquare);
 			
@@ -814,7 +822,8 @@ public class GameLogic extends Thread {
 			square.toggleCouch(-1 * n);
 			manageMoney(player, -1 * n * sellPrice);
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= n * sellPrice;
-			
+			notifyPlayers(GAM_SCOUCH, Integer.toString(squareId));
+			notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
 			return true;
 			
 		} else {
@@ -840,7 +849,8 @@ public class GameLogic extends Thread {
 			square.toggleHomeCinema(false);
 			manageMoney(player, -1 * sellPrice);
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= sellPrice;
-			
+			notifyPlayers(GAM_SHCINE, Integer.toString(squareId));
+			notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
 			return true;
 			
 		} else {
