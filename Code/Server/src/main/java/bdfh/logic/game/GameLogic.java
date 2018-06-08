@@ -134,6 +134,9 @@ public class GameLogic extends Thread {
 	
 	public void sendToExam() {
 		
+		// Initialize the number of double
+		initializeDouble();
+		
 		setExamState(true, 0, 0);
 		
 		// Move the player
@@ -313,6 +316,9 @@ public class GameLogic extends Thread {
 				
 				if (!didADouble) {
 					players.addLast(players.pop());
+					
+					// Initialize the number of double
+					initializeDouble();
 				}
 				
 				// Move the player and check if he passed the start square
@@ -513,9 +519,6 @@ public class GameLogic extends Thread {
 		currentPlayer = players.getFirst();
 		notifyPlayers(GameProtocol.GAM_PLAY, "");
 		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
-		
-		// Initialize the number of double
-		initializeDouble();
 		
 		// Check if the player can leave the exam
 		if (getExamPresence() && getExamTurn() == 3) {

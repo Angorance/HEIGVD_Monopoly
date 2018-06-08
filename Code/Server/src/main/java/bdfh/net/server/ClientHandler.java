@@ -313,7 +313,7 @@ public class ClientHandler implements Handler {
 	 */
 	public void sendData(String cmd, String param) {
 		
-		if (writer != null) {
+		//if (writer != null) {
 			String toSend = cmd;
 			
 			if (param != "") {
@@ -324,7 +324,7 @@ public class ClientHandler implements Handler {
 			writer.flush();
 			
 			LOG.log(Level.INFO, "SENT: " + toSend);
-		}
+		//}
 	}
 	
 	/**

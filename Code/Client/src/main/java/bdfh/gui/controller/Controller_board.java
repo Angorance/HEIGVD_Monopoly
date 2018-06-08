@@ -550,10 +550,6 @@ public class Controller_board implements Initializable, IWindow {
 			cases.get(pos).getChildren().removeAll(tmpPD);
 			cases.get(tmp).getChildren().add(tmpPD);
 			GameHandler.getInstance().getPlayers().get(idPlayer).setPosition(tmp);
-			if (Player.getInstance().isMyTurn()) {
-				rollDice_button.setDisable(true);
-				endTurn_button.setDisable(false);
-			}
 			
 			detailSquare(GameHandler.getInstance().getBoard().getSquares().get(tmp));
 		});
@@ -563,6 +559,8 @@ public class Controller_board implements Initializable, IWindow {
 		
 		unloadPopup();
 		Player.getInstance().rollDice();
+		rollDice_button.setDisable(true);
+		endTurn_button.setDisable(false);
 	}
 	
 	private void endTurn() {
