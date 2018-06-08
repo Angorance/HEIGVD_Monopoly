@@ -105,7 +105,7 @@ public class Controller_board implements Initializable, IWindow {
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
 	private Label[] labelPrisons = new Label[4];
-	private Label[] labelCartes  = new Label[4];
+	private Label[] labelCartes = new Label[4];
 	private Label[] label_rentProp = new Label[6];
 	private Label[] label_rentComp = new Label[2];
 	private Label[] label_rentInst = new Label[4];
@@ -271,11 +271,12 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
-	public void setOwner(int pos,int idPlayer){
+	public void setOwner(int pos, int idPlayer) {
+		
 		String colorUse;
-		if(idPlayer != -1){
+		if (idPlayer != -1) {
 			colorUse = colorPlayer.get(idPlayer) + "88";
-		}else{
+		} else {
 			colorUse = "transparent";
 		}
 		cases.get(pos).getFP().setStyle("-fx-background-color: " + colorUse + ";");
@@ -610,10 +611,12 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void sellProp() {
+		
 		square.sellSquare();
 	}
 	
 	private void buyProp() {
+		
 		square.buySquare();
 	}
 	
@@ -643,14 +646,14 @@ public class Controller_board implements Initializable, IWindow {
 		
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
-			colorPlayer.put(idPlayer,color[cnt]);
+			colorPlayer.put(idPlayer, color[cnt]);
 			pawnDisplay pd = new pawnDisplay(color[cnt]);
 			cases.get(0).getFP().getChildren().add(pd);
 			displayerList.put(idPlayer, pd);
 			LightPlayer lp = GameHandler.getInstance().getPlayers().get(idPlayer);
 			String username = lp.getUsername();
 			int capital = lp.getCapital();
-			boolean isPrison =  lp.isInExam();
+			boolean isPrison = lp.isInExam();
 			boolean hasCard = lp.getFreeCards() > 0;
 			
 			labelPlayers[cnt].setText(username);
@@ -708,6 +711,52 @@ public class Controller_board implements Initializable, IWindow {
 			@Override public void handle(ActionEvent event) {
 				
 				sellHouse();
+			}
+		});
+		
+		buy_buttonInstitute.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				buyProp();
+			}
+		});
+		
+		sell_buttonInstitute.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				sellProp();
+			}
+		});
+		
+		hyp_buttonInstitute.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+			
+			}
+		});
+		
+		buy_buttonCompany.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				buyProp();
+			}
+		});
+		
+		sell_buttonCompany.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				sellProp();
+			}
+		});
+		
+		hyp_buttonCompany.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+			
 			}
 		});
 		
