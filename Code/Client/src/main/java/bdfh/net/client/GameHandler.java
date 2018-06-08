@@ -162,8 +162,9 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GameProtocol.GAM_BUYS:
-				int pos = Integer.parseInt(split[2]);
-				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(split[1])));
+				String[] param = split[1].split(" ");
+				int pos = Integer.parseInt(param[1]);
+				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(param[0])));
 				break;
 		}
 	}
