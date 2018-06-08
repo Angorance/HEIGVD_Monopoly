@@ -42,7 +42,7 @@ public class Price {
 	
 	public Integer getPrice() {
 		
-		return rent;
+		return price;
 	}
 	
 	public Integer getPriceCouch() {
