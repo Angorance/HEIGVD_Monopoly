@@ -747,6 +747,10 @@ public class GameLogic extends Thread {
 				return NOT_ENOUGH_MONEY;
 			}
 			
+			if(board.getSquare(posSquare).getOwner() != null){
+				return ALREADY_OWNED;
+			}
+			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
 			
