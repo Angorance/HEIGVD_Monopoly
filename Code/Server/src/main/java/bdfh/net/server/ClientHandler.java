@@ -295,6 +295,9 @@ public class ClientHandler implements Handler {
 			case ALREADY_OWNED : // 8
 				sendData(ANS_ERR, ERR8);
 				break;
+			case NOT_BUYABLE : // 9
+				sendData(ANS_ERR, ERR9);
+				break;
 		}
 	}
 	

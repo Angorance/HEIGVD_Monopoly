@@ -2,10 +2,10 @@ package bdfh.net.notification;
 
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
-import bdfh.net.Handler;
 import bdfh.protocol.NotifProtocol;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +78,7 @@ public class NotificationHandler {
 		}
 		
 		writer.println(toSend);
-		writer.flush();
+		writer.flush(); // TODO - replace by checkError ?
 	}
 	
 	/**
@@ -93,13 +93,7 @@ public class NotificationHandler {
 	
 	public void update(String cmd, Lobby l) {
 		
-		if (socket.isClosed() || !socket.isConnected()) {
-			
-			try {
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (writer.checkError()) {
 			
 			NotificationServer.removeNotifier(this);
 			
