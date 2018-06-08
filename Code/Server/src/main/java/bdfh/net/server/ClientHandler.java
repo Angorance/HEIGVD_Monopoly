@@ -322,6 +322,8 @@ public class ClientHandler implements Handler {
 			
 			writer.println(toSend);
 			writer.flush();
+			
+			LOG.log(Level.INFO, "SENT: " + toSend);
 		}
 	}
 	
