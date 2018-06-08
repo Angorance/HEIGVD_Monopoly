@@ -87,6 +87,7 @@ public abstract class GameProtocol {
 	public static final int NOT_FULL_FAMILY = 5;
 	public static final int NOT_YOUR_TURN = 6;
 	public static final int NOT_OWNER = 7;
+	public static final int ALREADY_OWNED = 8;
 	
 	public static final String ERR1 = "Vous n'avez pas assez d'argent.";
 	public static final String ERR2 = "Il n'y a pas assez de canapés sur la case.";
@@ -95,4 +96,5 @@ public abstract class GameProtocol {
 	public static final String ERR5 = "Vous ne possédez pas encore toutes les cases de la famille.";
 	public static final String ERR6 = "C'est n'est pas à votre tour de jouer.";
 	public static final String ERR7 = "Vous n'êtes pas le propriétaire";
+	public static final String ERR8 = "La case est déjà possédée";
 }

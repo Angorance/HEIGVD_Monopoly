@@ -291,6 +291,10 @@ public class ClientHandler implements Handler {
 			case NOT_OWNER: // 7
 				sendData(ANS_ERR, ERR7);
 				break;
+				
+			case ALREADY_OWNED : // 8
+				sendData(ANS_ERR, ERR8);
+				break;
 		}
 	}
 	
