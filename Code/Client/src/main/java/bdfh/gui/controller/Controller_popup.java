@@ -40,7 +40,7 @@ public class Controller_popup implements Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		button_useCard.setDisable(Player.getInstance().hasFreedomCard());
+		button_useCard.setDisable(!Player.getInstance().hasFreedomCard());
 		
 		button_useCard.setOnAction(new EventHandler<ActionEvent>() {
 			

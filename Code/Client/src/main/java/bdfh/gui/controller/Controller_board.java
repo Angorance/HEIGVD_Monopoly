@@ -561,8 +561,8 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void rollDice() {
 		
-		Player.getInstance().rollDice();
 		unloadPopup();
+		Player.getInstance().rollDice();
 	}
 	
 	private void endTurn() {

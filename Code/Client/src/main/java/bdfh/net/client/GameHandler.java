@@ -35,6 +35,8 @@ public class GameHandler extends Thread {
 	private PrintWriter out = null;
 	private String response;
 	
+	private boolean popupLoaded;
+	
 	private Controller_board sub;
 	
 	private GameHandler() {}
@@ -198,6 +200,7 @@ public class GameHandler extends Thread {
 		Player.getInstance().setMyTurn(false);
 		sub.notifyTurn();
 		sendData(GameProtocol.GAM_ENDT);
+		popupLoaded = false;
 	}
 	
 	public Map<Integer, LightPlayer> getPlayers() {
@@ -236,8 +239,9 @@ public class GameHandler extends Thread {
 		// Don't move the player if he's in exam and load the popup choice
 		if(players.get(id).isInExam()) {
 			
-			if (Player.getInstance().isMyTurn()) {
+			if (Player.getInstance().isMyTurn() && !popupLoaded) {
 				sub.loadPopup();
+				popupLoaded = true;
 			}
 		} else {
 			
