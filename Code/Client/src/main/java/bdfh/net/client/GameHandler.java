@@ -4,6 +4,7 @@ import bdfh.gui.controller.Controller_board;
 import bdfh.gui.controller.Controller_lobbyList;
 import bdfh.logic.usr.Player;
 import bdfh.net.protocol.GameProtocol;
+import bdfh.net.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 import bdfh.serializable.LightBoard;
 import bdfh.serializable.LightPlayer;
@@ -18,6 +19,8 @@ import java.io.PrintWriter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static bdfh.net.protocol.GameProtocol.*;
 
 /**
  * @author Héléna Line Reymond
@@ -76,6 +79,8 @@ public class GameHandler extends Thread {
 		
 		String[] split = line.split(" ", 2);
 		
+		String[] param;
+		
 		switch (split[0]) {
 			case GameProtocol.GAM_BOARD:
 				manageBoard(split[1]);
@@ -90,27 +95,31 @@ public class GameHandler extends Thread {
 				break;
 			
 			case GameProtocol.GAM_ROLL:
-				manageRoll(split[1].split(" "));
+				param = split[1].split(" ");
+				manageRoll(param);
 				break;
 			
 			case GameProtocol.GAM_GAIN:
-				manageGain(split[1].split(" "));
+				param = split[1].split(" ");
+				manageGain(param);
 				break;
 				
 			case GameProtocol.GAM_PAY:
-				managePay(split[1].split(" "));
+				param = split[1].split(" ");
+				managePay(param);
 				break;
 				
 			case GameProtocol.GAM_MOV:
-				manageMove(split[1].split(" "));
+				param = split[1].split(" ");
+				manageMove(param);
 				break;
 				
 			case GameProtocol.GAM_EXAM:
-				String[] infos = split[1].split(" ");
-				int id = Integer.parseInt(infos[0]);
+				param = split[1].split(" ");
+				int id = Integer.parseInt(param[0]);
 				
 				players.get(id).setInExam(true);
-				manageMove(infos);
+				manageMove(param);
 				
 				// Refresh
 				sub.updateBoard();
@@ -165,7 +174,7 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GameProtocol.GAM_BUYS: //  todo - check
-				String[] param = split[1].split(" ");
+				param = split[1].split(" ");
 				int pos = Integer.parseInt(param[1]);
 				id = Integer.parseInt(param[0]);
 				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(param[0])));
@@ -173,12 +182,37 @@ public class GameHandler extends Thread {
 				break;
 			
 			case GameProtocol.GAM_SELL : //     todo - check
-				// id = Integer.parseInt(split[1]);
-				String[] param2 = split[1].split(" ");
-				int pos2 = Integer.parseInt(param2[1]);
+				param = split[1].split(" ");
+				int pos2 = Integer.parseInt(param[1]);
 				board.getSquares().get(pos2).setOwner(null);
 				sub.setOwner(pos2, -1);
 				break;
+			
+			case GAM_BCOUCH:
+				param = split[1].split(" ");
+				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
+				break;
+			
+			case GAM_SCOUCH:
+				param = split[1].split(" ");
+				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
+				break;
+			
+			case GAM_BHCINE:
+				param = split[1].split(" ");
+				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
+				break;
+			
+			case GAM_SHCINE:
+				param = split[1].split(" ");
+				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
+				break;
+				
+			case Protocoly.ANS_ERR:
+				// TODO - Afficher message dans GUI
+				LOG.log(Level.INFO, split[1]);
+				break;
+			
 		}
 	}
 	

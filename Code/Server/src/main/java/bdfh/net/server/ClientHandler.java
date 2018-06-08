@@ -65,7 +65,7 @@ public class ClientHandler implements Handler {
 		while (connected) {
 			
 			String line;
-			String cmd;
+			String cmd = "";
 			String[] param;
 			String[] args;
 			
@@ -242,12 +242,12 @@ public class ClientHandler implements Handler {
 				byebye();
 				
 				LOG.log(Level.SEVERE,
-						"Client " + clientID + " disconnected suddenly. (NullPointerException)");
+						"Client" + clientID + "::" + cmd + ":" +  " disconnected suddenly. (NullPointerException)");
 			} catch (SocketException e) {
 				
 				byebye();
 				LOG.log(Level.SEVERE,
-						"Client " + clientID + " disconnected suddenly. (SocketException)");
+						"Client " + clientID + "::" + cmd + ":" + " disconnected suddenly. (SocketException)");
 			}
 		}
 	}

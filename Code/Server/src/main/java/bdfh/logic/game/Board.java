@@ -194,7 +194,7 @@ public class Board {
 		
 		int count = 0;
 		for (Square i : SquareByFamily.get(family)) {
-			if (i.getOwner().getClientID() == clientID) {
+			if (i.getOwner() != null && i.getOwner().getClientID() == clientID) {
 				count++;
 			}
 		}

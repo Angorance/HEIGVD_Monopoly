@@ -399,8 +399,6 @@ public class Client {
 				sendData(GameProtocol.GAM_SHCINE + " " + pos);
 			}
 		}
-		
-		manageResponse();
 	}
 	
 	/**
@@ -416,8 +414,6 @@ public class Client {
 		} else {
 			sendData(GameProtocol.GAM_NHYPOT + " " + position);
 		}
-		
-		manageResponse();
 	}
 	
 	/**
@@ -432,47 +428,6 @@ public class Client {
 			sendData((GameProtocol.GAM_BUYS + " " + position));
 		} else {
 			sendData((GameProtocol.GAM_SELL + " " + position));
-		}
-		
-		manageResponse();
-	}
-	
-	private void manageResponse(){
-		
-		// TODO - Add log messages (board logs)
-		
-		try {
-			response = in.readLine();
-			
-			String[] split = response.split(" ", 2);
-			
-			String command = split[0];
-			String[] param = split[0].split(" ");
-			
-			switch (command) {
-				case GAM_BCOUCH:
-					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
-					break;
-					
-				case GAM_SCOUCH:
-					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
-					break;
-					
-				case GAM_BHCINE:
-					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
-					break;
-					
-				case GAM_SHCINE:
-					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
-					break;
-					
-					
-			}
-			
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }
