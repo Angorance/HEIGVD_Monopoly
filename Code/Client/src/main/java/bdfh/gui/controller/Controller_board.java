@@ -277,6 +277,10 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
+	public void redrawSquare(int pos){
+		
+		cases.get(pos).redraw();
+	}
 	public void setOwner(int pos, int idPlayer) {
 		
 		String colorUse;
