@@ -668,31 +668,35 @@ public class GameLogic extends Thread {
 		int price = square.getPrices().getPriceCouch();
 		int sellPrice = square.getPrices().getSellingCouchPrice();
 		
-		if (board.hasFullFamily(player.getClientID(), square.getFamily())) {
-			
-			if (!square.hasHomeCinema() || square.getNbCouch() != 4) {
+		if (square.getOwner().equals(player)) {
+			if (board.hasFullFamily(player.getClientID(), square.getFamily())) {
 				
-				if (playersFortune.get(player.getClientID())[CAPITAL] < price) {
+				if (!square.hasHomeCinema() && square.getNbCouch() != 4) {
 					
-					return NOT_ENOUGH_MONEY;
-				} else if (!board.checkCouchRepartition(square)) {
-					
-					return BAD_DISTRIBUTION;
+					if (playersFortune.get(player.getClientID())[CAPITAL] < price) {
+						
+						return NOT_ENOUGH_MONEY;
+					} else if (!board.checkCouchRepartition(square)) {
+						
+						return BAD_DISTRIBUTION;
+					} else {
+						
+						square.toggleCouch(1);
+						manageMoney(player, -1 * price);
+						playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
+						
+						return SUCCESS;
+					}
 				} else {
 					
-					square.toggleCouch(1);
-					manageMoney(player, -1 * price);
-					playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
-					
-					return SUCCESS;
+					return FULL;
 				}
 			} else {
 				
-				return FULL;
+				return NOT_FULL_FAMILY;
 			}
 		} else {
-			
-			return NOT_FULL_FAMILY;
+			return NOT_OWNER;
 		}
 	}
 	

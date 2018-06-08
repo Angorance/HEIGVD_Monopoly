@@ -287,6 +287,10 @@ public class ClientHandler implements Handler {
 			case NOT_YOUR_TURN: // 6
 				sendData(ANS_ERR, ERR6);
 				break;
+				
+			case NOT_OWNER: // 7
+				sendData(ANS_ERR, ERR7);
+				break;
 		}
 	}
 	
