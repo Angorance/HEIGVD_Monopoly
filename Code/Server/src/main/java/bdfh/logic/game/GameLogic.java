@@ -315,6 +315,7 @@ public class GameLogic extends Thread {
 				// The player can leave the exam
 				if (getExamPresence() && getExamNbrDouble() == 1) {
 					leaveExam();
+					players.addLast(players.pop());
 				}
 				
 				if (!didADouble) {
