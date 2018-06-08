@@ -76,9 +76,11 @@ public class Lobby {
 	 */
 	private void startGame() {
 		LOG.log(Level.INFO, "Lobby" + ID + ": Starting game...");
+		
 		Lobbies.getInstance().startLobbyGame(this);
 		Lobbies.getInstance().removeLobby(this);
 		GameLogic game = new GameLogic(this);
+		
 		for(ClientHandler p : players){
 			p.setGame(game);
 		}
