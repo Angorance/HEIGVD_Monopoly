@@ -138,6 +138,7 @@ public class GameLogic extends Thread {
 		initializeDouble();
 		
 		setExamState(true, 0, 0);
+		players.addLast(players.pop());
 		
 		// Move the player
 		Square exam = board.getExamSquare();
@@ -308,7 +309,6 @@ public class GameLogic extends Thread {
 				
 				// The player has to go in exam
 				sendToExam();
-				players.addLast(players.pop());
 				
 			} else {
 				
