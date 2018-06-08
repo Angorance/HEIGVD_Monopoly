@@ -620,6 +620,7 @@ public class GameLogic extends Thread {
 			playersFortune.get(caller.getClientID())[VPOSSESSION] -= price;
 			manageMoney(currentPlayer, price);
 			notifyPlayers(GAM_GAIN, Integer.toString(price));
+			notifyPlayers(GAM_HYPOT, Integer.toString(posProperty));
 			return SUCCESS;
 		}
 		return NOT_YOUR_TURN;
@@ -653,6 +654,7 @@ public class GameLogic extends Thread {
 			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
 			manageMoney(currentPlayer, (int)(price ));
 			notifyPlayers(GAM_PAY, Integer.toString(price));
+			notifyPlayers(GAM_NHYPOT, Integer.toString(posProperty));
 			
 			return SUCCESS;
 		}
