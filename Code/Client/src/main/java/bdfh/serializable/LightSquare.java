@@ -17,6 +17,9 @@ public class LightSquare {
 	private LightPrice prices;      // Prices of the square
 	private LightPlayer owner;           // Owner of the square
 	
+	private int nbCouches = 0;
+	private boolean hasCine = false;
+	
 	public LightSquare() {}
 
 	public int getPosition() {
@@ -155,5 +158,25 @@ public class LightSquare {
 		}
 		
 		return tmp;
+	}
+	
+	public void toggleCouch(int val) {
+		
+		nbCouches += val;
+	}
+	
+	public void toggleHCine(boolean has) {
+	
+		hasCine = has;
+	}
+	
+	public int getNbCouches() {
+		
+		return nbCouches;
+	}
+	
+	public boolean hasCine() {
+		
+		return hasCine;
 	}
 }

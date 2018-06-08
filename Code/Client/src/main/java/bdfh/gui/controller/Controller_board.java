@@ -174,6 +174,7 @@ public class Controller_board implements Initializable, IWindow {
 		private FlowPane fp;
 		private AnchorPane ap;
 		private Label label_House;
+		private LightSquare mySquare;
 		
 		private void add(String color, int pos) {
 			
@@ -205,6 +206,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		public squareDisplayer(LightSquare square, int pos) {
 			
+			mySquare = square;
 			String famility = square.getFamily();
 			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px");
 			
@@ -269,8 +271,16 @@ public class Controller_board implements Initializable, IWindow {
 			return fp;
 		}
 		
+		public void redraw(){
+			//label_House.setText(String.valueOf(mySquare.getNumberHouse()));
+		}
+		
 	}
 	
+	public void redrawSquare(int pos){
+		
+		cases.get(pos).redraw();
+	}
 	public void setOwner(int pos, int idPlayer) {
 		
 		String colorUse;
