@@ -229,7 +229,8 @@ public class GameLogic extends Thread {
 			Card card = cardList.get(pos);
 			
 			// we add it to the deck
-			deck.addFirst(card);
+			if(card.getAction().equals(CARD_EXAM) || card.getAction().equals(CARD_FREE))
+				deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
 			card.setQuantity(card.getQuantity() - 1);
@@ -301,6 +302,7 @@ public class GameLogic extends Thread {
 			
 			if (getExamPresence() && getExamNbrDouble() == 0) {
 				stayInExam();
+				players.addLast(players.pop());
 				
 			} else if(!getExamPresence() && getExamNbrDouble() == 3) {
 				
@@ -313,6 +315,7 @@ public class GameLogic extends Thread {
 				// The player can leave the exam
 				if (getExamPresence() && getExamNbrDouble() == 1) {
 					leaveExam();
+					players.addLast(players.pop());
 				}
 				
 				if (!didADouble) {
@@ -518,13 +521,14 @@ public class GameLogic extends Thread {
 		
 		LOG.log(Level.INFO, "Player queue : " + players.toString());
 		currentPlayer = players.getFirst();
-		notifyPlayers(GameProtocol.GAM_PLAY, "");
-		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
 		
 		// Check if the player can leave the exam
 		if (getExamPresence() && getExamTurn() == 3) {
 			leaveExam();
 		}
+		
+		notifyPlayers(GameProtocol.GAM_PLAY, "");
+		LOG.log(Level.INFO, "It's the turn of " + currentPlayer.getClientUsername() + " to play.");
 	}
 	
 	public void endTurn(ClientHandler c) {
@@ -745,6 +749,9 @@ public class GameLogic extends Thread {
 	public int buySquare(ClientHandler caller, int posSquare) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
+			if(!board.getSquare(posSquare).isBuyable()){
+				return NOT_BUYABLE;
+			}
 			Price price = board.getSquare(posSquare).getPrices();
 			
 			if(playersFortune.get(currentPlayer.getClientID())[CAPITAL] < price.getPrice()){

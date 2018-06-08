@@ -2,10 +2,12 @@ package bdfh.net.notification;
 
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
-import bdfh.net.Handler;
 import bdfh.protocol.NotifProtocol;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +19,7 @@ import java.util.logging.Logger;
 public class NotificationHandler {
 	
 	private Socket socket;
+	private BufferedReader reader;
 	private PrintWriter writer;
 	
 	private final static Logger LOG = Logger.getLogger("NotificationHandler");
@@ -26,6 +29,7 @@ public class NotificationHandler {
 		socket = s;
 		
 		try {
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			writer = new PrintWriter(s.getOutputStream());
 			
 		} catch (IOException e) {
@@ -93,39 +97,39 @@ public class NotificationHandler {
 	
 	public void update(String cmd, Lobby l) {
 		
-		if (socket.isClosed() || !socket.isConnected()) {
+		String json = l.jsonify();
+		
+		LOG.log(Level.INFO, cmd + " Lobby: " + json);
+		
+		switch (cmd) {
+			case NotifProtocol.NOTIF_NEW:
+				sendData(NotifProtocol.NOTIF_NEW, json);
+				break;
 			
-			try {
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			case NotifProtocol.NOTIF_UPDATE:
+				sendData(NotifProtocol.NOTIF_UPDATE, json);
+				break;
 			
-			NotificationServer.removeNotifier(this);
+			case NotifProtocol.NOTIF_DELETE:
+				sendData(NotifProtocol.NOTIF_DELETE, json);
+				break;
 			
-		} else {
-			
-			String json = l.jsonify();
-			
-			LOG.log(Level.INFO, cmd + " Lobby: " + json);
-			
-			switch (cmd) {
-				case NotifProtocol.NOTIF_NEW:
-					sendData(NotifProtocol.NOTIF_NEW, json);
-					break;
+			case NotifProtocol.NOTIF_START:
+				sendData(NotifProtocol.NOTIF_START, Integer.toString(l.getID()));
 				
-				case NotifProtocol.NOTIF_UPDATE:
-					sendData(NotifProtocol.NOTIF_UPDATE, json);
-					break;
+				try {
+					String response = reader.readLine();
+					
+					if (response.equals("KILL")) {
+						socket.close();
+						NotificationServer.removeNotifier(this);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
-				case NotifProtocol.NOTIF_DELETE:
-					sendData(NotifProtocol.NOTIF_DELETE, json);
-					break;
 				
-				case NotifProtocol.NOTIF_START:
-					sendData(NotifProtocol.NOTIF_START, Integer.toString(l.getID()));
-					break;
-			}
+				break;
 		}
 	}
 }

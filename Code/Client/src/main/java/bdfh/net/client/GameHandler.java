@@ -109,7 +109,7 @@ public class GameHandler extends Thread {
 				String[] infos = split[1].split(" ");
 				int id = Integer.parseInt(infos[0]);
 				
-				players.get(id).setInPrison(true);
+				players.get(id).setInExam(true);
 				manageMove(infos);
 				
 				// Refresh
@@ -120,7 +120,7 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_FRDM:
 				id = Integer.parseInt(split[1]);
 				
-				players.get(id).setInPrison(false);
+				players.get(id).setInExam(false);
 				
 				// Refresh
 				sub.updateBoard();
@@ -136,7 +136,9 @@ public class GameHandler extends Thread {
 				players.get(id).setFreeCards(1);
 				
 				// Update the player
-				Player.getInstance().setHasFreedomCard(true);
+				if(id == Player.getInstance().getID()) {
+					Player.getInstance().setHasFreedomCard(true);
+				}
 				
 				// Refresh
 				sub.updateBoard();
@@ -149,10 +151,10 @@ public class GameHandler extends Thread {
 				id = Integer.parseInt(split[1]);
 				
 				players.get(id).setFreeCards(-1);
-				players.get(id).setInPrison(false);
+				players.get(id).setInExam(false);
 				
 				// Update the player
-				if(players.get(id).getFreeCards() == 0) {
+				if(players.get(id).getFreeCards() == 0 && id == Player.getInstance().getID()) {
 					
 					Player.getInstance().setHasFreedomCard(false);
 				}
@@ -244,11 +246,8 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		// Don't move the player if he's in exam and load the popup choice
-		if(players.get(id).isInExam()) {
-			
-		
-		} else {
+		// Don't move the player if he's in exam
+		if(!players.get(id).isInExam()) {
 			
 			sub.movePawn(Integer.parseInt(str[0]), tmp);
 		}

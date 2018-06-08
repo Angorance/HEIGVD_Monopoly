@@ -64,7 +64,7 @@ public class LightPlayer {
 		capital += val;
 	}
 	
-	public void setInPrison(boolean inPrison) {
+	public void setInExam(boolean inPrison) {
 		
 		this.inPrison = inPrison;
 	}
