@@ -23,6 +23,7 @@ public class Notification extends Thread {
 	
 	private Socket notifSocket = null;
 	private BufferedReader in = null;
+	private PrintWriter out = null;
 	private String response;
 	
 	private boolean noGame = true;
@@ -52,6 +53,7 @@ public class Notification extends Thread {
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
 			in = new BufferedReader(new InputStreamReader(notifSocket.getInputStream()));
+			out = new PrintWriter(notifSocket.getOutputStream());
 			
 			response = in.readLine();
 			LOG.log(Level.INFO, "RECEIVED: " + response);
@@ -120,6 +122,9 @@ public class Notification extends Thread {
 				// Check if my lobby is started
 				if(Player.getInstance().getLobbyID() == Integer.parseInt(json)) {
 					
+					out.println("KILL");
+					out.flush();
+					
 					// Quit the notification channel
 					pause();
 					
@@ -130,6 +135,10 @@ public class Notification extends Thread {
 					GameHandler.getInstance().start();
 					
 					noGame = false;
+				} else {
+					
+					out.println("STAY");
+					out.flush();
 				}
 				
 				break;
