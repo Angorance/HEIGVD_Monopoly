@@ -82,7 +82,7 @@ public class NotificationHandler {
 		}
 		
 		writer.println(toSend);
-		writer.flush(); // TODO - replace by checkError ?
+		writer.flush();
 	}
 	
 	/**
@@ -121,6 +121,7 @@ public class NotificationHandler {
 					String response = reader.readLine();
 					
 					if (response.equals("KILL")) {
+						socket.close();
 						NotificationServer.removeNotifier(this);
 					}
 				} catch (IOException e) {
