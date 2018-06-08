@@ -306,6 +306,7 @@ public class GameLogic extends Thread {
 				
 				// The player has to go in exam
 				sendToExam();
+				players.addLast(players.pop());
 				
 			} else {
 				

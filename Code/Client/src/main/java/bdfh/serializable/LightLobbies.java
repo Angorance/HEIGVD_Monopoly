@@ -51,6 +51,8 @@ public class LightLobbies {
 		toUpdate.updateAll(tmp.getUsernames(), tmp.getAreReady());
 		
 		lobbies.put(tmp.getID(), toUpdate);
+		
+		
 		sub.updateLobby(toUpdate);
 	}
 	
