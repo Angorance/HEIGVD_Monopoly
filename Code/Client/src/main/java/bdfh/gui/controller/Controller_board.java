@@ -118,24 +118,27 @@ public class Controller_board implements Initializable, IWindow {
 	private LightSquare square;
 	
 	public void loadPopup() {
-		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup.fxml"));
 		
-		/*Create a instance of the controller of bank account form*/
-		Controller_popup cp = new Controller_popup(this);
-		
-		/*Sets the controller associated with the root object*/
-		loader.setController(cp);
-		
-		popup.setVisible(true);
-		popup.setMouseTransparent(false);
-		
-		try {
-			AnchorPane pane = loader.load();
-			popup.getChildren().add(pane);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Platform.runLater(() -> {
+			/* we load the form fxml*/
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup.fxml"));
+			
+			/*Create a instance of the controller of bank account form*/
+			Controller_popup cp = new Controller_popup(this);
+			
+			/*Sets the controller associated with the root object*/
+			loader.setController(cp);
+			
+			popup.setVisible(true);
+			popup.setMouseTransparent(false);
+			
+			try {
+				AnchorPane pane = loader.load();
+				popup.getChildren().add(pane);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	private void unloadPopup() {
