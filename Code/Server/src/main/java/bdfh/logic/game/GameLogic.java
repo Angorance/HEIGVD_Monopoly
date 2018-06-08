@@ -142,7 +142,7 @@ public class GameLogic extends Thread {
 		
 		// Move the player
 		Square exam = board.getExamSquare();
-		board.setPlayerPosition(getCurrentPlayerID(), exam.getPosition());
+		board.setPlayerPosition(getCurrentPlayerID(), exam.getPosition(), this);
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_EXAM, Integer.toString(exam.getPosition()));
@@ -152,6 +152,7 @@ public class GameLogic extends Thread {
 	public void leaveExam() {
 		
 		setExamState(false, 0, 0);
+		players.addLast(players.pop());
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_FRDM, "");
@@ -161,6 +162,7 @@ public class GameLogic extends Thread {
 	public void stayInExam() {
 		
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
+		players.addLast(players.pop());
 	}
 	
 	public void initializeDouble() {
@@ -282,6 +284,7 @@ public class GameLogic extends Thread {
 			int total = 0;
 			String rollsStr = "";
 			boolean didADouble = false;
+			boolean canMove = false;
 			
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = dice.nextInt(6) + 1;
@@ -298,52 +301,72 @@ public class GameLogic extends Thread {
 				rollsStr += " " + roll;
 			}
 			
-			// notify the players
-			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
-			
 			if (getExamPresence() && getExamNbrDouble() == 0) {
+				
+				// The player has to stay in exam
 				stayInExam();
-				players.addLast(players.pop());
 				
 			} else if(!getExamPresence() && getExamNbrDouble() == 3) {
 				
 				// The player has to go in exam
 				sendToExam();
 				
+			} else if (getExamPresence() && getExamNbrDouble() == 1) {
+					
+				// The player can leave the exam
+				leaveExam();
+				canMove = true;
+				
 			} else {
 				
-				// The player can leave the exam
-				if (getExamPresence() && getExamNbrDouble() == 1) {
-					leaveExam();
-					players.addLast(players.pop());
-				}
-				
+				// If the player didn't do a double, he can't play again
 				if (!didADouble) {
 					players.addLast(players.pop());
-					
-					// Initialize the number of double
 					initializeDouble();
 				}
 				
-				// Move the player and check if he passed the start square
-				totalLastRoll = total;
+				canMove = true;
+			}
+			
+			// Move the player
+			if(canMove) {
+				
+				// Notify the players
+				notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
 				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 				
-				if(!getExamPresence()) {
-					if (board.movePlayer(currentPlayer.getClientID(), total)) {
-						handleStartPassed();
-					}
-					
-					// MANAGING THE CASE EFFECT
-					Square current = board.getCurrentSquare(currentPlayer.getClientID());
-					if (current.isBuyable() && current.getOwner() == null) {
-						currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
-					} else {
-						board.manageEffect(this, current);
-					}
-				}
+				// Move the player and check if he passed the start square
+				totalLastRoll = total;
+				board.movePlayer(currentPlayer.getClientID(), total, this);
 			}
 		}
+	}
+	
+	/**
+	 * Manage the effect of a square.
+	 */
+	public void manageSquareEffect() {
+
+		Square current = board.getCurrentSquare(currentPlayer.getClientID());
+		
+		if (current.isBuyable() && current.getOwner() == null) {
+			currentPlayer.sendData(GameProtocol.GAM_FREE, Integer.toString(current.getPosition()));
+			
+		} else {
+			board.manageEffect(this, current);
+		}
+	}
+	
+	/**
+	 * Give the money of the start square to the player who passed it.
+	 */
+	public void handleStartPassed() {
+		
+		playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
+		
+		// Notify
+		notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
+		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " passed the start square");
 	}
 	
 	public int getTotalLastRoll() {
@@ -380,9 +403,7 @@ public class GameLogic extends Thread {
 					value = Integer.parseInt(fullAction[1]);
 					
 					// Move the player
-					if (board.movePlayer(currentPlayer.getClientID(), value)) {
-						handleStartPassed();
-					}
+					board.movePlayer(currentPlayer.getClientID(), value, this);
 					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(
@@ -396,7 +417,7 @@ public class GameLogic extends Thread {
 					value = Integer.parseInt(fullAction[1]);
 					
 					// Move the player
-					board.movePlayer(getCurrentPlayerID(), value * -1);
+					board.movePlayer(getCurrentPlayerID(), value * -1, this);
 					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(
@@ -434,7 +455,7 @@ public class GameLogic extends Thread {
 					int position = Integer.parseInt(fullAction[1]);
 					
 					// Move the player
-					board.setPlayerPosition(getCurrentPlayerID(), position);
+					board.setPlayerPosition(getCurrentPlayerID(), position, this);
 					
 					if (board.getSquare(position).getFamily().equals(SQUA_START)) {
 						handleStartPassed();
@@ -580,16 +601,6 @@ public class GameLogic extends Thread {
 	public int getCurrentPlayerID() {
 		
 		return currentPlayer.getClientID();
-	}
-	
-	/**
-	 * Give the money of the start square to the player who passed it.
-	 */
-	public void handleStartPassed() {
-		
-		playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
-		notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
-		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " passed the start square");
 	}
 	
 	/**

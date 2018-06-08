@@ -55,17 +55,22 @@ public class Board {
 	 *
 	 * @return true if the player passed the start case
 	 */
-	public boolean movePlayer(int clientID, int movement) {
+	public void movePlayer(int clientID, int movement, GameLogic game) {
 		
 		int oldPos =  playerPosition.get(clientID);
 		int newPos = ((oldPos + movement) + NB_SQUARE) % NB_SQUARE;
 		
+		// Move the player
 		playerPosition.put(clientID, newPos);
-		// Notify
 		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos );
 		
-		boolean passedGo = newPos < oldPos && movement > 0;
-		return passedGo;
+		// Handle the case if the player passed the start square
+		if(newPos < oldPos && movement > 0) {
+			game.handleStartPassed();
+		}
+		
+		// Handle the effect of the square
+		game.manageSquareEffect();
 	}
 	
 	/**
@@ -76,13 +81,16 @@ public class Board {
 	 *
 	 * @return true if the player passed the start case
 	 */
-	public void setPlayerPosition(int clientID, int position) {
+	public void setPlayerPosition(int clientID, int position, GameLogic game) {
 		
 		int oldPos =  playerPosition.get(clientID);
-		playerPosition.put(clientID, position);
 		
-		// Notify
+		// Move the player
+		playerPosition.put(clientID, position);
 		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + position);
+		
+		// Handle the effect of the square
+		game.manageSquareEffect();
 	}
 	
 	/**
