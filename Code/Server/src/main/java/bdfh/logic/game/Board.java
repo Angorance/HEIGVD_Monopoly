@@ -11,6 +11,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static bdfh.protocol.GameProtocol.RENT_TO_1COMP;
+import static bdfh.protocol.GameProtocol.RENT_TO_2COMP;
+
 /**
  * @author Daniel Gonzalez Lopez, Bryan Curchod
  * @version 1.6
@@ -20,8 +23,11 @@ public class Board {
 	private final static Logger LOG = Logger.getLogger("Board");
 	
 	public static final int NB_SQUARE = 40;
+	
 	private Map<String, LinkedList<Square>> SquareByFamily;
+	
 	private Map<Integer, Integer> playerPosition;
+	
 	private Square[] board = new Square[NB_SQUARE];
 	
 	/**
@@ -57,15 +63,15 @@ public class Board {
 	 */
 	public void movePlayer(int clientID, int movement, GameLogic game) {
 		
-		int oldPos =  playerPosition.get(clientID);
+		int oldPos = playerPosition.get(clientID);
 		int newPos = ((oldPos + movement) + NB_SQUARE) % NB_SQUARE;
 		
 		// Move the player
 		playerPosition.put(clientID, newPos);
-		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos );
+		LOG.log(Level.INFO, clientID + " old pos: " + oldPos + " | new pos : " + newPos);
 		
 		// Handle the case if the player passed the start square
-		if(newPos < oldPos && movement > 0) {
+		if (newPos < oldPos && movement > 0) {
 			game.handleStartPassed();
 		}
 		
@@ -83,7 +89,7 @@ public class Board {
 	 */
 	public void setPlayerPosition(int clientID, int position, GameLogic game) {
 		
-		int oldPos =  playerPosition.get(clientID);
+		int oldPos = playerPosition.get(clientID);
 		
 		// Move the player
 		playerPosition.put(clientID, position);
@@ -114,11 +120,11 @@ public class Board {
 		
 		Square exam = null;
 		
-		for(int s = 0; s < NB_SQUARE; s++) {
+		for (int s = 0; s < NB_SQUARE; s++) {
 			
 			exam = board[s];
 			
-			if(exam.getFamily().equals(GameProtocol.SQUA_EXAM)) {
+			if (exam.getFamily().equals(GameProtocol.SQUA_EXAM)) {
 				break;
 			}
 		}
@@ -139,30 +145,39 @@ public class Board {
 				
 				game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(s.getPrices().getRent()));
 				LOG.log(Level.INFO,
-						game.getCurrentPlayer().getClientUsername() + " paid " + s.getPrices().getRent() + " (got a Tax)");
+						game.getCurrentPlayer().getClientUsername() + " paid " + s.getPrices()
+								.getRent() + " (got a Tax)");
 				break;
 			
 			case GameProtocol.SQUA_INSTITUTE:
-				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID() && !s.isMortgaged()) {
+				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()
+						&& !s.isMortgaged()) {
 					int baseRent = s.getPrices().getRent();
 					int factor = howManyPossession(s.getOwner().getClientID(), s.getFamily());
 					int totalToPay = baseRent * (int) Math.pow(2, factor - 1);
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
 					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY, Integer.toString(totalToPay));
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN,
+							Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
-							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay + " to " + s.getOwner()
-									.getClientUsername() + " (" + factor + " Institute possessed)");
+							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay
+									+ " to " + s.getOwner().getClientUsername() + " (" + factor
+									+ " Institute possessed)");
 				}
 				break;
 			
 			case GameProtocol.SQUA_COMPANY: // IL Y EN A DEUX
-				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID() && !s.isMortgaged()) {
-					int factor = s.getPrices().getRent();
-					int howManyPossession = howManyPossession(s.getOwner().getClientID(), s.getFamily());
-					if ( howManyPossession == 2) {
-						factor *= 2.5;
+				if (s.getOwner() != null && s.getOwner().getClientID() != game.getCurrentPlayerID()
+						&& !s.isMortgaged()) {
+					int factor;
+					int howManyPossession = howManyPossession(s.getOwner().getClientID(),
+							s.getFamily());
+					
+					if (howManyPossession == 2) {
+						factor = RENT_TO_2COMP;
+					} else {
+						factor = RENT_TO_1COMP;
 					}
 					
 					int roll = game.getTotalLastRoll();
@@ -170,10 +185,12 @@ public class Board {
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
 					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY, Integer.toString(totalToPay));
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY,
+							Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
-							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay + " to " + s.getOwner()
-									.getClientUsername() + " (rolled a " + roll + ", "+ howManyPossession +" Company possessed)");
+							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay
+									+ " to " + s.getOwner().getClientUsername() + " (rolled a "
+									+ roll + ", " + howManyPossession + " Company possessed)");
 				}
 				break;
 			
@@ -276,18 +293,20 @@ public class Board {
 		return GsonSerializer.getInstance().toJson(jsonBoard);
 	}
 	
-	public void setMortgaged(ClientHandler caller, int posProperty){
+	public void setMortgaged(ClientHandler caller, int posProperty) {
+		
 		Square requested = board[posProperty];
 		
-		if(requested.getOwner().getClientID() == caller.getClientID()){
+		if (requested.getOwner().getClientID() == caller.getClientID()) {
 			requested.setMortgaged(true);
 		}
 	}
 	
-	public void cancelMortgaged(ClientHandler caller, int posProperty){
+	public void cancelMortgaged(ClientHandler caller, int posProperty) {
+		
 		Square requested = board[posProperty];
 		
-		if(requested.getOwner().getClientID() == caller.getClientID()){
+		if (requested.getOwner().getClientID() == caller.getClientID()) {
 			requested.setMortgaged(false);
 		}
 	}
@@ -300,10 +319,11 @@ public class Board {
 	 * @param s
 	 */
 	private void handleProperty(GameLogic game, Square s) {
+		
 		ClientHandler owner = s.getOwner();
 		ClientHandler player = game.getCurrentPlayer();
 		
-		if(owner != null && owner.getClientID() != player.getClientID() && !s.isMortgaged()){
+		if (owner != null && owner.getClientID() != player.getClientID() && !s.isMortgaged()) {
 			
 			// Get the rent to pay
 			int rent = s.getPrices().getRents()[s.getLevelRent()];
@@ -312,13 +332,17 @@ public class Board {
 			game.manageMoney(player, rent * -1);
 			
 			game.notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(rent));
-			LOG.log(Level.INFO, player.getClientUsername() + " a payé " + rent + ".- de loyer à " + owner.getClientUsername() + ".");
+			LOG.log(Level.INFO,
+					player.getClientUsername() + " a payé " + rent + ".- de loyer à " + owner
+							.getClientUsername() + ".");
 			
 			// The owner of the square receives the rent
 			game.manageMoney(owner, rent);
 			
 			game.notifyPlayers(owner, GameProtocol.GAM_GAIN, String.valueOf(rent));
-			LOG.log(Level.INFO, owner.getClientUsername() + " a reçu " + rent + ".- de loyer de " + player.getClientUsername() + ".");
+			LOG.log(Level.INFO,
+					owner.getClientUsername() + " a reçu " + rent + ".- de loyer de " + player
+							.getClientUsername() + ".");
 		}
 	}
 	
@@ -326,9 +350,11 @@ public class Board {
 	 * Allows to check if couches are well dispatched over the square's family.
 	 *
 	 * @param s
+	 *
 	 * @return
 	 */
 	public boolean checkCouchRepartition(Square s) {
+		
 		for (Square tmp : SquareByFamily.get(s.getFamily())) {
 			if (!tmp.equals(s) && tmp.getNbCouch() < s.getNbCouch()) {
 				return false;

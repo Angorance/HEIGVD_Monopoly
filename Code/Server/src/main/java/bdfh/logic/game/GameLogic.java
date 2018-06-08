@@ -32,6 +32,8 @@ public class GameLogic extends Thread {
 	private Board board;
 	private int nbDice;
 	private int totalLastRoll;
+	private boolean keepTurn;
+	private boolean looseTurn;
 	
 	// Map a player to his fortune. The first cell of the tab is the capital,
 	// and the second is the total of his possession (capital + nbHouse + Hypothecs + ... )
@@ -134,11 +136,13 @@ public class GameLogic extends Thread {
 	
 	public void sendToExam() {
 		
+		looseTurn = true;
+		
 		// Initialize the number of double
 		initializeDouble();
 		
 		setExamState(true, 0, 0);
-		players.addLast(players.pop());
+		// TODO - players.addLast(players.pop());
 		
 		// Move the player
 		Square exam = board.getExamSquare();
@@ -151,8 +155,12 @@ public class GameLogic extends Thread {
 	
 	public void leaveExam() {
 		
+		if (keepTurn) {
+			looseTurn = true;
+		}
+		
 		setExamState(false, 0, 0);
-		players.addLast(players.pop());
+		// TODO - players.addLast(players.pop());
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_FRDM, "");
@@ -161,8 +169,10 @@ public class GameLogic extends Thread {
 	
 	public void stayInExam() {
 		
+		looseTurn = true;
+		
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
-		players.addLast(players.pop());
+		// TODO - players.addLast(players.pop());
 	}
 	
 	public void initializeDouble() {
@@ -232,7 +242,7 @@ public class GameLogic extends Thread {
 			Card card = cardList.get(pos);
 			
 			// we add it to the deck
-			//if(card.getAction().equals(CARD_EXAM) || card.getAction().equals(CARD_FREE))
+			if(card.getAction().equals(CARD_EXAM) || card.getAction().equals(CARD_FREE))
 				deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
@@ -283,14 +293,15 @@ public class GameLogic extends Thread {
 			ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
 			int total = 0;
 			String rollsStr = "";
-			boolean didADouble = false;
+			// TODO - boolean didADouble = false;
 			boolean canMove = false;
 			
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = dice.nextInt(6) + 1;
 				
 				if (rolls.contains(roll)) {
-					didADouble = true;
+					// TODO - didADouble = true;
+					keepTurn = true;
 					
 					// Update for exam state
 					didADouble();
@@ -320,20 +331,20 @@ public class GameLogic extends Thread {
 			} else {
 				
 				// If the player didn't do a double, he can't play again
-				if (!didADouble) {
-					players.addLast(players.pop());
+				if (!keepTurn) {
+					// TODO - players.addLast(players.pop());
 					initializeDouble();
 				}
 				
 				canMove = true;
 			}
 			
+			// Notify the players
+			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
+			
 			// Move the player
 			if(canMove) {
-				
-				// Notify the players
-				notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
-				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 				
 				// Move the player and check if he passed the start square
 				totalLastRoll = total;
@@ -540,6 +551,9 @@ public class GameLogic extends Thread {
 	
 	private void nextTurn() {
 		
+		keepTurn = false;
+		looseTurn = false;
+		
 		LOG.log(Level.INFO, "Player queue : " + players.toString());
 		currentPlayer = players.getFirst();
 		
@@ -556,7 +570,15 @@ public class GameLogic extends Thread {
 		
 		if (c.getClientID() == currentPlayer.getClientID()) {
 			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " ended his turn");
-			//players.addLast(currentPlayer);
+			
+			if (looseTurn) {
+				players.addLast(players.pop());
+			} else if (keepTurn) {
+				players.addFirst(players.pop());
+			} else {
+				players.addLast(players.pop());
+			}
+			
 			currentPlayer = null;
 			nextTurn();
 		}
@@ -706,7 +728,7 @@ public class GameLogic extends Thread {
 						manageMoney(player, -1 * price);
 						playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
 						notifyPlayers(GAM_BCOUCH, Integer.toString(squareId));
-						notifyPlayers(GAM_PAY, Integer.toString(sellPrice));
+						notifyPlayers(GAM_PAY, Integer.toString(price));
 						return SUCCESS;
 					}
 				} else {
@@ -752,7 +774,7 @@ public class GameLogic extends Thread {
 			manageMoney(player, -1 * price);
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += sellPrice;
 			notifyPlayers(GAM_BHCINE, Integer.toString(squareId));
-			notifyPlayers(GAM_PAY, Integer.toString(sellPrice));
+			notifyPlayers(GAM_PAY, Integer.toString(price));
 			return SUCCESS;
 		}
 	}

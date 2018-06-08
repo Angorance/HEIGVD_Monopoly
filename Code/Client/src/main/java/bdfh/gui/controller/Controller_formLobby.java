@@ -66,7 +66,8 @@ public class Controller_formLobby implements Initializable {
 				gameTime = 0;
 			}
 			
-			Player.getInstance().createLobby(nbrDice, money, gameMode, gameTime, random);
+			Player.getInstance()
+					.createLobby(nbrDice, money, gameMode, gameTime, random);
 			cl.returnForm();
 		}
 		
@@ -166,6 +167,7 @@ public class Controller_formLobby implements Initializable {
 			random_label.setVisible(false);
 			randomCheck.setVisible(false);
 		}
+		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
