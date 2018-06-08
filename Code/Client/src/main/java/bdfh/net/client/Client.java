@@ -10,6 +10,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.logging.*;
 
+import static bdfh.net.protocol.GameProtocol.*;
+
 // TODO - Maybe handle better the exceptions...
 
 /**
@@ -382,7 +384,7 @@ public class Client {
 		if (type == COUCH) {
 			if (buy) {
 				// Send the command to the server
-				sendData(GameProtocol.GAM_BCOUCH + " " + pos);
+				sendData(GAM_BCOUCH + " " + pos);
 				
 			} else {
 				// Send the command to the server
@@ -436,6 +438,41 @@ public class Client {
 	}
 	
 	private void manageResponse(){
-		// TODO - manage Response !
+		
+		// TODO - Add log messages (board logs)
+		
+		try {
+			response = in.readLine();
+			
+			String[] split = response.split(" ", 2);
+			
+			String command = split[0];
+			String[] param = split[0].split(" ");
+			
+			switch (command) {
+				case GAM_BCOUCH:
+					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
+					break;
+					
+				case GAM_SCOUCH:
+					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
+					break;
+					
+				case GAM_BHCINE:
+					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
+					break;
+					
+				case GAM_SHCINE:
+					GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
+					break;
+					
+					
+			}
+			
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
