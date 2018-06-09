@@ -320,6 +320,15 @@ public class GameHandler extends Thread {
 				sub.logMessage(id, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
 				
 				break;
+				
+			case GAM_RST:
+				param = split[1].split(" ", 2);
+				
+				id = Integer.parseInt(param[0]);
+				
+				manageReset(id, param[1].split(" "));
+				
+				break;
 			
 			case Protocoly.ANS_ERR:
 				sub.errorMessage(split[1]);
@@ -516,5 +525,20 @@ public class GameHandler extends Thread {
 	public void manageDraw(int id, String card) {
 		
 		sub.logMessage(id, players.get(id).getUsername() + " a tiré la carte : " + card);
+	}
+	
+	private void manageReset(int id, String[] toReset) {
+	
+		for (String s : toReset) {
+			
+			int pos = Integer.parseInt(s);
+			LightSquare square = board.getSquares().get(pos);
+			
+			square.reset();
+			sub.redrawSquare(pos);
+		}
+		
+		players.remove(id);
+		// TODO - refresh players tab and remove pawn
 	}
 }

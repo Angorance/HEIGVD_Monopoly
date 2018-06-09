@@ -2,10 +2,11 @@ package bdfh.net.server;
 
 import bdfh.database.DatabaseConnect;
 import bdfh.net.Worker;
-import bdfh.protocol.Protocoly;
 
 import java.net.*;
 import java.util.logging.*;
+
+import static bdfh.protocol.Protocoly.CPORT;
 
 /**
  * ClientServer class.
@@ -24,10 +25,10 @@ public class ClientServer implements Runnable {
 	private ClientServer() {
 		
 		try {
-			srv = new ServerSocket(Protocoly.CPORT);
+			srv = new ServerSocket(CPORT);
 			LOG.log(Level.INFO,
 					"Server connected\nAddress::" + srv.getLocalSocketAddress()
-							+ "\nPort::" + Protocoly.CPORT);
+							+ "\nPort::" + CPORT);
 			
 			// Update the limits of the logic
 			DatabaseConnect.getInstance().getParameterDB().updateLimits();
