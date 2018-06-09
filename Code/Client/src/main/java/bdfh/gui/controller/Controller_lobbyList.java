@@ -70,7 +70,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 					nbPlayers++;
 				}
 			}
-			name = new Label("Salon" + lLobby.getID());
+			name = new Label("Salon " + lLobby.getID());
 			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueurs");
 			
 			this.add(name, 0, 0);
