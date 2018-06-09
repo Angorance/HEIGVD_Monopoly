@@ -474,7 +474,7 @@ public class Controller_board implements Initializable, IWindow {
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			boolean hasCine = square.hasCine();
 			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
-			boolean isMortgage = square.isMortgage();
+			boolean isMortgage = square.isMortgaged();
 			
 			if (square.getNbCouches() == 4) {
 				buy_buttonCanape.setText("Achat HC");
@@ -520,7 +520,7 @@ public class Controller_board implements Initializable, IWindow {
 				dehyp_buttonInstitute.setDisable(true);
 			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
-			boolean isMortgage = square.isMortgage();
+			boolean isMortgage = square.isMortgaged();
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(false);
 			hyp_buttonInstitute.setDisable(isMortgage);
@@ -549,7 +549,7 @@ public class Controller_board implements Initializable, IWindow {
 				dehyp_buttonCompany.setDisable(true);
 			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
-			boolean isMortgage = square.isMortgage();
+			boolean isMortgage = square.isMortgaged();
 			buy_buttonCompany.setDisable(true);
 			sell_buttonCompany.setDisable(false);
 			hyp_buttonCompany.setDisable(isMortgage);
