@@ -162,6 +162,10 @@ public class ClientHandler implements Handler {
 						
 						createLobby(param[0]);
 						break;
+						
+					case Protocoly.CMD_SETP:
+						updateParameter(param[0]);
+						break;
 					
 					// ============================================================================================
 					// commande de phase de jeu
@@ -261,6 +265,15 @@ public class ClientHandler implements Handler {
 						"Client " + clientID + "::" + cmd + ":" + " disconnected suddenly. (SocketException)");
 			}
 		}
+	}
+	
+	private void updateParameter(String s) {
+		LOG.log(Level.INFO, "Mise à jour des paramètres ! : " + s);
+		BoundParameters b = GsonSerializer.getInstance().fromJson(s, BoundParameters.class);
+		
+		DatabaseConnect.getInstance().getParameterDB().setLimits(b);
+		DatabaseConnect.getInstance().getParameterDB().updateLimits();
+		
 	}
 	
 	/**

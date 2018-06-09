@@ -683,8 +683,9 @@ public class GameLogic extends Thread {
 		if (caller.getClientID() == currentPlayer.getClientID() && board.getSquare(posProperty)
 				.isProperty()) {
 			
-			// sell the home cinema and all the couch
-			sellAllConstruction(caller, posProperty);
+			if(board.getSquare(posProperty).getNbCouch() > 0){
+				return FULL;
+			}
 			
 			board.setMortgaged(currentPlayer, posProperty);
 			int price = (board.getSquare(posProperty).getPrices().getHypothec());
@@ -697,6 +698,7 @@ public class GameLogic extends Thread {
 		}
 		return NOT_YOUR_TURN;
 	}
+	
 	
 	private void sellAllConstruction(ClientHandler caller, Integer posProperty) {
 		
