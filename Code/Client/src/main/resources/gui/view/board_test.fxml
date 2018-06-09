@@ -169,9 +169,9 @@
                         <JFXButton fx:id="buy_buttonProp" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat propriété" />
                         <JFXButton fx:id="buy_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Achat canapé" GridPane.columnIndex="1" />
                         <JFXButton fx:id="hyp_button" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
-                        <JFXButton fx:id="sell_buttonProp" style="-fx-background-color: cdcdcd;" text="Vendre propriété" GridPane.rowIndex="1" />
-                        <JFXButton fx:id="sell_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vendre canapé" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <JFXButton fx:id="dehyp_button" layoutX="277.0" layoutY="14.0" style="-fx-background-color: cdcdcd;" text="Déhypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="sell_buttonProp" style="-fx-background-color: cdcdcd;" text="Vente propriété" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="sell_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente canapé" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="dehyp_button" layoutX="277.0" layoutY="14.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane fx:id="buttons_Institute" layoutX="33.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
@@ -189,7 +189,7 @@
                         <JFXButton fx:id="buy_buttonInstitute" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" GridPane.rowSpan="2" />
                         <JFXButton fx:id="sell_buttonInstitute" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" GridPane.rowSpan="2" />
                         <JFXButton fx:id="hyp_buttonInstitute" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
-                        <JFXButton fx:id="dehyp_buttonInstitute" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déhypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="dehyp_buttonInstitute" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane fx:id="buttons_Company" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
@@ -207,7 +207,7 @@
                         <JFXButton fx:id="buy_buttonCompany" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" GridPane.rowSpan="2" />
                         <JFXButton fx:id="sell_buttonCompany" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" GridPane.rowSpan="2" />
                         <JFXButton fx:id="hyp_buttonCompany" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
-                        <JFXButton fx:id="dehyp_buttonCompany" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déhypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="dehyp_buttonCompany" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
