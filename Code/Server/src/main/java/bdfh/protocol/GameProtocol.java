@@ -63,6 +63,10 @@ public abstract class GameProtocol {
 	public static final String GAM_SCOUCH = "SCOUCH"; // le joueur vend un canapé.
 	public static final String GAM_BHCINE = "BHCINE"; // le joueur achète un home cinema.
 	public static final String GAM_SHCINE = "SHCINE"; // le joueur vend un home cinema.
+	public static final String GAM_BKRPT = "BKRPT"; // le joueur est en banqueroute
+	public static final String GAM_GOVR = "GOVR"; // game over ~~ le joueur a perdu
+	public static final String GAM_WIN = "WIN"; // game over ~~ le joueur a gagné
+	
 
 	// Factors used to calculate rents
 	public static final int RENT_TO_1COUC = 5;
