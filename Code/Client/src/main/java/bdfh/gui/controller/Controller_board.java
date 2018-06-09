@@ -125,10 +125,13 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	public void logMessage(String log) {
+	public void logMessage(int idPlayer,String log) {
 		
 		Platform.runLater(() -> {
-			vbox_Log.getChildren().add(new Label(log));
+			Label label_log = new Label(log);
+			label_log.setStyle("-fx-font-style: " + colorPlayer.get(idPlayer) + ";");
+			vbox_Log.getChildren().add(label_log);
+			
 		});
 	}
 	
