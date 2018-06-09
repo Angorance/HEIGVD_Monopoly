@@ -385,18 +385,18 @@ public class GameHandler extends Thread {
 		String username = Player.getInstance().getUsername();
 		String usernameTurn = players.get(id).getUsername();
 		
-		if (username.equals(usernameTurn)) {
-			Player.getInstance().setMyTurn(true);
-			
-			if (sub == null) {
-				synchronized (this) {
-					try {
-						this.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		if (sub == null) {
+			synchronized (this) {
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
+		}
+		
+		if (username.equals(usernameTurn)) {
+			Player.getInstance().setMyTurn(true);
 			
 			sub.notifyTurn();
 			
