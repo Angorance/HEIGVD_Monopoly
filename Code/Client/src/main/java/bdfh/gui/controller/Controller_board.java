@@ -15,10 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -31,6 +29,15 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private GridPane board;
 	@FXML private AnchorPane popup;
 	@FXML private Label message;
+	@FXML private VBox vbox_Log;
+	
+	
+	@FXML private Label loyer0;
+	@FXML private Label loyer1;
+	@FXML private Label loyer2;
+	@FXML private Label loyer3;
+	@FXML private Label loyer4;
+	@FXML private Label loyer5;
 	
 	/*Info properties*/
 	@FXML private GridPane infoProperties;
@@ -103,6 +110,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton endTurn_button;
 	
 	private static ArrayList<squareDisplayer> cases = new ArrayList<>();
+	private Label[] labelNameLoyer = new Label[6];
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
 	private Label[] labelPrisons = new Label[4];
@@ -120,8 +128,20 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void errorMessage(String error) {
 		
-		message.setText(error);
-		message.setStyle("-fx-text-fill: RED;-fx-font-style: bold");
+		Platform.runLater(() -> {
+			message.setText(error);
+			message.setStyle("-fx-text-fill: RED; -fx-font-weight: bold;");
+		});
+	}
+	
+	public void logMessage(int idPlayer, String log) {
+		
+		Platform.runLater(() -> {
+			Label label_log = new Label(log);
+			label_log.setStyle("-fx-text-fill: " + colorPlayer.get(idPlayer) + ";");
+			vbox_Log.getChildren().add(label_log);
+			
+		});
 	}
 	
 	public void loadPopup() {
@@ -187,8 +207,9 @@ public class Controller_board implements Initializable, IWindow {
 		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
-						
+			label_House = new Label(String.valueOf("     " + mySquare.getNbCouches()));
+			label_House.setFont(new Font("Cambria", 12));
+			
 			if (pos == 0) {
 				ap.setPrefWidth(20);
 				label_House.setRotate(90);
@@ -280,10 +301,10 @@ public class Controller_board implements Initializable, IWindow {
 		
 		public void redraw() {
 			
-			if(mySquare.hasCine()){
-				label_House.setText("HC : 1");
-			}else{
-				label_House.setText("Canapé : " + String.valueOf(mySquare.getNbCouches()));
+			if (mySquare.hasCine()) {
+				label_House.setText("     HC : 1");
+			} else {
+				label_House.setText("     C : " + String.valueOf(mySquare.getNbCouches()));
 			}
 		}
 		
@@ -291,7 +312,9 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void redrawSquare(int pos) {
 		
-		cases.get(pos).redraw();
+		Platform.runLater(() -> {
+			cases.get(pos).redraw();
+		});
 	}
 	
 	public void setOwner(int pos, int idPlayer) {
@@ -335,6 +358,7 @@ public class Controller_board implements Initializable, IWindow {
 				break;
 			
 		}
+		propertiesButton();
 		
 	}
 	
@@ -385,8 +409,20 @@ public class Controller_board implements Initializable, IWindow {
 		sell_buttonProp.setDisable(false);
 		sell_buttonCanape.setDisable(false);
 		hyp_button.setDisable(false);
-		//propertiesButton();
 		
+		infoLoyer();
+	}
+	
+	private void infoLoyer() {
+		int nbCouche = square.getNbCouches();
+		for(int i = 0; i < 6; ++i){
+			label_rentProp[i].setStyle("-fx-text-fill: black");
+			labelNameLoyer[i].setStyle("-fx-text-fill: black");
+			if((i == nbCouche && !square.hasCine()) || (i == 5 && square.hasCine())) {
+				label_rentProp[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
+				labelNameLoyer[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
+			}
+		}
 	}
 	
 	public void propertiesButton() {
@@ -415,13 +451,20 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesProd() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonProp.setDisable(false);
-			buy_buttonCanape.setDisable(true);
-			sell_buttonProp.setDisable(true);
-			sell_buttonCanape.setDisable(true);
-			hyp_button.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonProp.setDisable(false);
+				buy_buttonCanape.setDisable(true);
+				sell_buttonProp.setDisable(true);
+				sell_buttonCanape.setDisable(true);
+				hyp_button.setDisable(true);
+			}else{
+				buy_buttonProp.setDisable(true);
+				buy_buttonCanape.setDisable(true);
+				sell_buttonProp.setDisable(true);
+				sell_buttonCanape.setDisable(true);
+				hyp_button.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			boolean hasCine = square.hasCine();
 			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
@@ -454,11 +497,17 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesInstitut() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonInstitute.setDisable(false);
-			sell_buttonInstitute.setDisable(true);
-			hyp_buttonInstitute.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonInstitute.setDisable(false);
+				sell_buttonInstitute.setDisable(true);
+				hyp_buttonInstitute.setDisable(true);
+			}else{
+				buy_buttonInstitute.setDisable(true);
+				sell_buttonInstitute.setDisable(true);
+				hyp_buttonInstitute.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(false);
@@ -472,11 +521,17 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesCompany() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonCompany.setDisable(false);
-			sell_buttonCompany.setDisable(true);
-			hyp_buttonCompany.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonCompany.setDisable(false);
+				sell_buttonCompany.setDisable(true);
+				hyp_buttonCompany.setDisable(true);
+			}else{
+				buy_buttonCompany.setDisable(true);
+				sell_buttonCompany.setDisable(true);
+				hyp_buttonCompany.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonCompany.setDisable(true);
 			sell_buttonCompany.setDisable(false);
@@ -637,6 +692,13 @@ public class Controller_board implements Initializable, IWindow {
 		label_rentProp[4] = canape4;
 		label_rentProp[5] = homecinema;
 		
+		labelNameLoyer[0] = loyer0;
+		labelNameLoyer[1] = loyer1;
+		labelNameLoyer[2] = loyer2;
+		labelNameLoyer[3] = loyer3;
+		labelNameLoyer[4] = loyer4;
+		labelNameLoyer[5] = loyer5;
+		
 		label_rentInst[0] = loyer1_institute;
 		label_rentInst[1] = loyer2_institute;
 		label_rentInst[2] = loyer3_institute;
@@ -717,7 +779,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void sellHouse() {
 		
-		if (true/*canSellCouch*/) {
+		if (!square.hasCine()) {
 			square.sellCouch();
 		} else {
 			square.sellHomeCinema();
@@ -769,8 +831,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		
 		String[] color;
-		color = new String[] { "#d60e0e", "#0766ff", "#00ad1f",
-				"#dce218" };
+		color = new String[] { "#d60e0e", "#0766ff", "#00ad1f", "#dce218" };
 		
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {

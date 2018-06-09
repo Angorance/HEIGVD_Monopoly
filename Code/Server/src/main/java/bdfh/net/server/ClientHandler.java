@@ -162,6 +162,10 @@ public class ClientHandler implements Handler {
 						
 						createLobby(param[0]);
 						break;
+						
+					case Protocoly.CMD_SETP:
+						updateParameter(param[0]);
+						break;
 					
 					// ============================================================================================
 					// commande de phase de jeu
@@ -209,11 +213,7 @@ public class ClientHandler implements Handler {
 					
 					case GameProtocol.GAM_SCOUCH:
 						if(game != null) {
-							if (game.sellCouch(this, Integer.parseInt(param[0]), false)) {
-								sendData(ANS_SUCCESS);
-							} else {
-								sendData(ANS_DENIED);
-							}
+							handleResponse(game.sellCouch(this, Integer.parseInt(param[0]), false));
 						}
 						
 						break;
@@ -227,11 +227,7 @@ public class ClientHandler implements Handler {
 					
 					case GameProtocol.GAM_SHCINE:
 						if(game != null){
-							if (game.sellHomeCinema(this, Integer.parseInt(param[0]))) {
-								sendData(ANS_SUCCESS);
-							} else {
-								sendData(ANS_DENIED);
-							}
+							handleResponse(game.sellHomeCinema(this, Integer.parseInt(param[0])));
 						}
 						
 						break;
@@ -269,6 +265,15 @@ public class ClientHandler implements Handler {
 						"Client " + clientID + "::" + cmd + ":" + " disconnected suddenly. (SocketException)");
 			}
 		}
+	}
+	
+	private void updateParameter(String s) {
+		LOG.log(Level.INFO, "Mise à jour des paramètres ! : " + s);
+		BoundParameters b = GsonSerializer.getInstance().fromJson(s, BoundParameters.class);
+		
+		DatabaseConnect.getInstance().getParameterDB().setLimits(b);
+		DatabaseConnect.getInstance().getParameterDB().updateLimits();
+		
 	}
 	
 	/**
@@ -316,6 +321,10 @@ public class ClientHandler implements Handler {
 				break;
 			case NOT_BUYABLE : // 9
 				sendData(ANS_ERR, ERR9);
+				break;
+				
+			case NO_HOME_CINEMA:
+				sendData(ANS_ERR, ERR10);
 				break;
 		}
 	}

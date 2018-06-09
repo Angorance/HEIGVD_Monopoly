@@ -45,6 +45,11 @@ public class Price {
 		return price;
 	}
 	
+	public Integer getSellingPrice() {
+		
+		return price / 2;
+	}
+	
 	public Integer getPriceCouch() {
 		
 		return priceCouch;

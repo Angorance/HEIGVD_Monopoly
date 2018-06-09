@@ -94,6 +94,7 @@ public abstract class GameProtocol {
 	public static final int NOT_OWNER = 7;
 	public static final int ALREADY_OWNED = 8;
 	public static final int NOT_BUYABLE = 9;
+	public static final int NO_HOME_CINEMA = 10;
 	
 	public static final String ERR1 = "Vous n'avez pas assez d'argent.";
 	public static final String ERR2 = "Il n'y a pas assez de canapés sur la case.";
@@ -104,5 +105,6 @@ public abstract class GameProtocol {
 	public static final String ERR7 = "Vous n'êtes pas le propriétaire";
 	public static final String ERR8 = "La case est déjà possédée";
 	public static final String ERR9 = "Vous ne pouvez pas acheter cette case !";
+	public static final String ERR10 = "Vous ne possédez pas de Home Cinema sur la case.";
 	
 }

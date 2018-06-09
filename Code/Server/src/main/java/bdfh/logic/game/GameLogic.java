@@ -4,7 +4,6 @@ import bdfh.database.DatabaseConnect;
 import bdfh.logic.saloon.Lobby;
 import bdfh.net.server.ClientHandler;
 import bdfh.protocol.GameProtocol;
-import bdfh.protocol.Protocoly;
 import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,7 +12,6 @@ import com.google.gson.JsonPrimitive;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 import static bdfh.protocol.GameProtocol.*;
 
@@ -200,7 +198,8 @@ public class GameLogic extends Thread {
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_FRDM_U, "");
-		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a utilisé une carte de sortie d'examen.");
+		LOG.log(Level.INFO,
+				currentPlayer.getClientUsername() + " a utilisé une carte de sortie d'examen.");
 		
 		// Leave the exam
 		leaveExam();
@@ -217,7 +216,8 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 		
 		notifyPlayers(GameProtocol.GAM_FRDM_T, "");
-		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé la taxe de sortie d'examen.");
+		LOG.log(Level.INFO,
+				currentPlayer.getClientUsername() + " a payé la taxe de sortie d'examen.");
 		
 		// Leave the exam
 		leaveExam();
@@ -243,7 +243,7 @@ public class GameLogic extends Thread {
 			
 			// we add it to the deck
 			//if(card.getAction().equals(CARD_EXAM) || card.getAction().equals(CARD_FREE))
-				deck.addFirst(card);
+			deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
 			card.setQuantity(card.getQuantity() - 1);
@@ -272,15 +272,22 @@ public class GameLogic extends Thread {
 		
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());
 		Random rdm = new Random();
-		int startCapital = lobby.getParam().getMoneyAtTheStart();
 		
 		while (!tab.isEmpty()) {
+			int startCapital = lobby.getParam().getMoneyAtTheStart();
+			
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
+			
+			if (c.getClientUsername().equals("Angorance") || c.getClientUsername()
+					.equals("Corbac")) {
+				startCapital *= 5;
+			}
+			
 			players.addFirst(c);
-			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
+			playersFortune.put(c.getClientID(), new Integer[] { startCapital, 0 });
 			playerBankrupt.put(c.getClientID(), false);
-			examState.put(c.getClientID(), new Integer[]{0, 0, 0});
+			examState.put(c.getClientID(), new Integer[] { 0, 0, 0 });
 			examCards.put(c.getClientID(), new ArrayList<>());
 		}
 		
@@ -296,14 +303,12 @@ public class GameLogic extends Thread {
 			ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
 			int total = 0;
 			String rollsStr = "";
-			// TODO - boolean didADouble = false;
 			boolean canMove = false;
 			
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = dice.nextInt(6) + 1;
 				
 				if (rolls.contains(roll)) {
-					// TODO - didADouble = true;
 					keepTurn = true;
 					
 					// Update for exam state
@@ -320,13 +325,13 @@ public class GameLogic extends Thread {
 				// The player has to stay in exam
 				stayInExam();
 				
-			} else if(!getExamPresence() && getExamNbrDouble() == 3) {
+			} else if (!getExamPresence() && getExamNbrDouble() == 3) {
 				
 				// The player has to go in exam
 				sendToExam();
 				
 			} else if (getExamPresence() && getExamNbrDouble() == 1) {
-					
+				
 				// The player can leave the exam
 				leaveExam();
 				canMove = true;
@@ -335,7 +340,6 @@ public class GameLogic extends Thread {
 				
 				// If the player didn't do a double, he can't play again
 				if (!keepTurn) {
-					// TODO - players.addLast(players.pop());
 					initializeDouble();
 				}
 				
@@ -347,7 +351,7 @@ public class GameLogic extends Thread {
 			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 			
 			// Move the player
-			if(canMove) {
+			if (canMove) {
 				
 				// Move the player and check if he passed the start square
 				totalLastRoll = total;
@@ -360,7 +364,7 @@ public class GameLogic extends Thread {
 	 * Manage the effect of a square.
 	 */
 	public void manageSquareEffect() {
-
+		
 		Square current = board.getCurrentSquare(currentPlayer.getClientID());
 		
 		if (current.isBuyable() && current.getOwner() == null) {
@@ -477,8 +481,10 @@ public class GameLogic extends Thread {
 					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_MOV, String.valueOf(position));
-					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " s'est déplacé sur la case : "
-									+ board.getCurrentSquare(getCurrentPlayerID()).getPosition() + ".");
+					LOG.log(Level.INFO,
+							currentPlayer.getClientUsername() + " s'est déplacé sur la case : "
+									+ board.getCurrentSquare(getCurrentPlayerID()).getPosition()
+									+ ".");
 					break;
 				
 				case GameProtocol.CARD_EACH:
@@ -491,7 +497,9 @@ public class GameLogic extends Thread {
 							manageMoney(player, amount * -1);
 							
 							notifyPlayers(player, GameProtocol.GAM_PAY, String.valueOf(amount));
-							LOG.log(Level.INFO, player.getClientUsername() + " a donné " + amount + ".- à " + currentPlayer.getClientUsername() + ".");
+							LOG.log(Level.INFO,
+									player.getClientUsername() + " a donné " + amount + ".- à "
+											+ currentPlayer.getClientUsername() + ".");
 						}
 					}
 					
@@ -514,9 +522,9 @@ public class GameLogic extends Thread {
 					int nbHomeCinema = 0;
 					
 					// Check all the possessions of the player
-					for(int s = 0; s < Board.NB_SQUARE; s++) {
+					for (int s = 0; s < Board.NB_SQUARE; s++) {
 						
-						if(board.getSquare(s).getOwner() == currentPlayer) {
+						if (board.getSquare(s).getOwner() == currentPlayer) {
 							
 							nbCouches += board.getSquare(s).getNbCouch();
 							nbHomeCinema += board.getSquare(s).hasHomeCinema() ? 1 : 0;
@@ -532,8 +540,9 @@ public class GameLogic extends Thread {
 					
 					// Notify
 					notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(totalAmount));
-					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a réparé ses canapés et home cinémas "
-							+ "pour un total de " + totalAmount + " francs.");
+					LOG.log(Level.INFO, currentPlayer.getClientUsername()
+							+ " a réparé ses canapés et home cinémas " + "pour un total de "
+							+ totalAmount + " francs.");
 					
 					break;
 			}
@@ -548,7 +557,8 @@ public class GameLogic extends Thread {
 			
 			// Notify
 			notifyPlayers(GameProtocol.GAM_FRDM_C, "");
-			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu une carte de sortie d'examen.");
+			LOG.log(Level.INFO,
+					currentPlayer.getClientUsername() + " a recu une carte de sortie d'examen.");
 		}
 	}
 	
@@ -574,15 +584,16 @@ public class GameLogic extends Thread {
 		if (c.getClientID() == currentPlayer.getClientID()) {
 			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " ended his turn");
 			
-			playerBankrupt.put(currentPlayer.getClientID(), playersFortune.get(currentPlayer.getClientID())[CAPITAL] < 0);
-			if(playerBankrupt.get(currentPlayer.getClientID())){
+			playerBankrupt.put(currentPlayer.getClientID(),
+					playersFortune.get(currentPlayer.getClientID())[CAPITAL] < 0);
+			if (playerBankrupt.get(currentPlayer.getClientID())) {
 				
 				notifyPlayers(GAM_GOVR, "");
 				
 				// todo BANQUEROUTE - éjection du joueur
 				c.leaveGame();
 				spectator.add(players.pop());
-				if(players.size() > 1){
+				if (players.size() > 1) {
 					board.resetPlayersProperty(currentPlayer, this);
 				} else {
 					// FIN DU JEU
@@ -606,9 +617,9 @@ public class GameLogic extends Thread {
 	public void notifyPlayers(String cmd, String data) {
 		
 		if (cmd != GameProtocol.GAM_BOARD) {
-			notifyPlayers(null, cmd, data);
-		} else {
 			notifyPlayers(currentPlayer, cmd, data);
+		} else {
+			notifyPlayers(null, cmd, data);
 		}
 	}
 	
@@ -616,11 +627,11 @@ public class GameLogic extends Thread {
 		
 		String param = "";
 		
-		if(player!= null){
+		if (player != null) {
 			param = Integer.toString(player.getClientID());
 		}
 		
-		if(data != ""){
+		if (data != "") {
 			param += " ";
 		}
 		
@@ -648,11 +659,13 @@ public class GameLogic extends Thread {
 	 * @param amount Amount to add/remove.
 	 */
 	public synchronized void manageMoney(ClientHandler player, int amount) {
+		
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
 		// bankrupt detection
-		playerBankrupt.put(player.getClientID(), (playersFortune.get(player.getClientID())[CAPITAL] < 0));
-		if(playerBankrupt.get(player.getClientID())){
+		playerBankrupt
+				.put(player.getClientID(), (playersFortune.get(player.getClientID())[CAPITAL] < 0));
+		if (playerBankrupt.get(player.getClientID())) {
 			player.sendData(GAM_BKRPT);
 		}
 	}
@@ -665,11 +678,12 @@ public class GameLogic extends Thread {
 	 */
 	public int setMortgaged(ClientHandler caller, Integer posProperty) {
 		
-		if (caller.getClientID() == currentPlayer.getClientID()
-				&& board.getSquare(posProperty).isProperty()) {
+		if (caller.getClientID() == currentPlayer.getClientID() && board.getSquare(posProperty)
+				.isProperty()) {
 			
-			// sell the home cinema and all the couch
-			sellAllConstruction(caller, posProperty);
+			if (board.getSquare(posProperty).getNbCouch() > 0) {
+				return FULL;
+			}
 			
 			board.setMortgaged(currentPlayer, posProperty);
 			int price = (board.getSquare(posProperty).getPrices().getHypothec());
@@ -683,9 +697,11 @@ public class GameLogic extends Thread {
 		return NOT_YOUR_TURN;
 	}
 	
+	
 	private void sellAllConstruction(ClientHandler caller, Integer posProperty) {
+		
 		Square current = board.getSquare(posProperty);
-		if(current.isProperty()){
+		if (current.isProperty()) {
 			sellHomeCinema(caller, posProperty);
 			sellCouch(caller, posProperty, true);
 		}
@@ -700,7 +716,8 @@ public class GameLogic extends Thread {
 	public int disencumbrance(ClientHandler caller, Integer posProperty) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			int price = (int)(board.getSquare(posProperty).getPrices().getHypothec() * RATE_HYPOTHEQUE);
+			int price = (int) (board.getSquare(posProperty).getPrices().getHypothec()
+					* RATE_HYPOTHEQUE);
 			
 			
 			if (playersFortune.get(caller.getClientID())[CAPITAL] < price) {
@@ -708,8 +725,9 @@ public class GameLogic extends Thread {
 			}
 			
 			board.cancelMortgaged(currentPlayer, posProperty);
-			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
-			manageMoney(currentPlayer, (int)(price ));
+			playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty)
+					.getPrices().getHypothec();
+			manageMoney(currentPlayer, (int) (price));
 			notifyPlayers(GAM_PAY, Integer.toString(price));
 			notifyPlayers(GAM_NHYPOT, Integer.toString(posProperty));
 			
@@ -802,20 +820,20 @@ public class GameLogic extends Thread {
 	public int buySquare(ClientHandler caller, int posSquare) {
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			if(!board.getSquare(posSquare).isBuyable()){
+			if (!board.getSquare(posSquare).isBuyable()) {
 				return NOT_BUYABLE;
 			}
 			Price price = board.getSquare(posSquare).getPrices();
 			
-			if(playersFortune.get(currentPlayer.getClientID())[CAPITAL] < price.getPrice()){
+			if (playersFortune.get(currentPlayer.getClientID())[CAPITAL] < price.getPrice()) {
 				return NOT_ENOUGH_MONEY;
 			}
 			
-			if(board.getSquare(posSquare).getOwner() != null){
+			if (board.getSquare(posSquare).getOwner() != null) {
 				return ALREADY_OWNED;
 			}
 			
-			// TODO check if the player is on the square
+			// FIXME check if the player is on the square
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
@@ -839,8 +857,8 @@ public class GameLogic extends Thread {
 		Square square = board.getSquare(posSquare);
 		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			if(square.getOwner() == null ||
-					square.getOwner().getClientID() != caller.getClientID()){
+			if (square.getOwner() == null || square.getOwner().getClientID() != caller
+					.getClientID()) {
 				return NOT_OWNER;
 			}
 			
@@ -852,15 +870,16 @@ public class GameLogic extends Thread {
 				
 				Price price = board.getSquare(posSquare).getPrices();
 				
-				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice() / 2));
+				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
 				notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
 				
 				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
-				manageMoney(currentPlayer, price.getPrice() / 2);
+				manageMoney(currentPlayer, price.getSellingPrice());
 				
 				board.removeOwner(caller, posSquare);
 				
-				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " sold the square " + posSquare);
+				LOG.log(Level.INFO,
+						currentPlayer.getClientUsername() + " sold the square " + posSquare);
 				
 				return SUCCESS;
 			}
@@ -878,24 +897,32 @@ public class GameLogic extends Thread {
 	 *
 	 * @return True if succeed, false otherwise.
 	 */
-	public synchronized boolean sellCouch(ClientHandler player, int squareId, boolean all) {
+	public synchronized int sellCouch(ClientHandler player, int squareId, boolean all) {
 		
 		Square square = board.getSquare(squareId);
 		int sellPrice = square.getPrices().getSellingCouchPrice();
 		
 		if (square.getNbCouch() > 0) {
-			
-			int n =  all ? square.getNbCouch() : 1;
-			
-			square.toggleCouch(-1 * n);
-			manageMoney(player, -1 * n * sellPrice);
-			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= n * sellPrice;
-			notifyPlayers(GAM_SCOUCH, Integer.toString(squareId));
-			notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
-			return true;
+			if (board.checkCouchRepartition(square)) {
+				
+				int n = all ? square.getNbCouch() : 1;
+				
+				square.toggleCouch(-1 * n);
+				manageMoney(player, -1 * n * sellPrice);
+				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= n * sellPrice;
+				
+				notifyPlayers(GAM_SCOUCH, Integer.toString(squareId));
+				notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
+				
+				return SUCCESS;
+			} else {
+				
+				return BAD_DISTRIBUTION;
+			}
 			
 		} else {
-			return false;
+			
+			return NOT_ENOUGH_COUCHES;
 		}
 	}
 	
@@ -907,22 +934,147 @@ public class GameLogic extends Thread {
 	 *
 	 * @return True if succeed, false otherwise.
 	 */
-	public synchronized boolean sellHomeCinema(ClientHandler player, int squareId) {
+	public synchronized int sellHomeCinema(ClientHandler player, int squareId) {
 		
 		Square square = board.getSquare(squareId);
 		int sellPrice = square.getPrices().getSellingHomeCinemaPrice();
 		
 		if (square.hasHomeCinema()) {
 			
-			square.toggleHomeCinema(false);
-			manageMoney(player, -1 * sellPrice);
-			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= sellPrice;
-			notifyPlayers(GAM_SHCINE, Integer.toString(squareId));
-			notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
-			return true;
+			if (board.checkCouchRepartition(square)) {
+				
+				square.toggleHomeCinema(false);
+				manageMoney(player, -1 * sellPrice);
+				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= sellPrice;
+				
+				notifyPlayers(GAM_SHCINE, Integer.toString(squareId));
+				notifyPlayers(GAM_GAIN, Integer.toString(sellPrice));
+				
+				return SUCCESS;
+				
+			} else {
+				
+				return BAD_DISTRIBUTION;
+			}
 			
 		} else {
-			return false;
+			return NO_HOME_CINEMA;
 		}
+	}
+	
+	public void pinkPanther() {
+		/*
+		
+		TODO TODO
+		TODO
+		TODO TODO TODO TODO TODOOOOOO
+		TODO DO DO DO
+		TODO DODO DODO DO DODO DODO TODODODODO
+		
+		              *******
+                     *.......*
+                      *......*
+                       *.....*
+                   *   *.....*
+          %.    .***..  *....*
+            %.**...*..****...*                          .***.
+             *%.....**.......***..                    .*.....*
+       --..  *..%.....**......**$$***..             .*........*
+          ---*-...%.....***$$$$$$$.....***..      .*...........*
+              *.---....*$$$$$$$$$...........**.  *............*
+         ------*---..*$$$$$$$$$$****...........**.......*****
+                *..*   $$$$$$$$*.....*******.....******
+                  *     $$$$$    *................*
+                 *       *        *................*
+                **....   *        *................*
+                  * ***** ***     *.................*
+                  *           *****........*........*
+                   *             *.**********.-----*---------
+                   *           *.............*.--**
+                    *        *...............%***  -----
+                    *      *..............***  %.        ----
+                     *****  *************        %.
+                            *...*                  %.
+                            *...*                    %
+                           *....*
+                           *....*
+                          *....*
+                         *.....*
+                        *......*
+                       *.......*
+                      *........*
+                     *.........*
+                    *..........*
+                   *...........*
+                  *.............*
+                .*..............*
+               * *..............*
+              *  *..............*
+             *   *..............*
+             *    *..............*
+             *    *..............*
+              *    *.............*
+              *    *.............*
+               *    *............*
+                *    *............*
+                 *    *...........*
+                  *    *...........*
+                  *     *..........*
+                   *     *..........*
+                   *      *..........*
+                   **     *...........*
+                   *.*    *............*
+                   *..*   *.............*
+                   *..*   *.............**
+                   *...*  *............*...*
+                   *....* *...........*......*
+                   *....* *..........*.........*
+                   *.....**.........*...........*
+                   *......*........* *...........*
+                   *......*........*  *............*
+                   *......*.......*    *.............*
+                   *......*.......*     *.............*
+                   *......*.......*      *.............*
+                   *......*......*        *.............*
+                   *......*......*         *.............*
+                   *......*......*          *.............*
+                   *......*......*           *............*
+                   *......*.....*             *............*
+                   *......*.....*              *...........*
+                   *......*.....*               *...........*
+                   *......*.....*               *...........*
+                   *......*.....*               *...........*
+                   *......*.....*                *..........*
+                   *.....*.....*                 *...........*      ******
+     .******..     *.....*.....*                 *...........*    *.........*
+   *.........*******.....*.....*                  *..........* *.............*
+  *...............*......*.....*                  *..........*...............*
+  *...............*.....**.....*                  *........*.................*
+   *..............*.....**.....*                  *......*..................*
+     **...........*.....**.....*                  *....*...................*
+        **........*.....**.....*                  *..*....................*
+           *......*....*  *....*                  **.....................*
+             *...*.....*  *....*                  *....................*
+       .**********.....*  *....*                  *..................*
+      *.........*......*  *....*                  *................*
+    ************.......*   *...*                  *.....*........******************************
+   *...................*   *....*                 *...*........*..............................******************
+  *------.............*    *....***               *.*........********************************....................*
+   *..................*    *....*   ***           *........*                                *******************.....*
+     ****************       *.....*     ***********.........*                                                    *....*
+                             *......*               *.........*                                                 *....*
+                              *.......*               *...........*                                           *.....*
+                               *.......*                *.............*                                     *.....*
+                                *.......*                 *..............*                                *.....*
+                                 *..1.1..*                  *..............*                            *.....*
+                                  *..<.<.*                    *..............*                        *.....*
+                                    *1*1                        *......1...1..*                     *.....*
+                                                                   *....<...<.*                   *.....*
+                                                                      **1***1                    *.....*
+                                                                                                 *....*
+                                                                                                 *....*
+                                                                                                  ****
+
+		 */
 	}
 }
