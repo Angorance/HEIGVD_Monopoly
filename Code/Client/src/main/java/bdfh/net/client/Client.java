@@ -39,6 +39,12 @@ public class Client {
 	
 	private Client() {}
 	
+	public void sendNewParameter(BoundParameters param) {
+		String jsonParam = GsonSerializer.getInstance().toJson(param);
+		
+		sendData(Protocoly.CMD_SETP + " " + jsonParam);
+	}
+	
 	private static class Instance {
 		
 		static final Client instance = new Client();

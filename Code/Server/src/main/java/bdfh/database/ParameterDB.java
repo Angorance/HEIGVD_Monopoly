@@ -81,35 +81,27 @@ public class ParameterDB {
 	/**
 	 * Set the limits of the logic in the database.
 	 *
-	 * @param minDice Minimum number of dice allowed
-	 * @param maxDice Maximum number of dice allowed
-	 * @param minMoney Minimum money allowed at the start per player
-	 * @param maxMoney Maximum money allowed at the start per player
-	 * @param minTime
-	 * @param maxTime
-	 * @param randomGameGeneration True if randomGameGeneration allowed, false
-	 * 		otherwise
+	 * @param p parameters to use
 	 */
-	public void setLimits(int minDice, int maxDice, int minMoney, int maxMoney,
-			int minTime, int maxTime, boolean randomGameGeneration) {
+	public void setLimits(BoundParameters p) {
 		
 		String sql = "UPDATE parameter " + "SET minDice = ?, "
-				+ "SET maxDice = ?, " + "SET minMoneyAtTheStart = ?, "
-				+ "SET maxMoneyAtTheStart = ?, "
-				+ "SET minTime = ?, " + "SET maxTime = ?, "
-				+ "SET randomGameGeneration = ? " + "WHERE id = 1;";
+				+ "maxDice = ?, " + "minMoneyAtTheStart = ?, "
+				+ "maxMoneyAtTheStart = ?, "
+				+ "minTime = ?, " + "maxTime = ?, "
+				+ "randomGameGeneration = ? " + " WHERE id = 1;";
 		
 		try {
 			PreparedStatement statement = db.connect().prepareStatement(sql);
 			
 			// Execute the query
-			statement.setInt(1, minDice);
-			statement.setInt(2, maxDice);
-			statement.setInt(3, minMoney);
-			statement.setInt(4, maxMoney);
-			statement.setInt(5, minTime);
-			statement.setInt(6, maxTime);
-			statement.setBoolean(7, randomGameGeneration);
+			statement.setInt(1, p.getMinDice());
+			statement.setInt(2, p.getMaxDice());
+			statement.setInt(3, p.getMinMoneyAtTheStart());
+			statement.setInt(4, p.getMaxMoneyAtTheStart());
+			statement.setInt(5, p.getMinTime());
+			statement.setInt(6, p.getMaxTime());
+			statement.setBoolean(7, p.isRandomGameGeneration());
 			statement.execute();
 			
 			// Close the db
