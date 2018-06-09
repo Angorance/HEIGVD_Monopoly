@@ -404,9 +404,9 @@ public class GameHandler extends Thread {
 				
 				sub.loadPopup();
 			}
-			
-			sub.logMessage(id, "C'est au tour du joueur " + usernameTurn);
 		}
+		
+		sub.logMessage(id, "C'est au tour du joueur " + usernameTurn);
 		
 		synchronized (this) {
 			this.notify();
