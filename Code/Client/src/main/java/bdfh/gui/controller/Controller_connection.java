@@ -8,11 +8,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import static bdfh.logic.conn.Authentication.*;
 
-public class Controller_connection {
+public class Controller_connection{
 	
 	@FXML private JFXTextField username;
 	@FXML private JFXPasswordField password;
@@ -21,7 +22,10 @@ public class Controller_connection {
 	@FXML private JFXButton login;
 	@FXML private JFXButton register;
 	@FXML private Label message;
+	@FXML private Pane window;
 	
+	
+	Konami konami = new Konami();
 	/**
 	 * Event check if checkBox is ticked
 	 *

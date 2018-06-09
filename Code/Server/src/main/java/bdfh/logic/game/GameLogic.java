@@ -619,9 +619,9 @@ public class GameLogic extends Thread {
 	public void notifyPlayers(String cmd, String data) {
 		
 		if (cmd != GameProtocol.GAM_BOARD) {
-			notifyPlayers(null, cmd, data);
-		} else {
 			notifyPlayers(currentPlayer, cmd, data);
+		} else {
+			notifyPlayers(null, cmd, data);
 		}
 	}
 	

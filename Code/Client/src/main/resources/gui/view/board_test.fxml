@@ -71,11 +71,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Loyer canapé 1" GridPane.rowIndex="2" />
-                        <Label text="Loyer canapé 2" GridPane.rowIndex="3" />
-                        <Label text="Loyer canapé 3" GridPane.rowIndex="4" />
-                        <Label text="Loyer canapé 4" GridPane.rowIndex="5" />
-                        <Label text="Loyer Home Cinéma" GridPane.rowIndex="6" />
+                        <Label fx:id="loyer1" text="Loyer canapé 1" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer2" text="Loyer canapé 2" GridPane.rowIndex="3" />
+                        <Label fx:id="loyer3" text="Loyer canapé 3" GridPane.rowIndex="4" />
+                        <Label fx:id="loyer4" text="Loyer canapé 4" GridPane.rowIndex="5" />
+                        <Label fx:id="loyer5" text="Loyer Home Cinéma" GridPane.rowIndex="6" />
                         <Label fx:id="canape1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -91,7 +91,7 @@
                         <Label text="Vente Home Cinema" GridPane.rowIndex="11" />
                         <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <Label text="Loyer de base" GridPane.rowIndex="1" />
+                        <Label fx:id="loyer0" text="Loyer de base" GridPane.rowIndex="1" />
                         <Label fx:id="base" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Prix" />
                         <Label fx:id="price_prop" text="-" GridPane.columnIndex="1" />
