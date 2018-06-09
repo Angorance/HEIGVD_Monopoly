@@ -310,7 +310,9 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GAM_BKRPT:
-			
+				sub.loadPopup_BR();
+				break;
+				
 			case GAM_GOVR:
 				id = Integer.parseInt(split[1]);
 				
