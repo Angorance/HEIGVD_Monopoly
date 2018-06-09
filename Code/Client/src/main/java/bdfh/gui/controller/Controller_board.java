@@ -31,6 +31,14 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private Label message;
 	@FXML private VBox vbox_Log;
 	
+	
+	@FXML private Label loyer0;
+	@FXML private Label loyer1;
+	@FXML private Label loyer2;
+	@FXML private Label loyer3;
+	@FXML private Label loyer4;
+	@FXML private Label loyer5;
+	
 	/*Info properties*/
 	@FXML private GridPane infoProperties;
 	@FXML private GridPane buttons_properties;
@@ -102,6 +110,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton endTurn_button;
 	
 	private static ArrayList<squareDisplayer> cases = new ArrayList<>();
+	private Label[] labelNameLoyer = new Label[6];
 	private Label[] labelPlayers = new Label[4];
 	private Label[] labelCapitals = new Label[4];
 	private Label[] labelPrisons = new Label[4];
@@ -125,7 +134,7 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	public void logMessage(int idPlayer,String log) {
+	public void logMessage(int idPlayer, String log) {
 		
 		Platform.runLater(() -> {
 			Label label_log = new Label(log);
@@ -349,6 +358,7 @@ public class Controller_board implements Initializable, IWindow {
 				break;
 			
 		}
+		propertiesButton();
 		
 	}
 	
@@ -399,8 +409,20 @@ public class Controller_board implements Initializable, IWindow {
 		sell_buttonProp.setDisable(false);
 		sell_buttonCanape.setDisable(false);
 		hyp_button.setDisable(false);
-		//propertiesButton();
 		
+		infoLoyer();
+	}
+	
+	private void infoLoyer() {
+		int nbCouche = square.getNbCouches();
+		for(int i = 0; i < 6; ++i){
+			label_rentProp[i].setStyle("-fx-text-fill: black");
+			labelNameLoyer[i].setStyle("-fx-text-fill: black");
+			if(i == nbCouche || (i == 5 && square.hasCine())) {
+				label_rentProp[i].setStyle("-fx-text-fill: green");
+				labelNameLoyer[i].setStyle("-fx-text-fill: green");
+			}
+		}
 	}
 	
 	public void propertiesButton() {
@@ -650,6 +672,13 @@ public class Controller_board implements Initializable, IWindow {
 		label_rentProp[3] = canape3;
 		label_rentProp[4] = canape4;
 		label_rentProp[5] = homecinema;
+		
+		labelNameLoyer[0] = loyer0;
+		labelNameLoyer[1] = loyer1;
+		labelNameLoyer[2] = loyer2;
+		labelNameLoyer[3] = loyer3;
+		labelNameLoyer[4] = loyer4;
+		labelNameLoyer[5] = loyer5;
 		
 		label_rentInst[0] = loyer1_institute;
 		label_rentInst[1] = loyer2_institute;
