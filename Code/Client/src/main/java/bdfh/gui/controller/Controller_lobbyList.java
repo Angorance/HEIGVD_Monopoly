@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class Controller_lobbyList implements Initializable, IWindow {
 	
+	@FXML private Label nameLobby;
 	@FXML private VBox lobby;
 	@FXML private Label name_player1;
 	@FXML private Label name_player2;
@@ -70,7 +71,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 				}
 			}
 			name = new Label("Salon" + lLobby.getID());
-			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
+			nbPlayer = new Label(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueurs");
 			
 			this.add(name, 0, 0);
 			this.add(nbPlayer, 0, 1);
@@ -147,7 +148,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	public void removeLobby(LightLobby l) {
 		
 		Platform.runLater(() -> {
-			if(l.getUsernames().size() == 0 && l.getID() == lightLobby.getID()){
+			if (l.getUsernames().size() == 0 && l.getID() == lightLobby.getID()) {
 				detailLobby.setVisible(false);
 			}
 			lobby.getChildren().removeAll(displayerList.get(l.getID()));
@@ -157,10 +158,10 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	
 	public static void startGame() {
 		
-		Platform.runLater(()->{
+		Platform.runLater(() -> {
 			windowManager wm = windowManager.getInstance();
 			
-			if(!wm.hasGameBoard()){
+			if (!wm.hasGameBoard()) {
 				new Board();
 			}
 			
@@ -171,8 +172,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	/**
 	 * hide the main frame
 	 */
-	@Override
-	public void hide() {
+	@Override public void hide() {
 		
 		if (thisStage == null) {
 			thisStage = (Stage) lobby.getScene().getWindow();
@@ -183,8 +183,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	/**
 	 * show the window and reset the display
 	 */
-	@Override
-	public void show() {
+	@Override public void show() {
 		
 		if (thisStage == null) {
 			thisStage = (Stage) lobby.getScene().getWindow();
@@ -201,6 +200,8 @@ public class Controller_lobbyList implements Initializable, IWindow {
 	private void detailLobby(LightLobby lobby) {
 		
 		lightLobby = lobby;
+		
+		nameLobby.setText("Salon " + lobby.getID());
 		int currendIDLoby = Player.getInstance().getLobbyID();
 		
 		detailLobby.setVisible(true);
