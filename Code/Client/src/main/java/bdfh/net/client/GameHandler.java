@@ -101,7 +101,7 @@ public class GameHandler extends Thread {
 			case GAM_WIN:
 				id = Integer.parseInt(split[1]);
 				
-				sub.logMessage(id, players.get(id).getUsername() + " a gagné la partie ! BRAVO");
+				sub.logMessage(id, false, players.get(id).getUsername() + " a gagné la partie ! BRAVO");
 				
 				if (Player.getInstance().getID() == id) {
 					// TODO - START SOUND
@@ -148,7 +148,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " a été envoyé en salle d'examen");
+				sub.logMessage(id, false, players.get(id).getUsername() + " a été envoyé en salle d'examen");
 				
 				break;
 			
@@ -159,7 +159,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " est sorti de la salle d'examen");
+				sub.logMessage(id, false, players.get(id).getUsername() + " est sorti de la salle d'examen");
 				
 				break;
 
@@ -178,7 +178,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " a reçu une carte pour sortir d'examen");
+				sub.logMessage(id, false, players.get(id).getUsername() + " a reçu une carte pour sortir d'examen");
 				
 				break;
 
@@ -198,7 +198,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " utilise une carte pour sortir d'examen");
+				sub.logMessage(id, false, players.get(id).getUsername() + " utilise une carte pour sortir d'examen");
 				
 				break;
 				
@@ -212,7 +212,7 @@ public class GameHandler extends Thread {
 				square.setOwner(players.get(Integer.parseInt(param[0])));
 				
 				sub.setOwner(pos, id);
-				sub.logMessage(id, players.get(id).getUsername() + " a acheté la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté la salle " + square.getName());
 				
 				break;
 			
@@ -226,7 +226,7 @@ public class GameHandler extends Thread {
 				square.setOwner(null);
 				
 				sub.setOwner(pos, -1);
-				sub.logMessage(id, players.get(id).getUsername() + " a vendu " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu " + square.getName());
 				
 				break;
 			
@@ -240,7 +240,7 @@ public class GameHandler extends Thread {
 				square.toggleCouch(1);
 				
 				sub.redrawSquare(pos);
-				sub.logMessage(id, players.get(id).getUsername() + " a acheté un canapé pour la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté un canapé pour la salle " + square.getName());
 				
 				break;
 			
@@ -254,7 +254,7 @@ public class GameHandler extends Thread {
 				square.toggleCouch(-1);
 				
 				sub.redrawSquare(pos);
-				sub.logMessage(id, players.get(id).getUsername() + " a vendu un canapé de la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu un canapé de la salle " + square.getName());
 				
 				break;
 			
@@ -268,7 +268,7 @@ public class GameHandler extends Thread {
 				square.toggleHCine(true);
 				
 				sub.redrawSquare(Integer.parseInt(param[1]));
-				sub.logMessage(id, players.get(id).getUsername() + " a acheté un home cinéma pour la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté un home cinéma pour la salle " + square.getName());
 				
 				break;
 			
@@ -282,7 +282,7 @@ public class GameHandler extends Thread {
 				square.toggleHCine(false);
 				
 				sub.redrawSquare(pos);
-				sub.logMessage(id, players.get(id).getUsername() + " a vendu le home cinéma de la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu le home cinéma de la salle " + square.getName());
 				
 				break;
 				
@@ -295,7 +295,7 @@ public class GameHandler extends Thread {
 				
 				square.setMortgaged(true);
 				
-				sub.logMessage(id, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
 				break;
 				
 			case GAM_NHYPOT:
@@ -307,7 +307,7 @@ public class GameHandler extends Thread {
 				
 				square.setMortgaged(false);
 				
-				sub.logMessage(id, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
+				sub.logMessage(id, false, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
 				break;
 				
 			case GAM_BKRPT:
@@ -317,7 +317,7 @@ public class GameHandler extends Thread {
 			case GAM_GOVR:
 				id = Integer.parseInt(split[1]);
 				
-				sub.logMessage(id, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
+				sub.logMessage(id, false, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
 				
 				break;
 				
@@ -404,7 +404,7 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
-		sub.logMessage(id, players.get(id).getUsername() + " tire les dés : " + tmp);
+		sub.logMessage(id, false, players.get(id).getUsername() + " tire les dés : " + tmp);
 		
 		// Don't move the player if he's in exam
 		if(!players.get(id).isInExam()) {
@@ -463,7 +463,7 @@ public class GameHandler extends Thread {
 			}
 		}
 		
-		sub.logMessage(id, "C'est au tour du joueur " + usernameTurn);
+		sub.logMessage(id, true, "C'est au tour du joueur " + usernameTurn);
 		
 		synchronized (this) {
 			this.notify();
@@ -477,7 +477,7 @@ public class GameHandler extends Thread {
 		
 		updateCapital(id, gain);
 		
-		sub.logMessage(id, players.get(id).getUsername() + " gagne " + gain + ".-");
+		sub.logMessage(id, false, players.get(id).getUsername() + " gagne " + gain + ".-");
 	}
 	
 	private void managePay(String[] split) {
@@ -487,7 +487,7 @@ public class GameHandler extends Thread {
 		
 		updateCapital(id, -1 * pay);
 		
-		sub.logMessage(id, players.get(id).getUsername() + " perd " + pay + ".-");
+		sub.logMessage(id, false, players.get(id).getUsername() + " perd " + pay + ".-");
 	}
 	
 	private void updateCapital(int id, int value) {
@@ -504,7 +504,7 @@ public class GameHandler extends Thread {
 	
 		sub.move(id, pos);
 		
-		sub.logMessage(id, players.get(id).getUsername() + " se déplace sur la case " + board.getSquares().get(pos).getName());
+		sub.logMessage(id, false, players.get(id).getUsername() + " se déplace sur la case " + board.getSquares().get(pos).getName());
 	}
 	
 	/**
@@ -524,7 +524,7 @@ public class GameHandler extends Thread {
 	
 	public void manageDraw(int id, String card) {
 		
-		sub.logMessage(id, players.get(id).getUsername() + " a tiré la carte : " + card);
+		sub.logMessage(id, false, players.get(id).getUsername() + " a tiré la carte : " + card);
 	}
 	
 	private void manageReset(int id, String[] toReset) {

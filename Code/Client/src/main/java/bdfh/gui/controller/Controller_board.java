@@ -136,11 +136,15 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	public void logMessage(int idPlayer, String log) {
+	public void logMessage(int idPlayer, boolean isBold, String log) {
 		
 		Platform.runLater(() -> {
 			Label label_log = new Label(log);
 			label_log.setStyle("-fx-text-fill: " + colorPlayer.get(idPlayer) + ";");
+			
+			if(isBold) {
+				label_log.setStyle("-fx-font-weight: bold;");
+			}
 			vbox_Log.getChildren().add(0, label_log);
 			
 		});
