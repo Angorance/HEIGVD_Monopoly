@@ -183,25 +183,25 @@ public class ClientHandler implements Handler {
 					
 					case GameProtocol.GAM_BUYS:
 						if (game != null) {
-							handleResponse(game.buySquare(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+							handleResponse(game.buySquare(this, Integer.valueOf(param[0])));
 						}
 						break;
 					
 					case GameProtocol.GAM_SELL:
-						if(game!= null){
+						if(game != null){
 							handleResponse(game.sellSquare(this, Integer.valueOf(param[0])));
 						}
 						break;
 						
 					case GameProtocol.GAM_HYPOT:
 						if(game != null){
-							handleResponse(game.setMortgaged(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+							handleResponse(game.setMortgaged(this, Integer.valueOf(param[0])));
 						}
 						break;
 					
 					case GameProtocol.GAM_NHYPOT:
 						if(game != null){
-							handleResponse(game.disencumbrance(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+							handleResponse(game.disencumbrance(this, Integer.valueOf(param[0])));
 						}
 						break;
 					
