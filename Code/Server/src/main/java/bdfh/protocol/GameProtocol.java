@@ -102,7 +102,7 @@ public abstract class GameProtocol {
 	public static final String ERR3 = "Vous n'avez pas assez de canapés dans les autres cases de la même famille.";
 	public static final String ERR4 = "Il y a trop de canapés / Home Cinema sur cette case";
 	public static final String ERR5 = "Vous ne possédez pas encore toutes les cases de la famille.";
-	public static final String ERR6 = "C'est n'est pas à votre tour de jouer.";
+	public static final String ERR6 = "C'est n'est pas à vous de jouer.";
 	public static final String ERR7 = "Vous n'êtes pas le propriétaire";
 	public static final String ERR8 = "La case est déjà possédée";
 	public static final String ERR9 = "Vous ne pouvez pas acheter cette case !";

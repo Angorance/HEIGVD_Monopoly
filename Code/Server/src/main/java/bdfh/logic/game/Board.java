@@ -364,12 +364,15 @@ public class Board {
 		return true;
 	}
 	
-	public void resetPlayersProperty(ClientHandler looser, GameLogic caller) {
+	public String resetPlayersProperty(ClientHandler looser) {
+		String propertyToReset = "";
 		for(Square s : board){
-			if(s.getOwner().getClientID() == looser.getClientID()){
+			if(s.getOwner() != null && s.getOwner().getClientID() == looser.getClientID()){
 				s.reset();
-				caller.notifyPlayers(GameProtocol.GAM_RST, Integer.toString(s.getPosition()));
+				propertyToReset += Integer.toString(s.getPosition());
 			}
 		}
+		
+		return propertyToReset;
 	}
 }

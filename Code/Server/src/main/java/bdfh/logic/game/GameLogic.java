@@ -588,10 +588,9 @@ public class GameLogic extends Thread {
 				
 				notifyPlayers(GAM_GOVR, "");
 				
-				c.leaveGame();
 				spectator.add(players.pop());
 				if (players.size() > 1) {
-					board.resetPlayersProperty(currentPlayer, this);
+					notifyPlayers(GAM_RST,board.resetPlayersProperty(c));
 				} else {
 					// FIN DU JEU
 					notifyPlayers(players.getFirst(), GAM_WIN, "");
@@ -609,6 +608,7 @@ public class GameLogic extends Thread {
 			currentPlayer = null;
 			nextTurn();
 		}
+		
 	}
 	
 	public void notifyPlayers(String cmd, String data) {
@@ -867,15 +867,15 @@ public class GameLogic extends Thread {
 			
 			Price price = board.getSquare(posSquare).getPrices();
 			
-			notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
-			notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
+			notifyPlayers(caller, GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
+			notifyPlayers(caller, GameProtocol.GAM_SELL, Integer.toString(posSquare));
 			
-			playersFortune.get(square.getOwner())[VPOSSESSION] -= price.getHypothec();
-			manageMoney(square.getOwner(), price.getSellingPrice());
+			playersFortune.get(caller.getClientID())[VPOSSESSION] -= price.getHypothec();
+			manageMoney(caller, price.getSellingPrice());
 			board.removeOwner(caller, posSquare);
 			
 			LOG.log(Level.INFO,
-					square.getOwner().getClientUsername() + " sold the square " + posSquare);
+					caller.getClientUsername() + " sold the square " + posSquare);
 			
 			return SUCCESS;
 		}
