@@ -681,7 +681,7 @@ public class GameLogic extends Thread {
 		if (caller.getClientID() == currentPlayer.getClientID() && board.getSquare(posProperty)
 				.isProperty()) {
 			
-			if(board.getSquare(posProperty).getNbCouch() > 0){
+			if (board.getSquare(posProperty).getNbCouch() > 0) {
 				return FULL;
 			}
 			
@@ -960,5 +960,17 @@ public class GameLogic extends Thread {
 		} else {
 			return NO_HOME_CINEMA;
 		}
+	}
+	
+	public void pinkPanther() {
+		/*
+		TODO TODO
+		TODO
+		TODO TODO TODO TODOOOOOO
+		TODO DODO
+		TODO TODO
+		TODO
+		TODO TODO TODO TODOOOOOO
+		 */
 	}
 }
