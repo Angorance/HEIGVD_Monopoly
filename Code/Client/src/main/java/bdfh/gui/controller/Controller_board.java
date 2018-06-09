@@ -121,7 +121,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		Platform.runLater(() -> {
 			message.setText(error);
-			message.setStyle("-fx-text-fill: RED;-fx-font-style: bold");
+			message.setStyle("-fx-text-fill: RED; -fx-font-weight: bold;");
 		});
 	}
 	
