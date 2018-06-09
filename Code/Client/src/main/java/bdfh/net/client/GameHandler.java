@@ -309,6 +309,15 @@ public class GameHandler extends Thread {
 				sub.logMessage(id, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
 				break;
 				
+			case GAM_BKRPT:
+			
+			case GAM_GOVR:
+				id = Integer.parseInt(split[1]);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
+				
+				break;
+			
 			case Protocoly.ANS_ERR:
 				sub.errorMessage(split[1]);
 				
