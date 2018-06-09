@@ -814,28 +814,34 @@ public class GameLogic extends Thread {
 	
 	public int sellSquare(ClientHandler caller, Integer posSquare) {
 		
+		Square square = board.getSquare(posSquare);
+		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			if(board.getSquare(posSquare).getOwner() == null ||
-					board.getSquare(posSquare).getOwner().getClientID() != caller.getClientID()){
+			if(square.getOwner() == null ||
+					square.getOwner().getClientID() != caller.getClientID()){
 				return NOT_OWNER;
 			}
 			
-			sellAllConstruction(caller, posSquare);
+			//sellAllConstruction(caller, posSquare);
 			
-			Price price = board.getSquare(posSquare).getPrices();
-			
-			notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice()/2));
-			notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
-			
-			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
-			manageMoney(currentPlayer, price.getPrice()/2);
-			
-			board.removeOwner(caller, posSquare);
-			
-			LOG.log(Level.INFO,
-					currentPlayer.getClientUsername() + " sold the square " + posSquare);
-			
-			return SUCCESS;
+			if (square.hasHomeCinema() || square.getNbCouch() > 0) {
+				return FULL;
+			} else {
+				
+				Price price = board.getSquare(posSquare).getPrices();
+				
+				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice() / 2));
+				notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
+				
+				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
+				manageMoney(currentPlayer, price.getPrice() / 2);
+				
+				board.removeOwner(caller, posSquare);
+				
+				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " sold the square " + posSquare);
+				
+				return SUCCESS;
+			}
 		}
 		
 		return NOT_YOUR_TURN;
