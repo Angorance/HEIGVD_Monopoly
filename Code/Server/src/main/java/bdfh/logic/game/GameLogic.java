@@ -832,7 +832,9 @@ public class GameLogic extends Thread {
 				return ALREADY_OWNED;
 			}
 			
-			// FIXME check if the player is on the square
+			if (board.getCurrentSquare(caller.getClientID()).getPosition() != posSquare) {
+				return NOT_IN_SQUARE;
+			}
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));

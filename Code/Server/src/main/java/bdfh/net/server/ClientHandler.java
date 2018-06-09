@@ -326,6 +326,10 @@ public class ClientHandler implements Handler {
 			case NO_HOME_CINEMA:
 				sendData(ANS_ERR, ERR10);
 				break;
+				
+			case NOT_IN_SQUARE:
+				sendData(ANS_ERR, ERR11);
+				break;
 		}
 	}
 	
