@@ -60,6 +60,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton sell_buttonProp;
 	@FXML private JFXButton sell_buttonCanape;
 	@FXML private JFXButton hyp_button;
+	@FXML private JFXButton dehyp_button;
 	
 	/*Info Institute*/
 	@FXML private GridPane infoInstitute;
@@ -72,6 +73,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton buy_buttonInstitute;
 	@FXML private JFXButton sell_buttonInstitute;
 	@FXML private JFXButton hyp_buttonInstitute;
+	@FXML private JFXButton dehyp_buttonInstitute;
 	
 	/*Info Company*/
 	@FXML private GridPane buttons_Company;
@@ -82,6 +84,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private JFXButton buy_buttonCompany;
 	@FXML private JFXButton sell_buttonCompany;
 	@FXML private JFXButton hyp_buttonCompany;
+	@FXML private JFXButton dehyp_buttonCompany;
 	
 	/*Info tax*/
 	@FXML private GridPane infoTax;
@@ -124,7 +127,6 @@ public class Controller_board implements Initializable, IWindow {
 	private Stage thisStage = null;
 	
 	private LightSquare square;
-	
 	
 	public void errorMessage(String error) {
 		
@@ -414,11 +416,12 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void infoLoyer() {
+		
 		int nbCouche = square.getNbCouches();
-		for(int i = 0; i < 6; ++i){
+		for (int i = 0; i < 6; ++i) {
 			label_rentProp[i].setStyle("-fx-text-fill: black");
 			labelNameLoyer[i].setStyle("-fx-text-fill: black");
-			if((i == nbCouche && !square.hasCine()) || (i == 5 && square.hasCine())) {
+			if ((i == nbCouche && !square.hasCine()) || (i == 5 && square.hasCine())) {
 				label_rentProp[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
 				labelNameLoyer[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
 			}
@@ -452,22 +455,26 @@ public class Controller_board implements Initializable, IWindow {
 	private void propertiesProd() {
 		
 		if (square.getOwner() == null) {
-			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+			if (Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers()
+					.get(Player.getInstance().getID()).getPosition()) {
 				buy_buttonProp.setDisable(false);
 				buy_buttonCanape.setDisable(true);
 				sell_buttonProp.setDisable(true);
 				sell_buttonCanape.setDisable(true);
 				hyp_button.setDisable(true);
-			}else{
+				dehyp_button.setDisable(true);
+			} else {
 				buy_buttonProp.setDisable(true);
 				buy_buttonCanape.setDisable(true);
 				sell_buttonProp.setDisable(true);
 				sell_buttonCanape.setDisable(true);
 				hyp_button.setDisable(true);
+				dehyp_button.setDisable(true);
 			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			boolean hasCine = square.hasCine();
 			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
+			boolean isMortgage = square.isMortgage();
 			
 			if (square.getNbCouches() == 4) {
 				buy_buttonCanape.setText("Achat HC");
@@ -485,64 +492,75 @@ public class Controller_board implements Initializable, IWindow {
 			buy_buttonCanape.setDisable(square.hasCine());
 			sell_buttonProp.setDisable(canSellHouse);
 			sell_buttonCanape.setDisable(!canSellHouse);
-			hyp_button.setDisable(true);
+			hyp_button.setDisable(isMortgage);
+			dehyp_button.setDisable(!isMortgage);
 		} else {
 			buy_buttonProp.setDisable(true);
 			buy_buttonCanape.setDisable(true);
 			sell_buttonProp.setDisable(true);
 			sell_buttonCanape.setDisable(true);
 			hyp_button.setDisable(true);
+			dehyp_button.setDisable(true);
 		}
 	}
 	
 	private void propertiesInstitut() {
 		
 		if (square.getOwner() == null) {
-			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+			if (Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers()
+					.get(Player.getInstance().getID()).getPosition()) {
 				buy_buttonInstitute.setDisable(false);
 				sell_buttonInstitute.setDisable(true);
 				hyp_buttonInstitute.setDisable(true);
-			}else{
+				dehyp_buttonInstitute.setDisable(true);
+			} else {
 				buy_buttonInstitute.setDisable(true);
 				sell_buttonInstitute.setDisable(true);
 				hyp_buttonInstitute.setDisable(true);
+				dehyp_buttonInstitute.setDisable(true);
 			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
+			boolean isMortgage = square.isMortgage();
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(false);
-			hyp_buttonInstitute.setDisable(false);
+			hyp_buttonInstitute.setDisable(isMortgage);
+			dehyp_buttonInstitute.setDisable(!isMortgage);
 		} else {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(true);
 			hyp_buttonInstitute.setDisable(true);
+			dehyp_buttonInstitute.setDisable(true);
 		}
 	}
 	
 	private void propertiesCompany() {
 		
 		if (square.getOwner() == null) {
-			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+			if (Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers()
+					.get(Player.getInstance().getID()).getPosition()) {
 				buy_buttonCompany.setDisable(false);
 				sell_buttonCompany.setDisable(true);
 				hyp_buttonCompany.setDisable(true);
-			}else{
+				dehyp_buttonCompany.setDisable(true);
+			} else {
 				buy_buttonCompany.setDisable(true);
 				sell_buttonCompany.setDisable(true);
 				hyp_buttonCompany.setDisable(true);
+				dehyp_buttonCompany.setDisable(true);
 			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
+			boolean isMortgage = square.isMortgage();
 			buy_buttonCompany.setDisable(true);
 			sell_buttonCompany.setDisable(false);
-			hyp_buttonCompany.setDisable(false);
+			hyp_buttonCompany.setDisable(isMortgage);
+			dehyp_buttonCompany.setDisable(!isMortgage);
 		} else {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(true);
-			hypotheque.setDisable(true);
+			hyp_buttonCompany.setDisable(true);
+			dehyp_buttonCompany.setDisable(true);
 		}
 	}
-	
 	
 	private void infoCompany(LightSquare square) {
 		
@@ -808,6 +826,16 @@ public class Controller_board implements Initializable, IWindow {
 		square.buySquare();
 	}
 	
+	private void hypoth() {
+		
+		square.setMortgage();
+	}
+	
+	private void dehypoth() {
+		
+		square.cancelMortgage();
+	}
+	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		popup.setMouseTransparent(true);
@@ -887,6 +915,22 @@ public class Controller_board implements Initializable, IWindow {
 			}
 		});
 		
+		hyp_button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				hypoth();
+			}
+		});
+		
+		dehyp_button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				dehypoth();
+			}
+		});
+		
 		buy_buttonCanape.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
@@ -922,7 +966,16 @@ public class Controller_board implements Initializable, IWindow {
 		hyp_buttonInstitute.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
+				hypoth();
+			}
+		});
+		
+		dehyp_buttonInstitute.setOnAction(new EventHandler<ActionEvent>() {
 			
+			@Override public void handle(ActionEvent event) {
+				
+				dehypoth();
 			}
 		});
 		
@@ -945,10 +998,18 @@ public class Controller_board implements Initializable, IWindow {
 		hyp_buttonCompany.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-			
+				
+				hypoth();
 			}
 		});
 		
+		dehyp_buttonCompany.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				dehypoth();
+			}
+		});
 		
 		windowManager.getInstance().setBoard(this);
 		

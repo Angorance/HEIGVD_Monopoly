@@ -18,7 +18,6 @@ public abstract class Protocoly {
 	public static final String CMD_NEWLOBBY = "NLOBBY";
 	public static final String CMD_QUITLOBBY = "QLOBBY";
 	public static final String CMD_BYE = "BYE";
-	public static final String CMD_PARAM= "PARAM";
 	public static final String CMD_SETP= "SETP";
 	
 	public static final String ANS_ERR = "ERR";
