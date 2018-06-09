@@ -272,9 +272,10 @@ public class GameLogic extends Thread {
 		
 		ArrayList<ClientHandler> tab = new ArrayList<>(lobby.getPlayers());
 		Random rdm = new Random();
-		int startCapital = lobby.getParam().getMoneyAtTheStart();
 		
 		while (!tab.isEmpty()) {
+			int startCapital = lobby.getParam().getMoneyAtTheStart();
+			
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
 			
@@ -302,14 +303,12 @@ public class GameLogic extends Thread {
 			ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
 			int total = 0;
 			String rollsStr = "";
-			// TODO - boolean didADouble = false;
 			boolean canMove = false;
 			
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = dice.nextInt(6) + 1;
 				
 				if (rolls.contains(roll)) {
-					// TODO - didADouble = true;
 					keepTurn = true;
 					
 					// Update for exam state
@@ -341,7 +340,6 @@ public class GameLogic extends Thread {
 				
 				// If the player didn't do a double, he can't play again
 				if (!keepTurn) {
-					// TODO - players.addLast(players.pop());
 					initializeDouble();
 				}
 				
