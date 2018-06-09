@@ -47,7 +47,7 @@
                   </JFXButton>
                </children>
             </HBox>
-            <Label alignment="CENTER" layoutX="113.0" layoutY="23.0" prefWidth="425.0" text="Nom du salon" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <Label fx:id="nameLobby" alignment="CENTER" layoutX="113.0" layoutY="23.0" prefWidth="425.0" text="Nom du salon" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
                <font>
                   <Font size="32.0" />
                </font>

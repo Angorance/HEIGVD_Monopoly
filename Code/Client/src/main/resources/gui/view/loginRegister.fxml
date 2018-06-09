@@ -27,7 +27,7 @@
             </rowConstraints>
             <children>
                 <JFXTextField fx:id="username" alignment="CENTER" promptText="Nom d'utilisateur" GridPane.rowIndex="2" />
-                <JFXPasswordField fx:id="password" alignment="CENTER" prefWidth="200.0" promptText="mot de passe" GridPane.rowIndex="3" />
+                <JFXPasswordField fx:id="password" alignment="CENTER" prefWidth="200.0" promptText="Mot de passe" GridPane.rowIndex="3" />
                 <JFXPasswordField fx:id="confirmPassword" alignment="CENTER" promptText="Confirmer mot de passe" visible="false" GridPane.rowIndex="4" />
                 <JFXCheckBox fx:id="enregistrementCheckBox" onAction="#checkEnregistrement" text="Enregistrement" GridPane.rowIndex="5" />
             <Label fx:id="message" alignment="CENTER" prefHeight="28.0" prefWidth="258.0" />
@@ -38,7 +38,7 @@
                 <Font size="29.0" />
             </font>
         </Label>
-        <JFXButton fx:id="login" layoutX="279.0" layoutY="313.0" onAction="#loginButton" style="-fx-background-color: ed6a6a;" text="login" />
-        <JFXButton fx:id="register" layoutX="272.0" layoutY="313.0" onAction="#registerButton" style="-fx-background-color: ed6a6a;" text="register" visible="false" />
+        <JFXButton fx:id="login" layoutX="279.0" layoutY="313.0" onAction="#loginButton" style="-fx-background-color: ed6a6a;" text="Se connecter" />
+        <JFXButton fx:id="register" layoutX="272.0" layoutY="313.0" onAction="#registerButton" style="-fx-background-color: ed6a6a;" text="S'enregistrer" visible="false" />
     </children>
 </AnchorPane>
