@@ -145,7 +145,6 @@ public class GameLogic extends Thread {
 		initializeDouble();
 		
 		setExamState(true, 0, 0);
-		// TODO - players.addLast(players.pop());
 		
 		// Move the player
 		Square exam = board.getExamSquare();
@@ -163,7 +162,6 @@ public class GameLogic extends Thread {
 		}
 		
 		setExamState(false, 0, 0);
-		// TODO - players.addLast(players.pop());
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_FRDM, "");
@@ -175,7 +173,6 @@ public class GameLogic extends Thread {
 		looseTurn = true;
 		
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
-		// TODO - players.addLast(players.pop());
 	}
 	
 	public void initializeDouble() {
