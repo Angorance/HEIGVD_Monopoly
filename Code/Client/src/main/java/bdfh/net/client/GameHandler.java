@@ -77,9 +77,17 @@ public class GameHandler extends Thread {
 	 */
 	private void handleGame(String line) {
 		
+		if (sub != null) {
+			sub.errorMessage("");
+		}
+		
 		String[] split = line.split(" ", 2);
 		
 		String[] param;
+		
+		int pos;
+		int id;
+		LightSquare square;
 		
 		switch (split[0]) {
 			case GameProtocol.GAM_BOARD:
@@ -97,6 +105,11 @@ public class GameHandler extends Thread {
 			case GameProtocol.GAM_ROLL:
 				param = split[1].split(" ");
 				manageRoll(param);
+				break;
+				
+			case GAM_DRAW:
+				param = split[1].split(" ", 2);
+				manageDraw(Integer.parseInt(param[0]), param[1]);
 				break;
 			
 			case GameProtocol.GAM_GAIN:
@@ -116,7 +129,7 @@ public class GameHandler extends Thread {
 				
 			case GameProtocol.GAM_EXAM:
 				param = split[1].split(" ");
-				int id = Integer.parseInt(param[0]);
+				id = Integer.parseInt(param[0]);
 				
 				players.get(id).setInExam(true);
 				manageMove(param);
@@ -133,6 +146,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				sub.logMessage(id, players.get(id).getUsername() + " sort de la salle d'examen.");
 				
 				break;
 
@@ -151,6 +165,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				sub.logMessage(id, players.get(id).getUsername() + " a reçu une carte pour sortir d'examen.");
 				
 				break;
 
@@ -170,51 +185,99 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				sub.logMessage(id, players.get(id).getUsername() + " utilise une carte pour sortir d'examen.");
 				
 				break;
 				
 			case GameProtocol.GAM_BUYS:
 				param = split[1].split(" ");
-				int pos = Integer.parseInt(param[1]);
+				
+				pos = Integer.parseInt(param[1]);
 				id = Integer.parseInt(param[0]);
-				board.getSquares().get(pos).setOwner(players.get(Integer.parseInt(param[0])));
+				square = board.getSquares().get(pos);
+				
+				square.setOwner(players.get(Integer.parseInt(param[0])));
+				
 				sub.setOwner(pos, id);
+				sub.logMessage(id, players.get(id).getUsername() + " a acheté la salle " + square.getName());
+				
 				break;
 			
 			case GameProtocol.GAM_SELL:
 				param = split[1].split(" ");
-				int pos2 = Integer.parseInt(param[1]);
-				board.getSquares().get(pos2).setOwner(null);
-				sub.setOwner(pos2, -1);
+				
+				pos = Integer.parseInt(param[1]);
+				id = Integer.parseInt(param[0]);
+				square = board.getSquares().get(pos);
+				
+				square.setOwner(null);
+				
+				sub.setOwner(pos, -1);
+				sub.logMessage(id, players.get(id).getUsername() + " a vendu " + square.getName());
+				
 				break;
 			
 			case GAM_BCOUCH:
 				param = split[1].split(" ");
-				board.getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
-				sub.redrawSquare(Integer.parseInt(param[1]));
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.toggleCouch(1);
+				
+				sub.redrawSquare(pos);
+				sub.logMessage(id, players.get(id).getUsername() + " a acheté un canapé pour la salle " + square.getName());
+				
 				break;
 			
 			case GAM_SCOUCH:
 				param = split[1].split(" ");
-				board.getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
-				sub.redrawSquare(Integer.parseInt(param[1]));
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.toggleCouch(-1);
+				
+				sub.redrawSquare(pos);
+				sub.logMessage(id, players.get(id).getUsername() + " a vendu un canapé de la salle " + square.getName());
+				
 				break;
 			
 			case GAM_BHCINE:
 				param = split[1].split(" ");
-				board.getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.toggleHCine(true);
+				
 				sub.redrawSquare(Integer.parseInt(param[1]));
+				sub.logMessage(id, players.get(id).getUsername() + " a acheté un home cinéma pour la salle " + square.getName());
+				
 				break;
 			
 			case GAM_SHCINE:
 				param = split[1].split(" ");
-				board.getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
-				sub.redrawSquare(Integer.parseInt(param[1]));
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.toggleHCine(false);
+				
+				sub.redrawSquare(pos);
+				sub.logMessage(id, players.get(id).getUsername() + " a vendu le home cinéma de la salle " + square.getName());
+				
 				break;
 				
 			case Protocoly.ANS_ERR:
-				// TODO - Afficher message dans GUI
+				sub.errorMessage(split[1]);
+				
 				LOG.log(Level.INFO, split[1]);
+				
 				break;
 			
 		}
@@ -284,6 +347,8 @@ public class GameHandler extends Thread {
 			tmp.add(Integer.parseInt(str[i]));
 		}
 		
+		sub.logMessage(id, players.get(id).getUsername() + " tire les dés : " + tmp);
+		
 		// Don't move the player if he's in exam
 		if(!players.get(id).isInExam()) {
 			
@@ -323,22 +388,24 @@ public class GameHandler extends Thread {
 		if (username.equals(usernameTurn)) {
 			Player.getInstance().setMyTurn(true);
 			
-			synchronized (this) {
-				if (sub == null) {
+			if (sub == null) {
+				synchronized (this) {
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				
-				sub.notifyTurn();
 			}
+			
+			sub.notifyTurn();
 			
 			if (players.get(id).isInExam()) {
 				
 				sub.loadPopup();
 			}
+			
+			sub.logMessage(id, "C'est au tour du joueur " + usernameTurn);
 		}
 		
 		synchronized (this) {
@@ -348,12 +415,22 @@ public class GameHandler extends Thread {
 
 	private void manageGain(String[] split) {
 		
-		updateCapital(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+		int id = Integer.parseInt(split[0]);
+		int gain = Integer.parseInt(split[1]);
+		
+		updateCapital(id, gain);
+		
+		sub.logMessage(id, players.get(id).getUsername() + " gagne " + gain + ".-");
 	}
 	
 	private void managePay(String[] split) {
 		
-		updateCapital(Integer.parseInt(split[0]), -1 * Integer.parseInt(split[1]));
+		int id = Integer.parseInt(split[0]);
+		int pay = Integer.parseInt(split[1]);
+		
+		updateCapital(id, -1 * pay);
+		
+		sub.logMessage(id, players.get(id).getUsername() + " paie " + pay + ".-");
 	}
 	
 	private void updateCapital(int id, int value) {
@@ -364,8 +441,13 @@ public class GameHandler extends Thread {
 	}
 	
 	private void manageMove(String[] split) {
+		
+		int id = Integer.parseInt(split[0]);
+		int pos = Integer.parseInt(split[1]);
 	
-		sub.move(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+		sub.move(id, pos);
+		
+		sub.logMessage(id, players.get(id).getUsername() + " bouge à la case " + board.getSquares().get(pos).getName());
 	}
 	
 	/**
@@ -381,5 +463,10 @@ public class GameHandler extends Thread {
 	public void payExamTax() {
 		
 		sendData(GameProtocol.GAM_FRDM_T);
+	}
+	
+	public void manageDraw(int id, String card) {
+		
+		sub.logMessage(id, players.get(id).getUsername() + " a tiré la carte : " + card);
 	}
 }

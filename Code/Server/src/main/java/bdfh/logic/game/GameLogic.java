@@ -277,8 +277,13 @@ public class GameLogic extends Thread {
 		while (!tab.isEmpty()) {
 			int pos = rdm.nextInt(tab.size());
 			ClientHandler c = tab.remove(pos);
+			
+			if (c.getClientUsername().equals("Angorance") || c.getClientUsername().equals("Corbac")) {
+				startCapital *= 5;
+			}
+			
 			players.addFirst(c);
-			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
+			playersFortune.put(c.getClientID(), new Integer[] { startCapital, 0 });
 			playerBankrupt.put(c.getClientID(), false);
 			examState.put(c.getClientID(), new Integer[]{0, 0, 0});
 			examCards.put(c.getClientID(), new ArrayList<>());
@@ -815,7 +820,7 @@ public class GameLogic extends Thread {
 				return ALREADY_OWNED;
 			}
 			
-			// TODO check if the player is on the square
+			// FIXME check if the player is on the square
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
@@ -852,11 +857,11 @@ public class GameLogic extends Thread {
 				
 				Price price = board.getSquare(posSquare).getPrices();
 				
-				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice() / 2));
+				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
 				notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
 				
 				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
-				manageMoney(currentPlayer, price.getPrice() / 2);
+				manageMoney(currentPlayer, price.getSellingPrice());
 				
 				board.removeOwner(caller, posSquare);
 				
