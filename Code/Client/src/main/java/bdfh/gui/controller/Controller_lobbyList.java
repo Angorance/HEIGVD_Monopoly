@@ -98,7 +98,7 @@ public class Controller_lobbyList implements Initializable, IWindow {
 					nbPlayers++;
 				}
 			}
-			nbPlayer.setText(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueur");
+			nbPlayer.setText(String.valueOf(nbPlayers) + "/" + MAX_PLAYER + " joueurs");
 		}
 		
 	}
