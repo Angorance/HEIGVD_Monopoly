@@ -184,49 +184,68 @@ public class ClientHandler implements Handler {
 						break;
 					
 					case GameProtocol.GAM_SELL:
-						handleResponse(game.sellSquare(this, Integer.valueOf(param[0])));
+						if(game!= null){
+							handleResponse(game.sellSquare(this, Integer.valueOf(param[0])));
+						}
 						break;
 						
 					case GameProtocol.GAM_HYPOT:
-						handleResponse(game.setMortgaged(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+						if(game != null){
+							handleResponse(game.setMortgaged(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+						}
 						break;
 					
 					case GameProtocol.GAM_NHYPOT:
-						handleResponse(game.disencumbrance(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+						if(game != null){
+							handleResponse(game.disencumbrance(this, Integer.valueOf(param[0]))); // TODO -  pas sûr...
+						}
 						break;
 					
 					case GameProtocol.GAM_BCOUCH:
-						handleResponse(game.buyCouch(this, Integer.parseInt(param[0])));
+						if(game != null){
+							handleResponse(game.buyCouch(this, Integer.parseInt(param[0])));
+						}
 						break;
 					
 					case GameProtocol.GAM_SCOUCH:
-						if (game.sellCouch(this, Integer.parseInt(param[0]), false)) {
-							sendData(ANS_SUCCESS);
-						} else {
-							sendData(ANS_DENIED);
+						if(game != null) {
+							if (game.sellCouch(this, Integer.parseInt(param[0]), false)) {
+								sendData(ANS_SUCCESS);
+							} else {
+								sendData(ANS_DENIED);
+							}
 						}
 						
 						break;
 					
 					case GameProtocol.GAM_BHCINE:
-						handleResponse(game.buyHomeCinema(this, Integer.parseInt(param[0])));
+						if(game != null){
+							handleResponse(game.buyHomeCinema(this, Integer.parseInt(param[0])));
+						}
+						
 						break;
 					
 					case GameProtocol.GAM_SHCINE:
-						if (game.sellHomeCinema(this, Integer.parseInt(param[0]))) {
-							sendData(ANS_SUCCESS);
-						} else {
-							sendData(ANS_DENIED);
+						if(game != null){
+							if (game.sellHomeCinema(this, Integer.parseInt(param[0]))) {
+								sendData(ANS_SUCCESS);
+							} else {
+								sendData(ANS_DENIED);
+							}
 						}
 						
 						break;
 					
 					case GameProtocol.GAM_FRDM_U:
-						game.useFreedomCard();
+						if(game != null) {
+							game.useFreedomCard();
+						}
 						break;
 					
 					case GameProtocol.GAM_FRDM_T:
-						game.payExamTax();
+						if(game != null) {
+							game.payExamTax();
+						}
 						break;
 					
 					default: // WTF ???
@@ -450,5 +469,9 @@ public class ClientHandler implements Handler {
 	public void setPlayer(int id, String username) {
 		this.clientID = id;
 		this.clientUsername = username;
+	}
+	
+	public void leaveGame() {
+		game = null;
 	}
 }
