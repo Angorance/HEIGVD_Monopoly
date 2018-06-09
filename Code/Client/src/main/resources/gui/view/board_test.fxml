@@ -243,7 +243,7 @@
             <Label fx:id="prison_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="prison_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="prison_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="prison_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="prison_player4" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label fx:id="carte_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label fx:id="carte_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label fx:id="carte_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />

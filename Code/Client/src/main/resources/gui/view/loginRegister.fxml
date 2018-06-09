@@ -33,12 +33,12 @@
             <Label fx:id="message" alignment="CENTER" prefHeight="28.0" prefWidth="258.0" />
             </children>
         </GridPane>
-        <Label layoutX="117.0" layoutY="46.0" text="Bienvenue au Cheseaux-Poly">
+        <Label layoutX="130.0" layoutY="55.0" text="Bienvenue au Cheseaux-Poly">
             <font>
                 <Font size="29.0" />
             </font>
         </Label>
-        <JFXButton fx:id="login" layoutX="279.0" layoutY="313.0" onAction="#loginButton" style="-fx-background-color: ed6a6a;" text="Se connecter" />
+        <JFXButton fx:id="login" layoutX="271.0" layoutY="313.0" onAction="#loginButton" style="-fx-background-color: ed6a6a;" text="Se connecter" />
         <JFXButton fx:id="register" layoutX="272.0" layoutY="313.0" onAction="#registerButton" style="-fx-background-color: ed6a6a;" text="S'enregistrer" visible="false" />
     </children>
 </AnchorPane>
