@@ -254,7 +254,7 @@
       <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
       <AnchorPane layoutX="716.0" layoutY="289.0" prefHeight="436.0" prefWidth="371.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="13.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="436.0" prefWidth="371.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="436.0" prefWidth="371.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                   <VBox fx:id="vbox_Log" spacing="5.0">
                      <padding>
