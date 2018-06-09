@@ -292,9 +292,22 @@ public class GameHandler extends Thread {
 				pos = Integer.parseInt(param[1]);
 				square = board.getSquares().get(pos);
 				
-				square.setMortgage();
+				square.setMortgaged(true);
 				
 				sub.logMessage(id, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
+				break;
+				
+			case GAM_NHYPOT:
+				param = split[1].split(" ");
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.setMortgaged(false);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
+				break;
 				
 			case Protocoly.ANS_ERR:
 				sub.errorMessage(split[1]);
