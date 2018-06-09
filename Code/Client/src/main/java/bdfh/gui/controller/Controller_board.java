@@ -263,7 +263,8 @@ public class Controller_board implements Initializable, IWindow {
 			mySquare = square;
 			String famility = square.getFamily();
 			this.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px");
-			
+			Label name = new Label();
+			name.setStyle("-fx-background-color: transparent");
 			fp = new FlowPane();
 			ap = new AnchorPane();
 			switch (famility) {
@@ -279,34 +280,42 @@ public class Controller_board implements Initializable, IWindow {
 					break;
 				case GameProtocol.SQUA_TAX:
 					this.setCenter(fp);
-					this.setTop(new Label("Taxe"));
+					name.setText("Taxe");
+					this.setTop(name);
 					break;
 				case GameProtocol.SQUA_INSTITUTE:
 					this.setCenter(fp);
-					this.setTop(new Label("Institut"));
+					name.setText("Institut");
+					this.setTop(name);
 					break;
 				case GameProtocol.SQUA_COMPANY:
-					this.setTop(new Label("Compagnie"));
+					name.setText("Compagnie");
+					this.setTop(name);
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_CARD:
 					this.setCenter(fp);
-					this.setTop(new Label("Carte chance"));
+					name.setText("Carte chance");
+					this.setTop(name);
 					break;
 				case GameProtocol.SQUA_START:
-					this.setTop(new Label("Start"));
+					name.setText("Start");
+					this.setTop(name);
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_EXAM:
-					this.setTop(new Label("Examen"));
+					name.setText("Examen");
+					this.setTop(name);
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_GO_EXAM:
-					this.setTop(new Label("Aller en examen"));
+					name.setText("Aller en examen");
+					this.setTop(name);
 					this.setCenter(fp);
 					break;
 				case GameProtocol.SQUA_BREAK:
-					this.setTop(new Label("Pause"));
+					name.setText("Pause");
+					this.setTop(name);
 					this.setCenter(fp);
 					break;
 			}
