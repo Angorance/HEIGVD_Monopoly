@@ -79,24 +79,8 @@ public class Card {
 				cardText += "Recule de " + infos[1] + " cases";
 				break;
 				
-			case GameProtocol.CARD_WIN:
-				cardText += "Tu reçois " + infos[1] + " francs";
-				break;
-				
-			case GameProtocol.CARD_LOSE:
-				cardText += "Tu paies " + infos[1] + " francs";
-				break;
-				
-			case GameProtocol.CARD_GOTO:
-				cardText += "Vas sur la case " + infos[1];
-				break;
-				
 			case GameProtocol.CARD_FREE:
 				cardText += "Tu peux conserver cette carte";
-				break;
-				
-			case GameProtocol.CARD_EACH:
-				cardText += "Chaque joueur te donne " + infos[1] + " francs";
 				break;
 		}
 		
