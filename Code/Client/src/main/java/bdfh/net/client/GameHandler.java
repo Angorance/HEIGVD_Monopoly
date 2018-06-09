@@ -148,6 +148,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
+				sub.logMessage(id, players.get(id).getUsername() + " a été envoyé en salle d'examen");
 				
 				break;
 			
@@ -158,7 +159,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " sort de la salle d'examen.");
+				sub.logMessage(id, players.get(id).getUsername() + " est sorti de la salle d'examen");
 				
 				break;
 
@@ -177,7 +178,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " a reçu une carte pour sortir d'examen.");
+				sub.logMessage(id, players.get(id).getUsername() + " a reçu une carte pour sortir d'examen");
 				
 				break;
 
@@ -197,7 +198,7 @@ public class GameHandler extends Thread {
 				
 				// Refresh
 				sub.updateBoard();
-				sub.logMessage(id, players.get(id).getUsername() + " utilise une carte pour sortir d'examen.");
+				sub.logMessage(id, players.get(id).getUsername() + " utilise une carte pour sortir d'examen");
 				
 				break;
 				
@@ -477,7 +478,7 @@ public class GameHandler extends Thread {
 		
 		updateCapital(id, -1 * pay);
 		
-		sub.logMessage(id, players.get(id).getUsername() + " paie " + pay + ".-");
+		sub.logMessage(id, players.get(id).getUsername() + " perd " + pay + ".-");
 	}
 	
 	private void updateCapital(int id, int value) {
@@ -494,7 +495,7 @@ public class GameHandler extends Thread {
 	
 		sub.move(id, pos);
 		
-		sub.logMessage(id, players.get(id).getUsername() + " bouge à la case " + board.getSquares().get(pos).getName());
+		sub.logMessage(id, players.get(id).getUsername() + " se déplace sur la case " + board.getSquares().get(pos).getName());
 	}
 	
 	/**
