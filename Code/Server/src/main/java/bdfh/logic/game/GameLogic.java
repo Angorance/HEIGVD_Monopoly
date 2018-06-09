@@ -590,7 +590,6 @@ public class GameLogic extends Thread {
 				
 				notifyPlayers(GAM_GOVR, "");
 				
-				// todo BANQUEROUTE - éjection du joueur
 				c.leaveGame();
 				spectator.add(players.pop());
 				if (players.size() > 1) {
