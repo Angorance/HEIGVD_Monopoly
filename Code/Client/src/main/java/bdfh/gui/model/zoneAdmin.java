@@ -20,14 +20,6 @@ public class zoneAdmin {
 					"/gui/view/zoneAdmin.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
 			primaryStage.setScene(new Scene(root, 600, 400));
-			primaryStage.setOnCloseRequest(event -> {
-				try {
-					Client.getInstance().disconnect();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				exit(0);
-			});
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (IOException e) {
