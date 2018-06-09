@@ -6,7 +6,7 @@ package bdfh.net.protocol;
  */
 public abstract class Protocoly {
 
-	public static final String SERVER = "192.168.1.115";
+	public static final String SERVER = "192.168.1.109";
 	
 	public static final int CPORT = 4242;
 	public static final int NPORT = 9071;

@@ -8,16 +8,6 @@ package bdfh.net.protocol;
  */
 public abstract class GameProtocol {
 	
-	// Cards
-	public static final String CARD_MOVE = "MOVE";
-	public static final String CARD_BACK = "BACK";
-	public static final String CARD_WIN = "WIN";
-	public static final String CARD_LOSE = "LOSE";
-	public static final String CARD_GOTO = "GOTO";
-	public static final String CARD_FREE = "FREE";
-	public static final String CARD_EACH = "EACH";
-	public static final String CARD_REP = "REP";
-	
 	// Squares
 	public static final String SQUA_TAX = "TAX";
 	public static final String SQUA_INSTITUTE = "INSTITUTE";
@@ -76,7 +66,4 @@ public abstract class GameProtocol {
 	public static final int RENT_TO_4INST = 8;
 	public static final int RENT_TO_1COMP = 4;
 	public static final int RENT_TO_2COMP = 10;
-	public static final double RATE_HYPOTHEQUE = 1.1;
-	
-	
 }
