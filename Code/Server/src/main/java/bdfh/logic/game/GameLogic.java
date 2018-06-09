@@ -32,6 +32,7 @@ public class GameLogic extends Thread {
 	private Board board;
 	private int nbDice;
 	private int totalLastRoll;
+	private int oldPos;
 	private boolean keepTurn;
 	private boolean looseTurn;
 	private Map<Integer, Boolean> playerBankrupt;
@@ -570,6 +571,8 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Player queue : " + players.toString());
 		currentPlayer = players.getFirst();
 		
+		oldPos = board.getCurrentSquare(currentPlayer.getClientID()).getPosition();
+		
 		// Check if the player can leave the exam
 		if (getExamPresence() && getExamTurn() == 3) {
 			leaveExam();
@@ -834,6 +837,10 @@ public class GameLogic extends Thread {
 			
 			if (board.getCurrentSquare(caller.getClientID()).getPosition() != posSquare) {
 				return NOT_IN_SQUARE;
+			}
+			
+			if (posSquare == oldPos) {
+				return ROLL_FIRST;
 			}
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));

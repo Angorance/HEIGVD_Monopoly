@@ -330,6 +330,10 @@ public class ClientHandler implements Handler {
 			case NOT_IN_SQUARE:
 				sendData(ANS_ERR, ERR11);
 				break;
+				
+			case ROLL_FIRST:
+				sendData(ANS_ERR, ERR12);
+				break;
 		}
 	}
 	

@@ -95,6 +95,7 @@ public abstract class GameProtocol {
 	public static final int NOT_BUYABLE = 9;
 	public static final int NO_HOME_CINEMA = 10;
 	public static final int NOT_IN_SQUARE = 11;
+	public static final int ROLL_FIRST = 12;
 	
 	public static final String ERR1 = "Vous n'avez pas assez d'argent.";
 	public static final String ERR2 = "Il n'y a pas assez de canapés sur la case.";
@@ -107,5 +108,6 @@ public abstract class GameProtocol {
 	public static final String ERR9 = "Vous ne pouvez pas acheter cette case !";
 	public static final String ERR10 = "Vous ne possédez pas de Home Cinema sur la case.";
 	public static final String ERR11 = "Vous n'êtes pas sur la bonne case";
+	public static final String ERR12 = "Commencez par tirer les dés !";
 	
 }
