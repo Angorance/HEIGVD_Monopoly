@@ -19,6 +19,7 @@ public class LightSquare {
 	
 	private int nbCouches = 0;
 	private boolean hasCine = false;
+	private boolean isMortgaged = false;
 	
 	public LightSquare() {}
 
@@ -178,5 +179,15 @@ public class LightSquare {
 	public boolean hasCine() {
 		
 		return hasCine;
+	}
+	
+	public boolean isMortgaged() {
+		
+		return isMortgaged;
+	}
+	
+	public void setMortgaged(boolean mortgaged) {
+		
+		isMortgaged = mortgaged;
 	}
 }
