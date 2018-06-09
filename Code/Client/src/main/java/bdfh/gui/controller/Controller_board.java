@@ -15,10 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -31,6 +29,7 @@ public class Controller_board implements Initializable, IWindow {
 	@FXML private GridPane board;
 	@FXML private AnchorPane popup;
 	@FXML private Label message;
+	@FXML private VBox vbox_Log;
 	
 	/*Info properties*/
 	@FXML private GridPane infoProperties;
@@ -120,8 +119,17 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void errorMessage(String error) {
 		
-		message.setText(error);
-		message.setStyle("-fx-text-fill: RED;-fx-font-style: bold");
+		Platform.runLater(() -> {
+			message.setText(error);
+			message.setStyle("-fx-text-fill: RED;-fx-font-style: bold");
+		});
+	}
+	
+	public void logMessage(String log) {
+		
+		Platform.runLater(() -> {
+			vbox_Log.getChildren().add(new Label(log));
+		});
 	}
 	
 	public void loadPopup() {
@@ -187,7 +195,8 @@ public class Controller_board implements Initializable, IWindow {
 		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
+			label_House = new Label(String.valueOf("     " + mySquare.getNbCouches()));
+			label_House.setFont(new Font("Cambria", 12));
 			
 			if (pos == 0) {
 				ap.setPrefWidth(20);
@@ -280,10 +289,10 @@ public class Controller_board implements Initializable, IWindow {
 		
 		public void redraw() {
 			
-			if(mySquare.hasCine()){
-				label_House.setText("HC : 1");
-			}else{
-				label_House.setText("Canapé : " + String.valueOf(mySquare.getNbCouches()));
+			if (mySquare.hasCine()) {
+				label_House.setText("     HC : 1");
+			} else {
+				label_House.setText("     C : " + String.valueOf(mySquare.getNbCouches()));
 			}
 		}
 		
@@ -294,7 +303,6 @@ public class Controller_board implements Initializable, IWindow {
 		Platform.runLater(() -> {
 			cases.get(pos).redraw();
 		});
-		
 	}
 	
 	public void setOwner(int pos, int idPlayer) {
@@ -720,7 +728,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void sellHouse() {
 		
-		if (true/*canSellCouch*/) {
+		if (!square.hasCine()) {
 			square.sellCouch();
 		} else {
 			square.sellHomeCinema();
@@ -772,8 +780,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		
 		String[] color;
-		color = new String[] { "#d60e0e", "#0766ff", "#00ad1f",
-				"#dce218" };
+		color = new String[] { "#d60e0e", "#0766ff", "#00ad1f", "#dce218" };
 		
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
