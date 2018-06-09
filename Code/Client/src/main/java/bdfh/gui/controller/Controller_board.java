@@ -170,7 +170,31 @@ public class Controller_board implements Initializable, IWindow {
 		});
 	}
 	
-	private void unloadPopup() {
+	public void loadPopup_BR() {
+		
+		Platform.runLater(() -> {
+			/* we load the form fxml*/
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/popup_BR.fxml"));
+			
+			/*Create a instance of the controller of bank account form*/
+			Controller_popupBR cp = new Controller_popupBR(this);
+			
+			/*Sets the controller associated with the root object*/
+			loader.setController(cp);
+			
+			popup.setVisible(true);
+			popup.setMouseTransparent(false);
+			
+			try {
+				AnchorPane pane = loader.load();
+				popup.getChildren().add(pane);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+	
+	public void unloadPopup() {
 		
 		popup.getChildren().clear();
 		popup.setMouseTransparent(true);
