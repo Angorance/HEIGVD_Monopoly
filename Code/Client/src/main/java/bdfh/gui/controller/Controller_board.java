@@ -281,7 +281,11 @@ public class Controller_board implements Initializable, IWindow {
 		
 		public void redraw() {
 			
-			label_House.setText(String.valueOf(mySquare.getNbCouches()));
+			if(mySquare.hasCine()){
+				label_House.setText("HC : 1");
+			}else{
+				label_House.setText("Canapé : " + String.valueOf(mySquare.getNbCouches()));
+			}
 		}
 		
 	}
