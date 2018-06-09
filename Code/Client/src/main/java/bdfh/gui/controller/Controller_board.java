@@ -432,7 +432,10 @@ public class Controller_board implements Initializable, IWindow {
 			cnt++;
 		}
 		nameSquare.setText(name);
+		
 		price_prop.setText(String.valueOf(price));
+		price_prop.setStyle("-fx-font-weight: bold;");
+		
 		hypotheque.setText(String.valueOf(hyp));
 		prixCanape.setText(String.valueOf(can));
 		prixHC.setText(String.valueOf(hc));
@@ -610,6 +613,7 @@ public class Controller_board implements Initializable, IWindow {
 		int price = square.getPrices().getPrice();
 		
 		price_company.setText(String.valueOf(price));
+		price_company.setStyle("-fx-font-weight: bold;");
 		
 		int cnt = 0;
 		for (String s : square.getPrices().getCompaniesRents()) {
@@ -634,6 +638,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		nameSquare.setText(name);
 		price_institute.setText(String.valueOf(price));
+		price_institute.setStyle("-fx-font-weight: bold;");
 		
 		int cnt = 0;
 		for (int i : square.getPrices().getRents()) {
