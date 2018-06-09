@@ -188,7 +188,7 @@ public class Controller_board implements Initializable, IWindow {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
 			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
-						
+			
 			if (pos == 0) {
 				ap.setPrefWidth(20);
 				label_House.setRotate(90);
@@ -291,7 +291,10 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void redrawSquare(int pos) {
 		
-		cases.get(pos).redraw();
+		Platform.runLater(() -> {
+			cases.get(pos).redraw();
+		});
+		
 	}
 	
 	public void setOwner(int pos, int idPlayer) {
