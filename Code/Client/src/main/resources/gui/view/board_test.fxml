@@ -237,9 +237,9 @@
             <Label fx:id="label_capital2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="label_capital3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="label_capital4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Information joueur" GridPane.columnSpan="2" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Prison" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Carte" GridPane.columnIndex="3" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Informations des joueurs" GridPane.columnSpan="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Salle d'examen" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Ticket de sortie" GridPane.columnIndex="3" />
             <Label fx:id="prison_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="prison_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="prison_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
