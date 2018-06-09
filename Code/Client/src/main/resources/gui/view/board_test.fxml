@@ -246,9 +246,9 @@
       </GridPane>
       <JFXButton fx:id="rollDice_button" layoutX="163.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="163.0" />
       <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
-      <AnchorPane layoutX="716.0" layoutY="323.0" prefHeight="436.0" prefWidth="371.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="13.0">
+      <AnchorPane layoutX="716.0" layoutY="289.0" prefHeight="436.0" prefWidth="371.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="13.0">
          <children>
-            <ScrollPane prefHeight="200.0" prefWidth="371.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane prefHeight="436.0" prefWidth="371.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                   <VBox fx:id="vbox_Log" />
               </content>
@@ -258,13 +258,13 @@
             <InnerShadow />
          </effect>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="725.0" layoutY="260.0" prefHeight="25.0" prefWidth="371.0" text="Log">
+      <Label alignment="CENTER" layoutX="716.0" layoutY="260.0" prefHeight="25.0" prefWidth="371.0" text="Log">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
       <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
       <AnchorPane fx:id="popup" mouseTransparent="true" prefHeight="800.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label fx:id="message" layoutX="50.0" layoutY="42.0" prefHeight="17.0" prefWidth="650.0" text="Label" />
+      <Label fx:id="message" layoutX="50.0" layoutY="42.0" prefHeight="17.0" prefWidth="650.0" />
    </children>
 </AnchorPane>

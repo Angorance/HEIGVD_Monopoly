@@ -138,7 +138,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		Platform.runLater(() -> {
 			Label label_log = new Label(log);
-			label_log.setStyle("-fx-font-style: " + colorPlayer.get(idPlayer) + ";");
+			label_log.setStyle("-fx-text-fill: " + colorPlayer.get(idPlayer) + ";");
 			vbox_Log.getChildren().add(label_log);
 			
 		});
@@ -497,11 +497,17 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesInstitut() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonInstitute.setDisable(false);
-			sell_buttonInstitute.setDisable(true);
-			hyp_buttonInstitute.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonInstitute.setDisable(false);
+				sell_buttonInstitute.setDisable(true);
+				hyp_buttonInstitute.setDisable(true);
+			}else{
+				buy_buttonInstitute.setDisable(true);
+				sell_buttonInstitute.setDisable(true);
+				hyp_buttonInstitute.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(false);
@@ -515,11 +521,17 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesCompany() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonCompany.setDisable(false);
-			sell_buttonCompany.setDisable(true);
-			hyp_buttonCompany.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+					.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonCompany.setDisable(false);
+				sell_buttonCompany.setDisable(true);
+				hyp_buttonCompany.setDisable(true);
+			}else{
+				buy_buttonCompany.setDisable(true);
+				sell_buttonCompany.setDisable(true);
+				hyp_buttonCompany.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonCompany.setDisable(true);
 			sell_buttonCompany.setDisable(false);
