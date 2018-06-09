@@ -190,4 +190,12 @@ public class LightSquare {
 		
 		isMortgaged = mortgaged;
 	}
+	
+	public void reset() {
+		
+		owner = null;
+		nbCouches = 0;
+		hasCine = false;
+		isMortgaged = false;
+	}
 }

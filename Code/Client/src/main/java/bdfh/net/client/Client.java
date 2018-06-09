@@ -106,6 +106,7 @@ public class Client {
 			}
 			
 			Notification.getInstance().pause();
+			GameHandler.getInstance().interrupt();
 			
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Client::disconnect: " + e);
