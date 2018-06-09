@@ -289,7 +289,8 @@ public class Controller_lobbyList implements Initializable, IWindow {
 			ready_button.setDisable(false);
 			
 			/*On rejoint le lobby*/
-			Player.getInstance().joinLobby(lightLobby.getID());
+			boolean check = Player.getInstance().joinLobby(lightLobby.getID());
+			add_button.setDisable(check);
 		}
 	}
 	
@@ -326,7 +327,8 @@ public class Controller_lobbyList implements Initializable, IWindow {
 			join_button.setDisable(false);
 			ready_button.setDisable(false);
 			
-			Player.getInstance().quitLobby();
+			boolean check = Player.getInstance().quitLobby();
+			add_button.setDisable(!check);
 		}
 	}
 	
