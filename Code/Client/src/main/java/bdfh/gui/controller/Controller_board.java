@@ -451,13 +451,20 @@ public class Controller_board implements Initializable, IWindow {
 	
 	private void propertiesProd() {
 		
-		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
-			buy_buttonProp.setDisable(false);
-			buy_buttonCanape.setDisable(true);
-			sell_buttonProp.setDisable(true);
-			sell_buttonCanape.setDisable(true);
-			hyp_button.setDisable(true);
+		if (square.getOwner() == null) {
+			if(Player.getInstance().isMyTurn() && square.getPosition() == GameHandler.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
+				buy_buttonProp.setDisable(false);
+				buy_buttonCanape.setDisable(true);
+				sell_buttonProp.setDisable(true);
+				sell_buttonCanape.setDisable(true);
+				hyp_button.setDisable(true);
+			}else{
+				buy_buttonProp.setDisable(true);
+				buy_buttonCanape.setDisable(true);
+				sell_buttonProp.setDisable(true);
+				sell_buttonCanape.setDisable(true);
+				hyp_button.setDisable(true);
+			}
 		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			boolean hasCine = square.hasCine();
 			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
