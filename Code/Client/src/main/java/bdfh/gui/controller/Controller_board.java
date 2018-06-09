@@ -187,9 +187,8 @@ public class Controller_board implements Initializable, IWindow {
 		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			label_House = new Label("2");
-			
-			
+			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
+						
 			if (pos == 0) {
 				ap.setPrefWidth(20);
 				label_House.setRotate(90);
