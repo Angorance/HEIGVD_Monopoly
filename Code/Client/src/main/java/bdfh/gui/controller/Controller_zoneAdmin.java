@@ -1,5 +1,8 @@
 package bdfh.gui.controller;
 
+import bdfh.logic.usr.Player;
+import bdfh.net.client.Client;
+import bdfh.serializable.BoundParameters;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
@@ -7,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -24,7 +28,6 @@ public class Controller_zoneAdmin implements Initializable {
 	@FXML private JFXButton validate;
 	
 	public void bound() {
-		
 		if (checkForm()) {
 			boolean rdm = random.isSelected();
 			int minCap = Integer.parseInt(minCapital.getText());
@@ -35,6 +38,8 @@ public class Controller_zoneAdmin implements Initializable {
 			int maxTim = Integer.parseInt(maxTime.getText());
 			
 			//TODO Appel de la méthode avec les paramètre
+			BoundParameters created = new BoundParameters(minDic, maxDic, minCap, maxCap, minTim, maxTim, rdm);
+			Client.getInstance().sendNewParameter(created);
 			
 			//Fermeture
 			random.getScene().getWindow().hide();
@@ -52,32 +57,32 @@ public class Controller_zoneAdmin implements Initializable {
 		
 		boolean check = true;
 		
-		if (minCap.isEmpty() || isNumber(minCap)) {
+		if (minCap.isEmpty() || !isNumber(minCap)) {
 			minCapital.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
-		if (maxCap.isEmpty() || isNumber(maxCap)) {
+		if (maxCap.isEmpty() || !isNumber(maxCap)) {
 			maxCapital.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
-		if (minDic.isEmpty() || isNumber(minDic)) {
+		if (minDic.isEmpty() || !isNumber(minDic)) {
 			minDice.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
-		if (maxDic.isEmpty() || isNumber(maxDic)) {
+		if (maxDic.isEmpty() || !isNumber(maxDic)) {
 			maxDice.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
-		if (minTim.isEmpty() || isNumber(minTim)) {
+		if (minTim.isEmpty() || !isNumber(minTim)) {
 			minTime.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
-		if (maxTim.isEmpty() || isNumber(maxTim)) {
+		if (maxTim.isEmpty() || !isNumber(maxTim)) {
 			maxTime.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
@@ -97,6 +102,9 @@ public class Controller_zoneAdmin implements Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		BoundParameters b = Player.getBounds();
+		
+		
 		validate.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
@@ -105,6 +113,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		minDice.setText(Integer.toString(b.getMinDice()));
 		minDice.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -113,6 +122,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		maxDice.setText(Integer.toString(b.getMaxDice()));
 		maxDice.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -121,6 +131,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		minCapital.setText(Integer.toString(b.getMinMoneyAtTheStart()));
 		minCapital.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -129,6 +140,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		maxCapital.setText(Integer.toString(b.getMaxMoneyAtTheStart()));
 		maxCapital.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -137,6 +149,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		minTime.setText(Integer.toString(b.getMinTime()));
 		minTime.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -145,6 +158,7 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
+		maxTime.setText(Integer.toString(b.getMaxTime()));
 		maxTime.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
@@ -153,7 +167,6 @@ public class Controller_zoneAdmin implements Initializable {
 			}
 		});
 		
-		
-		
+		random.setSelected(b.isRandomGameGeneration());
 	}
 }
