@@ -30,6 +30,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	@FXML private GridPane board;
 	@FXML private AnchorPane popup;
+	@FXML private Label message;
 	
 	/*Info properties*/
 	@FXML private GridPane infoProperties;
@@ -115,6 +116,13 @@ public class Controller_board implements Initializable, IWindow {
 	private Stage thisStage = null;
 	
 	private LightSquare square;
+	
+	
+	public void errorMessage(String error) {
+		
+		message.setText(error);
+		message.setStyle("-fx-text-fill: RED;-fx-font-style: bold");
+	}
 	
 	public void loadPopup() {
 		
@@ -403,6 +411,7 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void propertiesProd() {
+		
 		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
 				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
 			buy_buttonProp.setDisable(false);
@@ -414,15 +423,15 @@ public class Controller_board implements Initializable, IWindow {
 			boolean hasCine = square.hasCine();
 			boolean canSellHouse = square.getNbCouches() > 0 || square.hasCine();
 			
-			if(square.getNbCouches() == 4){
+			if (square.getNbCouches() == 4) {
 				buy_buttonCanape.setText("Achat HC");
-			}else{
+			} else {
 				buy_buttonCanape.setText("Achat canapé");
 			}
 			
-			if(square.hasCine()){
+			if (square.hasCine()) {
 				sell_buttonCanape.setText("Vente HC");
-			}else{
+			} else {
 				sell_buttonCanape.setText("Vente canapé");
 				
 			}
@@ -431,7 +440,7 @@ public class Controller_board implements Initializable, IWindow {
 			sell_buttonProp.setDisable(canSellHouse);
 			sell_buttonCanape.setDisable(!canSellHouse);
 			hyp_button.setDisable(true);
-		}else{
+		} else {
 			buy_buttonProp.setDisable(true);
 			buy_buttonCanape.setDisable(true);
 			sell_buttonProp.setDisable(true);
@@ -440,34 +449,36 @@ public class Controller_board implements Initializable, IWindow {
 		}
 	}
 	
-	private void propertiesInstitut(){
-		if(square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()){
+	private void propertiesInstitut() {
+		
+		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
 			buy_buttonInstitute.setDisable(false);
 			sell_buttonInstitute.setDisable(true);
 			hyp_buttonInstitute.setDisable(true);
-		}else if(square.getOwner().getId() == Player.getInstance().getID()){
+		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(false);
 			hyp_buttonInstitute.setDisable(false);
-		}else{
+		} else {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(true);
 			hyp_buttonInstitute.setDisable(true);
 		}
 	}
 	
-	private void propertiesCompany(){
-		if(square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
-				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()){
+	private void propertiesCompany() {
+		
+		if (square.getOwner() == null && Player.getInstance().isMyTurn() && square.getPosition() == GameHandler
+				.getInstance().getPlayers().get(Player.getInstance().getID()).getPosition()) {
 			buy_buttonCompany.setDisable(false);
 			sell_buttonCompany.setDisable(true);
 			hyp_buttonCompany.setDisable(true);
-		}else if(square.getOwner().getId() == Player.getInstance().getID()){
+		} else if (square.getOwner().getId() == Player.getInstance().getID()) {
 			buy_buttonCompany.setDisable(true);
 			sell_buttonCompany.setDisable(false);
 			hyp_buttonCompany.setDisable(false);
-		}else{
+		} else {
 			buy_buttonInstitute.setDisable(true);
 			sell_buttonInstitute.setDisable(true);
 			hypotheque.setDisable(true);
