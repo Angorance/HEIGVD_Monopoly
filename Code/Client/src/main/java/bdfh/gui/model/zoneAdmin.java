@@ -10,16 +10,16 @@ import java.io.IOException;
 
 import static java.lang.System.exit;
 
-public class Board {
-	public Board() {
+public class zoneAdmin {
+	public zoneAdmin() {
 		
 		Parent root = null;
 		Stage primaryStage = new Stage();
 		try {
 			root = FXMLLoader.load(getClass().getResource(
-					"/gui/view/board_test.fxml"));
+					"/gui/view/zoneAdmin.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
-			primaryStage.setScene(new Scene(root, 1100, 800));
+			primaryStage.setScene(new Scene(root, 600, 400));
 			primaryStage.setOnCloseRequest(event -> {
 				try {
 					Client.getInstance().disconnect();

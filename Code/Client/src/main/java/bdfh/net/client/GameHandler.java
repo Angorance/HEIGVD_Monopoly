@@ -173,7 +173,7 @@ public class GameHandler extends Thread {
 				
 				break;
 				
-			case GameProtocol.GAM_BUYS: //  todo - check
+			case GameProtocol.GAM_BUYS:
 				param = split[1].split(" ");
 				int pos = Integer.parseInt(param[1]);
 				id = Integer.parseInt(param[0]);
@@ -181,7 +181,7 @@ public class GameHandler extends Thread {
 				sub.setOwner(pos, id);
 				break;
 			
-			case GameProtocol.GAM_SELL : //     todo - check
+			case GameProtocol.GAM_SELL:
 				param = split[1].split(" ");
 				int pos2 = Integer.parseInt(param[1]);
 				board.getSquares().get(pos2).setOwner(null);
@@ -190,22 +190,26 @@ public class GameHandler extends Thread {
 			
 			case GAM_BCOUCH:
 				param = split[1].split(" ");
-				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
+				board.getSquares().get(Integer.parseInt(param[1])).toggleCouch(1);
+				sub.redrawSquare(Integer.parseInt(param[1]));
 				break;
 			
 			case GAM_SCOUCH:
 				param = split[1].split(" ");
-				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
+				board.getSquares().get(Integer.parseInt(param[1])).toggleCouch(-1);
+				sub.redrawSquare(Integer.parseInt(param[1]));
 				break;
 			
 			case GAM_BHCINE:
 				param = split[1].split(" ");
-				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
+				board.getSquares().get(Integer.parseInt(param[1])).toggleHCine(true);
+				sub.redrawSquare(Integer.parseInt(param[1]));
 				break;
 			
 			case GAM_SHCINE:
 				param = split[1].split(" ");
-				GameHandler.getInstance().getBoard().getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
+				board.getSquares().get(Integer.parseInt(param[1])).toggleHCine(false);
+				sub.redrawSquare(Integer.parseInt(param[1]));
 				break;
 				
 			case Protocoly.ANS_ERR:
