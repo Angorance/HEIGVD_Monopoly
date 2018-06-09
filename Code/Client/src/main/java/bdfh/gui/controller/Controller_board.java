@@ -141,7 +141,7 @@ public class Controller_board implements Initializable, IWindow {
 		Platform.runLater(() -> {
 			Label label_log = new Label(log);
 			label_log.setStyle("-fx-text-fill: " + colorPlayer.get(idPlayer) + ";");
-			vbox_Log.getChildren().add(label_log);
+			vbox_Log.getChildren().add(0, label_log);
 			
 		});
 	}

@@ -90,19 +90,31 @@ public class GameHandler extends Thread {
 		LightSquare square;
 		
 		switch (split[0]) {
-			case GameProtocol.GAM_BOARD:
+			case GAM_BOARD:
 				manageBoard(split[1]);
 				break;
 			
-			case GameProtocol.GAM_PLYR:
+			case GAM_PLYR:
 				managePlayers(split[1]);
 				break;
+				
+			case GAM_WIN:
+				id = Integer.parseInt(split[1]);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a gagné la partie ! BRAVO");
+				
+				if (Player.getInstance().getID() == id) {
+					// TODO - START SOUND
+				}
+				
+				break;
 			
-			case GameProtocol.GAM_PLAY:
+			
+			case GAM_PLAY:
 				manageCurrentPlayer(split[1]);
 				break;
 			
-			case GameProtocol.GAM_ROLL:
+			case GAM_ROLL:
 				param = split[1].split(" ");
 				manageRoll(param);
 				break;
@@ -112,22 +124,22 @@ public class GameHandler extends Thread {
 				manageDraw(Integer.parseInt(param[0]), param[1]);
 				break;
 			
-			case GameProtocol.GAM_GAIN:
+			case GAM_GAIN:
 				param = split[1].split(" ");
 				manageGain(param);
 				break;
 				
-			case GameProtocol.GAM_PAY:
+			case GAM_PAY:
 				param = split[1].split(" ");
 				managePay(param);
 				break;
 				
-			case GameProtocol.GAM_MOV:
+			case GAM_MOV:
 				param = split[1].split(" ");
 				manageMove(param);
 				break;
 				
-			case GameProtocol.GAM_EXAM:
+			case GAM_EXAM:
 				param = split[1].split(" ");
 				id = Integer.parseInt(param[0]);
 				
@@ -139,7 +151,7 @@ public class GameHandler extends Thread {
 				
 				break;
 			
-			case GameProtocol.GAM_FRDM:
+			case GAM_FRDM:
 				id = Integer.parseInt(split[1]);
 				
 				players.get(id).setInExam(false);
@@ -150,7 +162,7 @@ public class GameHandler extends Thread {
 				
 				break;
 
-			case GameProtocol.GAM_FRDM_C:
+			case GAM_FRDM_C:
 
 				// The player received a freedom card
 				
@@ -169,7 +181,7 @@ public class GameHandler extends Thread {
 				
 				break;
 
-			case GameProtocol.GAM_FRDM_U:
+			case GAM_FRDM_U:
 
 				// The player used a freedom card
 				id = Integer.parseInt(split[1]);
@@ -189,7 +201,7 @@ public class GameHandler extends Thread {
 				
 				break;
 				
-			case GameProtocol.GAM_BUYS:
+			case GAM_BUYS:
 				param = split[1].split(" ");
 				
 				pos = Integer.parseInt(param[1]);
@@ -203,7 +215,7 @@ public class GameHandler extends Thread {
 				
 				break;
 			
-			case GameProtocol.GAM_SELL:
+			case GAM_SELL:
 				param = split[1].split(" ");
 				
 				pos = Integer.parseInt(param[1]);
@@ -273,6 +285,39 @@ public class GameHandler extends Thread {
 				
 				break;
 				
+			case GAM_HYPOT:
+				param = split[1].split(" ");
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.setMortgaged(true);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
+				break;
+				
+			case GAM_NHYPOT:
+				param = split[1].split(" ");
+				
+				id = Integer.parseInt(param[0]);
+				pos = Integer.parseInt(param[1]);
+				square = board.getSquares().get(pos);
+				
+				square.setMortgaged(false);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
+				break;
+				
+			case GAM_BKRPT:
+			
+			case GAM_GOVR:
+				id = Integer.parseInt(split[1]);
+				
+				sub.logMessage(id, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
+				
+				break;
+			
 			case Protocoly.ANS_ERR:
 				sub.errorMessage(split[1]);
 				
@@ -304,14 +349,14 @@ public class GameHandler extends Thread {
 	
 	public void rollDice() {
 		
-		sendData(GameProtocol.GAM_ROLL);
+		sendData(GAM_ROLL);
 	}
 	
 	public void endTurn() {
 		
 		Player.getInstance().setMyTurn(false);
 		sub.notifyTurn();
-		sendData(GameProtocol.GAM_ENDT);
+		sendData(GAM_ENDT);
 	}
 	
 	public Map<Integer, LightPlayer> getPlayers() {
@@ -454,7 +499,7 @@ public class GameHandler extends Thread {
 	 * Use a card the leave the exam.
 	 */
 	public void useFreedomCard() {
-		sendData(GameProtocol.GAM_FRDM_U);
+		sendData(GAM_FRDM_U);
 	}
 	
 	/**
@@ -462,7 +507,7 @@ public class GameHandler extends Thread {
 	 */
 	public void payExamTax() {
 		
-		sendData(GameProtocol.GAM_FRDM_T);
+		sendData(GAM_FRDM_T);
 	}
 	
 	public void manageDraw(int id, String card) {

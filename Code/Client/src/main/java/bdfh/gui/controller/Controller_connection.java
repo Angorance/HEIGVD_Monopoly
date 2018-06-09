@@ -7,13 +7,17 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import static bdfh.logic.conn.Authentication.*;
 
-public class Controller_connection{
+public class Controller_connection implements Initializable {
 	
 	@FXML private JFXTextField username;
 	@FXML private JFXPasswordField password;
@@ -100,5 +104,19 @@ public class Controller_connection{
 		((Stage)username.getScene().getWindow()).close();
 		new frameLobby();
 	
+	}
+	
+	@Override public void initialize(URL location, ResourceBundle resources) {
+			password.setOnAction(event -> {
+				if(!enregistrementCheckBox.isSelected()){
+					loginButton(event);
+				}
+			});
+			
+			confirmPassword.setOnAction(event -> {
+				if(enregistrementCheckBox.isSelected()){
+					registerButton(event);
+				}
+			});
 	}
 }

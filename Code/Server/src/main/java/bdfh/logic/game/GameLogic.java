@@ -832,7 +832,9 @@ public class GameLogic extends Thread {
 				return ALREADY_OWNED;
 			}
 			
-			// FIXME check if the player is on the square
+			if (board.getCurrentSquare(caller.getClientID()).getPosition() != posSquare) {
+				return NOT_IN_SQUARE;
+			}
 			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
@@ -964,11 +966,19 @@ public class GameLogic extends Thread {
 	public void pinkPanther() {
 		/*
 		
+			  _ __ (_)_ __ | | __  _ __   __ _ _ __ | |_| |__   ___ _ __
+			 | '_ \| | '_ \| |/ / | '_ \ / _` | '_ \| __| '_ \ / _ \ '__|
+			 | |_) | | | | |   <  | |_) | (_| | | | | |_| | | |  __/ |
+			 | .__/|_|_| |_|_|\_\ | .__/ \__,_|_| |_|\__|_| |_|\___|_|
+			 |_|                  |_|
+		
+		
 		TODO TODO
 		TODO
 		TODO TODO TODO TODO TODOOOOOO
 		TODO DO DO DO
 		TODO DODO DODO DO DODO DODO TODODODODO
+		
 		
 		              *******
                      *.......*
