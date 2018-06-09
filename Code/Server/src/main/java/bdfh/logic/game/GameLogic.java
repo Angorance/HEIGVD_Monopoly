@@ -635,6 +635,7 @@ public class GameLogic extends Thread {
 		param += data;
 		
 		LOG.log(Level.INFO, "sending to players : " + cmd + " " + param);
+		
 		for (ClientHandler c : players) {
 			c.sendData(cmd, param);
 		}
@@ -859,13 +860,11 @@ public class GameLogic extends Thread {
 			return NOT_OWNER;
 		}
 		
-		//sellAllConstruction(caller, posSquare);
-		
 		if (square.hasHomeCinema() || square.getNbCouch() > 0) {
 			return FULL;
 		} else {
 			
-			Price price = board.getSquare(posSquare).getPrices();
+			Price price = square.getPrices();
 			
 			notifyPlayers(caller, GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
 			notifyPlayers(caller, GameProtocol.GAM_SELL, Integer.toString(posSquare));

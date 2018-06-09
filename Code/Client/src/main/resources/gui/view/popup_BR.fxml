@@ -15,7 +15,7 @@
                <children>
                   <AnchorPane prefHeight="132.0" prefWidth="600.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 10;">
                      <children>
-                        <Label alignment="CENTER" layoutY="39.0" prefHeight="17.0" prefWidth="659.0" text="Veuillez vendre des maisons, vendre des propriétés ou hypothèquer des propriété car vous êtes en banqueroute" textFill="RED">
+                        <Label alignment="CENTER" layoutY="39.0" prefHeight="17.0" prefWidth="659.0" text="Veuillez vendre des maisons, vendre des propriétés ou hypothéquer des propriétés car vous êtes en banqueroute" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
