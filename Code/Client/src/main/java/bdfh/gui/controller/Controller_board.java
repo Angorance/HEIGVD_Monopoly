@@ -418,9 +418,9 @@ public class Controller_board implements Initializable, IWindow {
 		for(int i = 0; i < 6; ++i){
 			label_rentProp[i].setStyle("-fx-text-fill: black");
 			labelNameLoyer[i].setStyle("-fx-text-fill: black");
-			if(i == nbCouche || (i == 5 && square.hasCine())) {
-				label_rentProp[i].setStyle("-fx-text-fill: green");
-				labelNameLoyer[i].setStyle("-fx-text-fill: green");
+			if((i == nbCouche && !square.hasCine()) || (i == 5 && square.hasCine())) {
+				label_rentProp[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
+				labelNameLoyer[i].setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
 			}
 		}
 	}
