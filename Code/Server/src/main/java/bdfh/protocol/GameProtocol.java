@@ -100,14 +100,14 @@ public abstract class GameProtocol {
 	public static final String ERR1 = "Vous n'avez pas assez d'argent.";
 	public static final String ERR2 = "Il n'y a pas assez de canapés sur la case.";
 	public static final String ERR3 = "Vous n'avez pas assez de canapés dans les autres cases de la même famille.";
-	public static final String ERR4 = "Il y a trop de canapés / Home Cinema sur cette case";
+	public static final String ERR4 = "Il y a trop de canapés / home cinéma sur cette case.";
 	public static final String ERR5 = "Vous ne possédez pas encore toutes les cases de la famille.";
 	public static final String ERR6 = "C'est n'est pas à vous de jouer.";
-	public static final String ERR7 = "Vous n'êtes pas le propriétaire";
-	public static final String ERR8 = "La case est déjà possédée";
+	public static final String ERR7 = "Vous n'êtes pas le propriétaire.";
+	public static final String ERR8 = "La case est déjà possédée.";
 	public static final String ERR9 = "Vous ne pouvez pas acheter cette case !";
 	public static final String ERR10 = "Vous ne possédez pas de Home Cinema sur la case.";
-	public static final String ERR11 = "Vous n'êtes pas sur la bonne case";
+	public static final String ERR11 = "Vous n'êtes pas sur la bonne case.";
 	public static final String ERR12 = "Commencez par tirer les dés !";
 	
 }
