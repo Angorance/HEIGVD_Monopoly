@@ -20,6 +20,8 @@ public abstract class Protocoly {
 	public static final String CMD_NEWLOBBY = "NLOBBY";
 	public static final String CMD_QUITLOBBY = "QLOBBY";
 	public static final String CMD_BYE = "BYE";
+	public static final String CMD_PARAM= "PARAM";
+	public static final String CMD_SETP= "SETP";
 	
 	// réponse du serveur
 	public static final String ANS_CONN = "WLCM";

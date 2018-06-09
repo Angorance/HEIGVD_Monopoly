@@ -147,4 +147,16 @@ public class Square {
 	public int getLevelRent() {
 		return homeCinema ? 5 : nbCouch;
 	}
+	
+	/**
+	 * Reset a square.
+	 *
+	 * Remove the owner and all the possessions.
+	 */
+	public void reset() {
+		owner = null;
+		nbCouch = 0;
+		homeCinema = false;
+		isMortgaged = false;
+	}
 }

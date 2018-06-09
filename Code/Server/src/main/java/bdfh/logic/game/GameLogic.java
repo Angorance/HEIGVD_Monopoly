@@ -13,6 +13,7 @@ import com.google.gson.JsonPrimitive;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import static bdfh.protocol.GameProtocol.*;
 
@@ -27,6 +28,7 @@ public class GameLogic extends Thread {
 	
 	private static final int STANDARD_GO_AMOUNT = 200;
 	private ArrayDeque<ClientHandler> players;
+	private ArrayList<ClientHandler> spectator;
 	
 	private ArrayDeque<Card> deck;
 	private Board board;
@@ -34,6 +36,7 @@ public class GameLogic extends Thread {
 	private int totalLastRoll;
 	private boolean keepTurn;
 	private boolean looseTurn;
+	private Map<Integer, Boolean> playerBankrupt;
 	
 	// Map a player to his fortune. The first cell of the tab is the capital,
 	// and the second is the total of his possession (capital + nbHouse + Hypothecs + ... )
@@ -142,7 +145,6 @@ public class GameLogic extends Thread {
 		initializeDouble();
 		
 		setExamState(true, 0, 0);
-		// TODO - players.addLast(players.pop());
 		
 		// Move the player
 		Square exam = board.getExamSquare();
@@ -160,7 +162,6 @@ public class GameLogic extends Thread {
 		}
 		
 		setExamState(false, 0, 0);
-		// TODO - players.addLast(players.pop());
 		
 		// Notify
 		notifyPlayers(GameProtocol.GAM_FRDM, "");
@@ -172,7 +173,6 @@ public class GameLogic extends Thread {
 		looseTurn = true;
 		
 		setExamState(getExamPresence(), getExamTurn() + 1, 0);
-		// TODO - players.addLast(players.pop());
 	}
 	
 	public void initializeDouble() {
@@ -264,7 +264,9 @@ public class GameLogic extends Thread {
 		LOG.log(Level.INFO, "Préparation des joueurs");
 		
 		players = new ArrayDeque<>(lobby.getPlayers().size());
+		spectator = new ArrayList<>();
 		playersFortune = new HashMap<>();
+		playerBankrupt = new HashMap<>();
 		examState = new HashMap<>();
 		examCards = new HashMap<>();
 		
@@ -277,6 +279,7 @@ public class GameLogic extends Thread {
 			ClientHandler c = tab.remove(pos);
 			players.addFirst(c);
 			playersFortune.put(c.getClientID(), new Integer[] { lobby.getParam().getMoneyAtTheStart(),0 });
+			playerBankrupt.put(c.getClientID(), false);
 			examState.put(c.getClientID(), new Integer[]{0, 0, 0});
 			examCards.put(c.getClientID(), new ArrayList<>());
 		}
@@ -571,7 +574,23 @@ public class GameLogic extends Thread {
 		if (c.getClientID() == currentPlayer.getClientID()) {
 			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " ended his turn");
 			
-			if (looseTurn) {
+			playerBankrupt.put(currentPlayer.getClientID(), playersFortune.get(currentPlayer.getClientID())[CAPITAL] < 0);
+			if(playerBankrupt.get(currentPlayer.getClientID())){
+				
+				notifyPlayers(GAM_GOVR, "");
+				
+				// todo BANQUEROUTE - éjection du joueur
+				c.leaveGame();
+				spectator.add(players.pop());
+				if(players.size() > 1){
+					board.resetPlayersProperty(currentPlayer, this);
+				} else {
+					// FIN DU JEU
+					notifyPlayers(players.getFirst(), GAM_WIN, "");
+					
+				}
+				
+			} else if (looseTurn) {
 				players.addLast(players.pop());
 			} else if (keepTurn) {
 				players.addFirst(players.pop());
@@ -586,26 +605,20 @@ public class GameLogic extends Thread {
 	
 	public void notifyPlayers(String cmd, String data) {
 		
-		String param = "";
-		
-		if (cmd != GameProtocol.GAM_BOARD && currentPlayer != null) {
-			param += currentPlayer.getClientID();
-		}
-		
-		if (data != "") {
-			param += " ";
-		}
-		
-		param += data;
-		LOG.log(Level.INFO, "sending to players : " + cmd + " " + param);
-		for (ClientHandler c : players) {
-			c.sendData(cmd, param);
+		if (cmd != GameProtocol.GAM_BOARD) {
+			notifyPlayers(null, cmd, data);
+		} else {
+			notifyPlayers(currentPlayer, cmd, data);
 		}
 	}
 	
 	public void notifyPlayers(ClientHandler player, String cmd, String data) {
 		
-		String param = Integer.toString(player.getClientID());
+		String param = "";
+		
+		if(player!= null){
+			param = Integer.toString(player.getClientID());
+		}
 		
 		if(data != ""){
 			param += " ";
@@ -614,8 +627,11 @@ public class GameLogic extends Thread {
 		param += data;
 		
 		LOG.log(Level.INFO, "sending to players : " + cmd + " " + param);
-		
 		for (ClientHandler c : players) {
+			c.sendData(cmd, param);
+		}
+		
+		for (ClientHandler c : spectator) {
 			c.sendData(cmd, param);
 		}
 	}
@@ -634,7 +650,11 @@ public class GameLogic extends Thread {
 	public synchronized void manageMoney(ClientHandler player, int amount) {
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
-		// TODO - check if the game is over for the player
+		// bankrupt detection
+		playerBankrupt.put(player.getClientID(), (playersFortune.get(player.getClientID())[CAPITAL] < 0));
+		if(playerBankrupt.get(player.getClientID())){
+			player.sendData(GAM_BKRPT);
+		}
 	}
 	
 	/**
@@ -795,6 +815,8 @@ public class GameLogic extends Thread {
 				return ALREADY_OWNED;
 			}
 			
+			// TODO check if the player is on the square
+			
 			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
 			
@@ -814,28 +836,34 @@ public class GameLogic extends Thread {
 	
 	public int sellSquare(ClientHandler caller, Integer posSquare) {
 		
+		Square square = board.getSquare(posSquare);
+		
 		if (caller.getClientID() == currentPlayer.getClientID()) {
-			if(board.getSquare(posSquare).getOwner() == null ||
-					board.getSquare(posSquare).getOwner().getClientID() != caller.getClientID()){
+			if(square.getOwner() == null ||
+					square.getOwner().getClientID() != caller.getClientID()){
 				return NOT_OWNER;
 			}
 			
-			sellAllConstruction(caller, posSquare);
+			//sellAllConstruction(caller, posSquare);
 			
-			Price price = board.getSquare(posSquare).getPrices();
-			
-			notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice()/2));
-			notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
-			
-			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
-			manageMoney(currentPlayer, price.getPrice()/2);
-			
-			board.removeOwner(caller, posSquare);
-			
-			LOG.log(Level.INFO,
-					currentPlayer.getClientUsername() + " sold the square " + posSquare);
-			
-			return SUCCESS;
+			if (square.hasHomeCinema() || square.getNbCouch() > 0) {
+				return FULL;
+			} else {
+				
+				Price price = board.getSquare(posSquare).getPrices();
+				
+				notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(price.getPrice() / 2));
+				notifyPlayers(GameProtocol.GAM_SELL, Integer.toString(posSquare));
+				
+				playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] -= price.getHypothec();
+				manageMoney(currentPlayer, price.getPrice() / 2);
+				
+				board.removeOwner(caller, posSquare);
+				
+				LOG.log(Level.INFO, currentPlayer.getClientUsername() + " sold the square " + posSquare);
+				
+				return SUCCESS;
+			}
 		}
 		
 		return NOT_YOUR_TURN;
