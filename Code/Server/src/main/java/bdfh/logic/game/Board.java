@@ -185,7 +185,7 @@ public class Board {
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
 					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_PAY,
+					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN,
 							Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
 							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay
