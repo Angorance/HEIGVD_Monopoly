@@ -356,10 +356,15 @@ public class Board {
 	
 	public String resetPlayersProperty(ClientHandler looser) {
 		StringBuilder propertyToReset = new StringBuilder();
+		boolean first = true;
 		for(Square s : board){
 			if(s.getOwner() != null && s.getOwner().getClientID() == looser.getClientID()){
 				s.reset();
-				propertyToReset.append(" ").append(Integer.toString(s.getPosition()));
+				if(!first){
+					propertyToReset.append(" ");
+				}
+				propertyToReset.append(Integer.toString(s.getPosition()));
+				first = false;
 			}
 		}
 		
