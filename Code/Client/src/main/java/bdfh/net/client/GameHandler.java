@@ -137,7 +137,7 @@ public class GameHandler extends Thread {
 				
 			case GAM_MOV:
 				param = split[1].split(" ");
-				manageMove(param);
+				manageMove(param, true);
 				break;
 				
 			case GAM_EXAM:
@@ -145,7 +145,7 @@ public class GameHandler extends Thread {
 				id = Integer.parseInt(param[0]);
 				
 				players.get(id).setInExam(true);
-				manageMove(param);
+				manageMove(param, false);
 				
 				// Refresh
 				sub.updateBoard();
@@ -501,14 +501,17 @@ public class GameHandler extends Thread {
 		sub.updateBoard();
 	}
 	
-	private void manageMove(String[] split) {
+	private void manageMove(String[] split, boolean log) {
 		
 		int id = Integer.parseInt(split[0]);
 		int pos = Integer.parseInt(split[1]);
 	
 		sub.move(id, pos);
 		
-		sub.logMessage(id, false, players.get(id).getUsername() + " se déplace sur la case " + board.getSquares().get(pos).getName());
+		if(log) {
+			sub.logMessage(id, false, players.get(id).getUsername() +
+					" se déplace sur la case " + board.getSquares().get(pos).getName());
+		}
 	}
 	
 	/**
