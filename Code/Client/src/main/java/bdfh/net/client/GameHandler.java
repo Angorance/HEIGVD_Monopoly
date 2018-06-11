@@ -137,7 +137,7 @@ public class GameHandler extends Thread {
 				
 			case GAM_MOV:
 				param = split[1].split(" ");
-				manageMove(param);
+				manageMove(param, true);
 				break;
 				
 			case GAM_EXAM:
@@ -145,7 +145,7 @@ public class GameHandler extends Thread {
 				id = Integer.parseInt(param[0]);
 				
 				players.get(id).setInExam(true);
-				manageMove(param);
+				manageMove(param, false);
 				
 				// Refresh
 				sub.updateBoard();
@@ -312,7 +312,13 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GAM_BKRPT:
-				sub.loadPopup_BR();
+				id = Integer.parseInt(split[1]);
+				
+				sub.logMessage(id, false, "Aïe aïe aïe, " + players.get(id).getUsername() + " est sur la corde raide !");
+				
+				if(id == Player.getInstance().getID())
+					sub.loadPopup_BR();
+				
 				break;
 				
 			case GAM_GOVR:
@@ -423,12 +429,15 @@ public class GameHandler extends Thread {
 		JsonArray jsonPlayers = GsonSerializer.getInstance()
 				.fromJson(json, JsonArray.class);
 		
+		int order = 0;
+		
 		for (JsonElement je : jsonPlayers) {
 			JsonObject jo = je.getAsJsonObject();
 			
-			LightPlayer tmp = LightPlayer.instancify(jo);
+			LightPlayer tmp = LightPlayer.instancify(jo, order);
 			
 			players.put(tmp.getId(), tmp);
+			order++;
 		}
 	}
 	
@@ -502,14 +511,17 @@ public class GameHandler extends Thread {
 		sub.updateBoard();
 	}
 	
-	private void manageMove(String[] split) {
+	private void manageMove(String[] split, boolean log) {
 		
 		int id = Integer.parseInt(split[0]);
 		int pos = Integer.parseInt(split[1]);
 	
 		sub.move(id, pos);
 		
-		sub.logMessage(id, false, players.get(id).getUsername() + " se déplace sur la case " + board.getSquares().get(pos).getName());
+		if(log) {
+			sub.logMessage(id, false, players.get(id).getUsername() +
+					" se déplace sur la case " + board.getSquares().get(pos).getName());
+		}
 	}
 	
 	/**

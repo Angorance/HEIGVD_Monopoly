@@ -667,7 +667,7 @@ public class GameLogic extends Thread {
 		playerBankrupt
 				.put(player.getClientID(), (playersFortune.get(player.getClientID())[CAPITAL] < 0));
 		if (playerBankrupt.get(player.getClientID())) {
-			player.sendData(GAM_BKRPT);
+			notifyPlayers(player, GAM_BKRPT, "");
 		}
 	}
 	
