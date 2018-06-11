@@ -332,6 +332,12 @@ public class Controller_lobbyList implements Initializable, IWindow {
 		}
 	}
 	
+	public void validationForm(){
+		
+		add_button.setDisable(true);
+		unloadForm();
+	}
+	
 	public void returnForm() {
 		
 		unloadForm();

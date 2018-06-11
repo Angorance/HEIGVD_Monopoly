@@ -19,7 +19,7 @@ public class Board {
 			root = FXMLLoader.load(getClass().getResource(
 					"/gui/view/board_test.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
-			primaryStage.setScene(new Scene(root, 1100, 800));
+			primaryStage.setScene(new Scene(root, 1300, 800));
 			primaryStage.setOnCloseRequest(event -> {
 				try {
 					Client.getInstance().disconnect();

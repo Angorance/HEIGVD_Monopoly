@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_board">
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_board">
    <children>
       <GridPane fx:id="board" layoutX="50.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
         <columnConstraints>
@@ -47,7 +47,7 @@
                   <InnerShadow choke="0.66" />
                </effect>
                <children>
-                  <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" text="Titre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                  <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -94,7 +94,7 @@
                         <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                         <Label fx:id="loyer0" text="Loyer de base" GridPane.rowIndex="1" />
                         <Label fx:id="base" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Prix" style="-fx-font-weight: bold" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
                         <Label fx:id="price_prop" text="-" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
@@ -119,7 +119,7 @@
                         <Label fx:id="loyer2_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="loyer3_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="loyer4_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Prix" style="-fx-font-weight: bold" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
                         <Label fx:id="price_institute" text="-" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
@@ -136,7 +136,7 @@
                      <children>
                         <Label text="Loyer 2" GridPane.rowIndex="2" />
                         <Label fx:id="loyer2_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Prix" style="-fx-font-weight: bold" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
                         <Label fx:id="price_company" text="-" GridPane.columnIndex="1" />
                         <Label text="Loyer 1" GridPane.rowIndex="1" />
                         <Label fx:id="loyer1_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -214,7 +214,7 @@
             </AnchorPane>
          </children>
       </GridPane>
-      <GridPane layoutX="750.0" layoutY="50.0" prefHeight="210.0" prefWidth="371.0" AnchorPane.rightAnchor="13.0">
+      <GridPane layoutX="750.0" layoutY="50.0" prefHeight="210.0" prefWidth="542.0" AnchorPane.rightAnchor="50.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -252,9 +252,9 @@
       </GridPane>
       <JFXButton fx:id="rollDice_button" layoutX="163.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="163.0" />
       <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
-      <AnchorPane layoutX="716.0" layoutY="289.0" prefHeight="436.0" prefWidth="371.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="13.0">
+      <AnchorPane layoutX="716.0" layoutY="289.0" prefHeight="436.0" prefWidth="519.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="50.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="436.0" prefWidth="371.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="436.0" prefWidth="542.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                   <VBox fx:id="vbox_Log" spacing="5.0">
                      <padding>
@@ -267,7 +267,7 @@
             <InnerShadow />
          </effect>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="716.0" layoutY="260.0" prefHeight="25.0" prefWidth="371.0" text="Log">
+      <Label alignment="CENTER" layoutX="731.0" layoutY="260.0" prefHeight="25.0" prefWidth="519.0" text="Log">
          <font>
             <Font size="16.0" />
          </font>
@@ -275,5 +275,6 @@
       <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
       <AnchorPane fx:id="popup" mouseTransparent="true" prefHeight="800.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="message" layoutX="50.0" layoutY="42.0" prefHeight="17.0" prefWidth="650.0" />
+      <JFXButton fx:id="quit_button" layoutX="959.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Quitter" />
    </children>
 </AnchorPane>

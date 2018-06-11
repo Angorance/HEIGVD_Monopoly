@@ -68,7 +68,7 @@ public class Controller_formLobby implements Initializable {
 			
 			Player.getInstance()
 					.createLobby(nbrDice, money, gameMode, gameTime, random);
-			cl.returnForm();
+			cl.validationForm();
 		}
 		
 	}
