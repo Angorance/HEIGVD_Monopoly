@@ -362,6 +362,10 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
+	public void redrawUsername(int playerOrder) {
+		labelPlayers[playerOrder].setStyle("-fx-text-fill: black");
+	}
+	
 	public void redrawSquare(int pos) {
 		
 		Platform.runLater(() -> {
