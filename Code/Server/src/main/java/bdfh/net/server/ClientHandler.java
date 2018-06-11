@@ -243,6 +243,10 @@ public class ClientHandler implements Handler {
 							game.payExamTax();
 						}
 						break;
+						
+					case GAM_QUIT:
+						game.quit(this);
+						break;
 					
 					default: // WTF ???
 						sendData("U wot m8 ?");

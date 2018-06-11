@@ -957,6 +957,12 @@ public class GameLogic extends Thread {
 		}
 	}
 	
+	public void quit(ClientHandler caller) {
+		
+		
+		players.remove(caller);
+	}
+	
 	public void pinkPanther() {
 		/*
 		

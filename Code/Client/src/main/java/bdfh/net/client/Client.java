@@ -414,7 +414,6 @@ public class Client {
 	 * @param position position of the concerned property
 	 */
 	public void setCancelMortgage(boolean set, int position) {
-		// TODO validate ~~Bry
 		
 		if(set){
 			sendData(GameProtocol.GAM_HYPOT + " " + position);
@@ -429,7 +428,6 @@ public class Client {
 	 * @param position position of the concerned property
 	 */
 	public void buySellSquare(boolean buy, int position) {
-		// TODO validate ~~Bry
 		
 		if(buy){
 			sendData((GameProtocol.GAM_BUYS + " " + position));

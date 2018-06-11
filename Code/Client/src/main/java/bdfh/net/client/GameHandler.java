@@ -320,6 +320,10 @@ public class GameHandler extends Thread {
 				
 				sub.logMessage(id, false, players.get(id).getUsername() + " a perdu. 1 seconde de silence pour lui...");
 				
+				if (id == Player.getInstance().getID()) {
+					gameOver = true;
+				}
+				
 				break;
 				
 			case GAM_RST:

@@ -2,6 +2,7 @@ package bdfh.logic.usr;
 
 import bdfh.net.client.Client;
 import bdfh.net.client.GameHandler;
+import bdfh.net.client.Notification;
 import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.BoundParameters;
 
@@ -216,5 +217,11 @@ public class Player {
 	public static BoundParameters getBounds() {
 		
 		return bounds;
+	}
+	
+	public void exitGame() {
+		
+		GameHandler.getInstance().interrupt();
+		Notification.getInstance().start();
 	}
 }
