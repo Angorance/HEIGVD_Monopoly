@@ -91,15 +91,27 @@ public class Notification extends Thread {
 	 */
 	private void handleNotification(String line) {
 		
-		String[] s = line.split(" ");
+		String[] s = null;
+		String json = "";
 		
-		String json = s[1];
+		try {
+			s = line.split(" ");
+			
+			json = s[1];
+		} catch (NullPointerException e) {
+			LOG.log(Level.INFO, "Null pointer on notification. Probably closing app.");
+			
+			return;
+		}
 		
 		// TODO - faire propre
 		switch (s[0]) {
 			case NotifProtocol.NOTIF_LIST:
 				
 				LightLobbies.getInstance().instancify(json);
+				out.println(Player.getInstance().getUsername());
+				out.flush();
+				
 				break;
 				
 			case NotifProtocol.NOTIF_NEW:
@@ -173,14 +185,14 @@ public class Notification extends Thread {
 	 */
 	public void pause() {
 		
-		interrupt();
-		
 		try {
 			disconnect();
 			
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Notification::pause: " + e);
 		}
+		
+		interrupt();
 	}
 	
 	/**

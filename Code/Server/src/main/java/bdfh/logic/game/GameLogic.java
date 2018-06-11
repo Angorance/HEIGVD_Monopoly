@@ -305,9 +305,9 @@ public class GameLogic extends Thread {
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = random.nextInt(6) + 1;
 				
-				int count = Collections.frequency(rolls, roll);
+				int count = Collections.frequency(rolls, roll) + 1;
 				
-				if (count >= nbDice - (nbDice % count)) {
+				if (count > 0 && count >= nbDice - (nbDice % count)) {
 					keepTurn = true;
 					
 					// Update for exam state

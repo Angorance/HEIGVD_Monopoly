@@ -1,7 +1,12 @@
 package bdfh.net;
 
+import bdfh.net.notification.NotificationHandler;
+import bdfh.net.notification.NotificationServer;
+import bdfh.net.server.ClientHandler;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.*;
 
 /**
@@ -12,6 +17,8 @@ import java.util.logging.*;
  * @version 1.1
  */
 public class Worker implements Runnable {
+	
+	public static ArrayList<Worker> workers = new ArrayList<>();
 	
 	private InputStream in;
 	private OutputStream out;
@@ -38,6 +45,8 @@ public class Worker implements Runnable {
 			LOG.log(Level.SEVERE, "Worker not created: " + e);
 			e.printStackTrace();
 		}
+		
+		workers.add(this);
 	}
 	
 	/**
@@ -59,6 +68,8 @@ public class Worker implements Runnable {
 	 */
 	private void disconnect() {
 		
+		workers.remove(this);
+		
 		try {
 			in.close();
 			out.close();
@@ -69,6 +80,16 @@ public class Worker implements Runnable {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void bindNotif(NotificationHandler not, String username) {
+		
+		for (Worker w : workers) {
+			
+			if (((ClientHandler) w.handler).getClientUsername().equals(username)) {
+				((ClientHandler) w.handler).addNot(not);
+			}
 		}
 	}
 }

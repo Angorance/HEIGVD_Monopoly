@@ -5,6 +5,7 @@ import bdfh.logic.game.GameLogic;
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
 import bdfh.net.Handler;
+import bdfh.net.notification.NotificationHandler;
 import bdfh.protocol.GameProtocol;
 import bdfh.protocol.Protocoly;
 import bdfh.serializable.BoundParameters;
@@ -30,6 +31,8 @@ import static bdfh.protocol.Protocoly.ANS_SUCCESS;
  * @version 1.0
  */
 public class ClientHandler implements Handler {
+	
+	private NotificationHandler not = null;
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -346,6 +349,15 @@ public class ClientHandler implements Handler {
 		
 		connected = false;
 		
+		if (game != null) {
+			game.quit(this);
+		}
+		
+		if (not != null) {
+			not.byebye();
+			not = null;
+		}
+		
 		if (lobby != null) {
 			lobby.quitLobby(this);
 		}
@@ -494,5 +506,10 @@ public class ClientHandler implements Handler {
 	
 	public void leaveGame() {
 		game = null;
+	}
+	
+	public void addNot(NotificationHandler not) {
+		
+		this.not = not;
 	}
 }

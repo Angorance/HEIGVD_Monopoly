@@ -2,6 +2,7 @@ package bdfh.net.notification;
 
 import bdfh.logic.saloon.Lobbies;
 import bdfh.logic.saloon.Lobby;
+import bdfh.net.Worker;
 import bdfh.protocol.NotifProtocol;
 
 import java.io.BufferedReader;
@@ -9,8 +10,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static bdfh.protocol.Protocoly.ANS_BYE;
 
 /**
  * @author Daniel Gonzalez Lopez
@@ -48,11 +52,19 @@ public class NotificationHandler {
 		
 		Lobbies.getInstance().addSubscriber(this);
 		sendLobbyList();
+		
+		Worker.bindNotif(this, reader.readLine());
 	}
 	
 	public void byebye() {
 		
 		Lobbies.getInstance().removeSub(this);
+		
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -118,6 +130,9 @@ public class NotificationHandler {
 					String response = reader.readLine();
 					
 					if (response.equals("KILL")) {
+						
+						sendData(ANS_BYE);
+						
 						socket.close();
 						
 						Lobbies.getInstance().removeSub(this);
