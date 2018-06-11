@@ -231,8 +231,11 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void removePawn(int idPlayer, int pos) {
 		
-		pawnDisplay tmpPD = displayerList.get(idPlayer);
-		cases.get(pos).getFP().getChildren().removeAll(tmpPD);
+		Platform.runLater(()->{
+			pawnDisplay tmpPD = displayerList.get(idPlayer);
+			cases.get(pos).getFP().getChildren().removeAll(tmpPD);
+		});
+
 	}
 	
 	public class squareDisplayer extends BorderPane {
@@ -378,35 +381,38 @@ public class Controller_board implements Initializable, IWindow {
 	
 	public void detailSquare(LightSquare square) {
 		
-		this.square = square;
-		
-		String family = square.getFamily();
-		switch (family) {
-			case GameProtocol.SQUA_BROWN:
-			case GameProtocol.SQUA_CYAN:
-			case GameProtocol.SQUA_PINK:
-			case GameProtocol.SQUA_ORANGE:
-			case GameProtocol.SQUA_RED:
-			case GameProtocol.SQUA_YELLOW:
-			case GameProtocol.SQUA_GREEN:
-			case GameProtocol.SQUA_BLUE:
-				infoProperties(square);
-				break;
-			case GameProtocol.SQUA_INSTITUTE:
-				infoInstitute(square);
-				break;
-			case GameProtocol.SQUA_COMPANY:
-				infoCompany(square);
-				break;
-			case GameProtocol.SQUA_TAX:
-				infoTax(square);
-				break;
-			default:
-				reset();
-				break;
+		Platform.runLater(()->{
+			this.square = square;
 			
-		}
-		propertiesButton();
+			String family = square.getFamily();
+			switch (family) {
+				case GameProtocol.SQUA_BROWN:
+				case GameProtocol.SQUA_CYAN:
+				case GameProtocol.SQUA_PINK:
+				case GameProtocol.SQUA_ORANGE:
+				case GameProtocol.SQUA_RED:
+				case GameProtocol.SQUA_YELLOW:
+				case GameProtocol.SQUA_GREEN:
+				case GameProtocol.SQUA_BLUE:
+					infoProperties(square);
+					break;
+				case GameProtocol.SQUA_INSTITUTE:
+					infoInstitute(square);
+					break;
+				case GameProtocol.SQUA_COMPANY:
+					infoCompany(square);
+					break;
+				case GameProtocol.SQUA_TAX:
+					infoTax(square);
+					break;
+				default:
+					reset();
+					break;
+				
+			}
+			propertiesButton();
+		});
+
 		
 	}
 	
