@@ -141,6 +141,8 @@ public class NotificationHandler {
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+				} catch (NullPointerException n) {
+					n.printStackTrace();
 				}
 			
 			case NotifProtocol.NOTIF_DELETE:
