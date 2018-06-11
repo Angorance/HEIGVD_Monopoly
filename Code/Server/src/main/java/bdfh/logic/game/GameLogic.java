@@ -941,8 +941,7 @@ public class GameLogic extends Thread {
 	public void quit(ClientHandler caller) {
 		
 		players.remove(caller);
-		board.resetPlayersProperty(caller);
-		notifyPlayers(caller, GAM_RST, "");
+		notifyPlayers(caller, GAM_RST, board.resetPlayersProperty(caller));
 	}
 	
 	public void pinkPanther() {
