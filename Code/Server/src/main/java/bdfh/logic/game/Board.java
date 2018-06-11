@@ -142,8 +142,6 @@ public class Board {
 			
 			case GameProtocol.SQUA_TAX:
 				game.manageMoney(game.getCurrentPlayer(), s.getPrices().getRent() * -1);
-				
-				game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(s.getPrices().getRent()));
 				LOG.log(Level.INFO,
 						game.getCurrentPlayer().getClientUsername() + " paid " + s.getPrices()
 								.getRent() + " (got a Tax)");
@@ -156,10 +154,7 @@ public class Board {
 					int factor = howManyPossession(s.getOwner().getClientID(), s.getFamily());
 					int totalToPay = baseRent * (int) Math.pow(2, factor - 1);
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
-					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN,
-							Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
 							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay
 									+ " to " + s.getOwner().getClientUsername() + " (" + factor
@@ -183,10 +178,7 @@ public class Board {
 					int roll = game.getTotalLastRoll();
 					int totalToPay = roll * factor;
 					game.manageMoney(game.getCurrentPlayer(), totalToPay * -1);
-					game.notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(totalToPay));
 					game.manageMoney(s.getOwner(), totalToPay);
-					game.notifyPlayers(s.getOwner(), GameProtocol.GAM_GAIN,
-							Integer.toString(totalToPay));
 					LOG.log(Level.INFO,
 							game.getCurrentPlayer().getClientUsername() + " paid " + totalToPay
 									+ " to " + s.getOwner().getClientUsername() + " (rolled a "
@@ -331,7 +323,6 @@ public class Board {
 			// The current player pay the rent
 			game.manageMoney(player, rent * -1);
 			
-			game.notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(rent));
 			LOG.log(Level.INFO,
 					player.getClientUsername() + " a payé " + rent + ".- de loyer à " + owner
 							.getClientUsername() + ".");
@@ -339,7 +330,6 @@ public class Board {
 			// The owner of the square receives the rent
 			game.manageMoney(owner, rent);
 			
-			game.notifyPlayers(owner, GameProtocol.GAM_GAIN, String.valueOf(rent));
 			LOG.log(Level.INFO,
 					owner.getClientUsername() + " a reçu " + rent + ".- de loyer de " + player
 							.getClientUsername() + ".");
