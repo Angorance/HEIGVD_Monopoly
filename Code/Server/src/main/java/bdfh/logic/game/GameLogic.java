@@ -8,6 +8,7 @@ import bdfh.serializable.GsonSerializer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mysql.fabric.xmlrpc.Client;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -588,12 +589,15 @@ public class GameLogic extends Thread {
 				notifyPlayers(GAM_GOVR, "");
 				
 				spectator.add(players.pop());
+				
 				if (players.size() > 1) {
-					notifyPlayers(GAM_RST,board.resetPlayersProperty(c));
+					notifyPlayers(GAM_RST, board.resetPlayersProperty(c));
 				} else {
 					// FIN DU JEU
-					notifyPlayers(players.getFirst(), GAM_WIN, "");
+					ClientHandler winner = players.pop();
 					
+					spectator.add(winner);
+					notifyPlayers(winner, GAM_WIN, "");
 				}
 				
 			} else if (looseTurn) {
