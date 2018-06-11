@@ -239,7 +239,7 @@ public class Controller_board implements Initializable, IWindow {
 		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			label_House = new Label(String.valueOf("     " + mySquare.getNbCouches()));
+			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
 			label_House.setFont(new Font("Cambria", 12));
 			label_House.setAlignment(Pos.CENTER);
 			
