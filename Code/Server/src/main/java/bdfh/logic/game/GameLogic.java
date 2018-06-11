@@ -212,9 +212,6 @@ public class GameLogic extends Thread {
 		// Pay the tax
 		int amount = board.getCurrentSquare(getCurrentPlayerID()).getPrices().getRent();
 		manageMoney(currentPlayer, amount * -1);
-		
-		// Notify
-		notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(amount));
 		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 		
 		notifyPlayers(GameProtocol.GAM_FRDM_T, "");
@@ -376,10 +373,7 @@ public class GameLogic extends Thread {
 	 */
 	public void handleStartPassed() {
 		
-		playersFortune.get(currentPlayer.getClientID())[CAPITAL] += STANDARD_GO_AMOUNT;
-		
-		// Notify
-		notifyPlayers(GameProtocol.GAM_GAIN, Integer.toString(STANDARD_GO_AMOUNT));
+		manageMoney(currentPlayer, STANDARD_GO_AMOUNT);
 		LOG.log(Level.INFO, currentPlayer.getClientUsername() + " passed the start square");
 	}
 	
@@ -446,9 +440,6 @@ public class GameLogic extends Thread {
 					
 					// Update the money
 					manageMoney(currentPlayer, amount);
-					
-					// Notify
-					notifyPlayers(GameProtocol.GAM_GAIN, String.valueOf(amount));
 					LOG.log(Level.INFO,
 							currentPlayer.getClientUsername() + " a recu " + amount + ".-");
 					break;
@@ -459,8 +450,6 @@ public class GameLogic extends Thread {
 					// Update the money
 					manageMoney(currentPlayer, amount * -1);
 					
-					// Notify
-					notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(amount));
 					LOG.log(Level.INFO,
 							currentPlayer.getClientUsername() + " a payé " + amount + ".-");
 					break;
@@ -492,7 +481,6 @@ public class GameLogic extends Thread {
 						if (player != currentPlayer) {
 							manageMoney(player, amount * -1);
 							
-							notifyPlayers(player, GameProtocol.GAM_PAY, String.valueOf(amount));
 							LOG.log(Level.INFO,
 									player.getClientUsername() + " a donné " + amount + ".- à "
 											+ currentPlayer.getClientUsername() + ".");
@@ -502,9 +490,6 @@ public class GameLogic extends Thread {
 					// The current player receives the money
 					amount = (amount * (players.size() - 1));
 					manageMoney(currentPlayer, amount);
-					
-					// Notify
-					notifyPlayers(GameProtocol.GAM_GAIN, String.valueOf(amount));
 					LOG.log(Level.INFO, currentPlayer.getClientUsername() + " a recu " + amount
 							+ ".- de chaque joueur.");
 					break;
@@ -534,8 +519,6 @@ public class GameLogic extends Thread {
 					
 					manageMoney(currentPlayer, totalAmount * -1);
 					
-					// Notify
-					notifyPlayers(GameProtocol.GAM_PAY, String.valueOf(totalAmount));
 					LOG.log(Level.INFO, currentPlayer.getClientUsername()
 							+ " a réparé ses canapés et home cinémas " + "pour un total de "
 							+ totalAmount + " francs.");
@@ -663,6 +646,12 @@ public class GameLogic extends Thread {
 		
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
 		
+		if(amount > 0){
+			notifyPlayers(player, GAM_GAIN, Integer.toString(amount));
+		}else {
+			notifyPlayers(player, GAM_PAY, Integer.toString(-amount));
+		}
+		
 		// bankrupt detection
 		playerBankrupt
 				.put(player.getClientID(), (playersFortune.get(player.getClientID())[CAPITAL] < 0));
@@ -689,7 +678,6 @@ public class GameLogic extends Thread {
 		
 		playersFortune.get(caller.getClientID())[VPOSSESSION] -= price;
 		manageMoney(square.getOwner(), price);
-		notifyPlayers(square.getOwner(), GAM_GAIN, Integer.toString(price));
 		notifyPlayers(square.getOwner(), GAM_HYPOT, Integer.toString(posProperty));
 		return SUCCESS;
 		
@@ -724,7 +712,6 @@ public class GameLogic extends Thread {
 		board.cancelMortgaged(square.getOwner(), posProperty);
 		playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
 		manageMoney(square.getOwner(), (int) (price));
-		notifyPlayers(square.getOwner(), GAM_PAY, Integer.toString(price));
 		notifyPlayers(square.getOwner(), GAM_NHYPOT, Integer.toString(posProperty));
 		
 		return SUCCESS;
@@ -760,7 +747,6 @@ public class GameLogic extends Thread {
 						playersFortune.get(player.getClientID())[VPOSSESSION] += sellPrice;
 						
 						notifyPlayers(player, GAM_BCOUCH, Integer.toString(squareId));
-						notifyPlayers(player, GAM_PAY, Integer.toString(price));
 						
 						return SUCCESS;
 					}
@@ -807,7 +793,6 @@ public class GameLogic extends Thread {
 			manageMoney(player, -1 * price);
 			playersFortune.get(player.getClientID())[VPOSSESSION] += sellPrice;
 			notifyPlayers(player, GAM_BHCINE, Integer.toString(squareId));
-			notifyPlayers(player, GAM_PAY, Integer.toString(price));
 			
 			return SUCCESS;
 		}
@@ -837,7 +822,6 @@ public class GameLogic extends Thread {
 				return ROLL_FIRST;
 			}
 			
-			notifyPlayers(GameProtocol.GAM_PAY, Integer.toString(price.getPrice()));
 			notifyPlayers(GameProtocol.GAM_BUYS, Integer.toString(posSquare));
 			
 			playersFortune.get(currentPlayer.getClientID())[VPOSSESSION] += price.getHypothec();
@@ -869,7 +853,6 @@ public class GameLogic extends Thread {
 			
 			Price price = square.getPrices();
 			
-			notifyPlayers(caller, GameProtocol.GAM_GAIN, Integer.toString(price.getSellingPrice()));
 			notifyPlayers(caller, GameProtocol.GAM_SELL, Integer.toString(posSquare));
 			
 			playersFortune.get(caller.getClientID())[VPOSSESSION] -= price.getHypothec();
@@ -907,7 +890,6 @@ public class GameLogic extends Thread {
 				playersFortune.get(player.getClientID())[VPOSSESSION] -= n * sellPrice;
 				
 				notifyPlayers(player, GAM_SCOUCH, Integer.toString(squareId));
-				notifyPlayers(player, GAM_GAIN, Integer.toString(sellPrice));
 				
 				return SUCCESS;
 			} else {
@@ -943,7 +925,6 @@ public class GameLogic extends Thread {
 				playersFortune.get(player.getClientID())[VPOSSESSION] -= sellPrice;
 				
 				notifyPlayers(player, GAM_SHCINE, Integer.toString(squareId));
-				notifyPlayers(player, GAM_GAIN, Integer.toString(sellPrice));
 				
 				return SUCCESS;
 				
