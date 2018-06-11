@@ -3,7 +3,6 @@ package bdfh.logic.usr;
 import bdfh.net.client.Client;
 import bdfh.net.client.GameHandler;
 import bdfh.net.client.Notification;
-import bdfh.net.protocol.GameProtocol;
 import bdfh.serializable.BoundParameters;
 
 /**

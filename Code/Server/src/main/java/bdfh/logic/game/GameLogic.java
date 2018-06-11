@@ -29,6 +29,8 @@ public class GameLogic extends Thread {
 	private ArrayDeque<ClientHandler> players;
 	private ArrayList<ClientHandler> spectator;
 	
+	private Random random;
+	
 	private ArrayDeque<Card> deck;
 	private Board board;
 	private int nbDice;
@@ -74,6 +76,8 @@ public class GameLogic extends Thread {
 		String boardJSON = board.jsonify();
 		notifyPlayers(GameProtocol.GAM_BOARD, boardJSON);
 		nbDice = lobby.getParam().getNbrDice();
+		
+		random = new Random();
 	}
 	
 	
@@ -292,14 +296,13 @@ public class GameLogic extends Thread {
 	public void rollDice(ClientHandler player) {
 		
 		if (currentPlayer.getClientID() == player.getClientID()) {
-			Random dice = new Random();
-			ArrayList<Integer> rolls = new ArrayList<Integer>(nbDice);
+			ArrayList<Integer> rolls = new ArrayList<>(nbDice);
 			int total = 0;
 			String rollsStr = "";
 			boolean canMove = false;
 			
 			for (int i = 0; i < nbDice; ++i) {
-				int roll = dice.nextInt(6) + 1;
+				int roll = random.nextInt(6) + 1;
 				
 				if (rolls.contains(roll)) {
 					keepTurn = true;
@@ -940,8 +943,27 @@ public class GameLogic extends Thread {
 	
 	public void quit(ClientHandler caller) {
 		
-		players.remove(caller);
-		notifyPlayers(caller, GAM_RST, board.resetPlayersProperty(caller));
+		if (spectator.contains(caller)) {
+		
+			spectator.remove(caller.getClientID());
+		} else {
+			
+			players.remove(caller);
+			notifyPlayers(caller, GAM_RST, board.resetPlayersProperty(caller));
+			
+			if (caller.equals(currentPlayer)) {
+				
+				if (players.size() > 1) {
+					
+					nextTurn();
+				} else {
+					
+					notifyPlayers(players.getFirst(), GAM_WIN, "");
+					players.pop();
+				}
+				
+			}
+		}
 	}
 	
 	public void pinkPanther() {
