@@ -959,12 +959,11 @@ public class GameLogic extends Thread {
 				if (players.size() > 1) {
 					
 					nextTurn();
-				} else {
+				} else if (players.size() == 1) {
 					
 					notifyPlayers(players.getFirst(), GAM_WIN, "");
 					players.pop();
 				}
-				
 			}
 		}
 	}

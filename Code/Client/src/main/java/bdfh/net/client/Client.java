@@ -94,6 +94,7 @@ public class Client {
 	 */
 	public void disconnect() throws IOException {
 		
+		
 		sendData(Protocoly.CMD_BYE);
 		
 		try {
