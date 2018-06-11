@@ -241,7 +241,7 @@ public class Controller_board implements Initializable, IWindow {
 	public class squareDisplayer extends BorderPane {
 		
 		private FlowPane fp;
-		private AnchorPane ap;
+		private FlowPane ap;
 		private Label label_House;
 		private LightSquare mySquare;
 		
@@ -282,7 +282,8 @@ public class Controller_board implements Initializable, IWindow {
 			Label name = new Label();
 			name.setStyle("-fx-background-color: transparent");
 			fp = new FlowPane();
-			ap = new AnchorPane();
+			ap = new FlowPane();
+			ap.setAlignment(Pos.CENTER);
 			switch (famility) {
 				case GameProtocol.SQUA_BROWN:
 				case GameProtocol.SQUA_CYAN:

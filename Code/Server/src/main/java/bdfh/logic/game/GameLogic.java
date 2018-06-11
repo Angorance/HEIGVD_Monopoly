@@ -5,6 +5,7 @@ import bdfh.logic.saloon.Lobby;
 import bdfh.net.server.ClientHandler;
 import bdfh.protocol.GameProtocol;
 import bdfh.serializable.GsonSerializer;
+import bdfh.serializable.Parameter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -304,7 +305,9 @@ public class GameLogic extends Thread {
 			for (int i = 0; i < nbDice; ++i) {
 				int roll = random.nextInt(6) + 1;
 				
-				if (rolls.contains(roll)) {
+				int count = Collections.frequency(rolls, roll);
+				
+				if (count >= nbDice - (nbDice % count)) {
 					keepTurn = true;
 					
 					// Update for exam state
