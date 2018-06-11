@@ -579,4 +579,13 @@ public class GameHandler extends Thread {
 		
 		return gameOver;
 	}
+	
+	/**
+	 * Announce that a player quit the game.
+	 *
+	 * @param id    ID of the player who quit.
+	 */
+	public void exitGame(int id) {
+		sub.logMessage(id, true, players.get(id).getUsername() + " a quitté la partie");
+	}
 }
