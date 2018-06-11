@@ -557,7 +557,9 @@ public class GameHandler extends Thread {
 	}
 	
 	private void manageReset(int id, String[] toReset) {
-	
+		
+		sub.logMessage(id, true, players.get(id).getUsername() + " a quitté la partie");
+		
 		for (String s : toReset) {
 			
 			int pos = Integer.parseInt(s);
