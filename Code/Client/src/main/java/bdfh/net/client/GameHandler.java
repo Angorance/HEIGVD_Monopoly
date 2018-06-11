@@ -522,7 +522,10 @@ public class GameHandler extends Thread {
 		sendData(GAM_FRDM_T);
 	}
 	
-	public void manageDraw(int id, String card) {
+	public void manageDraw(int id, String jsonCard) {
+		
+		JsonObject jo = GsonSerializer.getInstance().fromJson(jsonCard, JsonObject.class);
+		String card = jo.get("text").getAsString();
 		
 		sub.logMessage(id, false, players.get(id).getUsername() + " a tiré la carte : " + card);
 	}
