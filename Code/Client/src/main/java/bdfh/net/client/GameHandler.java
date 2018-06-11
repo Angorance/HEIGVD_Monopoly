@@ -211,6 +211,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setOwner(players.get(Integer.parseInt(param[0])));
+				sub.detailSquare(square);
 				
 				sub.setOwner(pos, id);
 				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté la salle " + square.getName());
@@ -225,6 +226,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setOwner(null);
+				sub.detailSquare(square);
 				
 				sub.setOwner(pos, -1);
 				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu " + square.getName());
@@ -239,6 +241,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.toggleCouch(1);
+				sub.detailSquare(square);
 				
 				sub.redrawSquare(pos);
 				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté un canapé pour la salle " + square.getName());
@@ -253,6 +256,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.toggleCouch(-1);
+				sub.detailSquare(square);
 				
 				sub.redrawSquare(pos);
 				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu un canapé de la salle " + square.getName());
@@ -267,6 +271,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.toggleHCine(true);
+				sub.detailSquare(square);
 				
 				sub.redrawSquare(Integer.parseInt(param[1]));
 				sub.logMessage(id, false, players.get(id).getUsername() + " a acheté un home cinéma pour la salle " + square.getName());
@@ -281,6 +286,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.toggleHCine(false);
+				sub.detailSquare(square);
 				
 				sub.redrawSquare(pos);
 				sub.logMessage(id, false, players.get(id).getUsername() + " a vendu le home cinéma de la salle " + square.getName());
@@ -295,6 +301,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setMortgaged(true);
+				sub.detailSquare(square);
 				
 				sub.logMessage(id, false, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
 				break;
@@ -307,6 +314,8 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setMortgaged(false);
+				
+				sub.detailSquare(square);
 				
 				sub.logMessage(id, false, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
 				break;
