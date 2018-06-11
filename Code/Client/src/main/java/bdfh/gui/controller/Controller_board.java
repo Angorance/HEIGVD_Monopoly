@@ -229,6 +229,12 @@ public class Controller_board implements Initializable, IWindow {
 		}
 	}
 	
+	public void removePawn(int idPlayer, int pos) {
+		
+		pawnDisplay tmpPD = displayerList.get(idPlayer);
+		cases.get(pos).getFP().getChildren().removeAll(tmpPD);
+	}
+	
 	public class squareDisplayer extends BorderPane {
 		
 		private FlowPane fp;
