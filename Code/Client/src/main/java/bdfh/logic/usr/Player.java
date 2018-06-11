@@ -220,9 +220,7 @@ public class Player {
 	
 	public void exitGame() {
 		
-		if (!GameHandler.getInstance().isGameOver()) {
-			Client.getInstance().exitGame();
-		}
+		Client.getInstance().exitGame();
 		
 		GameHandler.getInstance().exitGame(id);
 		GameHandler.getInstance().interrupt();
