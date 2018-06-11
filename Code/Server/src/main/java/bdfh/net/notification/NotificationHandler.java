@@ -73,7 +73,7 @@ public class NotificationHandler {
 	 * @param cmd command of the notification
 	 * @param param parameter of the command
 	 */
-	private void sendData(String cmd, String param) {
+	private synchronized void sendData(String cmd, String param) {
 		
 		String toSend = cmd;
 		
@@ -95,7 +95,7 @@ public class NotificationHandler {
 		sendData(cmd, "");
 	}
 	
-	public void update(String cmd, Lobby l) {
+	public synchronized void update(String cmd, Lobby l) {
 		
 		String json = l.jsonify();
 		
