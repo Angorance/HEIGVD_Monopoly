@@ -831,8 +831,9 @@ public class Controller_board implements Initializable, IWindow {
 	}
 	
 	private void quit() {
-	
-	
+		
+		Player.getInstance().exitGame();
+		endGame();
 	}
 	
 	public void notifyTurn() {
@@ -953,6 +954,7 @@ public class Controller_board implements Initializable, IWindow {
 		quit_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				quit();
 			}
 		});

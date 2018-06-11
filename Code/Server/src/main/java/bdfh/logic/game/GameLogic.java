@@ -316,6 +316,10 @@ public class GameLogic extends Thread {
 				rollsStr += " " + roll;
 			}
 			
+			// Notify the players
+			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
+			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
+			
 			if (getExamPresence() && getExamNbrDouble() == 0) {
 				
 				// The player has to stay in exam
@@ -341,10 +345,6 @@ public class GameLogic extends Thread {
 				
 				canMove = true;
 			}
-			
-			// Notify the players
-			notifyPlayers(GameProtocol.GAM_ROLL, rollsStr);
-			LOG.log(Level.INFO, currentPlayer.getClientUsername() + " rolled " + rolls);
 			
 			// Move the player
 			if (canMove) {
