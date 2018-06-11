@@ -556,9 +556,16 @@ public class GameHandler extends Thread {
 			
 			square.reset();
 			sub.redrawSquare(pos);
+			sub.setOwner(pos, -1);
 		}
 		
+		sub.removePawn(id, players.get(id).getPosition());
 		players.remove(id);
 		// TODO - refresh players tab and remove pawn
+	}
+	
+	public boolean isGameOver() {
+		
+		return gameOver;
 	}
 }

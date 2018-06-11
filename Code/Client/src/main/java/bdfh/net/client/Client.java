@@ -435,4 +435,9 @@ public class Client {
 			sendData((GameProtocol.GAM_SELL + " " + position));
 		}
 	}
+	
+	public void exitGame() {
+		
+		sendData(GAM_QUIT);
+	}
 }

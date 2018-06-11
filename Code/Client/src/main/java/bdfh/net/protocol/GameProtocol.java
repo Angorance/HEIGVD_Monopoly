@@ -53,6 +53,7 @@ public abstract class GameProtocol {
 	public static final String GAM_GOVR = "GOVR"; // game over ~~ le joueur a perdu
 	public static final String GAM_WIN = "WIN"; // game over ~~ le joueur a gagné
 	public static final String GAM_RST = "RST"; // reset une case
+	public static final String GAM_QUIT = "Q";
 	
 	// Factors used to calculate rents
 	public static final int RENT_TO_1COUC = 5;

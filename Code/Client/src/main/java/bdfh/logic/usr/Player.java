@@ -221,7 +221,14 @@ public class Player {
 	
 	public void exitGame() {
 		
-		GameHandler.getInstance().interrupt();
-		Notification.getInstance().start();
+		if (GameHandler.getInstance().isGameOver()) {
+			GameHandler.getInstance().interrupt();
+			Notification.getInstance().start();
+		} else {
+			
+			Client.getInstance().exitGame();
+			GameHandler.getInstance().interrupt();
+			Notification.getInstance().start();
+		}
 	}
 }
