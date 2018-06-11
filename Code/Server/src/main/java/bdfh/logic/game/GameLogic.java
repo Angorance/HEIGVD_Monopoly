@@ -243,7 +243,6 @@ public class GameLogic extends Thread {
 			Card card = cardList.get(pos);
 			
 			// we add it to the deck
-			//if(card.getAction().equals(CARD_EXAM) || card.getAction().equals(CARD_FREE))
 			deck.addFirst(card);
 			
 			// we reduce the available quantity. if it get to 0, we remove the card from the list
