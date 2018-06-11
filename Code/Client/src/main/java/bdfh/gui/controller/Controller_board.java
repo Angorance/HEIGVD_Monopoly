@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -111,6 +112,7 @@ public class Controller_board implements Initializable, IWindow {
 	
 	@FXML private JFXButton rollDice_button;
 	@FXML private JFXButton endTurn_button;
+	@FXML private JFXButton quit_button;
 	
 	private static ArrayList<squareDisplayer> cases = new ArrayList<>();
 	private Label[] labelNameLoyer = new Label[6];
@@ -142,7 +144,7 @@ public class Controller_board implements Initializable, IWindow {
 			Label label_log = new Label(log);
 			label_log.setStyle("-fx-text-fill: " + colorPlayer.get(idPlayer) + ";");
 			
-			if(isBold) {
+			if (isBold) {
 				label_log.setStyle("-fx-font-weight: bold;");
 			}
 			vbox_Log.getChildren().add(0, label_log);
@@ -239,6 +241,7 @@ public class Controller_board implements Initializable, IWindow {
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
 			label_House = new Label(String.valueOf("     " + mySquare.getNbCouches()));
 			label_House.setFont(new Font("Cambria", 12));
+			label_House.setAlignment(Pos.CENTER);
 			
 			if (pos == 0) {
 				ap.setPrefWidth(20);
@@ -341,9 +344,9 @@ public class Controller_board implements Initializable, IWindow {
 		public void redraw() {
 			
 			if (mySquare.hasCine()) {
-				label_House.setText("     HC : 1");
+				label_House.setText("HC : 1");
 			} else {
-				label_House.setText("     C : " + String.valueOf(mySquare.getNbCouches()));
+				label_House.setText("C : " + String.valueOf(mySquare.getNbCouches()));
 			}
 		}
 		
@@ -826,6 +829,11 @@ public class Controller_board implements Initializable, IWindow {
 		
 	}
 	
+	private void quit() {
+	
+	
+	}
+	
 	public void notifyTurn() {
 		
 		if (Player.getInstance().isMyTurn()) {
@@ -938,6 +946,13 @@ public class Controller_board implements Initializable, IWindow {
 			@Override public void handle(ActionEvent event) {
 				
 				endTurn();
+			}
+		});
+		
+		quit_button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				quit();
 			}
 		});
 		
