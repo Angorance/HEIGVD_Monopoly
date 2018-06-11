@@ -312,7 +312,13 @@ public class GameHandler extends Thread {
 				break;
 				
 			case GAM_BKRPT:
-				sub.loadPopup_BR();
+				id = Integer.parseInt(split[1]);
+				
+				sub.logMessage(id, false, "Aïe aïe aïe, " + players.get(id).getUsername() + " est sur la corde raide !");
+				
+				if(id == Player.getInstance().getID())
+					sub.loadPopup_BR();
+				
 				break;
 				
 			case GAM_GOVR:
