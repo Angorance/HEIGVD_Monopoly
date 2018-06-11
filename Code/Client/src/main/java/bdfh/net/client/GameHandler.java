@@ -561,16 +561,18 @@ public class GameHandler extends Thread {
 		for (String s : toReset) {
 			
 			int pos = Integer.parseInt(s);
-			LightSquare square = board.getSquares().get(pos);
 			
-			square.reset();
-			sub.redrawSquare(pos);
-			sub.setOwner(pos, -1);
+			if (pos != -1) {
+				LightSquare square = board.getSquares().get(pos);
+				
+				square.reset();
+				sub.redrawSquare(pos);
+				sub.setOwner(pos, -1);
+			}
 		}
 		
 		sub.removePawn(id, players.get(id).getPosition());
 		players.remove(id);
-		// TODO - refresh players tab and remove pawn
 	}
 	
 	public boolean isGameOver() {
