@@ -239,7 +239,7 @@ public class Controller_board implements Initializable, IWindow {
 		private void add(String color, int pos) {
 			
 			ap.setStyle("-fx-background-color: " + color + "; -fx-border-color: BLACK ; -fx-border-width: 1px");
-			label_House = new Label(String.valueOf("     " + mySquare.getNbCouches()));
+			label_House = new Label(String.valueOf(mySquare.getNbCouches()));
 			label_House.setFont(new Font("Cambria", 12));
 			label_House.setAlignment(Pos.CENTER);
 			
@@ -679,9 +679,10 @@ public class Controller_board implements Initializable, IWindow {
 				int capital = GameHandler.getInstance().getPlayers().get(idPlayer).getCapital();
 				boolean isPrison = GameHandler.getInstance().getPlayers().get(idPlayer).isInExam();
 				boolean hasCard = GameHandler.getInstance().getPlayers().get(idPlayer).getFreeCards() > 0;
-				labelCapitals[cnt].setText(String.valueOf(capital));
-				labelPrisons[cnt].setText(isPrison ? "X" : "");
-				labelCartes[cnt].setText(hasCard ? "X" : "");
+				LightPlayer lp = GameHandler.getInstance().getPlayers().get(idPlayer);
+				labelCapitals[lp.getOrder()].setText(String.valueOf(capital));
+				labelPrisons[lp.getOrder()].setText(isPrison ? "X" : "");
+				labelCartes[lp.getOrder()].setText(hasCard ? "X" : "");
 				cnt++;
 			}
 		});
@@ -923,12 +924,12 @@ public class Controller_board implements Initializable, IWindow {
 			boolean isPrison = lp.isInExam();
 			boolean hasCard = lp.getFreeCards() > 0;
 			
-			labelPlayers[cnt].setText(username);
-			labelPlayers[cnt].setStyle("-fx-text-fill: " + color[cnt]);
-			labelCapitals[cnt].setText(String.valueOf(capital));
+			labelPlayers[lp.getOrder()].setText(username);
+			labelPlayers[lp.getOrder()].setStyle("-fx-text-fill: " + color[cnt]);
+			labelCapitals[lp.getOrder()].setText(String.valueOf(capital));
 			
-			labelPrisons[cnt].setText(isPrison ? "X" : "");
-			labelCartes[cnt].setText(hasCard ? "X" : "");
+			labelPrisons[lp.getOrder()].setText(isPrison ? "X" : "");
+			labelCartes[lp.getOrder()].setText(hasCard ? "X" : "");
 			
 			cnt++;
 		}

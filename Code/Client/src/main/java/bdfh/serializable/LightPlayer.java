@@ -16,12 +16,14 @@ public class LightPlayer {
 	private String username;
 	
 	private boolean inPrison;
+	private int order;
 	
-	public LightPlayer(int id, String username, int capital) {
+	public LightPlayer(int id, String username, int capital, int order) {
 		this.id = id;
 		this.username = username;
 		this.capital = capital;
 		this.position = 0;
+		this.order = order;
 	}
 	
 	public int getId() {
@@ -79,6 +81,10 @@ public class LightPlayer {
 		this.position = position;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+	
 	/**
 	 * Change a json Object into a LightPrice.
 	 *
@@ -86,12 +92,13 @@ public class LightPlayer {
 	 *
 	 * @return  a LightPrice.
 	 */
-	public static LightPlayer instancify(JsonObject jo) {
+	public static LightPlayer instancify(JsonObject jo, int rank) {
 		
 		LightPlayer tmp = new LightPlayer(
 				jo.get("id").getAsInt(),
 				jo.get("username").getAsString(),
-				jo.get("capital").getAsInt()
+				jo.get("capital").getAsInt(),
+				rank
 		);
 		
 		if (Player.getInstance().getUsername().equals(tmp.username)) {
