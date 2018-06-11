@@ -17,7 +17,7 @@ public class zoneAdmin {
 		Stage primaryStage = new Stage();
 		try {
 			root = FXMLLoader.load(getClass().getResource(
-					"/gui/view/popup.fxml"));
+					"/gui/view/zoneAdmin.fxml"));
 			primaryStage.setTitle("Cheseaux-Poly");
 			primaryStage.setScene(new Scene(root, 600, 400));
 			primaryStage.setResizable(false);

@@ -909,7 +909,7 @@ public class Controller_board implements Initializable, IWindow {
 		
 		
 		String[] color;
-		color = new String[] { "#d60e0e" /*rouge*/, "#0766ff" /*bleu */, "#00ad1f" /*vert*/, "#cc28be"/*rose*/ };
+		color = new String[] { "#d60e0e" /*rouge*/, "#0766ff" /*bleu */, "#00ad1f" /*vert*/, "#cc28be"/*violet*/ };
 		
 		int cnt = 0;
 		for (int idPlayer : GameHandler.getInstance().getPlayers().keySet()) {
