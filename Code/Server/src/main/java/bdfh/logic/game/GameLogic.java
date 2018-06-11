@@ -717,7 +717,7 @@ public class GameLogic extends Thread {
 		
 		board.cancelMortgaged(square.getOwner(), posProperty);
 		playersFortune.get(caller.getClientID())[VPOSSESSION] += board.getSquare(posProperty).getPrices().getHypothec();
-		manageMoney(square.getOwner(), (int) (price));
+		manageMoney(square.getOwner(), (-price));
 		notifyPlayers(square.getOwner(), GAM_NHYPOT, Integer.toString(posProperty));
 		
 		return SUCCESS;
