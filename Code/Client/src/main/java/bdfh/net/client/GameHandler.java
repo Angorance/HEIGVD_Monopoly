@@ -418,15 +418,15 @@ public class GameHandler extends Thread {
 		JsonArray jsonPlayers = GsonSerializer.getInstance()
 				.fromJson(json, JsonArray.class);
 		
-		int rank = 0;
+		int order = 0;
 		
 		for (JsonElement je : jsonPlayers) {
 			JsonObject jo = je.getAsJsonObject();
 			
-			LightPlayer tmp = LightPlayer.instancify(jo, rank);
+			LightPlayer tmp = LightPlayer.instancify(jo, order);
 			
 			players.put(tmp.getId(), tmp);
-			rank++;
+			order++;
 		}
 	}
 	

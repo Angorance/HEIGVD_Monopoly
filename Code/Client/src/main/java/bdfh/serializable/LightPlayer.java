@@ -16,14 +16,14 @@ public class LightPlayer {
 	private String username;
 	
 	private boolean inPrison;
-	private int rank;
+	private int order;
 	
-	public LightPlayer(int id, String username, int capital, int rank) {
+	public LightPlayer(int id, String username, int capital, int order) {
 		this.id = id;
 		this.username = username;
 		this.capital = capital;
 		this.position = 0;
-		this.rank = rank;
+		this.order = order;
 	}
 	
 	public int getId() {
@@ -81,8 +81,8 @@ public class LightPlayer {
 		this.position = position;
 	}
 	
-	public int getRank() {
-		return rank;
+	public int getOrder() {
+		return order;
 	}
 	
 	/**
