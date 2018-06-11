@@ -38,6 +38,7 @@ public class GameHandler extends Thread {
 	private BufferedReader in = null;
 	private PrintWriter out = null;
 	private String response;
+	private boolean gameOver;
 	
 	private Controller_board sub;
 	
