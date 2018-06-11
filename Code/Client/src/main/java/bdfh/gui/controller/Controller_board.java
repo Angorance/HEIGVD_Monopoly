@@ -376,7 +376,7 @@ public class Controller_board implements Initializable, IWindow {
 		cases.get(pos).getFP().setStyle("-fx-background-color: " + colorUse + ";");
 	}
 	
-	private void detailSquare(LightSquare square) {
+	public void detailSquare(LightSquare square) {
 		
 		this.square = square;
 		
