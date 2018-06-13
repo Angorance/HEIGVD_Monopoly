@@ -625,8 +625,8 @@ public class Controller_board implements Initializable, IWindow {
 			hyp_buttonCompany.setDisable(isMortgage);
 			dehyp_buttonCompany.setDisable(!isMortgage);
 		} else {
-			buy_buttonInstitute.setDisable(true);
-			sell_buttonInstitute.setDisable(true);
+			buy_buttonCompany.setDisable(true);
+			sell_buttonCompany.setDisable(true);
 			hyp_buttonCompany.setDisable(true);
 			dehyp_buttonCompany.setDisable(true);
 		}
