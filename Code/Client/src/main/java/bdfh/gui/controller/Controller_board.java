@@ -384,6 +384,16 @@ public class Controller_board implements Initializable, IWindow {
 		cases.get(pos).getFP().setStyle("-fx-background-color: " + colorUse + ";");
 	}
 	
+	public void setHypothec(int pos, boolean hypothec, int idPlayer) {
+		
+		if(hypothec) {
+			cases.get(pos).getFP().setStyle("-fx-background-color: " + "lightgrey" + ";");
+		} else {
+			
+			cases.get(pos).getFP().setStyle("-fx-background-color: " + colorPlayer.get(idPlayer) + "88;");
+		}
+	}
+	
 	public void detailSquare(LightSquare square) {
 		
 		Platform.runLater(()->{
