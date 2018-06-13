@@ -14,6 +14,9 @@ public class App {
 
     public static void main(String[] args) {
 	
+    	// Get the client's configuration
+	    
+    	
 	    try {
 		    Client.getInstance().connect();
 	    } catch (ConnectionException e) {
