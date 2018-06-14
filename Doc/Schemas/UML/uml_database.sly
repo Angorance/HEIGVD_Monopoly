@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="Cheseaux-Poly - Base de données">
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="83704" name="has">
+      <role componentId="83442" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+      <role componentId="83542" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="ENUM" id="83703" name="Enum"/>
+    <entity entityType="CLASS" id="83542" isAbstract="false" name="Price" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="rent" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="price" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="priceCouch" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="priceHomeCinema" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="hypothec" type="void" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="83442" isAbstract="false" name="Square" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="position" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="family" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="83210" isAbstract="false" name="Parameter" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="minDice" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxDice" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="minMoneyAtTheStart" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxMoneyAtTheStart" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="minTime" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxTime" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="randomGameGeneration" type="boolean" visibility="PRIVATE"/>
+    </entity>
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="83188" name="has">
+      <role componentId="83086" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+      <role componentId="83153" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="83153" isAbstract="false" name="Action" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="type" type="String" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="83086" isAbstract="false" name="Card" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="text" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="quantity" type="int" visibility="PRIVATE"/>
+    </entity>
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="83068" name="has">
+      <role componentId="82604" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="82704" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="82704" isAbstract="false" name="Score" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="startDate" type="Date" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="endDate" type="Date" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="abort" type="boolean" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="rank" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="moneyAtTheEnd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="moneyWin" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="moneyLost" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="boughtHouses" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="examVisits" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="squaresMoved" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="startWalker" type="int" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="82604" isAbstract="false" name="Player" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="username" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="password" type="String" visibility="PRIVATE"/>
+    </entity>
+  </diagramElements>
+  <umlView grid="10" name="Main view" open="true">
+    <relationView color="-12566464" relationId="83068">
+      <line>
+        <point>
+          <x>81</x>
+          <y>136</y>
+        </point>
+        <point>
+          <x>81</x>
+          <y>231</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>84</x>
+        <y>170</y>
+        <w>22</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>85</x>
+        <y>140</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>91</x>
+        <y>216</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>58</x>
+        <y>135</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>50</x>
+        <y>211</y>
+        <w>21</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="83188">
+      <line>
+        <point>
+          <x>251</x>
+          <y>136</y>
+        </point>
+        <point>
+          <x>251</x>
+          <y>231</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>255</x>
+        <y>171</y>
+        <w>22</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>255</x>
+        <y>140</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>260</x>
+        <y>218</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>226</x>
+        <y>138</y>
+        <w>21</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>231</x>
+        <y>207</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="83704">
+      <line>
+        <point>
+          <x>651</x>
+          <y>151</y>
+        </point>
+        <point>
+          <x>651</x>
+          <y>231</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>654</x>
+        <y>185</y>
+        <w>22</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>655</x>
+        <y>155</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>655</x>
+        <y>208</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>626</x>
+        <y>153</y>
+        <w>21</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>630</x>
+        <y>209</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <componentView color="-2079" componentID="82604" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>10</x>
+        <y>50</y>
+        <w>150</w>
+        <h>85</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="82704" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>10</x>
+        <y>230</y>
+        <w>150</w>
+        <h>220</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="83086" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>180</x>
+        <y>50</y>
+        <w>150</w>
+        <h>85</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="83153" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>180</x>
+        <y>230</y>
+        <w>150</w>
+        <h>70</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="83210" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>350</x>
+        <y>50</y>
+        <w>210</w>
+        <h>160</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="83442" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>580</x>
+        <y>50</y>
+        <w>150</w>
+        <h>100</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="83542" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>580</x>
+        <y>230</y>
+        <w>150</w>
+        <h>130</h>
+      </geometry>
+    </componentView>
+  </umlView>
+</classDiagram>
