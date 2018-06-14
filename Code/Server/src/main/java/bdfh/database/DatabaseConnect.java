@@ -1,6 +1,10 @@
 package bdfh.database;
 
-import java.sql.*;
+import bdfh.net.server.ClientHandler;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -12,10 +16,9 @@ import java.util.Properties;
 public class DatabaseConnect {
 	
 	private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-	//private static final String DATABASE_URL = "jdbc:mysql://10.192.95.28:3306/cheseaux-poly";
-	private static final String DATABASE_URL = "jdbc:mysql://192.168.1.104:3306/cheseaux-poly";
-	private static final String USERNAME = "cheseaux-poly_server";
-	private static final String PASSWORD = "ch3$e@ux_p0Ly";
+	private static String DATABASE_URL;
+	private static String USERNAME;
+	private static String PASSWORD;
 	
 	private Connection connection;
 	private Properties properties;
@@ -44,7 +47,7 @@ public class DatabaseConnect {
 	/**
 	 * Get the properties of the MySQL database connection.
 	 *
-	 * @return  properties of the connection.
+	 * @return properties of the connection.
 	 */
 	private Properties getProperties() {
 		
@@ -55,6 +58,21 @@ public class DatabaseConnect {
 		}
 		
 		return properties;
+	}
+	
+	/**
+	 * Set the connection properties to be connected to the database.
+	 *
+	 * @param ip        Url or ip of the databasse.
+	 * @param port      Port of the database.
+	 * @param name      Name of the database.
+	 * @param username  Username used to connect to the database.
+	 * @param password  Password used to connect to the database.
+	 */
+	public void setProperties(String ip, int port, String name, String username, String password) {
+		DATABASE_URL = "jdbc:mysql://" + ip + ":" + port + "/" + name;
+		USERNAME = username;
+		PASSWORD = password;
 	}
 	
 	/**
@@ -97,33 +115,46 @@ public class DatabaseConnect {
 	
 	/**
 	 * Get the Player DB object used to send queries about the player.
-	 * @return  the Player DB object
+	 *
+	 * @return the Player DB object
 	 */
-	public PlayerDB getPlayerDB(){
+	public PlayerDB getPlayerDB() {
+		
 		return PlayerDB.getInstance();
 	}
 	
 	/**
 	 * Get the Parameter DB object used to send queries about the parameters.
-	 * @return  the Parameter DB object
+	 *
+	 * @return the Parameter DB object
 	 */
-	public ParameterDB getParameterDB(){
+	public ParameterDB getParameterDB() {
+		
 		return ParameterDB.getInstance();
 	}
 	
 	/**
 	 * Get the Card DB object used to send queries about the cards.
-	 * @return  the Card DB object
+	 *
+	 * @return the Card DB object
 	 */
-	public CardDB getCardDB(){
+	public CardDB getCardDB() {
+		
 		return CardDB.getInstance();
 	}
 	
 	/**
 	 * Get the Square DB object used to send queries about the cards.
-	 * @return  the Square DB object
+	 *
+	 * @return the Square DB object
 	 */
-	public SquareDB getSquareDB(){
+	public SquareDB getSquareDB() {
+		
 		return SquareDB.getInstance();
+	}
+	
+	public void addSubToParameterDB(ClientHandler c) {
+		
+		ParameterDB.getInstance().addSubscriber(c);
 	}
 }

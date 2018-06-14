@@ -15,12 +15,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.tuple.MutablePair;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -313,9 +315,7 @@ public class Controller_board implements Initializable, IWindow {
 				case GameProtocol.SQUA_CARD:
 					this.setCenter(fp);
 					String image = getClass().getResource("/gui/image/chance.png").toExternalForm();
-					fp.setStyle("-fx-background-image: url('" + image + "'); -fx-background-size: stretch; -fx-background-position: center center");//" transform: rotate(" + rotation + ");");
-					name.setText("Carte chance");
-					//this.setTop(name);
+					fp.setStyle("-fx-background-image: url('" + image + "'); -fx-background-size: stretch; -fx-rotate: " + rotation + ";");
 					break;
 				case GameProtocol.SQUA_START:
 					name.setText("Start");

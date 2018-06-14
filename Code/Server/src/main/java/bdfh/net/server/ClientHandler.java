@@ -60,9 +60,9 @@ public class ClientHandler implements Handler {
 		
 		DatabaseConnect database = DatabaseConnect.getInstance();
 		
-		String bounds = GsonSerializer.getInstance().toJson(BoundParameters.getInstance());
+		database.addSubToParameterDB(this);
 		
-		sendData(Protocoly.ANS_CONN, bounds);
+		sendBounds();
 		
 		// Dialog management
 		while (connected) {
@@ -280,7 +280,6 @@ public class ClientHandler implements Handler {
 		
 		DatabaseConnect.getInstance().getParameterDB().setLimits(b);
 		DatabaseConnect.getInstance().getParameterDB().updateLimits();
-		
 	}
 	
 	/**
@@ -511,5 +510,16 @@ public class ClientHandler implements Handler {
 	public void addNot(NotificationHandler not) {
 		
 		this.not = not;
+	}
+	
+	private void sendBounds() {
+		
+		String bounds = GsonSerializer.getInstance().toJson(BoundParameters.getInstance());
+		
+		sendData(Protocoly.ANS_CONN, bounds);
+	}
+	
+	public void update() {
+		sendBounds();
 	}
 }

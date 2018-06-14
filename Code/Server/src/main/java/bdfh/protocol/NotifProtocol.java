@@ -6,7 +6,7 @@ package bdfh.protocol;
  */
 public abstract class NotifProtocol {
 	
-	public static final int NPORT = 9071;
+	public static int NPORT;
 	
 	public static final String NOTIF_DELETE = "DELETED";
 	public static final String NOTIF_UPDATE = "UPDATED";
