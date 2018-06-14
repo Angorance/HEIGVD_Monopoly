@@ -103,6 +103,26 @@ public class Controller_lobbyList implements Initializable, IWindow {
 		
 	}
 	
+	public void updateLobbyList(){
+		
+		Platform.runLater(()->{
+			add_button.setDisable(false);
+			join_button.setDisable(false);
+			quit_button.setDisable(true);
+			ready_button.setDisable(true);
+			
+			lobby.getChildren().clear();
+			displayerList.clear();
+			
+			for (LightLobby l : LightLobbies.getInstance().getLobbies().values()) {
+				LobbyDisplayer ld = new LobbyDisplayer(l);
+				lobby.getChildren().add(ld);
+				displayerList.put(l.getID(), ld);
+			}
+		});
+
+	}
+	
 	/**
 	 * Mise à jour du lobby. Si le joueur à cliquer dans un lobby
 	 * il met a jour aussi les information de se lobby
