@@ -314,8 +314,8 @@ public class Controller_board implements Initializable, IWindow {
 					break;
 				case GameProtocol.SQUA_CARD:
 					this.setCenter(fp);
-					String image = getClass().getResource("/gui/image/chance.png").toExternalForm();
-					fp.setStyle("-fx-background-image: url('" + image + "'); -fx-background-size: stretch; -fx-rotate: " + rotation + ";");
+					String image = getClass().getResource("/gui/image/chance" + pos +".png").toExternalForm();
+					fp.setStyle("-fx-background-image: url('" + image + "'); -fx-background-size: stretch;");
 					break;
 				case GameProtocol.SQUA_START:
 					name.setText("Start");
