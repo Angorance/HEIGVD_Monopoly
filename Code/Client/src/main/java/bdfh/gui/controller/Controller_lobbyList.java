@@ -140,6 +140,14 @@ public class Controller_lobbyList implements Initializable, IWindow {
 		});
 	}
 	
+	public void clearLobbies() {
+		
+		Platform.runLater(() -> {
+			
+			lobby.getChildren().clear();
+		});
+	}
+	
 	/**
 	 * Suppression d'un lobby de la liste
 	 *

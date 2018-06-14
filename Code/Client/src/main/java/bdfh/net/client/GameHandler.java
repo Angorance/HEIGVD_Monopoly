@@ -301,6 +301,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setMortgaged(true);
+				sub.setHypothec(pos, true, square.getOwner().getId());
 				sub.detailSquare(square);
 				
 				sub.logMessage(id, false, players.get(id).getUsername() + " a mis en hypothèque la salle " + square.getName());
@@ -314,7 +315,7 @@ public class GameHandler extends Thread {
 				square = board.getSquares().get(pos);
 				
 				square.setMortgaged(false);
-				
+				sub.setHypothec(pos, false, square.getOwner().getId());
 				sub.detailSquare(square);
 				
 				sub.logMessage(id, false, players.get(id).getUsername() + " a levé l'hypothèque de la salle " + square.getName());
@@ -589,6 +590,8 @@ public class GameHandler extends Thread {
 	 * @param id    ID of the player who quit.
 	 */
 	public void exitGame(int id) {
-		sub.logMessage(id, true, players.get(id).getUsername() + " a quitté la partie");
+		if (players.get(id) != null) {
+			sub.logMessage(id, true, players.get(id).getUsername() + " a quitté la partie");
+		}
 	}
 }
