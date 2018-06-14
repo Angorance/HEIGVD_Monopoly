@@ -50,6 +50,8 @@ public class Notification extends Thread {
 	 */
 	public void connect() throws IOException {
 		
+		noGame = true;
+		
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
 			in = new BufferedReader(new InputStreamReader(notifSocket.getInputStream()));

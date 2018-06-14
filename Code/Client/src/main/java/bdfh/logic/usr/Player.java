@@ -220,6 +220,8 @@ public class Player {
 	
 	public void exitGame() {
 		
+		lobbyID = -1;
+		
 		Client.getInstance().exitGame();
 		
 		
