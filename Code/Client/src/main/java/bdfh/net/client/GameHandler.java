@@ -600,9 +600,6 @@ public class GameHandler extends Thread {
 		
 		board = null;
 		
-		in = null;
-		out = null;
-		
 		gameOver = false;
 	}
 }
