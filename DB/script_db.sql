@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`player` (
 CREATE TABLE IF NOT EXISTS `cheseaux-poly`.`score` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `startDate` DATETIME NOT NULL,
-  `startEnd` DATETIME NOT NULL,
+  `endDate` DATETIME NOT NULL,
   `abort` TINYINT NOT NULL,
   `rank` INT NOT NULL,
   `moneyAtTheEnd` INT NOT NULL,
