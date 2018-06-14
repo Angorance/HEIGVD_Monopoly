@@ -587,6 +587,7 @@ public class GameLogic extends Thread {
 					
 					spectator.add(winner);
 					notifyPlayers(winner, GAM_WIN, "");
+					return;
 				}
 				
 			} else if (looseTurn) {
@@ -651,6 +652,7 @@ public class GameLogic extends Thread {
 	public synchronized void manageMoney(ClientHandler player, int amount) {
 		
 		playersFortune.get(player.getClientID())[CAPITAL] += amount;
+		LOG.log(Level.INFO, "Gestion de la fortune " + player.getClientUsername() + " : " + amount);
 		
 		if(amount > 0){
 			notifyPlayers(player, GAM_GAIN, Integer.toString(amount));
