@@ -1,7 +1,10 @@
 package bdfh.database;
 
+import bdfh.net.server.ClientHandler;
 import bdfh.serializable.BoundParameters;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to execute queries on the parameter table.
@@ -10,6 +13,8 @@ import java.sql.*;
  * @version 1.0
  */
 public class ParameterDB {
+	
+	private List<ClientHandler> subs = new ArrayList<>();
 	
 	private static final DatabaseConnect db = DatabaseConnect.getInstance();
 	
@@ -38,7 +43,6 @@ public class ParameterDB {
 	 * Update the limits of the logic.
 	 */
 	public void updateLimits() {
-		// TODO - call this method each time the administrator update the limits
 		
 		String sql = "SELECT * FROM parameter WHERE id = 1;";
 		
@@ -67,6 +71,8 @@ public class ParameterDB {
 			
 			// Close the db
 			statement.close();
+			
+			notifySubs();
 			
 		} catch (SQLException e) {
 			System.out
@@ -115,5 +121,16 @@ public class ParameterDB {
 		} finally {
 			db.disconnect();
 		}
+	}
+	
+	public void notifySubs() {
+		for (ClientHandler c : subs) {
+			c.update();
+		}
+	}
+	
+	public void addSubscriber(ClientHandler c) {
+		
+		subs.add(c);
 	}
 }
