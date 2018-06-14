@@ -1,6 +1,10 @@
 package bdfh.database;
 
-import java.sql.*;
+import bdfh.net.server.ClientHandler;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -43,7 +47,7 @@ public class DatabaseConnect {
 	/**
 	 * Get the properties of the MySQL database connection.
 	 *
-	 * @return  properties of the connection.
+	 * @return properties of the connection.
 	 */
 	private Properties getProperties() {
 		
@@ -111,33 +115,46 @@ public class DatabaseConnect {
 	
 	/**
 	 * Get the Player DB object used to send queries about the player.
-	 * @return  the Player DB object
+	 *
+	 * @return the Player DB object
 	 */
-	public PlayerDB getPlayerDB(){
+	public PlayerDB getPlayerDB() {
+		
 		return PlayerDB.getInstance();
 	}
 	
 	/**
 	 * Get the Parameter DB object used to send queries about the parameters.
-	 * @return  the Parameter DB object
+	 *
+	 * @return the Parameter DB object
 	 */
-	public ParameterDB getParameterDB(){
+	public ParameterDB getParameterDB() {
+		
 		return ParameterDB.getInstance();
 	}
 	
 	/**
 	 * Get the Card DB object used to send queries about the cards.
-	 * @return  the Card DB object
+	 *
+	 * @return the Card DB object
 	 */
-	public CardDB getCardDB(){
+	public CardDB getCardDB() {
+		
 		return CardDB.getInstance();
 	}
 	
 	/**
 	 * Get the Square DB object used to send queries about the cards.
-	 * @return  the Square DB object
+	 *
+	 * @return the Square DB object
 	 */
-	public SquareDB getSquareDB(){
+	public SquareDB getSquareDB() {
+		
 		return SquareDB.getInstance();
+	}
+	
+	public void addSubToParameterDB(ClientHandler c) {
+		
+		ParameterDB.getInstance().addSubscriber(c);
 	}
 }
