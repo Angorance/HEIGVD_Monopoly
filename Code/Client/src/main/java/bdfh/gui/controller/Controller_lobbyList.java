@@ -119,6 +119,8 @@ public class Controller_lobbyList implements Initializable, IWindow {
 				lobby.getChildren().add(ld);
 				displayerList.put(l.getID(), ld);
 			}
+			
+			detailLobby.setVisible(false);
 		});
 
 	}
