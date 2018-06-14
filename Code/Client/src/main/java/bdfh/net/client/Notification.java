@@ -112,6 +112,10 @@ public class Notification extends Thread {
 				out.println(Player.getInstance().getUsername());
 				out.flush();
 				
+				if (sub != null) {
+					sub.updateLobbyList();
+				}
+				
 				break;
 				
 			case NotifProtocol.NOTIF_NEW:

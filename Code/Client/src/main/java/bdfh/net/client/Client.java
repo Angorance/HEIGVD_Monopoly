@@ -440,5 +440,8 @@ public class Client {
 	public void exitGame() {
 		
 		sendData(GAM_QUIT);
+		
+		GameHandler.getInstance().clear();
+		gamehandler.interrupt();
 	}
 }

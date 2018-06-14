@@ -222,8 +222,7 @@ public class Player {
 		
 		Client.getInstance().exitGame();
 		
-		GameHandler.getInstance().exitGame(id);
-		GameHandler.getInstance().interrupt();
+		
 		Notification.getInstance().start();
 	}
 }
