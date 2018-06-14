@@ -50,6 +50,8 @@ public class Notification extends Thread {
 	 */
 	public void connect() throws IOException {
 		
+		noGame = true;
+		
 		try {
 			notifSocket = new Socket(Protocoly.SERVER, Protocoly.NPORT);
 			in = new BufferedReader(new InputStreamReader(notifSocket.getInputStream()));
@@ -111,6 +113,10 @@ public class Notification extends Thread {
 				LightLobbies.getInstance().instancify(json);
 				out.println(Player.getInstance().getUsername());
 				out.flush();
+				
+				if (sub != null) {
+					sub.updateLobbyList();
+				}
 				
 				break;
 				

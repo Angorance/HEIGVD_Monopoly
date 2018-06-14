@@ -594,4 +594,12 @@ public class GameHandler extends Thread {
 			sub.logMessage(id, true, players.get(id).getUsername() + " a quitté la partie");
 		}
 	}
+	
+	public void clear() {
+		players.clear();
+		
+		board = null;
+		
+		gameOver = false;
+	}
 }

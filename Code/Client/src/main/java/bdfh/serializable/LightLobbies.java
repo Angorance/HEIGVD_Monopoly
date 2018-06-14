@@ -74,6 +74,8 @@ public class LightLobbies {
 	
 	public void instancify(String s) {
 		
+		lobbies.clear();
+		
 		JsonArray jsonMap = GsonSerializer.getInstance().fromJson(s, JsonArray.class);
 		
 		for (JsonElement je : jsonMap) {

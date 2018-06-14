@@ -220,10 +220,11 @@ public class Player {
 	
 	public void exitGame() {
 		
+		lobbyID = -1;
+		
 		Client.getInstance().exitGame();
 		
-		GameHandler.getInstance().exitGame(id);
-		GameHandler.getInstance().interrupt();
+		
 		Notification.getInstance().start();
 	}
 }
