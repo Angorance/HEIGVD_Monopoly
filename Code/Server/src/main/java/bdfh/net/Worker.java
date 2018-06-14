@@ -1,7 +1,6 @@
 package bdfh.net;
 
 import bdfh.net.notification.NotificationHandler;
-import bdfh.net.notification.NotificationServer;
 import bdfh.net.server.ClientHandler;
 
 import java.io.*;
