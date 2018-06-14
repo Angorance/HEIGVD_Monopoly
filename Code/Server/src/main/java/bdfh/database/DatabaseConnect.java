@@ -12,10 +12,9 @@ import java.util.Properties;
 public class DatabaseConnect {
 	
 	private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-	//private static final String DATABASE_URL = "jdbc:mysql://10.192.95.28:3306/cheseaux-poly";
-	private static final String DATABASE_URL = "jdbc:mysql://192.168.1.104:3306/cheseaux-poly";
-	private static final String USERNAME = "cheseaux-poly_server";
-	private static final String PASSWORD = "ch3$e@ux_p0Ly";
+	private static String DATABASE_URL;
+	private static String USERNAME;
+	private static String PASSWORD;
 	
 	private Connection connection;
 	private Properties properties;
@@ -55,6 +54,21 @@ public class DatabaseConnect {
 		}
 		
 		return properties;
+	}
+	
+	/**
+	 * Set the connection properties to be connected to the database.
+	 *
+	 * @param ip        Url or ip of the databasse.
+	 * @param port      Port of the database.
+	 * @param name      Name of the database.
+	 * @param username  Username used to connect to the database.
+	 * @param password  Password used to connect to the database.
+	 */
+	public void setProperties(String ip, int port, String name, String username, String password) {
+		DATABASE_URL = "jdbc:mysql://" + ip + ":" + port + "/" + name;
+		USERNAME = username;
+		PASSWORD = password;
 	}
 	
 	/**
