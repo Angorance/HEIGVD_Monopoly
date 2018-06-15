@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bdfh.gui.controller.Controller_board">
+   <children>
+      <GridPane fx:id="board" layoutX="50.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="50.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="NEVER" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="NEVER" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="250.0" prefWidth="435.0" style="-fx-background-color: white;" styleClass="case" GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="1" GridPane.rowSpan="9">
+               <effect>
+                  <InnerShadow choke="0.66" />
+               </effect>
+               <children>
+                  <Label fx:id="nameSquare" alignment="CENTER" layoutX="2.0" layoutY="18.0" prefHeight="43.0" prefWidth="540.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <GridPane fx:id="infoProperties" layoutX="34.0" layoutY="58.0" prefHeight="315.0" prefWidth="384.0" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="loyer1" text="Loyer canapé 1" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer2" text="Loyer canapé 2" GridPane.rowIndex="3" />
+                        <Label fx:id="loyer3" text="Loyer canapé 3" GridPane.rowIndex="4" />
+                        <Label fx:id="loyer4" text="Loyer canapé 4" GridPane.rowIndex="5" />
+                        <Label fx:id="loyer5" text="Loyer Home Cinéma" GridPane.rowIndex="6" />
+                        <Label fx:id="canape1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="canape2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="canape3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="canape4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="homecinema" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Prix hypotèque" GridPane.rowIndex="7" />
+                        <Label fx:id="hypotheque" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="Prix canapé" GridPane.rowIndex="8" />
+                        <Label fx:id="prixCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="Prix Home Cinéma" GridPane.rowIndex="9" />
+                        <Label fx:id="prixHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="Vente Canapé" GridPane.rowIndex="10" />
+                        <Label text="Vente Home Cinema" GridPane.rowIndex="11" />
+                        <Label fx:id="venteCanape" text="-" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label fx:id="venteHC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <Label fx:id="loyer0" text="Loyer de base" GridPane.rowIndex="1" />
+                        <Label fx:id="base" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
+                        <Label fx:id="price_prop" text="-" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="infoInstitute" layoutX="33.0" layoutY="58.0" prefHeight="315.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Loyer 1" GridPane.rowIndex="1" />
+                        <Label text="Loyer 2" GridPane.rowIndex="2" />
+                        <Label text="Loyer 3" GridPane.rowIndex="3" />
+                        <Label text="Loyer 4" GridPane.rowIndex="4" />
+                        <Label fx:id="loyer1_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="loyer2_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer3_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="loyer4_institute" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
+                        <Label fx:id="price_institute" text="-" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="infoCompany" layoutX="33.0" layoutY="74.0" prefHeight="222.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Loyer 2" GridPane.rowIndex="2" />
+                        <Label fx:id="loyer2_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label style="-fx-font-weight: bold" text="Prix" />
+                        <Label fx:id="price_company" text="-" GridPane.columnIndex="1" />
+                        <Label text="Loyer 1" GridPane.rowIndex="1" />
+                        <Label fx:id="loyer1_company" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="infoTax" layoutX="33.0" layoutY="85.0" prefHeight="222.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Taxe" />
+                        <Label fx:id="price_tax" text="-" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_properties" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonProp" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat propriété" />
+                        <JFXButton fx:id="buy_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Achat canapé" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="hyp_button" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
+                        <JFXButton fx:id="sell_buttonProp" style="-fx-background-color: cdcdcd;" text="Vente propriété" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="sell_buttonCanape" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente canapé" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="dehyp_button" layoutX="277.0" layoutY="14.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_Institute" layoutX="33.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonInstitute" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" GridPane.rowSpan="2" />
+                        <JFXButton fx:id="sell_buttonInstitute" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" GridPane.rowSpan="2" />
+                        <JFXButton fx:id="hyp_buttonInstitute" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
+                        <JFXButton fx:id="dehyp_buttonInstitute" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="buttons_Company" layoutX="34.0" layoutY="376.0" prefHeight="65.0" prefWidth="384.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="buy_buttonCompany" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: cdcdcd;" text="Achat" GridPane.rowSpan="2" />
+                        <JFXButton fx:id="sell_buttonCompany" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: cdcdcd;" text="Vente" GridPane.columnIndex="1" GridPane.rowSpan="2" />
+                        <JFXButton fx:id="hyp_buttonCompany" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: cdcdcd;" text="Hypothéquer" GridPane.columnIndex="2" />
+                        <JFXButton fx:id="dehyp_buttonCompany" layoutX="293.0" layoutY="13.0" style="-fx-background-color: cdcdcd;" text="Déshypothéquer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+      <GridPane layoutX="750.0" layoutY="50.0" prefHeight="210.0" prefWidth="542.0" AnchorPane.rightAnchor="50.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" valignment="CENTER" />
+            <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" valignment="BOTTOM" />
+          <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" valignment="BOTTOM" />
+          <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="29.0" valignment="BOTTOM" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="label_player1" text="-" GridPane.rowIndex="1" />
+            <Label fx:id="label_player2" text="-" GridPane.rowIndex="2" />
+            <Label fx:id="label_player3" text="-" GridPane.rowIndex="3" />
+            <Label fx:id="label_player4" text="-" GridPane.rowIndex="4" />
+            <Label fx:id="label_capital1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="label_capital2" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="label_capital3" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="label_capital4" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Informations des joueurs" GridPane.columnSpan="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Salle d'examen" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Ticket de sortie" GridPane.columnIndex="3" />
+            <Label fx:id="prison_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="prison_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="prison_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="prison_player4" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="carte_player1" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="carte_player2" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label fx:id="carte_player3" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="carte_player4" alignment="CENTER" prefHeight="17.0" prefWidth="163.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <JFXButton fx:id="rollDice_button" layoutX="163.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Lancer les dés" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="163.0" />
+      <JFXButton fx:id="endTurn_button" layoutX="486.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Fin du tour" AnchorPane.leftAnchor="486.0" />
+      <AnchorPane layoutX="716.0" layoutY="289.0" prefHeight="436.0" prefWidth="519.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="50.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="436.0" prefWidth="542.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <content>
+                  <VBox fx:id="vbox_Log" spacing="5.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></VBox>
+              </content>
+            </ScrollPane>
+         </children>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="731.0" layoutY="260.0" prefHeight="25.0" prefWidth="519.0" text="Log">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_username" layoutX="375.0" layoutY="14.0" text="Label" />
+      <AnchorPane fx:id="popup" mouseTransparent="true" prefHeight="800.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="message" layoutX="50.0" layoutY="42.0" prefHeight="17.0" prefWidth="650.0" />
+      <JFXButton fx:id="quit_button" layoutX="959.0" layoutY="743.0" prefHeight="43.0" prefWidth="114.0" style="-fx-background-color: cdcdcd;" text="Quitter" />
+   </children>
+</AnchorPane>
