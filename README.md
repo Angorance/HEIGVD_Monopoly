@@ -1,6 +1,6 @@
 # Monopoly
 
-## Contributors
+## Contributeurs
 
 * **Bryan Curchod** - *Server-side* - [BryCur](https://github.com/BryCur)
 * **Daniel Gonzalez Lopez** - *Client-side / Server-side* - [Angorance](https://github.com/Angorance)
@@ -25,3 +25,14 @@ Derrière le serveur nous utilisons une base de données afin de pouvoir enregis
 limites de jeu (tel que le nombre de dés, ou encore le capital de départ), définir les objets inhérents au jeu
 (comme les cases et les cartes), et enfin nous avons également pensé à un suivi des statistiques de jeu
 pour les joueurs.
+
+## Technologies utilisées
+- Langage utilisé : **Java**
+- Interface Utilisateur : **JavaFX**
+- Base de données : **MySQL**
+- Planification et organisation : **IceScrum**
+- Gestion des dépendance : **Maven**
+
+## Screenshots
+![Liste des salons de jeu](/Doc/Maquette/salondejeu.PNG)
+![Plateau de jeu](/Doc/Maquette/jeu.PNG)
