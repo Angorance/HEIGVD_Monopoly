@@ -33,6 +33,6 @@ pour les joueurs.
 - Planification et organisation : **IceScrum**
 - Gestion des dépendance : **Maven**
 
-## Screenshots
+## Maquettes
 ![Liste des salons de jeu](/Doc/Maquette/salondejeu.PNG)
 ![Plateau de jeu](/Doc/Maquette/jeu.PNG)
